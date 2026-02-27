@@ -1,0 +1,26 @@
+@import '../../Common/UserLayout.css';
+
+.tree-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.tree-controls label {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tree-controls input {
+  width: 320px;
+  max-width: 100%;
+  border: 1px solid #c8d0d8;
+  padding: 8px;
+}
+
+.tree-list p {
+  margin: 7px 0;
+  color: #1088ff;
+}

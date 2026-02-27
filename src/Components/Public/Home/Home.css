@@ -1,0 +1,96 @@
+.home-banner {
+  min-height: clamp(220px, 36vw, 420px);
+  background: linear-gradient(rgba(45, 55, 72, 0.45), rgba(45, 55, 72, 0.35)),
+    linear-gradient(135deg, #00d4aa 0%, #6c63ff 100%);
+  display: grid;
+  place-items: center;
+}
+
+.home-banner-text {
+  font-size: clamp(56px, 13vw, 170px);
+  letter-spacing: 4px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 900;
+}
+
+.home-feature-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.home-feature {
+  text-align: center;
+  color: #fff;
+  padding: 28px 18px;
+}
+
+.home-feature h3 {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  font-size: 24px;
+}
+
+.home-feature p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.home-blue {
+  background: linear-gradient(135deg, #00d4aa 0%, #6c63ff 100%);
+}
+
+.home-orange {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ffd166 100%);
+}
+
+.home-green {
+  background: linear-gradient(135deg, #1db954 0%, #00d4aa 100%);
+}
+
+.home-welcome-card {
+  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 18px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+.home-welcome-image {
+  min-height: 180px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6c63ff, #00d4aa, #ffd166);
+}
+
+.home-welcome-kicker {
+  margin: 0;
+  color: #00b894;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.home-welcome-card h2 {
+  margin: 4px 0 10px;
+  color: #2d3748;
+  text-transform: uppercase;
+}
+
+.home-welcome-card p {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 13px;
+}
+
+@media (max-width: 860px) {
+  .home-feature-row {
+    grid-template-columns: 1fr;
+  }
+
+  .home-welcome-card {
+    grid-template-columns: 1fr;
+  }
+}

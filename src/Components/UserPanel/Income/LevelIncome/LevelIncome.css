@@ -1,0 +1,13 @@
+@import '../../Common/UserLayout.css';
+
+.level-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.level-filters input {
+  border: 1px solid #ccd3db;
+  padding: 8px;
+}

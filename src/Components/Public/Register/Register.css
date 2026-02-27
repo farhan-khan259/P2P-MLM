@@ -1,0 +1,32 @@
+.register-card {
+  width: min(740px, 100%);
+}
+
+.register-card h3 {
+  margin: 0 0 14px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #2d3748;
+}
+
+.register-subtitle {
+  margin-top: 18px !important;
+}
+
+.register-full-row {
+  grid-column: 1 / -1;
+}
+
+.register-actions {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.register-terms {
+  font-size: 12px;
+  color: #8b98a8;
+}
