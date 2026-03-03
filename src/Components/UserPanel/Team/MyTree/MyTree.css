@@ -24,3 +24,14 @@
   margin: 7px 0;
   color: #1088ff;
 }
+
+@media (max-width: 768px) {
+  .tree-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tree-controls input {
+    width: 100%;
+  }
+}

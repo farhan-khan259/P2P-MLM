@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import './AdminLayout.css';
 
@@ -87,6 +87,12 @@ function AdminLayout() {
     setIsSidebarOpen((prev) => !prev);
   };
 
+  useEffect(() => {
+    if (window.innerWidth <= 992) {
+      setIsSidebarOpen(false);
+    }
+  }, [location.pathname]);
+
   return (
     <div className={`admin-root ${isSidebarOpen ? 'sidebar-open' : 'sidebar-collapsed'}`}>
       <aside className="sidebar">
@@ -153,7 +159,7 @@ function AdminLayout() {
             aria-label={isSidebarOpen ? 'Collapse sidebar' : 'Open sidebar'}
             onClick={toggleSidebar}
           >
-            ☰
+            {isSidebarOpen ? '✕' : '☰'}
           </button>
           <div className="topbar-avatar">👨‍💼</div>
         </header>

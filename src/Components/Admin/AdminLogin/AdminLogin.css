@@ -28,3 +28,19 @@
 	font-weight: 800;
 }
 
+@media (max-width: 768px) {
+	.login-root {
+		padding: 14px;
+	}
+
+	.login-card {
+		width: 100%;
+		padding: 18px;
+		border-radius: 14px;
+	}
+
+	.login-card h1 {
+		font-size: 20px;
+	}
+}
+

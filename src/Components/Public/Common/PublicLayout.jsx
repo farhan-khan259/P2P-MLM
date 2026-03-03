@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import './PublicLayout.css';
 
@@ -11,8 +12,12 @@ const navItems = [
 ];
 
 function PublicLayout() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const closeMenu = () => setIsMenuOpen(false);
+
   return (
-    <div className="public-root">
+    <div className={`public-root ${isMenuOpen ? 'public-menu-open' : 'public-menu-closed'}`}>
       <div className="public-top-strip">
         <div className="public-container public-top-inner">
           <span>support@p2pinvestment.com</span>
@@ -31,6 +36,15 @@ function PublicLayout() {
             <div className="public-logo-mark">IHH</div>
             <div className="public-logo-text">P2P Investment</div>
           </NavLink>
+
+          <button
+            type="button"
+            className="public-menu-btn"
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+          >
+            {isMenuOpen ? '✕' : '☰'}
+          </button>
 
           <nav className="public-nav">
             {navItems.map((item) => (
@@ -55,6 +69,38 @@ function PublicLayout() {
           </div>
         </div>
       </header>
+
+      <aside className="public-mobile-sidebar">
+        <nav className="public-mobile-nav">
+          {navItems.map((item) => (
+            <NavLink
+              key={`mobile-${item.to}`}
+              to={item.to}
+              className={({ isActive }) => `public-mobile-link ${isActive ? 'active' : ''}`}
+              end={item.to === '/'}
+              onClick={closeMenu}
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="public-mobile-auth">
+          <NavLink to="/user-login" className="public-auth-btn" onClick={closeMenu}>
+            Login
+          </NavLink>
+          <NavLink to="/registration" className="public-auth-btn" onClick={closeMenu}>
+            Registration
+          </NavLink>
+        </div>
+      </aside>
+
+      <button
+        type="button"
+        className="public-mobile-overlay"
+        aria-label="Close menu overlay"
+        onClick={closeMenu}
+      />
 
       <main>
         <Outlet />

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import './UserLayout.css';
 
@@ -82,6 +82,12 @@ function UserLayout() {
     setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
+  useEffect(() => {
+    if (window.innerWidth <= 992) {
+      setIsSidebarOpen(false);
+    }
+  }, [location.pathname]);
+
   return (
     <div className={`user-root ${isSidebarOpen ? 'user-sidebar-open' : 'user-sidebar-collapsed'}`}>
       <aside className="user-sidebar">
@@ -149,9 +155,9 @@ function UserLayout() {
             type="button"
             className="user-menu-btn"
             onClick={() => setIsSidebarOpen((prev) => !prev)}
-            aria-label="Toggle sidebar"
+            aria-label={isSidebarOpen ? 'Collapse sidebar' : 'Open sidebar'}
           >
-            ☰
+            {isSidebarOpen ? '✕' : '☰'}
           </button>
             <span className="user-top-title">Dashboard</span>
           </div>
