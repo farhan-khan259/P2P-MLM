@@ -5,48 +5,109 @@ import './AdminLayout.css';
 const menuItems = [
   { key: 'dashboard', label: 'Dashboard', to: '/dashboard' },
   {
+    key: 'epin',
+    label: 'ePin',
+    children: [
+      { label: 'ePin Request', to: '/epin/epin-request' },
+      { label: 'Generate ePin', to: '/epin/generate-epin' },
+      { label: 'Unused ePin', to: '/epin/unused-epin' },
+      { label: 'Used ePin', to: '/epin/used-epin' },
+      { label: 'All ePin', to: '/epin/all-epin' },
+      { label: 'Delete ePin', to: '/epin/delete-epin' },
+      { label: 'Transfer History', to: '/epin/transfer-history' }
+    ]
+  },
+  {
     key: 'members',
     label: 'Members',
     children: [
-      { label: 'Member View', to: '/members/member-view' },
-      { label: 'Edit Profile', to: '/members/edit-profile' },
-      { label: 'Member Password', to: '/members/member-password' },
-      { label: 'Member Block List', to: '/members/member-block-list' },
-      { label: 'Member Alert List', to: '/members/member-alert-list' }
+      { label: 'KYC Request', to: '/members/kyc-request' },
+      { label: 'All Members', to: '/members/all-members' },
+      { label: 'Active Members', to: '/members/active-members' },
+      { label: 'Inactive Members', to: '/members/inactive-members' },
+      { label: 'Block Members', to: '/members/block-members' }
     ]
   },
   {
-    key: 'tree',
-    label: 'Tree',
+    key: 'networkReports',
+    label: 'Network Reports',
     children: [
-      { label: 'Team View', to: '/tree/team-view' },
-      { label: 'My Direct Referral', to: '/tree/my-direct-referral' },
-      { label: 'MY TREE', to: '/tree/my-tree' },
-      { label: 'Team Level', to: '/tree/team-level' },
-      { label: 'My Level', to: '/tree/my-level' }
+      { label: 'Network Explorer', to: '/network-reports/network-explorer' },
+      { label: 'Downline List', to: '/network-reports/downline-list' },
+      { label: 'Level Income Reports', to: '/network-reports/level-income-reports' },
+      { label: 'Upgrade Reports', to: '/network-reports/upgrade-reports' }
     ]
   },
   {
-    key: 'payment',
-    label: 'Payment',
-    children: [{ label: 'Payment Request', to: '/payment/payment-request' }]
+    key: 'incomeReports',
+    label: 'Income Reports',
+    children: [
+      { label: 'Level Income Reports', to: '/income-reports/level-income-reports' },
+      { label: 'Donation Report', to: '/income-reports/donation-report' }
+    ]
   },
   {
-    key: 'income',
-    label: 'Income',
-    children: [{ label: 'Level Income', to: '/income/level-income' }]
+    key: 'productsPackage',
+    label: 'Products/Package',
+    children: [
+      { label: 'Add Products', to: '/products-package/add-products' },
+      { label: 'Modify Product', to: '/products-package/modify-product' },
+      { label: 'Rearrange Products', to: '/products-package/rearrange-products' }
+    ]
+  },
+  {
+    key: 'productOrder',
+    label: 'Product Order',
+    children: [
+      { label: 'New Orders', to: '/product-order/new-orders' },
+      { label: 'Pending Orders', to: '/product-order/pending-orders' },
+      { label: 'Delivered Orders', to: '/product-order/delivered-orders' },
+      { label: 'Rejected Orders', to: '/product-order/rejected-orders' },
+      { label: 'All Orders', to: '/product-order/all-orders' }
+    ]
+  },
+  {
+    key: 'transaction',
+    label: 'Transaction',
+    children: [{ label: 'Main Wallet', to: '/transaction/main-wallet' }]
+  },
+  {
+    key: 'withdrawals',
+    label: 'Withdrawals',
+    children: [
+      { label: 'All Request', to: '/withdrawals/all-request' },
+      { label: 'Approved Request', to: '/withdrawals/approved-request' },
+      { label: 'Pending Request', to: '/withdrawals/pending-request' },
+      { label: 'Reject Request', to: '/withdrawals/reject-request' }
+    ]
+  },
+  {
+    key: 'settings',
+    label: 'Settings',
+    children: [
+      { label: 'Level Plan', to: '/settings/level-plan' },
+      { label: 'Manage Taxes & Deduction', to: '/settings/manage-taxes-deduction' }
+    ]
+  },
+  {
+    key: 'newsPopup',
+    label: 'News & Popup',
+    children: [
+      { label: 'Add New', to: '/news-popup/add-new' },
+      { label: 'List All', to: '/news-popup/list-all' }
+    ]
   },
   {
     key: 'support',
-    label: 'Support Ticket',
-    children: [{ label: 'Ticket History', to: '/support-ticket/ticket-history' }]
+    label: 'Support',
+    children: [
+      { label: 'Support Section', to: '/support/support-section' },
+      { label: 'Support Tickets', to: '/support/support-tickets' },
+      { label: 'Chat Integration', to: '/support/chat-integration' }
+    ]
   },
-  {
-    key: 'other',
-    label: 'Other',
-    children: [{ label: 'Block And Un Block Member Id', to: '/other/block-unblock' }]
-  },
-  { key: 'signout', label: 'Sign Out', to: '/admin-login' }
+  { key: 'lastLogin', label: 'Last Login Date & Time', to: '/last-login-date-time' },
+  { key: 'signout', label: 'Sign Out', to: '/sign-out' }
 ];
 
 function toTitleCase(text) {
@@ -71,10 +132,16 @@ function AdminLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const [openSections, setOpenSections] = useState({
+    epin: true,
     members: true,
-    tree: true,
-    payment: true,
-    income: true,
+    networkReports: true,
+    incomeReports: true,
+    productsPackage: true,
+    productOrder: true,
+    transaction: true,
+    withdrawals: true,
+    settings: true,
+    newsPopup: true,
     support: true,
     other: true
   });

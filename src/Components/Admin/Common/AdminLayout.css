@@ -500,6 +500,14 @@
   -webkit-backdrop-filter: blur(10px);
 }
 
+.admin-blank-page {
+  min-height: 520px;
+  background: #fff;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
 @media (max-width: 1280px) {
   .sidebar {
     width: 240px;

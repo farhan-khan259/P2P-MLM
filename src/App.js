@@ -1,24 +1,25 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import AdminLayout from './Components/Admin/Common/AdminLayout';
+import AdminBlankPage from './Components/Admin/Common/AdminBlankPage';
 import Dashboard from './Components/Admin/Dashboard/Dashboard';
 import MemberView from './Components/Admin/Members/MemberView/MemberView';
-import EditProfile from './Components/Admin/Members/EditProfile/EditProfile';
-import MemberPassword from './Components/Admin/Members/MemberPassword/MemberPassword';
 import MemberBlockList from './Components/Admin/Members/MemberBlockList/MemberBlockList';
-import MemberAlertList from './Components/Admin/Members/MemberAlertList/MemberAlertList';
 import TeamView from './Components/Admin/Tree/TeamView/TeamView';
 import MyDirectReferral from './Components/Admin/Tree/MyDirectReferral/MyDirectReferral';
-import MyTree from './Components/Admin/Tree/MyTree/MyTree';
-import TeamLevel from './Components/Admin/Tree/TeamLevel/TeamLevel';
-import MyLevel from './Components/Admin/Tree/MyLevel/MyLevel';
-import PaymentRequest from './Components/Admin/Payment/PaymentRequest/PaymentRequest';
 import LevelIncome from './Components/Admin/Income/LevelIncome/LevelIncome';
 import TicketHistory from './Components/Admin/SupportTicket/TicketHistory/TicketHistory';
-import BlockUnblock from './Components/Admin/Other/BlockUnblock/BlockUnblock';
 import SignOut from './Components/Admin/SignOut/SignOut';
+import EPinRequest from './Components/Admin/ePin/EPinRequest';
+import GenerateEPin from './Components/Admin/ePin/GenerateEPin';
+import UnusedEPin from './Components/Admin/ePin/UnusedEPin';
+import UsedEPin from './Components/Admin/ePin/UsedEPin';
+import AllEPin from './Components/Admin/ePin/AllEPin';
+import DeleteEPin from './Components/Admin/ePin/DeleteEPin';
+import TransferHistory from './Components/Admin/ePin/TransferHistory';
 import AdminLogin from './Components/Admin/AdminLogin/AdminLogin';
 import UserLayout from './Components/UserPanel/Common/UserLayout';
+import UserBlankPage from './Components/UserPanel/Common/UserBlankPage';
 import UserLogin from './Components/UserPanel/UserLogin/UserLogin';
 import UserDashboard from './Components/UserPanel/UserDashboard/UserDashboard';
 import MyProfile from './Components/UserPanel/Profile/MyProfile/MyProfile';
@@ -28,11 +29,8 @@ import ChangePassword from './Components/UserPanel/Profile/ChangePassword/Change
 import DirectList from './Components/UserPanel/Team/DirectList/DirectList';
 import UserMyTree from './Components/UserPanel/Team/MyTree/MyTree';
 import MyTeam from './Components/UserPanel/Team/MyTeam/MyTeam';
-import TeamLevelUser from './Components/UserPanel/Team/TeamLevel/TeamLevel';
-import MyLevelUser from './Components/UserPanel/Team/MyLevel/MyLevel';
 import SelfPaymentHistory from './Components/UserPanel/Payment/SelfPaymentHistory/SelfPaymentHistory';
 import PaymentRequestHistory from './Components/UserPanel/Payment/PaymentRequestHistory/PaymentRequestHistory';
-import TotalLevelIncome from './Components/UserPanel/Income/TotalLevelIncome/TotalLevelIncome';
 import UserLevelIncome from './Components/UserPanel/Income/LevelIncome/LevelIncome';
 import CreateTicket from './Components/UserPanel/SupportTicket/CreateTicket/CreateTicket';
 import UserSignOut from './Components/UserPanel/SignOut/UserSignOut';
@@ -66,23 +64,56 @@ function App() {
           <Route index element={<Navigate to="/user/dashboard" replace />} />
           <Route path="dashboard" element={<UserDashboard />} />
 
-          <Route path="profile/my-profile" element={<MyProfile />} />
+          <Route path="my-profile/show-profile" element={<MyProfile />} />
           <Route path="profile/update-profile" element={<UpdateProfile />} />
-          <Route path="profile/update-bank-details" element={<UpdateBankDetails />} />
-          <Route path="profile/change-password" element={<ChangePassword />} />
+          <Route path="my-profile/change-login-password" element={<ChangePassword />} />
+          <Route path="my-profile/update-trans-password" element={<UpdateBankDetails />} />
 
+          <Route path="plan-chart-letters/business-plan-chart" element={<UserBlankPage />} />
+          <Route path="plan-chart-letters/welcome-letter" element={<UserBlankPage />} />
+          <Route path="plan-chart-letters/business-card" element={<UserBlankPage />} />
+          <Route path="plan-chart-letters/bank-information" element={<UserBlankPage />} />
+
+          <Route path="kyc-approved" element={<UserBlankPage />} />
+
+          <Route path="my-network/my-direct-network" element={<DirectList />} />
+          <Route path="my-network/network-explorer" element={<UserMyTree />} />
+          <Route path="my-network/downline-list" element={<MyTeam />} />
+
+          <Route path="income-report/level-income" element={<UserLevelIncome />} />
+          <Route path="income-report/donations-income" element={<UserBlankPage />} />
+
+          <Route path="donations/given-help" element={<SelfPaymentHistory />} />
+          <Route path="donations/recieved-help" element={<PaymentRequestHistory />} />
+
+          <Route path="product/product-list" element={<UserBlankPage />} />
+          <Route path="product/product-order" element={<UserBlankPage />} />
+          <Route path="product/delivery-status" element={<UserBlankPage />} />
+
+          <Route path="epin/buy-epin" element={<UserBlankPage />} />
+          <Route path="epin/generate-epin" element={<UserBlankPage />} />
+          <Route path="epin/used-epin" element={<UserBlankPage />} />
+          <Route path="epin/unused-epin" element={<UserBlankPage />} />
+          <Route path="epin/list-all-epin" element={<UserBlankPage />} />
+          <Route path="epin/transfer-epin" element={<UserBlankPage />} />
+          <Route path="epin/epin-transfer-history" element={<UserBlankPage />} />
+
+          <Route path="transactions/main-wallet" element={<UserBlankPage />} />
+          <Route path="transactions/transaction-history" element={<UserBlankPage />} />
+
+          <Route path="ticket-support" element={<CreateTicket />} />
+          <Route path="news-events" element={<UserBlankPage />} />
+          <Route path="log-out" element={<UserSignOut />} />
+
+          <Route path="profile/my-profile" element={<MyProfile />} />
+          <Route path="profile/change-password" element={<ChangePassword />} />
+          <Route path="profile/update-bank-details" element={<UpdateBankDetails />} />
           <Route path="team/direct-list" element={<DirectList />} />
           <Route path="team/my-tree" element={<UserMyTree />} />
           <Route path="team/my-team" element={<MyTeam />} />
-          <Route path="team/team-level" element={<TeamLevelUser />} />
-          <Route path="team/my-level" element={<MyLevelUser />} />
-
           <Route path="payment/self-payment-history" element={<SelfPaymentHistory />} />
           <Route path="payment/payment-request-history" element={<PaymentRequestHistory />} />
-
-          <Route path="income/total-level-income" element={<TotalLevelIncome />} />
           <Route path="income/level-income" element={<UserLevelIncome />} />
-
           <Route path="support/create-ticket" element={<CreateTicket />} />
           <Route path="sign-out" element={<UserSignOut />} />
 
@@ -93,22 +124,56 @@ function App() {
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
 
-          <Route path="members/member-view" element={<MemberView />} />
-          <Route path="members/edit-profile" element={<EditProfile />} />
-          <Route path="members/member-password" element={<MemberPassword />} />
-          <Route path="members/member-block-list" element={<MemberBlockList />} />
-          <Route path="members/member-alert-list" element={<MemberAlertList />} />
+          <Route path="epin/epin-request" element={<EPinRequest />} />
+          <Route path="epin/generate-epin" element={<GenerateEPin />} />
+          <Route path="epin/unused-epin" element={<UnusedEPin />} />
+          <Route path="epin/used-epin" element={<UsedEPin />} />
+          <Route path="epin/all-epin" element={<AllEPin />} />
+          <Route path="epin/delete-epin" element={<DeleteEPin />} />
+          <Route path="epin/transfer-history" element={<TransferHistory />} />
 
-          <Route path="tree/team-view" element={<TeamView />} />
-          <Route path="tree/my-direct-referral" element={<MyDirectReferral />} />
-          <Route path="tree/my-tree" element={<MyTree />} />
-          <Route path="tree/team-level" element={<TeamLevel />} />
-          <Route path="tree/my-level" element={<MyLevel />} />
+          <Route path="members/kyc-request" element={<AdminBlankPage />} />
+          <Route path="members/all-members" element={<MemberView />} />
+          <Route path="members/active-members" element={<AdminBlankPage />} />
+          <Route path="members/inactive-members" element={<AdminBlankPage />} />
+          <Route path="members/block-members" element={<MemberBlockList />} />
 
-          <Route path="payment/payment-request" element={<PaymentRequest />} />
-          <Route path="income/level-income" element={<LevelIncome />} />
-          <Route path="support-ticket/ticket-history" element={<TicketHistory />} />
-          <Route path="other/block-unblock" element={<BlockUnblock />} />
+          <Route path="network-reports/network-explorer" element={<TeamView />} />
+          <Route path="network-reports/downline-list" element={<MyDirectReferral />} />
+          <Route path="network-reports/level-income-reports" element={<LevelIncome />} />
+          <Route path="network-reports/upgrade-reports" element={<AdminBlankPage />} />
+
+          <Route path="income-reports/level-income-reports" element={<LevelIncome />} />
+          <Route path="income-reports/donation-report" element={<AdminBlankPage />} />
+
+          <Route path="products-package/add-products" element={<AdminBlankPage />} />
+          <Route path="products-package/modify-product" element={<AdminBlankPage />} />
+          <Route path="products-package/rearrange-products" element={<AdminBlankPage />} />
+
+          <Route path="product-order/new-orders" element={<AdminBlankPage />} />
+          <Route path="product-order/pending-orders" element={<AdminBlankPage />} />
+          <Route path="product-order/delivered-orders" element={<AdminBlankPage />} />
+          <Route path="product-order/rejected-orders" element={<AdminBlankPage />} />
+          <Route path="product-order/all-orders" element={<AdminBlankPage />} />
+
+          <Route path="transaction/main-wallet" element={<AdminBlankPage />} />
+
+          <Route path="withdrawals/all-request" element={<AdminBlankPage />} />
+          <Route path="withdrawals/approved-request" element={<AdminBlankPage />} />
+          <Route path="withdrawals/pending-request" element={<AdminBlankPage />} />
+          <Route path="withdrawals/reject-request" element={<AdminBlankPage />} />
+
+          <Route path="settings/level-plan" element={<AdminBlankPage />} />
+          <Route path="settings/manage-taxes-deduction" element={<AdminBlankPage />} />
+
+          <Route path="news-popup/add-new" element={<AdminBlankPage />} />
+          <Route path="news-popup/list-all" element={<AdminBlankPage />} />
+
+          <Route path="support/support-section" element={<AdminBlankPage />} />
+          <Route path="support/support-tickets" element={<TicketHistory />} />
+          <Route path="support/chat-integration" element={<AdminBlankPage />} />
+
+          <Route path="last-login-date-time" element={<AdminBlankPage />} />
           <Route path="sign-out" element={<SignOut />} />
 
           <Route path="*" element={<Navigate to="/dashboard" replace />} />

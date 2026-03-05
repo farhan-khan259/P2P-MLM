@@ -3,50 +3,85 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import './UserLayout.css';
 
 const menuItems = [
-  { key: 'dashboard', label: 'Dashboard', to: '/user/dashboard' },
   {
-    key: 'profile',
-    label: 'Profile',
+    key: 'myProfile',
+    label: 'My Profile',
     children: [
-      { label: 'My Profile', to: '/user/profile/my-profile' },
+      { label: 'Show Profile', to: '/user/my-profile/show-profile' },
       { label: 'Update Profile', to: '/user/profile/update-profile' },
-      { label: 'Update Bank Details', to: '/user/profile/update-bank-details' },
-      { label: 'Change Password', to: '/user/profile/change-password' }
+      { label: 'Change Login Password', to: '/user/my-profile/change-login-password' },
+      { label: 'Update Trans. Password', to: '/user/my-profile/update-trans-password' }
     ]
   },
   {
-    key: 'team',
-    label: 'Team Details',
+    key: 'planChartLetters',
+    label: 'Plan Chart & Letters',
     children: [
-      { label: 'Direct List', to: '/user/team/direct-list' },
-      { label: 'My Tree', to: '/user/team/my-tree' },
-      { label: 'My Team', to: '/user/team/my-team' },
-      { label: 'Team Level', to: '/user/team/team-level' },
-      { label: 'My Level', to: '/user/team/my-level' }
+      { label: 'Business Plan Chart', to: '/user/plan-chart-letters/business-plan-chart' },
+      { label: 'Welcome Letter', to: '/user/plan-chart-letters/welcome-letter' },
+      { label: 'Business Card', to: '/user/plan-chart-letters/business-card' },
+      { label: 'Bank Information', to: '/user/plan-chart-letters/bank-information' }
     ]
   },
+  { key: 'kycApproved', label: 'KYC Approved', to: '/user/kyc-approved' },
   {
-    key: 'payment',
-    label: 'Payment History',
+    key: 'myNetwork',
+    label: 'My Network',
     children: [
-      { label: 'Self Payment History', to: '/user/payment/self-payment-history' },
-      { label: 'Payment Request History', to: '/user/payment/payment-request-history' }
+      { label: 'My Direct Network', to: '/user/my-network/my-direct-network' },
+      { label: 'Network Explorer', to: '/user/my-network/network-explorer' },
+      { label: 'Downline List', to: '/user/my-network/downline-list' }
     ]
   },
   {
-    key: 'income',
-    label: 'Income',
+    key: 'incomeReport',
+    label: 'Income Report',
     children: [
-      { label: 'Total Level Income', to: '/user/income/total-level-income' },
-      { label: 'Level Income', to: '/user/income/level-income' }
+      { label: 'Level Income', to: '/user/income-report/level-income' },
+      { label: 'Donations Income', to: '/user/income-report/donations-income' }
     ]
   },
   {
-    key: 'support',
-    label: 'Support Ticket',
-    children: [{ label: 'Support Ticket', to: '/user/support/create-ticket' }]
+    key: 'donations',
+    label: 'Donations',
+    children: [
+      { label: 'Given Help', to: '/user/donations/given-help' },
+      { label: 'Recieved Help', to: '/user/donations/recieved-help' }
+    ]
   },
-  { key: 'signout', label: 'Sign Out', to: '/user/sign-out' }
+  {
+    key: 'product',
+    label: 'Product',
+    children: [
+      { label: 'Product List', to: '/user/product/product-list' },
+      { label: 'Product Order', to: '/user/product/product-order' },
+      { label: 'Delivery Status', to: '/user/product/delivery-status' }
+    ]
+  },
+  {
+    key: 'epin',
+    label: 'ePin',
+    children: [
+      { label: 'Buy ePin', to: '/user/epin/buy-epin' },
+      { label: 'Generate ePin', to: '/user/epin/generate-epin' },
+      { label: 'Used ePin', to: '/user/epin/used-epin' },
+      { label: 'Unused ePin', to: '/user/epin/unused-epin' },
+      { label: 'List All ePin', to: '/user/epin/list-all-epin' },
+      { label: 'Transfer ePin', to: '/user/epin/transfer-epin' },
+      { label: 'ePin Transfer History', to: '/user/epin/epin-transfer-history' }
+    ]
+  },
+  {
+    key: 'transactions',
+    label: 'Transactions',
+    children: [
+      { label: 'Main Wallet', to: '/user/transactions/main-wallet' },
+      { label: 'Transaction History', to: '/user/transactions/transaction-history' }
+    ]
+  },
+  { key: 'ticketSupport', label: 'Ticket Support', to: '/user/ticket-support' },
+  { key: 'newsEvents', label: 'News & Events', to: '/user/news-events' },
+  { key: 'logout', label: 'Log Out', to: '/user/log-out' }
 ];
 
 function toTitleCase(text) {
@@ -71,11 +106,14 @@ function UserLayout() {
   const breadcrumb = useMemo(() => buildBreadcrumb(location.pathname), [location.pathname]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [openSections, setOpenSections] = useState({
-    profile: true,
-    team: true,
-    payment: true,
-    income: true,
-    support: true
+    myProfile: true,
+    planChartLetters: true,
+    myNetwork: true,
+    incomeReport: true,
+    donations: true,
+    product: true,
+    epin: true,
+    transactions: true
   });
 
   const toggleSection = (key) => {
