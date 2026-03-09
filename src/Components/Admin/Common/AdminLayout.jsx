@@ -23,7 +23,7 @@ const menuItems = [
     children: [
       { label: 'KYC Request', to: '/members/kyc-request' },
       { label: 'All Members', to: '/members/all-members' },
-      { label: 'Active Members', to: '/members/active-members' },
+      { label: 'Members Location', to: '/members/active-members' },
       { label: 'Inactive Members', to: '/members/inactive-members' },
       { label: 'Block Members', to: '/members/block-members' }
     ]
@@ -35,7 +35,7 @@ const menuItems = [
       { label: 'Network Explorer', to: '/network-reports/network-explorer' },
       { label: 'Downline List', to: '/network-reports/downline-list' },
       { label: 'Level Income Reports', to: '/network-reports/level-income-reports' },
-      { label: 'Upgrade Reports', to: '/network-reports/upgrade-reports' }
+      { label: 'Donation Report', to: '/network-reports/donation-report' }
     ]
   },
   {
@@ -118,12 +118,16 @@ function toTitleCase(text) {
 }
 
 function buildBreadcrumb(pathname) {
+  const breadcrumbLabelMap = {
+    'active-members': 'Members Location'
+  };
+
   const segments = pathname.split('/').filter(Boolean);
   if (!segments.length) {
     return ['Dashboard'];
   }
 
-  return segments.map((segment) => toTitleCase(segment));
+  return segments.map((segment) => breadcrumbLabelMap[segment] || toTitleCase(segment));
 }
 
 function AdminLayout() {

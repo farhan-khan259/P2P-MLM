@@ -4,9 +4,11 @@ import AdminLayout from './Components/Admin/Common/AdminLayout';
 import AdminBlankPage from './Components/Admin/Common/AdminBlankPage';
 import Dashboard from './Components/Admin/Dashboard/Dashboard';
 import MemberView from './Components/Admin/Members/MemberView/MemberView';
+import MembersLocation from './Components/Admin/Members/MembersLocation/MembersLocation';
 import MemberBlockList from './Components/Admin/Members/MemberBlockList/MemberBlockList';
 import TeamView from './Components/Admin/Tree/TeamView/TeamView';
 import MyDirectReferral from './Components/Admin/Tree/MyDirectReferral/MyDirectReferral';
+import DonationReport from './Components/Admin/NetworkReports/DonationReport/DonationReport';
 import LevelIncome from './Components/Admin/Income/LevelIncome/LevelIncome';
 import TicketHistory from './Components/Admin/SupportTicket/TicketHistory/TicketHistory';
 import SignOut from './Components/Admin/SignOut/SignOut';
@@ -134,14 +136,15 @@ function App() {
 
           <Route path="members/kyc-request" element={<AdminBlankPage />} />
           <Route path="members/all-members" element={<MemberView />} />
-          <Route path="members/active-members" element={<AdminBlankPage />} />
+          <Route path="members/active-members" element={<MembersLocation />} />
           <Route path="members/inactive-members" element={<AdminBlankPage />} />
           <Route path="members/block-members" element={<MemberBlockList />} />
 
           <Route path="network-reports/network-explorer" element={<TeamView />} />
           <Route path="network-reports/downline-list" element={<MyDirectReferral />} />
           <Route path="network-reports/level-income-reports" element={<LevelIncome />} />
-          <Route path="network-reports/upgrade-reports" element={<AdminBlankPage />} />
+          <Route path="network-reports/donation-report" element={<DonationReport />} />
+          <Route path="network-reports/upgrade-reports" element={<Navigate to="/network-reports/donation-report" replace />} />
 
           <Route path="income-reports/level-income-reports" element={<LevelIncome />} />
           <Route path="income-reports/donation-report" element={<AdminBlankPage />} />

@@ -1,65 +1,63 @@
 import { useMemo, useState } from 'react';
-import './MemberView.css';
+import './MembersLocation.css';
 
-const allMembersRows = [
+const membersLocationRows = [
   {
-    srNo: '1', sponsorId: 'MM101010', memberId: 'MM101011', name: 'AMBIKA SALUNKE', mobile: '+91 7020110118',
-    joiningDateTime: '05-02-2026', jLevel: '21', state: 'BIHAR', city: 'PUNE', status: 'ACTIVE', password: '123456', trasPassword: 'ABC@123', wallet: '0.00'
+    srNo: '1', memberId: 'MM101011', name: 'AMBIKA SALUNKE', mobile: '+91 7020456118',
+    dob: '05-02-2026', joinDate: '05-02-2026', adharNo: '7020456118', panNo: 'BHVPS0875T',
+    address: 'PASHAN', state: 'BIHAR', district: 'PUNE', city: 'PUNE', pinCode: '411021',
+    emailId: 'ASDEG@GMAIL.COM', status: 'ACTIVE'
   },
   {
-    srNo: '2', sponsorId: 'MM101011', memberId: 'MM101012', name: 'AMBIKA SALUNKE', mobile: '+91 7020110118',
-    joiningDateTime: '05-02-2026', jLevel: '9', state: 'BIHAR', city: 'PCMC', status: 'ACTIVE', password: '123456', trasPassword: '123456', wallet: '0.00'
+    srNo: '2', memberId: 'MM101012', name: 'RAJKIRAN SALUKE', mobile: '+91 8650114455',
+    dob: '06-02-2026', joinDate: '06-02-2026', adharNo: '8650114455', panNo: 'AOUPS0875K',
+    address: 'SANGAVI', state: 'BIHAR', district: 'PCMC', city: 'PCMC', pinCode: '411027',
+    emailId: 'ASDEG@GMAIL.COM', status: 'ACTIVE'
   },
   {
-    srNo: '3', sponsorId: 'MM101012', memberId: 'MM101013', name: 'AMBIKA SALUNKE', mobile: '+91 7020110118',
-    joiningDateTime: '05-02-2026', jLevel: '2', state: 'BIHAR', city: 'PUNE', status: 'IN-ACTIVE', password: '123456', trasPassword: '123456', wallet: '0.00'
+    srNo: '3', memberId: 'MM101013', name: 'AMIT SHARMA', mobile: '+91 7020178456',
+    dob: '05-02-2026', joinDate: '05-02-2026', adharNo: '7020178456', panNo: 'BHPPS0584T',
+    address: 'SUSGAON', state: 'BIHAR', district: 'PUNE', city: 'PUNE', pinCode: '411045',
+    emailId: 'ASDEG@GMAIL.COM', status: 'IN-ACTIVE'
   },
   {
-    srNo: '4', sponsorId: 'MM101013', memberId: 'MM101014', name: 'AMBIKA SALUNKE', mobile: '+91 7020110118',
-    joiningDateTime: '05-02-2026', jLevel: '1', state: 'BIHAR', city: 'PATANA', status: 'ACTIVE', password: 'ABCDEF', trasPassword: 'ABCDEF', wallet: '0.00'
+    srNo: '4', memberId: 'MM101014', name: 'SADDAM SHAIKH', mobile: '+91 7020145858',
+    dob: '05-02-2026', joinDate: '05-02-2026', adharNo: '7020145858', panNo: 'FHJPS0855T',
+    address: 'MAHANGE', state: 'BIHAR', district: 'PATANA', city: 'PATANA', pinCode: '411025',
+    emailId: 'BGFHF@GMAIL.COM', status: 'ACTIVE'
   },
   {
-    srNo: '5', sponsorId: 'MM101014', memberId: 'MM101015', name: 'AMBIKA SALUNKE', mobile: '+91 7020110118',
-    joiningDateTime: '05-02-2026', jLevel: '1', state: 'BIHAR', city: 'THANE', status: 'IN-ACTIVE', password: '123456', trasPassword: '123456', wallet: '0.00'
+    srNo: '5', memberId: 'MM101015', name: 'THOMAS ANTHONY', mobile: '+91 9270110118',
+    dob: '05-02-2026', joinDate: '05-02-2026', adharNo: '9270110118', panNo: 'GHGPS1275T',
+    address: 'SHIVAE', state: 'BIHAR', district: 'THANE', city: 'THANE', pinCode: '411021',
+    emailId: 'BGFHF@GMAIL.COM', status: 'IN-ACTIVE'
   },
   {
-    srNo: '6', sponsorId: 'MM101015', memberId: 'MM101016', name: 'AMBIKA SALUNKE', mobile: '+91 7020110118',
-    joiningDateTime: '05-02-2026', jLevel: '2', state: 'BIHAR', city: 'NAGAR', status: 'ACTIVE', password: '123456', trasPassword: '123456', wallet: '0.00'
+    srNo: '6', memberId: 'MM101016', name: 'RAZMAN HUSSAIN', mobile: '+91 9450110118',
+    dob: '05-02-2026', joinDate: '05-02-2026', adharNo: '9450110118', panNo: 'AHWKL085T',
+    address: 'WARJE', state: 'BIHAR', district: 'NAGAR', city: 'NAGAR', pinCode: '411021',
+    emailId: '', status: 'ACTIVE'
   },
   {
-    srNo: '7', sponsorId: 'MM101016', memberId: 'MM101017', name: 'AMBIKA SALUNKE', mobile: '+91 7020110118',
-    joiningDateTime: '05-02-2026', jLevel: '1', state: 'BIHAR', city: 'SATARA', status: 'ACTIVE', password: '123456', trasPassword: '123456', wallet: '0.00'
+    srNo: '7', memberId: 'MM101017', name: 'SAMEER MIRZA', mobile: '+91 7020110785',
+    dob: '05-01-2026', joinDate: '05-01-2026', adharNo: '7020110785', panNo: 'DEVPS0889T',
+    address: 'DATTWADI', state: 'BIHAR', district: 'SATARA', city: 'SATARA', pinCode: '411021',
+    emailId: '', status: 'ACTIVE'
   }
 ];
 
-const actionBtnStyle = {
-  border: 0,
-  borderRadius: '4px',
-  minWidth: '62px',
-  height: '24px',
-  fontSize: '11px',
-  cursor: 'pointer',
-  color: '#fff',
-  fontWeight: 700,
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '0 8px'
-};
-
 const exportColumns = [
-  'S.No', 'Sponsor ID', 'Member ID', 'Name', 'Mobile', 'Joining Date & Time',
-  'J.Level', 'State', 'City', 'Status', 'Password', 'TRAS Password', 'Wallet'
+  'S.No', 'Member ID', 'Name', 'Mobile', 'D.O.B', 'Join Date', 'Adhar No', 'Pan No',
+  'Address', 'State', 'District', 'City', 'Pin Code', 'E-mail ID', 'Status'
 ];
 
-function MemberView() {
+function MembersLocation() {
   const [filters, setFilters] = useState({
-    sponsorId: '',
     memberId: '',
     name: '',
     mobile: '',
+    state: '',
     city: '',
-    level: '',
     status: '',
     startDate: '',
     endDate: ''
@@ -68,21 +66,20 @@ function MemberView() {
   const [pageSize, setPageSize] = useState('10');
 
   const filteredRows = useMemo(() => {
-    return allMembersRows.filter((row) => {
+    return membersLocationRows.filter((row) => {
       const filterText = searchText.trim().toLowerCase();
       const inGlobalSearch = !filterText || Object.values(row).some((value) => String(value).toLowerCase().includes(filterText));
 
-      const bySponsor = !filters.sponsorId || row.sponsorId.toLowerCase().includes(filters.sponsorId.toLowerCase());
       const byMember = !filters.memberId || row.memberId.toLowerCase().includes(filters.memberId.toLowerCase());
       const byName = !filters.name || row.name.toLowerCase().includes(filters.name.toLowerCase());
       const byMobile = !filters.mobile || row.mobile.toLowerCase().includes(filters.mobile.toLowerCase());
+      const byState = !filters.state || row.state.toLowerCase().includes(filters.state.toLowerCase());
       const byCity = !filters.city || row.city.toLowerCase().includes(filters.city.toLowerCase());
-      const byLevel = !filters.level || row.jLevel === filters.level;
       const byStatus = !filters.status || row.status === filters.status;
-      const byStartDate = !filters.startDate || row.joiningDateTime >= filters.startDate;
-      const byEndDate = !filters.endDate || row.joiningDateTime <= filters.endDate;
+      const byStartDate = !filters.startDate || row.joinDate >= filters.startDate;
+      const byEndDate = !filters.endDate || row.joinDate <= filters.endDate;
 
-      return inGlobalSearch && bySponsor && byMember && byName && byMobile && byCity && byLevel && byStatus && byStartDate && byEndDate;
+      return inGlobalSearch && byMember && byName && byMobile && byState && byCity && byStatus && byStartDate && byEndDate;
     });
   }, [filters, searchText]);
 
@@ -94,18 +91,20 @@ function MemberView() {
 
   const formatRowsForExport = (rows) => rows.map((row) => ([
     row.srNo,
-    row.sponsorId,
     row.memberId,
     row.name,
     row.mobile,
-    row.joiningDateTime,
-    row.jLevel,
+    row.dob,
+    row.joinDate,
+    row.adharNo,
+    row.panNo,
+    row.address,
     row.state,
+    row.district,
     row.city,
-    row.status,
-    row.password,
-    row.trasPassword,
-    row.wallet
+    row.pinCode,
+    row.emailId,
+    row.status
   ]));
 
   const handleExportExcel = () => {
@@ -117,7 +116,7 @@ function MemberView() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', 'all-members-list.csv');
+    link.setAttribute('download', 'members-location-list.csv');
     link.click();
     URL.revokeObjectURL(url);
   };
@@ -135,7 +134,7 @@ function MemberView() {
     printWindow.document.write(`
       <html>
         <head>
-          <title>All Members List</title>
+          <title>Members Location</title>
           <style>
             body { font-family: Arial, sans-serif; padding: 16px; }
             h2 { margin: 0 0 12px 0; }
@@ -145,7 +144,7 @@ function MemberView() {
           </style>
         </head>
         <body>
-          <h2>All Members List</h2>
+          <h2>Members Location</h2>
           <table>
             <thead>
               <tr>${exportColumns.map((column) => `<th>${column}</th>`).join('')}</tr>
@@ -162,22 +161,15 @@ function MemberView() {
 
   return (
     <div>
-      <h1 className="page-title" style={{ fontSize: '42px', marginBottom: '14px' }}>All Members List</h1>
+      <h1 className="page-title" style={{ fontSize: '42px', marginBottom: '14px' }}>All Members Location</h1>
 
       <div className="panel" style={{ borderRadius: '28px', padding: '24px' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>
-          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="SPONSOR ID" value={filters.sponsorId} onChange={handleFilterChange('sponsorId')} />
           <input className="text-input" style={{ maxWidth: '120px' }} placeholder="MEMBER ID" value={filters.memberId} onChange={handleFilterChange('memberId')} />
           <input className="text-input" style={{ maxWidth: '140px' }} placeholder="NAME" value={filters.name} onChange={handleFilterChange('name')} />
           <input className="text-input" style={{ maxWidth: '130px' }} placeholder="MOBILE" value={filters.mobile} onChange={handleFilterChange('mobile')} />
+          <input className="text-input" style={{ maxWidth: '110px' }} placeholder="STATE" value={filters.state} onChange={handleFilterChange('state')} />
           <input className="text-input" style={{ maxWidth: '90px' }} placeholder="CITY" value={filters.city} onChange={handleFilterChange('city')} />
-          <select className="select-input" style={{ maxWidth: '90px' }} value={filters.level} onChange={handleFilterChange('level')}>
-            <option value="">LEVEL</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="9">9</option>
-            <option value="21">21</option>
-          </select>
           <select className="select-input" style={{ maxWidth: '98px' }} value={filters.status} onChange={handleFilterChange('status')}>
             <option value="">STATUS</option>
             <option value="ACTIVE">ACTIVE</option>
@@ -190,7 +182,7 @@ function MemberView() {
             <option value="25">25</option>
             <option value="50">50</option>
           </select>
-          <button className="btn-primary" type="button">Search</button>
+          <button className="btn-primary" type="button" onClick={() => setSearchText((prev) => prev)}>Search</button>
         </div>
 
         <div className="btn-row" style={{ justifyContent: 'flex-end', marginBottom: '14px' }}>
@@ -199,54 +191,44 @@ function MemberView() {
         </div>
 
         <div className="table-wrap">
-          <table className="data-table" style={{ minWidth: '1420px' }}>
+          <table className="data-table" style={{ minWidth: '1700px' }}>
             <thead>
               <tr>
-                <th>S.no</th>
-                <th>SPONSOR ID</th>
+                <th>S.NO</th>
                 <th>MEMBER ID</th>
                 <th>NAME</th>
                 <th>MOBILE</th>
-                <th>JOINING DATE &amp; TIME</th>
-                <th>J.LEVEL</th>
+                <th>D.O.B</th>
+                <th>JOIN DATE</th>
+                <th>ADHAR NO</th>
+                <th>PAN NO</th>
+                <th>ADDRESS</th>
                 <th>STATE</th>
+                <th>DISTRICT</th>
                 <th>CITY</th>
+                <th>PIN CODE</th>
+                <th>E-MAIL ID</th>
                 <th>STATUS</th>
-                <th>PASSWORD</th>
-                <th>TRAS PASSWORD</th>
-                <th>WALLET</th>
-                <th>ACTION</th>
-                <th>LOGIN</th>
               </tr>
             </thead>
             <tbody>
               {visibleRows.map((row) => (
                 <tr key={row.srNo}>
                   <td>{row.srNo}</td>
-                  <td>{row.sponsorId}</td>
                   <td>{row.memberId}</td>
                   <td>{row.name}</td>
                   <td>{row.mobile}</td>
-                  <td>{row.joiningDateTime}</td>
-                  <td>{row.jLevel}</td>
+                  <td>{row.dob}</td>
+                  <td>{row.joinDate}</td>
+                  <td>{row.adharNo}</td>
+                  <td>{row.panNo}</td>
+                  <td>{row.address}</td>
                   <td>{row.state}</td>
+                  <td>{row.district}</td>
                   <td>{row.city}</td>
+                  <td>{row.pinCode}</td>
+                  <td>{row.emailId}</td>
                   <td>{row.status}</td>
-                  <td>{row.password}</td>
-                  <td>{row.trasPassword}</td>
-                  <td>{row.wallet}</td>
-                  <td>
-                    <div style={{ display: 'flex', gap: '4px' }}>
-                      <button type="button" style={{ ...actionBtnStyle, backgroundColor: '#5fc9de' }} title="Edit Profile">Edit</button>
-                      <button type="button" style={{ ...actionBtnStyle, backgroundColor: '#4fc79f' }} title="Active/Inactive">Status</button>
-                      <button type="button" style={{ ...actionBtnStyle, backgroundColor: '#49b9d8' }} title="Credit/Debit Wallet">Wallet</button>
-                    </div>
-                  </td>
-                  <td>
-                    <button className="btn-primary" type="button" style={{ padding: '5px 12px', fontSize: '11px' }}>
-                      Login
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>
@@ -268,10 +250,9 @@ function MemberView() {
             <button className="page-btn">&gt;&gt;</button>
           </div>
         </div>
-
       </div>
     </div>
   );
 }
 
-export default MemberView;
+export default MembersLocation;
