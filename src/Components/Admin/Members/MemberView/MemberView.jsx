@@ -64,7 +64,7 @@ function MemberView() {
     startDate: '',
     endDate: ''
   });
-  const [searchText, setSearchText] = useState('');
+  const [searchText] = useState('');
   const [pageSize, setPageSize] = useState('10');
 
   const filteredRows = useMemo(() => {
