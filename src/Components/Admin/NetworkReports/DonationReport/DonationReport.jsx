@@ -262,16 +262,6 @@ function DonationReport() {
           </div>
         </div>
 
-        <div className="donation-rank-wrap">
-          <div className="donation-rank-card">
-            <p className="donation-rank-title">Rank</p>
-            <ol className="donation-rank-list">
-              {Object.entries(rankLabels).map(([rankKey, label]) => (
-                <li key={rankKey}>{`${rankKey}. ${label}`}</li>
-              ))}
-            </ol>
-          </div>
-        </div>
       </div>
     </div>
   );

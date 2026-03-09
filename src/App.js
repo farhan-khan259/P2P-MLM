@@ -6,6 +6,7 @@ import Dashboard from './Components/Admin/Dashboard/Dashboard';
 import MemberView from './Components/Admin/Members/MemberView/MemberView';
 import MembersLocation from './Components/Admin/Members/MembersLocation/MembersLocation';
 import MemberBlockList from './Components/Admin/Members/MemberBlockList/MemberBlockList';
+import KYCRequest from './Components/Admin/Members/KYCRequest/KYCRequest';
 import TeamView from './Components/Admin/Tree/TeamView/TeamView';
 import MyDirectReferral from './Components/Admin/Tree/MyDirectReferral/MyDirectReferral';
 import DonationReport from './Components/Admin/NetworkReports/DonationReport/DonationReport';
@@ -134,7 +135,7 @@ function App() {
           <Route path="epin/delete-epin" element={<DeleteEPin />} />
           <Route path="epin/transfer-history" element={<TransferHistory />} />
 
-          <Route path="members/kyc-request" element={<AdminBlankPage />} />
+          <Route path="members/kyc-request" element={<KYCRequest />} />
           <Route path="members/all-members" element={<MemberView />} />
           <Route path="members/active-members" element={<MembersLocation />} />
           <Route path="members/inactive-members" element={<AdminBlankPage />} />
@@ -143,11 +144,11 @@ function App() {
           <Route path="network-reports/network-explorer" element={<TeamView />} />
           <Route path="network-reports/downline-list" element={<MyDirectReferral />} />
           <Route path="network-reports/level-income-reports" element={<LevelIncome />} />
-          <Route path="network-reports/donation-report" element={<DonationReport />} />
-          <Route path="network-reports/upgrade-reports" element={<Navigate to="/network-reports/donation-report" replace />} />
+          <Route path="network-reports/donation-report" element={<Navigate to="/income-reports/donation-report" replace />} />
+          <Route path="network-reports/upgrade-reports" element={<Navigate to="/income-reports/donation-report" replace />} />
 
           <Route path="income-reports/level-income-reports" element={<LevelIncome />} />
-          <Route path="income-reports/donation-report" element={<AdminBlankPage />} />
+          <Route path="income-reports/donation-report" element={<DonationReport />} />
 
           <Route path="products-package/add-products" element={<AdminBlankPage />} />
           <Route path="products-package/modify-product" element={<AdminBlankPage />} />
