@@ -7,7 +7,6 @@ import MembersLocation from './Components/Admin/Members/MembersLocation/MembersL
 import MemberBlockList from './Components/Admin/Members/MemberBlockList/MemberBlockList';
 import KYCRequest from './Components/Admin/Members/KYCRequest/KYCRequest';
 import AllMemberPerformance from './Components/Admin/Members/AllMemberPerformance/AllMemberPerformance';
-import TeamView from './Components/Admin/Tree/TeamView/TeamView';
 import MyDirectReferral from './Components/Admin/Tree/MyDirectReferral/MyDirectReferral';
 import DonationReport from './Components/Admin/NetworkReports/DonationReport/DonationReport';
 import NetworkExplorer from './Components/Admin/NetworkReports/NetworkExplorer/NetworkExplorer';
