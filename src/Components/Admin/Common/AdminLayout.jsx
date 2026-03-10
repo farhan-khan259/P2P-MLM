@@ -22,7 +22,7 @@ const menuItems = [
     label: 'Members',
     children: [
       { label: 'KYC Request', to: '/members/kyc-request' },
-      { label: 'All Members', to: '/members/all-members' },
+      { label: 'All-Member-Performance', to: '/members/all-member-performance' },
       { label: 'Members Location', to: '/members/active-members' },
       { label: 'Inactive Members', to: '/members/inactive-members' },
       { label: 'Block Members', to: '/members/block-members' }

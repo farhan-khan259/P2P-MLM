@@ -1,84 +1,193 @@
 import './LevelIncome.css';
-import { paymentRows } from '../../Common/mockData';
+
+const levelIncomeRows = [
+  {
+    sNo: 1,
+    incomeDate: '05-02-2026',
+    memberId: 'MM101010',
+    memberName: 'AMBIKA SALUNKE',
+    unlockLevel: 1,
+    fromMemberId: 'MM101011',
+    fromMemberName: 'SONALI SHIRKE',
+    levelNo: 1,
+    amount: 20,
+    tdsPercent: '5%',
+    tdsAmount: 1,
+    netAmount: 19
+  },
+  {
+    sNo: 2,
+    incomeDate: '06-02-2026',
+    memberId: 'MM101011',
+    memberName: 'RAJKIRAN SALUKE',
+    unlockLevel: 9,
+    fromMemberId: 'MM101012',
+    fromMemberName: 'AMBIKA SALUNKE',
+    levelNo: 9,
+    amount: 20,
+    tdsPercent: '5%',
+    tdsAmount: 1,
+    netAmount: 19
+  },
+  {
+    sNo: 3,
+    incomeDate: '05-02-2026',
+    memberId: 'MM101012',
+    memberName: 'AMIT SHARMA',
+    unlockLevel: 2,
+    fromMemberId: 'MM101013',
+    fromMemberName: 'RAJKIRAN SALUKE',
+    levelNo: 2,
+    amount: 20,
+    tdsPercent: '5%',
+    tdsAmount: 1,
+    netAmount: 19
+  },
+  {
+    sNo: 4,
+    incomeDate: '05-02-2026',
+    memberId: 'MM101013',
+    memberName: 'SADDAM SHAIKH',
+    unlockLevel: 1,
+    fromMemberId: 'MM101014',
+    fromMemberName: 'AMIT SHARMA',
+    levelNo: 1,
+    amount: 20,
+    tdsPercent: '5%',
+    tdsAmount: 1,
+    netAmount: 19
+  },
+  {
+    sNo: 5,
+    incomeDate: '05-02-2026',
+    memberId: 'MM101014',
+    memberName: 'THOMAS ANTHONY',
+    unlockLevel: 1,
+    fromMemberId: 'MM101015',
+    fromMemberName: 'SADDAM SHAIKH',
+    levelNo: 1,
+    amount: 20,
+    tdsPercent: '5%',
+    tdsAmount: 1,
+    netAmount: 19
+  },
+  {
+    sNo: 6,
+    incomeDate: '05-02-2026',
+    memberId: 'MM101015',
+    memberName: 'RAZMAN HUSSAIN',
+    unlockLevel: 2,
+    fromMemberId: 'MM101016',
+    fromMemberName: 'THOMAS ANTHONY',
+    levelNo: 1,
+    amount: 20,
+    tdsPercent: '5%',
+    tdsAmount: 1,
+    netAmount: 19
+  },
+  {
+    sNo: 7,
+    incomeDate: '05-01-2026',
+    memberId: 'MM101016',
+    memberName: 'SAMEER MIRZA',
+    unlockLevel: 1,
+    fromMemberId: 'MM101017',
+    fromMemberName: 'RAZMAN HUSSAIN',
+    levelNo: 1,
+    amount: 20,
+    tdsPercent: '5%',
+    tdsAmount: 1,
+    netAmount: 19
+  }
+];
+
+const totalAmount = levelIncomeRows.reduce((sum, row) => sum + row.amount, 0);
+const totalNetAmount = levelIncomeRows.reduce((sum, row) => sum + row.netAmount, 0);
 
 function LevelIncome() {
   return (
     <div>
-      <h1 className="page-title">Level Income</h1>
+      <h1 className="page-title" style={{ fontSize: '42px', marginBottom: '14px' }}>Level Income Reports</h1>
 
-      <div className="panel">
-        <div className="form-grid">
-          <label className="field-label">From Date</label>
-          <input className="text-input" placeholder="DD-MM-YYYY" />
+      <div className="panel" style={{ borderRadius: '28px', padding: '24px' }}>
+        <h2 className="section-title" style={{ fontSize: '34px', marginBottom: '14px' }}>LEVEL INCOME REPORT</h2>
 
-          <label className="field-label">To Date</label>
-          <input className="text-input" placeholder="DD-MM-YYYY" />
-        </div>
-
-        <div className="btn-row">
-          <button className="btn-primary">Show Details</button>
-        </div>
-        <div className="btn-row">
-          <button className="btn-outline">Excel</button>
-        </div>
-
-        <div className="table-tools">
-          <div />
-          <label className="search-box">
-            Search:
-            <input className="text-input" />
-          </label>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>
+          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="INCOME DATE" />
+          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="MEMBER ID" />
+          <input className="text-input" style={{ maxWidth: '140px' }} placeholder="MEMBER NAME" />
+          <input className="text-input" style={{ maxWidth: '110px' }} placeholder="UNLOCK LEVEL" />
+          <input className="text-input" style={{ maxWidth: '130px' }} placeholder="FROM MEMBER ID" />
+          <input className="text-input" style={{ maxWidth: '150px' }} placeholder="FROM MEMBER NAME" />
+          <input className="text-input" style={{ maxWidth: '90px' }} placeholder="LEVEL NO" />
+          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="START DATE" />
+          <input className="text-input" style={{ maxWidth: '110px' }} placeholder="END DATE" />
+          <select className="select-input" style={{ maxWidth: '84px' }} defaultValue="10">
+            <option value="10">10</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          <button className="btn-primary" type="button">Search</button>
         </div>
 
         <div className="table-wrap">
-          <table className="data-table">
+          <table className="data-table" style={{ minWidth: '1260px' }}>
             <thead>
               <tr>
-                <th>Sr. No.</th>
-                <th>Member ID</th>
-                <th>Member Name</th>
-                <th>Pay ID</th>
-                <th>Pay Name</th>
-                <th>Amount</th>
-                <th>Payment Proof</th>
-                <th>Status</th>
-                <th>Request Date</th>
-                <th>Approve Date</th>
-                <th>Level</th>
+                <th>S.NO</th>
+                <th>INCOME DATE</th>
+                <th>MEMBER ID</th>
+                <th>MEMBER NAME</th>
+                <th>UNLOCK LEVEL</th>
+                <th>FROM MEMBER ID</th>
+                <th>FROM MEMBER NAME</th>
+                <th>LEVEL NO</th>
+                <th>AMOUNT</th>
+                <th>TDS%</th>
+                <th>TDS AMOUNT</th>
+                <th>NET AMOUNT</th>
               </tr>
             </thead>
             <tbody>
-              {paymentRows.map((row) => (
-                <tr key={row[0]}>
-                  <td>{row[0]}</td>
-                  <td>{row[1]}</td>
-                  <td>{row[2]}</td>
-                  <td>{row[3]}</td>
-                  <td>{row[4]}</td>
-                  <td>{row[5]}</td>
-                  <td>{row[6]}</td>
-                  <td>{row[12]}</td>
-                  <td>{row[10]}</td>
-                  <td>{row[11]}</td>
-                  <td>{row[13]}</td>
+              {levelIncomeRows.map((row) => (
+                <tr key={row.sNo}>
+                  <td>{row.sNo}</td>
+                  <td>{row.incomeDate}</td>
+                  <td>{row.memberId}</td>
+                  <td>{row.memberName}</td>
+                  <td>{row.unlockLevel}</td>
+                  <td>{row.fromMemberId}</td>
+                  <td>{row.fromMemberName}</td>
+                  <td>{row.levelNo}</td>
+                  <td>{row.amount}</td>
+                  <td>{row.tdsPercent}</td>
+                  <td>{row.tdsAmount}</td>
+                  <td>{row.netAmount}</td>
                 </tr>
               ))}
+              <tr>
+                <td colSpan="8" style={{ fontWeight: 700, textAlign: 'right' }}>TOTAL AMOUNT</td>
+                <td>{totalAmount}</td>
+                <td colSpan="2" style={{ fontWeight: 700, textAlign: 'right' }}>TOTAL NET AMOUNT</td>
+                <td>{totalNetAmount}</td>
+              </tr>
             </tbody>
           </table>
         </div>
 
-        <div className="table-footer">
-          <span>Showing 1 to 10 of 4,015 entries</span>
+        <div className="table-footer" style={{ justifyContent: 'center', marginTop: '12px' }}>
           <div className="pagination">
-            <button className="page-btn">Previous</button>
+            <button className="page-btn">&laquo;</button>
+            <button className="page-btn">&lsaquo;</button>
             <button className="page-btn active">1</button>
             <button className="page-btn">2</button>
             <button className="page-btn">3</button>
             <button className="page-btn">4</button>
             <button className="page-btn">5</button>
-            <button className="page-btn">...</button>
-            <button className="page-btn">402</button>
-            <button className="page-btn">Next</button>
+            <button className="page-btn">6</button>
+            <button className="page-btn">7</button>
+            <button className="page-btn">&rsaquo;</button>
+            <button className="page-btn">&raquo;</button>
           </div>
         </div>
       </div>

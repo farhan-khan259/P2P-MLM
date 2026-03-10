@@ -3,13 +3,14 @@ import './App.css';
 import AdminLayout from './Components/Admin/Common/AdminLayout';
 import AdminBlankPage from './Components/Admin/Common/AdminBlankPage';
 import Dashboard from './Components/Admin/Dashboard/Dashboard';
-import MemberView from './Components/Admin/Members/MemberView/MemberView';
 import MembersLocation from './Components/Admin/Members/MembersLocation/MembersLocation';
 import MemberBlockList from './Components/Admin/Members/MemberBlockList/MemberBlockList';
 import KYCRequest from './Components/Admin/Members/KYCRequest/KYCRequest';
+import AllMemberPerformance from './Components/Admin/Members/AllMemberPerformance/AllMemberPerformance';
 import TeamView from './Components/Admin/Tree/TeamView/TeamView';
 import MyDirectReferral from './Components/Admin/Tree/MyDirectReferral/MyDirectReferral';
 import DonationReport from './Components/Admin/NetworkReports/DonationReport/DonationReport';
+import NetworkExplorer from './Components/Admin/NetworkReports/NetworkExplorer/NetworkExplorer';
 import LevelIncome from './Components/Admin/Income/LevelIncome/LevelIncome';
 import TicketHistory from './Components/Admin/SupportTicket/TicketHistory/TicketHistory';
 import SignOut from './Components/Admin/SignOut/SignOut';
@@ -29,6 +30,7 @@ import MyProfile from './Components/UserPanel/Profile/MyProfile/MyProfile';
 import UpdateProfile from './Components/UserPanel/Profile/UpdateProfile/UpdateProfile';
 import UpdateBankDetails from './Components/UserPanel/Profile/UpdateBankDetails/UpdateBankDetails';
 import ChangePassword from './Components/UserPanel/Profile/ChangePassword/ChangePassword';
+import UserKYCRequest from './Components/UserPanel/Profile/KYCRequest/KYCRequest';
 import DirectList from './Components/UserPanel/Team/DirectList/DirectList';
 import UserMyTree from './Components/UserPanel/Team/MyTree/MyTree';
 import MyTeam from './Components/UserPanel/Team/MyTeam/MyTeam';
@@ -77,7 +79,7 @@ function App() {
           <Route path="plan-chart-letters/business-card" element={<UserBlankPage />} />
           <Route path="plan-chart-letters/bank-information" element={<UserBlankPage />} />
 
-          <Route path="kyc-approved" element={<UserBlankPage />} />
+          <Route path="kyc-request" element={<UserKYCRequest />} />
 
           <Route path="my-network/my-direct-network" element={<DirectList />} />
           <Route path="my-network/network-explorer" element={<UserMyTree />} />
@@ -136,12 +138,13 @@ function App() {
           <Route path="epin/transfer-history" element={<TransferHistory />} />
 
           <Route path="members/kyc-request" element={<KYCRequest />} />
-          <Route path="members/all-members" element={<MemberView />} />
+          <Route path="members/all-members" element={<AllMemberPerformance />} />
+          <Route path="members/all-member-performance" element={<AllMemberPerformance />} />
           <Route path="members/active-members" element={<MembersLocation />} />
           <Route path="members/inactive-members" element={<AdminBlankPage />} />
           <Route path="members/block-members" element={<MemberBlockList />} />
 
-          <Route path="network-reports/network-explorer" element={<TeamView />} />
+          <Route path="network-reports/network-explorer" element={<NetworkExplorer />} />
           <Route path="network-reports/downline-list" element={<MyDirectReferral />} />
           <Route path="network-reports/level-income-reports" element={<LevelIncome />} />
           <Route path="network-reports/donation-report" element={<Navigate to="/income-reports/donation-report" replace />} />

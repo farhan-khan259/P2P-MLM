@@ -23,7 +23,7 @@ const menuItems = [
       { label: 'Bank Information', to: '/user/plan-chart-letters/bank-information' }
     ]
   },
-  { key: 'kycApproved', label: 'KYC Approved', to: '/user/kyc-approved' },
+  { key: 'kycRequest', label: 'KYC Request', to: '/user/kyc-request' },
   {
     key: 'myNetwork',
     label: 'My Network',
