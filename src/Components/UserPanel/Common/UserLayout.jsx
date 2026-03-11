@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import './UserLayout.css';
 
 const menuItems = [
+  { key: 'dashboard', label: 'Dashboard', to: '/user/dashboard' },
   {
     key: 'myProfile',
     label: 'My Profile',
@@ -13,17 +14,6 @@ const menuItems = [
       { label: 'Update Trans. Password', to: '/user/my-profile/update-trans-password' }
     ]
   },
-  {
-    key: 'planChartLetters',
-    label: 'Plan Chart & Letters',
-    children: [
-      { label: 'Business Plan Chart', to: '/user/plan-chart-letters/business-plan-chart' },
-      { label: 'Welcome Letter', to: '/user/plan-chart-letters/welcome-letter' },
-      { label: 'Business Card', to: '/user/plan-chart-letters/business-card' },
-      { label: 'Bank Information', to: '/user/plan-chart-letters/bank-information' }
-    ]
-  },
-  { key: 'kycRequest', label: 'KYC Request', to: '/user/kyc-request' },
   {
     key: 'myNetwork',
     label: 'My Network',
@@ -51,7 +41,7 @@ const menuItems = [
   },
   {
     key: 'product',
-    label: 'Product',
+    label: 'Products',
     children: [
       { label: 'Product List', to: '/user/product/product-list' },
       { label: 'Product Order', to: '/user/product/product-order' },
@@ -72,6 +62,16 @@ const menuItems = [
     ]
   },
   {
+    key: 'planChartLetters',
+    label: 'Plan Chart & Letters',
+    children: [
+      { label: 'Business Plan Chart', to: '/user/plan-chart-letters/business-plan-chart' },
+      { label: 'Welcome Letter', to: '/user/plan-chart-letters/welcome-letter' },
+      { label: 'Business Card', to: '/user/plan-chart-letters/business-card' },
+      { label: 'Bank Information', to: '/user/plan-chart-letters/bank-information' }
+    ]
+  },
+  {
     key: 'transactions',
     label: 'Transactions',
     children: [
@@ -79,6 +79,7 @@ const menuItems = [
       { label: 'Transaction History', to: '/user/transactions/transaction-history' }
     ]
   },
+  { key: 'kycRequest', label: 'KYC Request', to: '/user/kyc-request' },
   { key: 'ticketSupport', label: 'Ticket Support', to: '/user/ticket-support' },
   { key: 'newsEvents', label: 'News & Events', to: '/user/news-events' },
   { key: 'logout', label: 'Log Out', to: '/user/log-out' }
@@ -102,8 +103,10 @@ function buildBreadcrumb(pathname) {
 }
 
 function UserLayout() {
+  const navigate = useNavigate();
   const location = useLocation();
   const breadcrumb = useMemo(() => buildBreadcrumb(location.pathname), [location.pathname]);
+  const showBackButton = location.pathname !== '/user/dashboard';
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [openSections, setOpenSections] = useState({
     myProfile: true,
@@ -131,11 +134,21 @@ function UserLayout() {
       <aside className="user-sidebar">
         <div className="user-brand">IHH</div>
         <div className="user-member-card">
-          <div className="user-member-avatar">👤</div>
-          <div>
-            <div className="member-label">Member ID</div>
-            <div className="member-value">IHH192108</div>
+          <div className="user-member-meta">
+            <div className="user-member-avatar">👤</div>
+            <div>
+              <div className="member-label">Member ID</div>
+              <div className="member-value">IHH192108</div>
+            </div>
           </div>
+          <button
+            type="button"
+            className="user-sidebar-toggle"
+            onClick={() => setIsSidebarOpen(false)}
+            aria-label="Close sidebar"
+          >
+            ✕
+          </button>
         </div>
         <div className="user-nav-title">MAIN NAVIGATION</div>
 
@@ -188,15 +201,27 @@ function UserLayout() {
 
       <main className="user-main">
         <header className="user-topbar">
-          <div className="user-topbar-left">
-          <button
-            type="button"
-            className="user-menu-btn"
-            onClick={() => setIsSidebarOpen((prev) => !prev)}
-            aria-label={isSidebarOpen ? 'Collapse sidebar' : 'Open sidebar'}
-          >
-            {isSidebarOpen ? '✕' : '☰'}
-          </button>
+          <div className={`user-topbar-left ${showBackButton ? 'has-back' : ''}`}>
+          {showBackButton && (
+            <button
+              type="button"
+              className="user-back-btn"
+              onClick={() => navigate(-1)}
+              aria-label="Go back"
+            >
+              ←
+            </button>
+          )}
+          {!isSidebarOpen && (
+            <button
+              type="button"
+              className="user-menu-btn"
+              onClick={() => setIsSidebarOpen(true)}
+              aria-label="Open sidebar"
+            >
+              ☰
+            </button>
+          )}
             <span className="user-top-title">Dashboard</span>
           </div>
           <div className="user-top-avatar">👤</div>

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import './AdminLayout.css';
 
 const menuItems = [
@@ -130,8 +130,10 @@ function buildBreadcrumb(pathname) {
 }
 
 function AdminLayout() {
+  const navigate = useNavigate();
   const location = useLocation();
   const breadcrumb = useMemo(() => buildBreadcrumb(location.pathname), [location.pathname]);
+  const showBackButton = location.pathname !== '/dashboard';
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const [openSections, setOpenSections] = useState({
@@ -168,8 +170,18 @@ function AdminLayout() {
       <aside className="sidebar">
         <div className="sidebar-brand">IHH</div>
         <div className="sidebar-user">
-          <div className="sidebar-avatar">👤</div>
-          <span>Administrator</span>
+          <div className="sidebar-user-meta">
+            <div className="sidebar-avatar">👤</div>
+            <span>Administrator</span>
+          </div>
+          <button
+            type="button"
+            className="sidebar-toggle-btn"
+            aria-label="Close sidebar"
+            onClick={() => setIsSidebarOpen(false)}
+          >
+            ✕
+          </button>
         </div>
         <div className="sidebar-section-title">MAIN NAVIGATION</div>
 
@@ -223,14 +235,28 @@ function AdminLayout() {
 
       <main className="admin-main">
         <header className="topbar">
-          <button
-            type="button"
-            className="topbar-menu"
-            aria-label={isSidebarOpen ? 'Collapse sidebar' : 'Open sidebar'}
-            onClick={toggleSidebar}
-          >
-            {isSidebarOpen ? '✕' : '☰'}
-          </button>
+          <div className={`topbar-left ${showBackButton ? 'has-back' : ''}`}>
+            {showBackButton && (
+              <button
+                type="button"
+                className="topbar-back"
+                aria-label="Go back"
+                onClick={() => navigate(-1)}
+              >
+                ←
+              </button>
+            )}
+            {!isSidebarOpen && (
+              <button
+                type="button"
+                className="topbar-menu"
+                aria-label="Open sidebar"
+                onClick={toggleSidebar}
+              >
+                ☰
+              </button>
+            )}
+          </div>
           <div className="topbar-avatar">👨‍💼</div>
         </header>
 

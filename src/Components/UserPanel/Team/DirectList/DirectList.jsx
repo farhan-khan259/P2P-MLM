@@ -7,18 +7,17 @@ function DirectList() {
     <div>
       <h1 className="user-page-title">My Direct</h1>
       <div className="user-panel">
-        <h3>My Active Direct 1</h3>
-        <h3>My In-Active Direct 1</h3>
-        <h3>My Total Direct 2</h3>
         <div className="table-toolbar"><button className="user-btn-outline">Excel</button></div>
         <table className="user-table">
           <thead>
             <tr>
               <th>SR. NO.</th>
-              <th>MEMBERID</th>
+              <th>MEMBER ID</th>
               <th>MEMBER NAME</th>
-              <th>JOINING DATE</th>
-              <th>STATUS</th>
+              <th>CITY</th>
+              <th>DIRECTS</th>
+              <th>TOTAL TEAM</th>
+              <th>TOTAL INCOME</th>
             </tr>
           </thead>
           <tbody>
@@ -27,8 +26,10 @@ function DirectList() {
                 <td>{index + 1}</td>
                 <td>{item.memberId}</td>
                 <td>{item.memberName}</td>
-                <td>{item.joiningDate}</td>
-                <td>{item.status}</td>
+                <td>{item.city || '-'}</td>
+                <td>{item.directs ?? 0}</td>
+                <td>{item.totalTeam ?? 0}</td>
+                <td>{item.totalIncome ?? 0}</td>
               </tr>
             ))}
           </tbody>

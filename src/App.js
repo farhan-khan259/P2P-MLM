@@ -36,6 +36,7 @@ import MyTeam from './Components/UserPanel/Team/MyTeam/MyTeam';
 import SelfPaymentHistory from './Components/UserPanel/Payment/SelfPaymentHistory/SelfPaymentHistory';
 import PaymentRequestHistory from './Components/UserPanel/Payment/PaymentRequestHistory/PaymentRequestHistory';
 import UserLevelIncome from './Components/UserPanel/Income/LevelIncome/LevelIncome';
+import DonationsIncome from './Components/UserPanel/Income/DonationsIncome/DonationsIncome';
 import CreateTicket from './Components/UserPanel/SupportTicket/CreateTicket/CreateTicket';
 import UserSignOut from './Components/UserPanel/SignOut/UserSignOut';
 import PublicLayout from './Components/Public/Common/PublicLayout';
@@ -85,7 +86,7 @@ function App() {
           <Route path="my-network/downline-list" element={<MyTeam />} />
 
           <Route path="income-report/level-income" element={<UserLevelIncome />} />
-          <Route path="income-report/donations-income" element={<UserBlankPage />} />
+          <Route path="income-report/donations-income" element={<DonationsIncome />} />
 
           <Route path="donations/given-help" element={<SelfPaymentHistory />} />
           <Route path="donations/recieved-help" element={<PaymentRequestHistory />} />

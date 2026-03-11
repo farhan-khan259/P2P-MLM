@@ -23,15 +23,106 @@ export const profileData = {
 };
 
 export const directList = [
-  { memberId: 'IHH5977055', memberName: 'sukhdev rawat', joiningDate: '23-06-2021', status: 'ACTIVE' },
-  { memberId: 'IHH1676126', memberName: 'BHUWIN SINGH', joiningDate: '27-07-2021', status: 'INACTIVE' }
+  {
+    memberId: 'IHH5977055',
+    memberName: 'sukhdev rawat',
+    city: 'Dehradun',
+    directs: 1,
+    totalTeam: 3,
+    totalIncome: 1250,
+    joiningDate: '23-06-2021',
+    status: 'ACTIVE'
+  },
+  {
+    memberId: 'IHH1676126',
+    memberName: 'BHUWIN SINGH',
+    city: 'Haridwar',
+    directs: 1,
+    totalTeam: 2,
+    totalIncome: 980,
+    joiningDate: '27-07-2021',
+    status: 'INACTIVE'
+  }
 ];
 
 export const teamList = [
-  { memberId: 'IHH5977055', name: 'sukhdev rawat', sponsorId: 'IHH192108', joinDate: '23-06-2021', status: 'ACTIVE' },
-  { memberId: 'IHH4500814', name: 'Sukhdev singh rawat', sponsorId: 'IHH5977055', joinDate: '23-06-2021', status: 'ACTIVE' },
-  { memberId: 'IHH4016369', name: 'rahul rauthan', sponsorId: 'IHH4500814', joinDate: '23-06-2021', status: 'ACTIVE' },
-  { memberId: 'IHH2724795', name: 'shusma gusain', sponsorId: 'IHH4016369', joinDate: '23-06-2021', status: 'ACTIVE' }
+  {
+    memberId: 'MM101011',
+    name: 'AMBIKA SALUNKE',
+    sponsorId: 'IHH192108',
+    joinDate: '05-02-2026',
+    status: 'ACTIVE',
+    level: 21,
+    unlockLevel: 2,
+    city: 'PUNE',
+    rankNo: 21
+  },
+  {
+    memberId: 'MM101012',
+    name: 'RAJKIRAN SALUKE',
+    sponsorId: 'MM101011',
+    joinDate: '06-02-2026',
+    status: 'ACTIVE',
+    level: 9,
+    unlockLevel: 9,
+    city: 'PCMC',
+    rankNo: 9
+  },
+  {
+    memberId: 'MM101013',
+    name: 'AMIT SHARMA',
+    sponsorId: 'MM101012',
+    joinDate: '05-02-2026',
+    status: 'ACTIVE',
+    level: 2,
+    unlockLevel: 2,
+    city: 'PUNE',
+    rankNo: 2
+  },
+  {
+    memberId: 'MM101014',
+    name: 'SADDAM SHAIKH',
+    sponsorId: 'MM101013',
+    joinDate: '05-02-2026',
+    status: 'ACTIVE',
+    level: 1,
+    unlockLevel: 1,
+    city: 'PATANA',
+    rankNo: 1
+  },
+  {
+    memberId: 'MM101015',
+    name: 'THOMAS ANTHONY',
+    sponsorId: 'MM101014',
+    joinDate: '05-02-2026',
+    status: 'ACTIVE',
+    level: 1,
+    unlockLevel: 1,
+    city: 'THANE',
+    rankNo: 1
+  },
+  {
+    memberId: 'MM101016',
+    name: 'RAZMAN HUSSAIN',
+    sponsorId: 'MM101015',
+    joinDate: '05-02-2026',
+    status: 'ACTIVE',
+    level: 2,
+    unlockLevel: 2,
+    city: 'NAGAR',
+    rankNo: 2
+  },
+  {
+    memberId: 'MM101017',
+    name: 'SAMEER MIRZA',
+    sponsorId: 'MM101016',
+    joinDate: '05-01-2026',
+    status: 'ACTIVE',
+    level: 1,
+    unlockLevel: 1,
+    city: 'SATARA',
+    rankNo: 1
+  }
 ];
 
 export const paymentRows = [
@@ -70,4 +161,185 @@ export const levelIncomeRows = [
   { level: 'Level-8', amount: 400 },
   { level: 'Level-9', amount: 450 },
   { level: 'Level-10', amount: 500 }
+];
+
+export const donationIncomeRows = [
+  {
+    memberId: 'MM101010',
+    memberName: 'SONALI SHIRKE',
+    level: 1,
+    amount: 300,
+    transactionId: '123456789012',
+    requestDate: '23-11-2024 12:57:37PM',
+    approveDate: '23-11-2024 12:57:37PM',
+    status: 'SUCCESS'
+  },
+  {
+    memberId: 'MM101011',
+    memberName: 'AMBIKA SALUNKE',
+    level: 2,
+    amount: 1000,
+    transactionId: '123456789012',
+    requestDate: '23-11-2024 12:57:37PM',
+    approveDate: '23-11-2024 12:57:37PM',
+    status: 'SUCCESS'
+  },
+  {
+    memberId: 'MM101012',
+    memberName: 'RAJKIRAN SALUKE',
+    level: 3,
+    amount: 2000,
+    transactionId: '123456789012',
+    requestDate: '23-11-2024 12:57:37PM',
+    approveDate: '23-11-2024 12:57:37PM',
+    status: 'SUCCESS'
+  },
+  {
+    memberId: 'MM101013',
+    memberName: 'AMIT SHARMA',
+    level: 4,
+    amount: 4000,
+    transactionId: '123456789012',
+    requestDate: '23-11-2024 12:57:37PM',
+    approveDate: '23-11-2024 12:57:37PM',
+    status: 'SUCCESS'
+  },
+  {
+    memberId: 'MM101014',
+    memberName: 'SADDAM SHAIKH',
+    level: 6,
+    amount: 16000,
+    transactionId: '123456789012',
+    requestDate: '23-11-2024 12:57:37PM',
+    approveDate: '23-11-2024 12:57:37PM',
+    status: 'SUCCESS'
+  },
+  {
+    memberId: 'MM101015',
+    memberName: 'THOMAS ANTHONY',
+    level: 3,
+    amount: 2000,
+    transactionId: '123456789012',
+    requestDate: '23-11-2024 12:57:37PM',
+    approveDate: '23-11-2024 12:57:37PM',
+    status: 'SUCCESS'
+  },
+  {
+    memberId: 'MM101016',
+    memberName: 'RAZMAN HUSSAIN',
+    level: 4,
+    amount: 4000,
+    transactionId: '123456789012',
+    requestDate: '23-11-2024 12:57:37PM',
+    approveDate: '23-11-2024 12:57:37PM',
+    status: 'SUCCESS'
+  }
+];
+
+export const networkExplorerRows = [
+  {
+    memberId: 'DT944734',
+    memberName: 'Rajesh',
+    parentId: 'IHH192108',
+    level: 1,
+    city: 'PUNE',
+    status: 'ACTIVE'
+  },
+  {
+    memberId: 'DT659875',
+    memberName: 'Amit',
+    parentId: 'DT944734',
+    level: 2,
+    city: 'THANE',
+    status: 'ACTIVE'
+  },
+  {
+    memberId: 'DT623254',
+    memberName: 'Sumil',
+    parentId: 'DT659875',
+    level: 3,
+    city: 'NAGAR',
+    status: 'ACTIVE'
+  },
+  {
+    memberId: 'DT781347',
+    memberName: 'Sumit',
+    parentId: 'DT944734',
+    level: 2,
+    city: 'SATARA',
+    status: 'INACTIVE'
+  }
+];
+
+export const levelIncomeReportRows = [
+  {
+    incomeDate: '06-02-2026',
+    memberId: 'MM101011',
+    memberName: 'SONALI SHIRKE',
+    levelNo: 1,
+    amount: 20,
+    tdsPercent: 5,
+    tdsAmount: 1,
+    netAmount: 19
+  },
+  {
+    incomeDate: '06-02-2026',
+    memberId: 'MM101012',
+    memberName: 'AMBIKA SALUNKE',
+    levelNo: 9,
+    amount: 20,
+    tdsPercent: 5,
+    tdsAmount: 1,
+    netAmount: 19
+  },
+  {
+    incomeDate: '05-02-2026',
+    memberId: 'MM101013',
+    memberName: 'RAJKIRAN SALUKE',
+    levelNo: 2,
+    amount: 20,
+    tdsPercent: 5,
+    tdsAmount: 1,
+    netAmount: 19
+  },
+  {
+    incomeDate: '05-02-2026',
+    memberId: 'MM101014',
+    memberName: 'AMIT SHARMA',
+    levelNo: 1,
+    amount: 20,
+    tdsPercent: 5,
+    tdsAmount: 1,
+    netAmount: 19
+  },
+  {
+    incomeDate: '04-02-2026',
+    memberId: 'MM101015',
+    memberName: 'SADDAM SHAIKH',
+    levelNo: 1,
+    amount: 20,
+    tdsPercent: 5,
+    tdsAmount: 1,
+    netAmount: 19
+  },
+  {
+    incomeDate: '04-02-2026',
+    memberId: 'MM101016',
+    memberName: 'THOMAS ANTHONY',
+    levelNo: 2,
+    amount: 20,
+    tdsPercent: 5,
+    tdsAmount: 1,
+    netAmount: 19
+  },
+  {
+    incomeDate: '04-01-2026',
+    memberId: 'MM101017',
+    memberName: 'RAZMAN HUSSAIN',
+    levelNo: 1,
+    amount: 20,
+    tdsPercent: 5,
+    tdsAmount: 1,
+    netAmount: 19
+  }
 ];
