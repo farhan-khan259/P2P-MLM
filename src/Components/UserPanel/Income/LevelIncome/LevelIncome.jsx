@@ -9,6 +9,7 @@ function LevelIncome() {
   return (
     <div>
       <h1 className="user-page-title">Level Income</h1>
+       <h3>Total Donations Income : 140</h3>
       <div className="user-panel">
         <div className="level-income-filters">
           <select aria-label="Level Number">
@@ -38,42 +39,44 @@ function LevelIncome() {
           <button className="user-btn-outline" type="button">PDF</button>
         </div>
 
-        <table className="user-table">
-          <thead>
-            <tr>
-              <th>S.NO</th>
-              <th>INCOME DATE</th>
-              <th>FROM MEMBER ID</th>
-              <th>FROM MEMBER NAME</th>
-              <th>LEVEL NO</th>
-              <th>AMOUNT</th>
-              <th>TDS%</th>
-              <th>TDS AMOUNT</th>
-              <th>NET AMOUNT</th>
-            </tr>
-          </thead>
-          <tbody>
-            {levelIncomeReportRows.map((row, index) => (
-              <tr key={`${row.memberId}-${index}`}>
-                <td>{index + 1}</td>
-                <td>{row.incomeDate}</td>
-                <td>{row.memberId}</td>
-                <td>{row.memberName}</td>
-                <td>{row.levelNo}</td>
-                <td>{row.amount}</td>
-                <td>{row.tdsPercent}%</td>
-                <td>{row.tdsAmount}</td>
-                <td>{row.netAmount}</td>
+        <div className="table-wrap">
+          <table className="user-table">
+            <thead>
+              <tr>
+                <th>S.NO</th>
+                <th>INCOME DATE</th>
+                <th>FROM MEMBER ID</th>
+                <th>FROM MEMBER NAME</th>
+                <th>LEVEL NO</th>
+                <th>AMOUNT</th>
+                <th>TDS%</th>
+                <th>TDS AMOUNT</th>
+                <th>NET AMOUNT</th>
               </tr>
-            ))}
-            <tr className="level-income-total-row">
-              <td colSpan={5}>TOTAL AMOUNT</td>
-              <td>{totalAmount}</td>
-              <td colSpan={2}>TOTAL NET AMOUNT</td>
-              <td>{totalNetAmount}</td>
-            </tr>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {levelIncomeReportRows.map((row, index) => (
+                <tr key={`${row.memberId}-${index}`}>
+                  <td>{index + 1}</td>
+                  <td>{row.incomeDate}</td>
+                  <td>{row.memberId}</td>
+                  <td>{row.memberName}</td>
+                  <td>{row.levelNo}</td>
+                  <td>{row.amount}</td>
+                  <td>{row.tdsPercent}%</td>
+                  <td>{row.tdsAmount}</td>
+                  <td>{row.netAmount}</td>
+                </tr>
+              ))}
+              <tr className="level-income-total-row">
+                <td colSpan={5}>TOTAL AMOUNT</td>
+                <td>{totalAmount}</td>
+                <td colSpan={2}>TOTAL NET AMOUNT</td>
+                <td>{totalNetAmount}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <div className="level-income-pagination" aria-label="Pagination">
           <button type="button" className="level-income-page-btn" disabled>

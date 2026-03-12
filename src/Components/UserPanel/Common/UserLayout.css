@@ -1,3 +1,40 @@
+/* Table styles copied from AdminLayout.css for consistent look */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--user-border-soft);
+  border-radius: 12px;
+  background: #fff;
+  margin-bottom: 18px;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 980px;
+  background: #fff;
+}
+
+.user-table th,
+.user-table td {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 11px 10px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.user-table th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--user-dark);
+  text-align: left;
+  background: rgba(0, 212, 170, 0.1);
+}
+
+.user-table tbody tr:nth-child(odd) {
+  background: rgba(0, 212, 170, 0.03);
+}
 :root {
   --user-primary: #00d4aa;
   --user-primary-dark: #00b894;

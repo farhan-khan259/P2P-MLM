@@ -42,34 +42,36 @@ function MyTeam() {
           <button className="user-btn-outline" type="button">PDF</button>
         </div>
 
-        <table className="user-table">
-          <thead>
-            <tr>
-              <th>S.NO</th>
-              <th>MEMBER ID</th>
-              <th>MEMBER NAME</th>
-              <th>LEVEL</th>
-              <th>JOIN DATE</th>
-              <th>UNLOCK LEVEL</th>
-              <th>CITY</th>
-              <th>RANK NO</th>
-            </tr>
-          </thead>
-          <tbody>
-            {teamList.map((item, index) => (
-              <tr key={item.memberId}>
-                <td>{index + 1}</td>
-                <td>{item.memberId}</td>
-                <td>{item.name}</td>
-                <td>{item.level}</td>
-                <td>{item.joinDate}</td>
-                <td>{item.unlockLevel}</td>
-                <td>{item.city}</td>
-                <td>{item.rankNo}</td>
+        <div className="table-wrap">
+          <table className="user-table">
+            <thead>
+              <tr>
+                <th>S.NO</th>
+                <th>MEMBER ID</th>
+                <th>MEMBER NAME</th>
+                <th>LEVEL</th>
+                <th>JOIN DATE</th>
+                <th>UNLOCK LEVEL</th>
+                <th>CITY</th>
+                <th>RANK NO</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {teamList.map((item, index) => (
+                <tr key={item.memberId}>
+                  <td>{index + 1}</td>
+                  <td>{item.memberId}</td>
+                  <td>{item.name}</td>
+                  <td>{item.level}</td>
+                  <td>{item.joinDate}</td>
+                  <td>{item.unlockLevel}</td>
+                  <td>{item.city}</td>
+                  <td>{item.rankNo}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
         <div className="downline-pagination" aria-label="Pagination">
           <button type="button" className="downline-page-btn" disabled>

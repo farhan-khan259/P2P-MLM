@@ -12,7 +12,7 @@ const initialFormData = {
   paytmNumber: '',
   upiId: '',
   aadharCardNumber: '',
-  dateOfBirth: ''
+  panNo: ''
 };
 
 function KYCRequest() {
@@ -139,13 +139,14 @@ function KYCRequest() {
               </div>
 
               <div className="kyc-col">
-                <label className="kyc-label" htmlFor="dateOfBirth">Date of Birth</label>
+                <label className="kyc-label" htmlFor="panNo">PAN No</label>
                 <input
-                  id="dateOfBirth"
+                  id="panNo"
                   className="text-input"
-                  type="date"
-                  value={formData.dateOfBirth}
-                  onChange={handleChange('dateOfBirth')}
+                  type="text"
+                  placeholder="Enter PAN number"
+                  value={formData.panNo}
+                  onChange={handleChange('panNo')}
                 />
               </div>
             </div>

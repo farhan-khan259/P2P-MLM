@@ -108,19 +108,10 @@ function UserLayout() {
   const breadcrumb = useMemo(() => buildBreadcrumb(location.pathname), [location.pathname]);
   const showBackButton = location.pathname !== '/user/dashboard';
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [openSections, setOpenSections] = useState({
-    myProfile: true,
-    planChartLetters: true,
-    myNetwork: true,
-    incomeReport: true,
-    donations: true,
-    product: true,
-    epin: true,
-    transactions: true
-  });
+  const [openSection, setOpenSection] = useState(null);
 
   const toggleSection = (key) => {
-    setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
+    setOpenSection((prev) => (prev === key ? null : key));
   };
 
   useEffect(() => {
@@ -155,8 +146,7 @@ function UserLayout() {
         <nav className="user-nav">
           {menuItems.map((item) => {
             if (item.children) {
-              const isOpen = openSections[item.key];
-
+              const isOpen = openSection === item.key;
               return (
                 <div key={item.key} className="user-nav-group">
                   <button
@@ -185,7 +175,17 @@ function UserLayout() {
                 </div>
               );
             }
-
+            if (item.key === 'dashboard') {
+              return (
+                <NavLink
+                  key={item.key}
+                  to={item.to}
+                  className={({ isActive }) => `user-nav-link ${isActive ? 'user-nav-active' : ''}`}
+                >
+                  <strong>{item.label}</strong>
+                </NavLink>
+              );
+            }
             return (
               <NavLink
                 key={item.key}
@@ -202,16 +202,7 @@ function UserLayout() {
       <main className="user-main">
         <header className="user-topbar">
           <div className={`user-topbar-left ${showBackButton ? 'has-back' : ''}`}>
-          {showBackButton && (
-            <button
-              type="button"
-              className="user-back-btn"
-              onClick={() => navigate(-1)}
-              aria-label="Go back"
-            >
-              ←
-            </button>
-          )}
+          
           {!isSidebarOpen && (
             <button
               type="button"

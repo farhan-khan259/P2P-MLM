@@ -37,36 +37,38 @@ function DonationsIncome() {
           <button className="user-btn-outline" type="button">PDF</button>
         </div>
 
-        <table className="user-table">
-          <thead>
-            <tr>
-              <th>S.NO</th>
-              <th>DONAR MEMBER ID</th>
-              <th>DONAR MEMBER NAME</th>
-              <th>LEVEL</th>
-              <th>AMOUNT</th>
-              <th>TRASACTION ID</th>
-              <th>REQUEST DATE</th>
-              <th>APROVE DATE</th>
-              <th>STATUS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {donationIncomeRows.map((row, index) => (
-              <tr key={`${row.memberId}-${index}`}>
-                <td>{index + 1}</td>
-                <td>{row.memberId}</td>
-                <td>{row.memberName}</td>
-                <td>{row.level}</td>
-                <td>{row.amount}</td>
-                <td>{row.transactionId}</td>
-                <td>{row.requestDate}</td>
-                <td>{row.approveDate}</td>
-                <td>{row.status}</td>
+        <div className="table-wrap">
+          <table className="user-table">
+            <thead>
+              <tr>
+                <th>S.NO</th>
+                <th>DONAR MEMBER ID</th>
+                <th>DONAR MEMBER NAME</th>
+                <th>LEVEL</th>
+                <th>AMOUNT</th>
+                <th>TRASACTION ID</th>
+                <th>REQUEST DATE</th>
+                <th>APROVE DATE</th>
+                <th>STATUS</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {donationIncomeRows.map((row, index) => (
+                <tr key={`${row.memberId}-${index}`}>
+                  <td>{index + 1}</td>
+                  <td>{row.memberId}</td>
+                  <td>{row.memberName}</td>
+                  <td>{row.level}</td>
+                  <td>{row.amount}</td>
+                  <td>{row.transactionId}</td>
+                  <td>{row.requestDate}</td>
+                  <td>{row.approveDate}</td>
+                  <td>{row.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

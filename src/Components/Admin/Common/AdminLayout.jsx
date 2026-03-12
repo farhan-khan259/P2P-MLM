@@ -136,23 +136,10 @@ function AdminLayout() {
   const showBackButton = location.pathname !== '/dashboard';
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-  const [openSections, setOpenSections] = useState({
-    epin: true,
-    members: true,
-    networkReports: true,
-    incomeReports: true,
-    productsPackage: true,
-    productOrder: true,
-    transaction: true,
-    withdrawals: true,
-    settings: true,
-    newsPopup: true,
-    support: true,
-    other: true
-  });
+  const [openSection, setOpenSection] = useState(null);
 
   const toggleSection = (key) => {
-    setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
+    setOpenSection((prev) => (prev === key ? null : key));
   };
 
   const toggleSidebar = () => {
@@ -188,8 +175,7 @@ function AdminLayout() {
         <nav className="sidebar-nav">
           {menuItems.map((item) => {
             if (item.children) {
-              const isOpen = openSections[item.key];
-
+              const isOpen = openSection === item.key;
               return (
                 <div key={item.key} className="sidebar-group">
                   <button
@@ -200,7 +186,6 @@ function AdminLayout() {
                     <span>{item.label}</span>
                     <span>{isOpen ? '⌄' : '›'}</span>
                   </button>
-
                   {isOpen && (
                     <div className="sidebar-submenu">
                       {item.children.map((child) => (
@@ -220,6 +205,17 @@ function AdminLayout() {
               );
             }
 
+            if (item.key === 'dashboard') {
+              return (
+                <NavLink
+                  key={item.key}
+                  to={item.to}
+                  className={({ isActive }) => `sidebar-link ${isActive ? 'sidebar-active' : ''}`}
+                >
+                  <strong>{item.label}</strong>
+                </NavLink>
+              );
+            }
             return (
               <NavLink
                 key={item.key}
@@ -236,16 +232,6 @@ function AdminLayout() {
       <main className="admin-main">
         <header className="topbar">
           <div className={`topbar-left ${showBackButton ? 'has-back' : ''}`}>
-            {showBackButton && (
-              <button
-                type="button"
-                className="topbar-back"
-                aria-label="Go back"
-                onClick={() => navigate(-1)}
-              >
-                ←
-              </button>
-            )}
             {!isSidebarOpen && (
               <button
                 type="button"

@@ -94,8 +94,8 @@ function Register() {
                 </div>
 
                 <div className="register-field">
-                  <label htmlFor="panNo">Pan No</label>
-                  <input id="panNo" type="text" placeholder="Enter PAN number" />
+                  <label htmlFor="dateOfBirth">Date of Birth</label>
+                  <input id="dateOfBirth" type="date" />
                 </div>
 
                 <div className="register-field">

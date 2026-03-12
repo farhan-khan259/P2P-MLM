@@ -13,26 +13,28 @@ function TeamLevel() {
           <button className="user-btn-blue">Show Details</button>
         </div>
         <div className="table-toolbar"><button className="user-btn-outline">Excel</button></div>
-        <table className="user-table">
-          <thead>
-            <tr>
-              <th>MEMBERID</th>
-              <th>NAME</th>
-              <th>SPONSOR ID</th>
-              <th>JOIN DATE</th>
-            </tr>
-          </thead>
-          <tbody>
-            {directList.map((item) => (
-              <tr key={item.memberId}>
-                <td>{item.memberId}</td>
-                <td>{item.memberName}</td>
-                <td>IHH192108</td>
-                <td>{item.joiningDate}</td>
+        <div className="table-wrap">
+          <table className="user-table">
+            <thead>
+              <tr>
+                <th>MEMBERID</th>
+                <th>NAME</th>
+                <th>SPONSOR ID</th>
+                <th>JOIN DATE</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {directList.map((item) => (
+                <tr key={item.memberId}>
+                  <td>{item.memberId}</td>
+                  <td>{item.memberName}</td>
+                  <td>IHH192108</td>
+                  <td>{item.joiningDate}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

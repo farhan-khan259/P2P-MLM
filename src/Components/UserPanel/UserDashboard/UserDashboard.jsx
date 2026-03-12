@@ -73,7 +73,7 @@ function UserDashboard() {
 
 			<div className="user-panel">
 				<h2 className="user-section-title">Recieve</h2>
-				<div className="user-table-wrap">
+				<div className="table-wrap">
 					<table className="user-table">
 						<thead>
 							<tr>
