@@ -130,7 +130,7 @@ function buildBreadcrumb(pathname) {
 }
 
 function AdminLayout() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate(); // Removed unused variable
   const location = useLocation();
   const breadcrumb = useMemo(() => buildBreadcrumb(location.pathname), [location.pathname]);
   const showBackButton = location.pathname !== '/dashboard';
