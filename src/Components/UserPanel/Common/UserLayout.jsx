@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import './UserLayout.css';
 
 const menuItems = [
@@ -103,7 +103,7 @@ function buildBreadcrumb(pathname) {
 }
 
 function UserLayout() {
-  // const navigate = useNavigate(); // Removed unused variable
+  
   const location = useLocation();
   const breadcrumb = useMemo(() => buildBreadcrumb(location.pathname), [location.pathname]);
   const showBackButton = location.pathname !== '/user/dashboard';

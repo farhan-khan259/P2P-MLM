@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import { City, Country, State } from 'country-state-city';
-import { getDistricts } from 'india-state-district';
 import '../../../Public/Register/Register.css';
 
 function UpdateProfile() {
@@ -23,7 +22,7 @@ function UpdateProfile() {
 
   const countryOptions = useMemo(() => Country.getAllCountries(), []);
   const stateOptions = useMemo(() => State.getStatesOfCountry(form.country), [form.country]);
-  const cityOptions = useMemo(() => City.getCitiesOfState(form.country, form.state), [form.country, form.state]);
+
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
