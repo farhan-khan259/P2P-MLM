@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { City, Country, State } from 'country-state-city';
+import { Country, State } from 'country-state-city';
 import '../../../Public/Register/Register.css';
 
 function UpdateProfile() {
