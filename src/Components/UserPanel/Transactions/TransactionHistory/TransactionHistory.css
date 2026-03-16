@@ -1,0 +1,28 @@
+@import '../../Common/UserLayout.css';
+
+.transaction-filters {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(110px, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 900px) {
+  .user-page-title {
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 600px) {
+  .user-page-title {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+  .transaction-filters {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .user-table th, .user-table td {
+    font-size: 0.85rem;
+    padding: 5px 4px;
+  }
+}

@@ -4,7 +4,6 @@ import AdminLayout from './Components/Admin/Common/AdminLayout';
 import AdminBlankPage from './Components/Admin/Common/AdminBlankPage';
 import Dashboard from './Components/Admin/Dashboard/Dashboard';
 import MembersLocation from './Components/Admin/Members/MembersLocation/MembersLocation';
-import MemberBlockList from './Components/Admin/Members/MemberBlockList/MemberBlockList';
 import KYCRequest from './Components/Admin/Members/KYCRequest/KYCRequest';
 import AllMemberPerformance from './Components/Admin/Members/AllMemberPerformance/AllMemberPerformance';
 import MyDirectReferral from './Components/Admin/Tree/MyDirectReferral/MyDirectReferral';
@@ -47,6 +46,10 @@ import OurActivity from './Components/Public/OurActivity/OurActivity';
 import Gallery from './Components/Public/Gallery/Gallery';
 import Contact from './Components/Public/Contact/Contact';
 import Register from './Components/Public/Register/Register';
+import AllMembersList from './Components/Admin/Members/AllMembersList/AllMembersList';
+import DatewiseLevelIncome from './Components/UserPanel/Income/DatewiseLevelIncome/DatewiseLevelIncome';
+import ReceivedHelp from './Components/UserPanel/Payment/PaymentRequest/ReceivedHelp';
+import TransactionHistory from './Components/UserPanel/Transactions/TransactionHistory/TransactionHistory';
 
 function App() {
   return (
@@ -87,9 +90,11 @@ function App() {
 
           <Route path="income-report/level-income" element={<UserLevelIncome />} />
           <Route path="income-report/donations-income" element={<DonationsIncome />} />
+          <Route path="income-report/Datewise-level-income" element={<DatewiseLevelIncome />} />
 
           <Route path="donations/given-help" element={<SelfPaymentHistory />} />
-          <Route path="donations/recieved-help" element={<PaymentRequestHistory />} />
+          <Route path="donations/recieved-help" element={<ReceivedHelp />} />
+          <Route path="donations/ReceivedHelp" element={<ReceivedHelp />} />
 
           <Route path="product/product-list" element={<UserBlankPage />} />
           <Route path="product/product-order" element={<UserBlankPage />} />
@@ -104,7 +109,7 @@ function App() {
           <Route path="epin/epin-transfer-history" element={<UserBlankPage />} />
 
           <Route path="transactions/main-wallet" element={<UserBlankPage />} />
-          <Route path="transactions/transaction-history" element={<UserBlankPage />} />
+          <Route path="transactions/transaction-history" element={<TransactionHistory />} />
 
           <Route path="ticket-support" element={<CreateTicket />} />
           <Route path="news-events" element={<UserBlankPage />} />
@@ -141,8 +146,9 @@ function App() {
           <Route path="members/all-members" element={<AllMemberPerformance />} />
           <Route path="members/all-member-performance" element={<AllMemberPerformance />} />
           <Route path="members/active-members" element={<MembersLocation />} />
-          <Route path="members/inactive-members" element={<AdminBlankPage />} />
-          <Route path="members/block-members" element={<MemberBlockList />} />
+       
+
+          <Route path="members/all-members-list" element={<AllMembersList />} />
 
           <Route path="network-reports/network-explorer" element={<NetworkExplorer />} />
           <Route path="network-reports/downline-list" element={<MyDirectReferral />} />

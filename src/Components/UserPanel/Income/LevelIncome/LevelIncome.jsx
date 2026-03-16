@@ -4,7 +4,6 @@ import './LevelIncome.css';
 
 function LevelIncome() {
   const totalAmount = levelIncomeReportRows.reduce((sum, row) => sum + row.amount, 0);
-  const totalNetAmount = levelIncomeReportRows.reduce((sum, row) => sum + row.netAmount, 0);
 
   return (
     <div>
@@ -49,30 +48,26 @@ function LevelIncome() {
                 <th>FROM MEMBER NAME</th>
                 <th>LEVEL NO</th>
                 <th>AMOUNT</th>
-                <th>TDS%</th>
-                <th>TDS AMOUNT</th>
-                <th>NET AMOUNT</th>
+               
+                
               </tr>
             </thead>
             <tbody>
               {levelIncomeReportRows.map((row, index) => (
                 <tr key={`${row.memberId}-${index}`}>
                   <td>{index + 1}</td>
-                  <td>{row.incomeDate}</td>
+                  <td>{row.incomeDate.length <= 10 ? `${row.incomeDate} 10:30:00` : row.incomeDate}</td>
                   <td>{row.memberId}</td>
                   <td>{row.memberName}</td>
                   <td>{row.levelNo}</td>
                   <td>{row.amount}</td>
-                  <td>{row.tdsPercent}%</td>
-                  <td>{row.tdsAmount}</td>
-                  <td>{row.netAmount}</td>
+                 
                 </tr>
               ))}
               <tr className="level-income-total-row">
                 <td colSpan={5}>TOTAL AMOUNT</td>
                 <td>{totalAmount}</td>
-                <td colSpan={2}>TOTAL NET AMOUNT</td>
-                <td>{totalNetAmount}</td>
+           
               </tr>
             </tbody>
           </table>

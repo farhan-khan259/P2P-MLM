@@ -28,6 +28,7 @@ const menuItems = [
     label: 'Income Report',
     children: [
       { label: 'Level Income', to: '/user/income-report/level-income' },
+      { label: 'Datewise Level Income', to: '/user/income-report/Datewise-level-income' },
       { label: 'Donations Income', to: '/user/income-report/donations-income' }
     ]
   },
