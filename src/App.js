@@ -33,6 +33,7 @@ import DirectList from './Components/UserPanel/Team/DirectList/DirectList';
 import UserMyTree from './Components/UserPanel/Team/MyTree/MyTree';
 import MyTeam from './Components/UserPanel/Team/MyTeam/MyTeam';
 import SelfPaymentHistory from './Components/UserPanel/Payment/SelfPaymentHistory/SelfPaymentHistory';
+import GivenHelp from './Components/UserPanel/Donations/GivenHelp';
 import PaymentRequestHistory from './Components/UserPanel/Payment/PaymentRequestHistory/PaymentRequestHistory';
 import UserLevelIncome from './Components/UserPanel/Income/LevelIncome/LevelIncome';
 import DonationsIncome from './Components/UserPanel/Income/DonationsIncome/DonationsIncome';
@@ -92,7 +93,7 @@ function App() {
           <Route path="income-report/donations-income" element={<DonationsIncome />} />
           <Route path="income-report/Datewise-level-income" element={<DatewiseLevelIncome />} />
 
-          <Route path="donations/given-help" element={<SelfPaymentHistory />} />
+          <Route path="donations/given-help" element={<GivenHelp />} />
           <Route path="donations/recieved-help" element={<ReceivedHelp />} />
           <Route path="donations/ReceivedHelp" element={<ReceivedHelp />} />
 

@@ -14,7 +14,7 @@ const datewiseLevelIncomeRows = [
 const DatewiseLevelIncome = () => {
   return (
     <div>
-      <h1 className="user-page-title">DATEWISE LEVEL INCOME</h1>
+      <h1 className="user-page-title">Datewise Level Income</h1>
       <div className="user-panel">
         <div className="level-income-filters">
           <input type="date" placeholder="START DATE" aria-label="Start Date" />

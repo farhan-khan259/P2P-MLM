@@ -80,8 +80,8 @@ const ReceivedHelp = () => {
                   <td>{row.transactionId}</td>
                   <td><button className="user-btn-blue">VIEW</button></td>
                   <td>
-                    <button className="btn-primary">ACCEPT</button>
-                    <button className="btn-primary" style={{ background: '#f44336', marginLeft: 4 }}>REJECT</button>
+                    <button className="user-mini-btn user-accept" type="button">ACCEPT</button>
+                    <button className="user-mini-btn user-reject" type="button" style={{ marginLeft: 4 }}>REJECT</button>
                   </td>
                   <td>{row.status}</td>
                 </tr>

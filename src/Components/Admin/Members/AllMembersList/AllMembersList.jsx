@@ -82,9 +82,15 @@ const AllMembersList = () => {
                   <td>{member.wallet}</td>
                   <td>
                     <div style={{ display: 'flex', gap: '4px', justifyContent: 'center' }}>
-                      <button className="btn-primary" title="Approve">Approve</button>
-                      <button className="btn-outline" title="Reject">Reject</button>
-                      <button className="btn-outline" title="View">View</button>
+                      <button className="action-icon-btn edit" title="Edit Profile" style={{ backgroundColor: '#4ec3e0', border: 'none', color: '#fff' }}>
+                        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25z" fill="#fff"/><path d="M20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="#fff"/></svg>
+                      </button>
+                      <button className="action-icon-btn status" title="Active/Inactive" style={{ backgroundColor: '#4caf50', border: 'none', color: '#fff' }}>
+                        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><polyline points="20 6 9.5 17 4 11.5" stroke="#fff" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      </button>
+                      <button className="action-icon-btn wallet" title="Credit/Debit Wallet" style={{ backgroundColor: '#00bcd4', border: 'none', color: '#fff' }}>
+                        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="9" y="4" width="6" height="16" rx="3" fill="#fff"/><rect x="4" y="9" width="16" height="6" rx="3" fill="#fff"/></svg>
+                      </button>
                     </div>
                   </td>
                   <td>

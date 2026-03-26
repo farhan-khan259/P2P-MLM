@@ -8,9 +8,11 @@ function LevelIncome() {
   return (
     <div>
       <h1 className="user-page-title">Level Income</h1>
-       <h3>Total Donations Income : 140</h3>
+       
       <div className="user-panel">
+        <h3>Total Level Income : 140</h3>
         <div className="level-income-filters">
+          
           <select aria-label="Level Number">
             <option value="">LEVEL NO</option>
             <option value="1">1</option>
