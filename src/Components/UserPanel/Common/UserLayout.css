@@ -506,9 +506,7 @@
     border: 1px solid rgba(0, 0, 0, 0.08);
   }
 
-  .user-topbar-left.has-back .user-menu-btn {
-    left: 58px;
-  }
+
 
   .user-root.user-sidebar-open .user-sidebar-toggle {
     display: inline-flex;
@@ -557,10 +555,7 @@
     padding: 12px;
   }
 
-.user-menu-btn {
-  margin-left: -45px;
-}
-  
+
 
   .user-page-title {
     font-size: 22px;
