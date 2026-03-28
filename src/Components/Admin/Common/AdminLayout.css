@@ -631,9 +631,7 @@
     border: 1px solid rgba(0, 0, 0, 0.08);
   }
 
-  .topbar-left.has-back .topbar-menu {
-    left: 58px;
-  }
+
 
   .cards-row {
     grid-template-columns: 1fr;
