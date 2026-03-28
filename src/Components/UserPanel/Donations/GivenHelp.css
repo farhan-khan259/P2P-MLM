@@ -40,7 +40,7 @@
 .donation-section {
   margin-bottom: 16px;
 }
-.section-title {
+.section-title21{
   color: var(--primary, #00aaff);
   font-weight: 600;
   margin-bottom: 6px;
@@ -153,6 +153,10 @@
   .section-row span:first-child {
     min-width: 120px;
     font-size: 0.97rem;
+  }
+
+  .section-title21 {
+    font-size: 0.6rem;
   }
   .donation-title {
     font-size: 1rem;

@@ -59,7 +59,8 @@ const menuItems = [
       { label: 'Unused ePin', to: '/user/epin/unused-epin' },
       { label: 'List All ePin', to: '/user/epin/list-all-epin' },
       { label: 'Transfer ePin', to: '/user/epin/transfer-epin' },
-      { label: 'ePin Transfer History', to: '/user/epin/epin-transfer-history' }
+      { label: 'ePin Transfer History', to: '/user/epin/epin-transfer-history' },
+      { label: 'Deleted ePin', to: '/user/epin/deleted-epin' }
     ]
   },
   {

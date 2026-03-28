@@ -14,7 +14,7 @@ const transactionRows = [
 const TransactionHistory = () => {
   return (
     <div>
-      <h1 className="user-page-title">TRANSACTION HISTORY</h1>
+      <h1 className="user-page-title">Transaction History</h1>
       <div className="user-panel">
         <div className="transaction-filters">
           <input className="text-input" placeholder="DEBITE" />

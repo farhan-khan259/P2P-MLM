@@ -557,6 +557,11 @@
     padding: 12px;
   }
 
+.user-menu-btn {
+  margin-left: -45px;
+}
+  
+
   .user-page-title {
     font-size: 22px;
   }

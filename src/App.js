@@ -13,20 +13,23 @@ import LevelIncome from './Components/Admin/Income/LevelIncome/LevelIncome';
 import TicketHistory from './Components/Admin/SupportTicket/TicketHistory/TicketHistory';
 import SignOut from './Components/Admin/SignOut/SignOut';
 import EPinRequest from './Components/Admin/ePin/EPinRequest';
-import GenerateEPin from './Components/Admin/ePin/GenerateEPin';
-import UnusedEPin from './Components/Admin/ePin/UnusedEPin';
-import UsedEPin from './Components/Admin/ePin/UsedEPin';
-import AllEPin from './Components/Admin/ePin/AllEPin';
-import DeleteEPin from './Components/Admin/ePin/DeleteEPin';
-import TransferHistory from './Components/Admin/ePin/TransferHistory';
+import GenerateEPin from './Components/UserPanel/ePin/GenerateEPin';
+import UsedEPin from './Components/UserPanel/ePin/UsedEPin';
+import UnusedEPin from './Components/UserPanel/ePin/UnusedEPin';
+import ListAllEPin from './Components/UserPanel/ePin/ListAllEPin';
+import TransferEPin from './Components/UserPanel/ePin/TransferEPin';
+import EPinTransferHistory from './Components/UserPanel/ePin/EPinTransferHistory';
+import DeletedEPin from './Components/UserPanel/ePin/DeletedEPin';
 import AdminLogin from './Components/Admin/AdminLogin/AdminLogin';
 import UserLayout from './Components/UserPanel/Common/UserLayout';
 import UserBlankPage from './Components/UserPanel/Common/UserBlankPage';
+import BuyEPin from './Components/UserPanel/Common/BuyEPin';
 import UserLogin from './Components/UserPanel/UserLogin/UserLogin';
 import UserDashboard from './Components/UserPanel/UserDashboard/UserDashboard';
 import MyProfile from './Components/UserPanel/Profile/MyProfile/MyProfile';
 import UpdateProfile from './Components/UserPanel/Profile/UpdateProfile/UpdateProfile';
 import UpdateBankDetails from './Components/UserPanel/Profile/UpdateBankDetails/UpdateBankDetails';
+import UpdateTransPassword from './Components/UserPanel/Profile/ChangePassword/UpdateTransPassword';
 import ChangePassword from './Components/UserPanel/Profile/ChangePassword/ChangePassword';
 import UserKYCRequest from './Components/UserPanel/Profile/KYCRequest/KYCRequest';
 import DirectList from './Components/UserPanel/Team/DirectList/DirectList';
@@ -76,7 +79,7 @@ function App() {
           <Route path="my-profile/show-profile" element={<MyProfile />} />
           <Route path="profile/update-profile" element={<UpdateProfile />} />
           <Route path="my-profile/change-login-password" element={<ChangePassword />} />
-          <Route path="my-profile/update-trans-password" element={<UpdateBankDetails />} />
+          <Route path="my-profile/update-trans-password" element={<UpdateTransPassword />} />
 
           <Route path="plan-chart-letters/business-plan-chart" element={<UserBlankPage />} />
           <Route path="plan-chart-letters/welcome-letter" element={<UserBlankPage />} />
@@ -101,13 +104,14 @@ function App() {
           <Route path="product/product-order" element={<UserBlankPage />} />
           <Route path="product/delivery-status" element={<UserBlankPage />} />
 
-          <Route path="epin/buy-epin" element={<UserBlankPage />} />
-          <Route path="epin/generate-epin" element={<UserBlankPage />} />
-          <Route path="epin/used-epin" element={<UserBlankPage />} />
-          <Route path="epin/unused-epin" element={<UserBlankPage />} />
-          <Route path="epin/list-all-epin" element={<UserBlankPage />} />
-          <Route path="epin/transfer-epin" element={<UserBlankPage />} />
-          <Route path="epin/epin-transfer-history" element={<UserBlankPage />} />
+          <Route path="epin/buy-epin" element={<BuyEPin />} />
+          <Route path="epin/generate-epin" element={<GenerateEPin />} />
+          <Route path="epin/used-epin" element={<UsedEPin />} />
+          <Route path="epin/unused-epin" element={<UnusedEPin />} />
+          <Route path="epin/list-all-epin" element={<ListAllEPin />} />
+          <Route path="epin/transfer-epin" element={<TransferEPin />} />
+          <Route path="epin/epin-transfer-history" element={<EPinTransferHistory />} />
+          <Route path="epin/deleted-epin" element={<DeletedEPin />} />
 
           <Route path="transactions/main-wallet" element={<UserBlankPage />} />
           <Route path="transactions/transaction-history" element={<TransactionHistory />} />
@@ -139,9 +143,7 @@ function App() {
           <Route path="epin/generate-epin" element={<GenerateEPin />} />
           <Route path="epin/unused-epin" element={<UnusedEPin />} />
           <Route path="epin/used-epin" element={<UsedEPin />} />
-          <Route path="epin/all-epin" element={<AllEPin />} />
-          <Route path="epin/delete-epin" element={<DeleteEPin />} />
-          <Route path="epin/transfer-history" element={<TransferHistory />} />
+          {/* Removed Admin ePin components from user panel routes. Use only user panel ePin components. */}
 
           <Route path="members/kyc-request" element={<KYCRequest />} />
           <Route path="members/all-members" element={<AllMemberPerformance />} />

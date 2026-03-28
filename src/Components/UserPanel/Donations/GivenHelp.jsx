@@ -1,5 +1,6 @@
 import React from "react";
 import "./GivenHelp.css";
+import "../Payment/PaymentRequest/HelpInfo.css";
 
 const GivenHelp = () => {
   // Placeholder data for demonstration
@@ -40,43 +41,44 @@ const GivenHelp = () => {
       </div>
       <div className="donation-details-card">
         <div className="donation-section">
-          <div className="section-title">Sender Details (help Provider)</div>
-          <div className="section-row"><span>Member Name :</span> {data.sender.name}</div>
-          <div className="section-row"><span>Member ID :</span> {data.sender.id}</div>
-          <div className="section-row"><span>E-mail ID :</span> {data.sender.email}</div>
+          <div className="section-title21">Sender Details (help Provider)</div>
+          <div className="help-info-row"><span className="help-info-label">Member Name :</span> <span className="help-info-value">{data.sender.name}</span></div>
+          <div className="help-info-row"><span className="help-info-label">Member ID :</span> <span className="help-info-value">{data.sender.id}</span></div>
+          <div className="help-info-row"><span className="help-info-label">E-mail ID :</span> <span className="help-info-value">{data.sender.email}</span></div>
         </div>
         <div className="donation-section">
-          <div className="section-title">Receiver Details (help Receiver)</div>
-          <div className="section-row"><span>Member Name :</span> {data.receiver.name}</div>
-          <div className="section-row"><span>Mobile No. :</span> {data.receiver.mobile}</div>
-          <div className="section-row"><span>Member ID :</span> {data.receiver.id}</div>
-          <div className="section-row"><span>E-mail ID :</span> {data.receiver.email}</div>
-          <div className="section-row"><span>Gpay :</span> {data.receiver.gpay}</div>
-          <div className="section-row"><span>PhonePe :</span> {data.receiver.phonepe}</div>
-          <div className="section-row"><span>PayTM :</span> {data.receiver.paytm}</div>
-          <div className="section-row"><span>UPI ID :</span> {data.receiver.upi}</div>
-          <div className="section-row"><span>Bank Name :</span> {data.receiver.bank}</div>
-          <div className="section-row"><span>Account No :</span> {data.receiver.account}</div>
-          <div className="section-row"><span>Beneficiary Name :</span> {data.receiver.beneficiary}</div>
-          <div className="section-row"><span>IFSC Code :</span> {data.receiver.ifsc}</div>
+          <div className="section-title21">Receiver Details (help Receiver)</div>
+          <div className="help-info-row"><span className="help-info-label">Member Name :</span> <span className="help-info-value">{data.receiver.name}</span></div>
+          <div className="help-info-row"><span className="help-info-label">Mobile No. :</span> <span className="help-info-value">{data.receiver.mobile}</span></div>
+          <div className="help-info-row"><span className="help-info-label">Member ID :</span> <span className="help-info-value">{data.receiver.id}</span></div>
+          <div className="help-info-row"><span className="help-info-label">E-mail ID :</span> <span className="help-info-value">{data.receiver.email}</span></div>
+          <div className="help-info-row"><span className="help-info-label">Gpay :</span> <span className="help-info-value">{data.receiver.gpay}</span></div>
+          <div className="help-info-row"><span className="help-info-label">PhonePe :</span> <span className="help-info-value">{data.receiver.phonepe}</span></div>
+          <div className="help-info-row"><span className="help-info-label">PayTM :</span> <span className="help-info-value">{data.receiver.paytm}</span></div>
+          <div className="help-info-row"><span className="help-info-label">UPI ID :</span> <span className="help-info-value">{data.receiver.upi}</span></div>
+          <div className="help-info-row"><span className="help-info-label">Bank Name :</span> <span className="help-info-value">{data.receiver.bank}</span></div>
+          <div className="help-info-row"><span className="help-info-label">Account No :</span> <span className="help-info-value">{data.receiver.account}</span></div>
+          <div className="help-info-row"><span className="help-info-label">Beneficiary Name :</span> <span className="help-info-value">{data.receiver.beneficiary}</span></div>
+          <div className="help-info-row"><span className="help-info-label">IFSC Code :</span> <span className="help-info-value">{data.receiver.ifsc}</span></div>
         </div>
         <div className="donation-section">
-          <div className="section-title">Donation Or Help Details</div>
-          <div className="section-row"><span>Amount Sent in Rupees :</span> <span className="amount">₹ {data.donation.amount}.00</span></div>
-          <div className="section-row"><span>Donation Date :</span> {data.donation.date}</div>
-          <div className="section-row"><span>Donation Status :</span> {data.donation.status}</div>
+          <div className="section-title21">Donation Or Help Details</div>
+          <div className="help-info-row"><span className="help-info-label">Amount Sent in Rupees :</span> <span className="help-info-value amount">₹ {data.donation.amount}.00</span></div>
+          <div className="help-info-row"><span className="help-info-label">Donation Date :</span> <span className="help-info-value">{data.donation.date}</span></div>
+          <div className="help-info-row"><span className="help-info-label">Donation Status :</span> <span className="help-info-value">{data.donation.status}</span></div>
         </div>
         <div className="donation-section">
-          <div className="section-title">Declaration By Sender</div>
-          <div className="section-row declaration-text">{data.declaration}</div>
-          <div className="section-row"><span>Pay Slip :</span> <input type="file" /></div>
-          <div className="section-row"><span>Transaction No :</span> <input type="text" className="input-txn" /></div>
+          <div className="section-title21">Declaration By Sender</div>
+          <div className="help-info-row"><span className="help-info-label">Declaration :</span> <span className="help-info-value declaration-text">{data.declaration}</span></div>
+          <div className="help-info-row"><span className="help-info-label">Pay Slip :</span> <input type="file" /></div>
+          <div className="help-info-row"><span className="help-info-label">Transaction No :</span> <input type="text" className="input-txn" /></div>
         </div>
         <div className="donation-section verification-section">
           <button className="user-btn-blue">Get Code</button>
           <span className="verification-label">E-Mail Verification Code :</span>
           <input type="text" className="input-code" />
         </div>
+        <button className="help-submit-btn">Submit</button>
       </div>
       <div className="rank-steps">
         {[...Array(10)].map((_, i) => (

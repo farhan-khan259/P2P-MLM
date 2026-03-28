@@ -14,7 +14,7 @@ const receivedHelpRows = [
 const ReceivedHelp = () => {
   return (
     <div>
-      <h1 className="user-page-title">RECIEVED HELP (DOWNLINE ➔ YOU)</h1>
+      <h1 className="user-page-title">Received  Help (Downline ➔ You)</h1>
       <div className="user-panel">
         <div
           className="level-income-filters"
@@ -45,7 +45,7 @@ const ReceivedHelp = () => {
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-          <button className="user-btn-blue" type="button">Search</button>
+          <button className="user-btn-blue3" type="button">Search</button>
         </div>
         <div className="epin-tools" style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginBottom: 10 }}>
           <button className="btn-outline">Excel</button>
@@ -78,7 +78,7 @@ const ReceivedHelp = () => {
                   <td>{row.rank}</td>
                   <td>{row.requestDate}</td>
                   <td>{row.transactionId}</td>
-                  <td><button className="user-btn-blue">VIEW</button></td>
+                  <td><button className="user-btn-blue3">VIEW</button></td>
                   <td>
                     <button className="user-mini-btn user-accept" type="button">ACCEPT</button>
                     <button className="user-mini-btn user-reject" type="button" style={{ marginLeft: 4 }}>REJECT</button>
