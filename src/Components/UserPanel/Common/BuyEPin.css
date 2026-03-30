@@ -32,10 +32,9 @@
 
 /* ===== SINGLE CARD LAYOUT ===== */
 .buyepin-single-card {
-  background: #ffffff;
-  border-radius: 28px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
-  border: 1px solid #eef2f6;
+  
+  
+ 
   padding: 36px 32px;
   transition: all 0.3s ease;
 }
@@ -157,34 +156,67 @@
   -webkit-overflow-scrolling: touch;
 }
 
+
 .buyepin-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
 }
 
-.buyepin-table td {
-  padding: 12px 16px;
+.buyepin-table th, .buyepin-table td {
+  padding: 12px 20px;
   border-bottom: 1px solid #eef2f6;
-  background: #ffffff;
+  border-right: 1px solid #eef2f6;
+  text-align: left;
 }
-
+.buyepin-table th {
+  background: #f1f5f9;
+  color: #1e5a5a;
+  font-weight: 700;
+  font-size: 1em;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
 .buyepin-table tr:last-child td {
   border-bottom: none;
 }
-
+.buyepin-table tr:nth-child(even) td {
+  background: #f8fafc;
+}
+.buyepin-table tr:nth-child(odd) td {
+  background: #fff;
+}
+.buyepin-table td[colspan] {
+  text-align: center;
+  background: #ffeaea;
+  color: #c00;
+  font-weight: 600;
+}
 .buyepin-table-label {
   font-weight: 600;
   color: #4a5568;
   width: 140px;
   background: #fefefe;
 }
-
 .buyepin-table-value {
   color: #2d3748;
   font-family: monospace;
   font-weight: 500;
   word-break: break-word;
+}
+
+@media (max-width: 767px) {
+  .buyepin-table th, .buyepin-table td {
+    padding: 10px 15px;
+    font-size: 0.85em;
+  }
+  .buyepin-table th {
+    font-size: 0.9em;
+  }
 }
 
 /* ===== FORM FIELDS ===== */

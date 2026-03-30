@@ -25,22 +25,24 @@ const EPinTransferHistory = () => {
                 </div>
               </form>
               <div className="buyepin-tables-wrapper" style={{marginTop: 24}}>
-                <table className="buyepin-table">
-                  <thead>
-                    <tr>
-                      <th>S.No</th>
-                      <th>ePin No</th>
-                      <th>Trans. From</th>
-                      <th>Trans. To</th>
-                      <th>Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td colSpan="5" style={{background: '#ffeaea', color: '#c00', textAlign: 'center'}}>No Record Found</td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div className="buyepin-responsive-table">
+                  <table className="buyepin-table">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>ePin.No</th>
+                        <th>Trans.From</th>
+                        <th>Trans.To</th>
+                        <th>Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td colSpan="5" style={{background: '#ffeaea', color: '#c00', textAlign: 'center'}}>No Record Found</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

@@ -30,6 +30,7 @@ function BuyEPin() {
 
   // Payment details organized in two logical groups
   const upiDetails = [
+    { label: 'UPI ID', value: 'NishaShirke@Oksbi' },
     { label: 'Google Pay No.', value: 'gp@example.com' },
     { label: 'PhonePe No.', value: 'phonepe@example.com' },
     { label: 'Paytm No.', value: 'paytm@example.com' },

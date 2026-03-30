@@ -13,7 +13,7 @@ const GenerateEPin = () => {
                 <div className="buyepin-form-fields" style={{width: '100%'}}>
                   <div className="buyepin-form-col" style={{width: '100%'}}>
                     <div className="buyepin-input-group">
-                      <label>Requested From Upline</label>
+                      <label>Required No Of ePins</label>
                       <input type="text" value="No cash wallet" disabled />
                     </div>
                     <div className="buyepin-input-group">
