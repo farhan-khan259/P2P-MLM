@@ -1,3 +1,41 @@
+.align-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.help-info-value {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.help-info-row21 {
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    display: flex;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.help-info-row22 {
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+   
+    border-bottom: 1px solid #e0e0e0;
+}
+.copy-icon {
+  transition: fill 0.2s, stroke 0.2s;
+}
+.copy-icon:hover {
+  stroke: #e6007a;
+}
+.copied-msg {
+  color: #43b649;
+  font-size: 0.95em;
+  margin-left: 6px;
+  font-weight: 500;
+}
 .given-help-container {
   max-width: 700px;
   margin: 32px auto;
@@ -6,6 +44,8 @@
   box-shadow: 0 2px 16px rgba(0,0,0,0.08);
   padding: 24px 16px;
   font-family: inherit;
+  border: 1px solid #bdbdbd;
+  margin-bottom: 32px;
 }
 .donation-title {
   background: var(--primary, #00aaff);
@@ -36,6 +76,7 @@
   padding: 18px 12px;
   margin-bottom: 18px;
   box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  border: 1px solid #e0e0e0;
 }
 .donation-section {
   margin-bottom: 16px;
@@ -45,6 +86,8 @@
   font-weight: 600;
   margin-bottom: 6px;
   font-size: 1.05rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 2px;
 }
 .section-row {
   display: flex;
@@ -96,17 +139,19 @@
   font-weight: 500;
   color: #222;
 }
+/* Steps bar at the bottom, always */
 .rank-steps {
   display: flex;
-  flex-direction: column;
-  position: fixed;
-  right: 24px;
-  top: 120px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.07);
   padding: 10px 8px;
-  z-index: 10;
+  margin-top: 24px;
+  position: static;
+  width: 100%;
 }
 .rank-step {
   width: 36px;
@@ -134,9 +179,6 @@
     padding: 10px 2vw;
   }
   .rank-steps {
-    position: static;
-    flex-direction: row;
-    justify-content: center;
     margin-top: 18px;
     box-shadow: none;
     background: none;
@@ -162,9 +204,37 @@
     font-size: 1rem;
     padding: 7px 0;
   }
+
+  .verification-section {
+   display: block;
+   align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
   .rank-step {
     width: 28px;
     height: 28px;
     font-size: 0.95rem;
+  }
+}
+@media (max-width: 700px) {
+  .help-info-row21.pay-slip-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 0;
+  }
+  .help-info-row21.pay-slip-row .help-info-label,
+  .help-info-row21.pay-slip-row .trans-label {
+    min-width: unset;
+    margin-bottom: 2px;
+    padding-right: 0;
+  }
+  .help-info-row21.pay-slip-row .pay-slip-input,
+  .help-info-row21.pay-slip-row .input-txn {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-bottom: 6px;
   }
 }
