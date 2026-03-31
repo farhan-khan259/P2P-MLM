@@ -1,3 +1,30 @@
+/* Force placeholder text in date inputs to be black */
+input[type="date"]::-webkit-input-placeholder { color: #111 !important; opacity: 1 !important; }
+input[type="date"]::-moz-placeholder { color: #111 !important; opacity: 1 !important; }
+input[type="date"]:-ms-input-placeholder { color: #111 !important; opacity: 1 !important; }
+input[type="date"]::placeholder { color: #111 !important; opacity: 1 !important; }
+
+/* For Chrome/Safari: style the empty date field text */
+input[type="date"]:not(:focus):not([value])::-webkit-datetime-edit {
+  color: #111 !important;
+  opacity: 1 !important;
+}
+/* Make date input text always black and visible */
+input[type="date"],
+input[type="date"]::-webkit-input-placeholder,
+input[type="date"]::placeholder {
+  color: #111 !important;
+  opacity: 1 !important;
+}
+input[type="date"]::-webkit-datetime-edit {
+  color: #111 !important;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0);
+}
+input[type="date"]:not([value]) {
+  color: #111 !important;
+}
 @import '../../Common/UserLayout.css';
 
 .user-btn-blue3{
@@ -44,6 +71,8 @@
   background: #b71c1c;
 }
 
+
+
 @media (max-width: 900px) {
   .user-page-title {
     font-size: 1.5rem;
@@ -51,12 +80,21 @@
 }
 @media (max-width: 600px) {
   .user-page-title {
-    font-size: 1.1rem;
+    font-size: 1rem !important;
     margin-bottom: 12px;
   }
   .level-income-filters {
-    flex-direction: column;
-    gap: 6px;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+  .level-income-filters input,
+  .level-income-filters select,
+  .level-income-filters button {
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+    color: #333 !important;
   }
   .user-table th, .user-table td {
     font-size: 0.85rem;

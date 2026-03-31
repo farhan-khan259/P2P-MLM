@@ -67,8 +67,8 @@ const GivenHelp = () => {
           <div className="help-info-row21"><span className="help-info-label">Member Name :</span> <span className="help-info-value">{data.sender.name}</span></div>
           <div className="help-info-row21"><span className="help-info-label">Member ID :</span> <span className="help-info-value">{data.sender.id}</span></div>
           <div className="help-info-row21 align-row"><span className="help-info-label">E-mail ID :</span> <span className="help-info-value">{data.sender.email}
-            <CopyIcon onClick={() => handleCopy(data.sender.email, 'sender-email')} />
-            {copied === 'sender-email' && <span className="copied-msg">Copied!</span>}
+            
+           
           </span></div>
         </div>
         <div className="donation-section">
@@ -77,8 +77,7 @@ const GivenHelp = () => {
           <div className="help-info-row21"><span className="help-info-label">Mobile No. :</span> <span className="help-info-value">{data.receiver.mobile}</span></div>
           <div className="help-info-row21"><span className="help-info-label">Member ID :</span> <span className="help-info-value">{data.receiver.id}</span></div>
           <div className="help-info-row21 align-row"><span className="help-info-label">E-mail ID :</span> <span className="help-info-value">{data.receiver.email}
-            <CopyIcon onClick={() => handleCopy(data.receiver.email, 'receiver-email')} />
-            {copied === 'receiver-email' && <span className="copied-msg">Copied!</span>}
+           
           </span></div>
           <div className="help-info-row21 align-row"><span className="help-info-label">Gpay :</span> <span className="help-info-value">{data.receiver.gpay}
             <CopyIcon onClick={() => handleCopy(data.receiver.gpay, 'gpay')} />

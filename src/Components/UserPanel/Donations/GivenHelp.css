@@ -71,12 +71,10 @@
   color: #444;
 }
 .donation-details-card {
-  background: #f8fafd;
-  border-radius: 12px;
+  
   padding: 18px 12px;
   margin-bottom: 18px;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
-  border: 1px solid #e0e0e0;
+  
 }
 .donation-section {
   margin-bottom: 16px;
@@ -198,7 +196,8 @@
   }
 
   .section-title21 {
-    font-size: 0.6rem;
+    font-size: 1.3rem !important;
+  
   }
   .donation-title {
     font-size: 1rem;
