@@ -38,41 +38,41 @@ const topEarners = [
 
 function MemberDashboard() {
   return (
-    <div className="member-dashboard-root">
-      <div className="member-dashboard-header">
-        <div className="member-dashboard-profile-card">
-          <div className="member-dashboard-profile-pic">
+    <div className="user-dashboard1-member-dashboard-root">
+      <div className="user-dashboard1-member-dashboard-header">
+        <div className="user-dashboard1-member-dashboard-profile-card">
+          <div className="user-dashboard1-member-dashboard-profile-pic">
             <img src={profileImage} alt="Profile" />
           </div>
-          <div className="member-dashboard-profile-info">
-            <div className="member-dashboard-profile-name">Nishikant Kalias Shrike - EL12345678</div>
-            <div className="member-dashboard-profile-meta">Register Date: 23.06.2021 | Status: Active</div>
+          <div className="user-dashboard1-member-dashboard-profile-info">
+            <div className="user-dashboard1-member-dashboard-profile-name">Nishikant Kalias Shrike - EL12345678</div>
+            <div className="user-dashboard1-member-dashboard-profile-meta">Register Date: 23.06.2021 | Status: Active</div>
           </div>
         </div>
-        <div className="member-dashboard-actions">
-          <button className="member-dashboard-action-btn member-dashboard-buy">🛒 Buy Product</button>
-          <button className="member-dashboard-action-btn member-dashboard-withdraw">💰 Withdraw</button>
-          <button className="member-dashboard-action-btn member-dashboard-join">👥 Join Now</button>
-          <button className="member-dashboard-action-btn member-dashboard-share">🔗 Share Link</button>
+        <div className="user-dashboard1-member-dashboard-actions">
+          <button className="user-dashboard1-member-dashboard-action-btn user-dashboard1-member-dashboard-buy">🛒 Buy Product</button>
+          <button className="user-dashboard1-member-dashboard-action-btn user-dashboard1-member-dashboard-withdraw">💰 Withdraw</button>
+          <button className="user-dashboard1-member-dashboard-action-btn user-dashboard1-member-dashboard-join">👥 Join Now</button>
+          <button className="user-dashboard1-member-dashboard-action-btn user-dashboard1-member-dashboard-share">🔗 Share Link</button>
         </div>
       </div>
 
-      <div className="member-dashboard-stats-grid">
+      <div className="user-dashboard1-member-dashboard-stats-grid">
         {stats.map((stat, idx) => (
-          <div className="member-dashboard-stat-card" key={stat.label}>
-            <div className="member-dashboard-stat-icon">{stat.icon}</div>
-            <div className="member-dashboard-stat-content">
-              <div className="member-dashboard-stat-label">{stat.label}</div>
-              <div className="member-dashboard-stat-value">₹ {stat.value}</div>
+          <div className="user-dashboard1-member-dashboard-stat-card" key={stat.label}>
+            <div className="user-dashboard1-member-dashboard-stat-icon">{stat.icon}</div>
+            <div className="user-dashboard1-member-dashboard-stat-content">
+              <div className="user-dashboard1-member-dashboard-stat-label">{stat.label}</div>
+              <div className="user-dashboard1-member-dashboard-stat-value">₹ {stat.value}</div>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="member-dashboard-table-section">
-        <div className="member-dashboard-table-title">🏆 Daily Top Earner</div>
-        <div className="member-dashboard-table-wrap">
-          <table className="member-dashboard-table">
+      <div className="user-dashboard1-member-dashboard-table-section">
+        <div className="user-dashboard1-member-dashboard-table-title">🏆 Daily Top Earner</div>
+        <div className="user-dashboard1-member-dashboard-table-wrap">
+          <table className="user-dashboard1-member-dashboard-table">
             <thead>
               <tr>
                 <th>S.NO</th>
@@ -95,13 +95,13 @@ function MemberDashboard() {
         </div>
       </div>
 
-      <div className="member-dashboard-products-section">
-        <div className="member-dashboard-products-title">📦 Our Products (Sydney & Gront)</div>
-        <div className="member-dashboard-products-grid">
+      <div className="user-dashboard1-member-dashboard-products-section">
+        <div className="user-dashboard1-member-dashboard-products-title">📦 Our Products (Sydney & Gront)</div>
+        <div className="user-dashboard1-member-dashboard-products-grid">
           {productImages.map((img, idx) => (
-            <div className="member-dashboard-product-card" key={idx}>
+            <div className="user-dashboard1-member-dashboard-product-card" key={idx}>
               <img src={img.src} alt={img.name} />
-              <div className="member-dashboard-product-name">{img.name}</div>
+              <div className="user-dashboard1-member-dashboard-product-name">{img.name}</div>
             </div>
           ))}
         </div>

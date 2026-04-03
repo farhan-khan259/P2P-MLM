@@ -38,8 +38,14 @@ const ReceivedHelp = () => {
             <option value="5">5</option>
             <option value="6">6</option>
           </select>
-          <input className="text-input" type="date" placeholder="START DATE" />
-          <input className="text-input" type="date" placeholder="END DATE" />
+          <label className="filter-field">
+            <span className="filter-label">START DATE</span>
+            <input className="text-input" type="date" aria-label="Start Date" />
+          </label>
+          <label className="filter-field">
+            <span className="filter-label">END DATE</span>
+            <input className="text-input" type="date" aria-label="End Date" />
+          </label>
           <select className="select-input">
             <option value="10">10</option>
             <option value="50">50</option>

@@ -1,30 +1,3 @@
-/* Force placeholder text in date inputs to be black */
-input[type="date"]::-webkit-input-placeholder { color: #111 !important; opacity: 1 !important; }
-input[type="date"]::-moz-placeholder { color: #111 !important; opacity: 1 !important; }
-input[type="date"]:-ms-input-placeholder { color: #111 !important; opacity: 1 !important; }
-input[type="date"]::placeholder { color: #111 !important; opacity: 1 !important; }
-
-/* For Chrome/Safari: style the empty date field text */
-input[type="date"]:not(:focus):not([value])::-webkit-datetime-edit {
-  color: #111 !important;
-  opacity: 1 !important;
-}
-/* Make date input text always black and visible */
-input[type="date"],
-input[type="date"]::-webkit-input-placeholder,
-input[type="date"]::placeholder {
-  color: #111 !important;
-  opacity: 1 !important;
-}
-input[type="date"]::-webkit-datetime-edit {
-  color: #111 !important;
-}
-input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(0);
-}
-input[type="date"]:not([value]) {
-  color: #111 !important;
-}
 @import '../../Common/UserLayout.css';
 
 .user-btn-blue3{
@@ -38,9 +11,55 @@ input[type="date"]:not([value]) {
   font-size: 0.75rem;
   transition: background 0.2s;
 }
-.user-btn-blue3:hover {
-  background: #0097a7;
+
+
+button.user-btn-blue3 {
+  color: #fff !important;
 }
+
+.level-income-filters .filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.level-income-filters .filter-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--user-dark);
+  letter-spacing: 0.6px;
+}
+
+.level-income-filters .filter-field .text-input {
+  width: 100%;
+}
+
+.user-mini-btn {
+  border: 0;
+  border-radius: 5px;
+  padding: 6px 10px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.72rem;
+  line-height: 1.1;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.user-mini-btn:hover {
+  transform: translateY(-1px);
+}
+
+.user-accept {
+  background: #1db954;
+  color: #fff;
+}
+
+.user-reject {
+  background: #f44336;
+  color: #fff;
+}
+
 .user-btn-green {
   background: #4caf50;
   color: #fff;
@@ -89,12 +108,17 @@ input[type="date"]:not([value]) {
     gap: 6px !important;
   }
   .level-income-filters input,
-  .level-income-filters select,
-  .level-income-filters button {
+  .level-income-filters select {
     width: 100% !important;
     min-width: 0 !important;
     box-sizing: border-box;
     color: #333 !important;
+  }
+  .level-income-filters button.user-btn-blue3 {
+    color: #fff !important;
+  }
+  .level-income-filters .filter-field {
+    gap: 4px;
   }
   .user-table th, .user-table td {
     font-size: 0.85rem;
