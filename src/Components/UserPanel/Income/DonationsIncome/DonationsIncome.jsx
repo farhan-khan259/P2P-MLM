@@ -12,8 +12,8 @@ function DonationsIncome() {
         <h3>Total Donations Income : {totalDonationIncome}</h3>
 
         <div className="donation-income-filters">
-          <input type="text" placeholder="DONAR MEMBER ID" aria-label="Donar Member ID" />
-          <select aria-label="Level">
+          <input className="text-input" type="text" placeholder="DONAR MEMBER ID" aria-label="Donar Member ID" />
+          <select className="select-input" aria-label="Level">
             <option value="">LEVEL</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -22,9 +22,13 @@ function DonationsIncome() {
             <option value="5">5</option>
             <option value="6">6</option>
           </select>
-          <input type="text" placeholder="START DATE" aria-label="Start Date" />
-          <input type="text" placeholder="END DATE" aria-label="End Date" />
-          <select aria-label="Rows per page">
+          <label className="filter-field">
+            <input className="text-input" type="date" aria-label="Start Date" />
+          </label>
+          <label className="filter-field">
+            <input className="text-input" type="date" aria-label="End Date" />
+          </label>
+          <select className="select-input" aria-label="Rows per page">
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>

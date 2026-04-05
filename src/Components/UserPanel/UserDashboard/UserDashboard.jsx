@@ -16,16 +16,18 @@ const productImages = [
 ];
 
 const stats = [
-  { label: 'I Given Help', value: '156550.00', icon: '🤝' },
-  { label: 'I Received Help', value: '452150.00', icon: '🙌' },
-  { label: 'Pending Help', value: '455800.00', icon: '⏳' },
-  { label: 'Level Income', value: '254550.00', icon: '📈' },
-  { label: 'Total Team', value: '10250', icon: '👥' },
-  { label: 'Total Income', value: '1510000.00', icon: '💰' },
-  { label: 'Upgraded Level', value: '6', icon: '⬆️' },
-  { label: 'My Directs', value: '10', icon: '👤' },
-  { label: "Today's Income", value: '1500', icon: '📅' },
-  { label: 'Last Month Income', value: '26560', icon: '📊' },
+  { label: 'I Given Help', value: '156550.00',  },
+  { label: 'I Received Help', value: '452150.00', },
+  { label: 'Pending Help', value: '455800.00', },
+  { label: 'Level Income', value: '254550.00',  },
+  { label: 'Total Team', value: '10250',},
+  { label: 'Total Income', value: '1510000.00', },
+  { label: 'Upgraded Level', value: '6', },
+  { label: 'My Directs', value: '10', },
+  { label: "Today's Income", value: '1500', },
+  { label: 'Last Month Income', value: '26560',},
+  { label: 'Unlock Level', value: '7', },
+  { label: 'Rank', value: 'Gold', },
 ];
 
 const topEarners = [
@@ -60,7 +62,7 @@ function MemberDashboard() {
       <div className="user-dashboard1-member-dashboard-stats-grid">
         {stats.map((stat, idx) => (
           <div className="user-dashboard1-member-dashboard-stat-card" key={stat.label}>
-            <div className="user-dashboard1-member-dashboard-stat-icon">{stat.icon}</div>
+            
             <div className="user-dashboard1-member-dashboard-stat-content">
               <div className="user-dashboard1-member-dashboard-stat-label">{stat.label}</div>
               <div className="user-dashboard1-member-dashboard-stat-value">₹ {stat.value}</div>

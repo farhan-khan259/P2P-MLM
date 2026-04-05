@@ -39,11 +39,9 @@ const ReceivedHelp = () => {
             <option value="6">6</option>
           </select>
           <label className="filter-field">
-            <span className="filter-label">START DATE</span>
             <input className="text-input" type="date" aria-label="Start Date" />
           </label>
           <label className="filter-field">
-            <span className="filter-label">END DATE</span>
             <input className="text-input" type="date" aria-label="End Date" />
           </label>
           <select className="select-input">

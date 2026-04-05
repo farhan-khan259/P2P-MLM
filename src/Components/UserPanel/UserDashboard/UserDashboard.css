@@ -21,7 +21,7 @@
   --gradient-primary: linear-gradient(135deg, #00d4aa 0%, #6c63ff 100%);
   --gradient-secondary: linear-gradient(135deg, #ff6b6b 0%, #ffd166 100%);
   --gradient-success: linear-gradient(135deg, #1db954 0%, #00d4aa 100%);
-  --radius: 20px;
+  --radius: 10px;
   --radius-sm: 12px;
 }
 

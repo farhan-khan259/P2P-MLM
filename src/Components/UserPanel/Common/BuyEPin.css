@@ -330,7 +330,7 @@
 .buyepin-btn-row {
   margin-top: 8px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   border-top: 1px solid #eef2f6;
   padding-top: 28px;
 }
@@ -524,14 +524,14 @@
     border-radius: 14px;
   }
   
-  .user-btn-blue {
+  .buyepin-btn-blue {
     width: 100%;
     justify-content: center;
     padding: 12px 24px;
   }
   
-  .buy-epin-btn-row {
-    justify-content: stretch;
+  .buyepin-btn-row {
+    justify-content: center;
   }
 }
 
@@ -628,12 +628,12 @@
     font-size: 0.6rem;
   }
   
-  .buy-epin-btn-row {
+  .buyepin-btn-row {
     margin-top: 4px;
     padding-top: 20px;
   }
   
-  .user-btn-blue {
+  .buyepin-btn-blue {
     padding: 10px 20px;
     font-size: 0.85rem;
   }
