@@ -52,7 +52,17 @@
 		flex: 1 1 100%;
 	}
 
+	.downline-filters input,
+	.downline-filters select,
 	.downline-filters .user-btn-blue {
+		display: block;
 		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.table-toolbar .user-btn-outline {
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
 	}
 }

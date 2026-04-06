@@ -1,5 +1,5 @@
 // UserDashboard.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import '../Common/UserLayout.css';
 import './UserDashboard.css';
 import profileImage from '../../../Assets/Pictures/images.png';
@@ -16,8 +16,8 @@ const productImages = [
 ];
 
 const stats = [
-  { label: 'I Given Help', value: '156550.00',  },
-  { label: 'I Received Help', value: '452150.00', },
+  { label: ' Given Help', value: '156550.00',  },
+  { label: ' Received Help', value: '452150.00', },
   { label: 'Pending Help', value: '455800.00', },
   { label: 'Level Income', value: '254550.00',  },
   { label: 'Total Team', value: '10250',},
@@ -30,15 +30,51 @@ const stats = [
   { label: 'Rank', value: 'Gold', },
 ];
 
-const topEarners = [
-  { id: 'EL12345678', name: 'SONALI SHIRKE', amount: '156550.00' },
-  { id: 'EL12345679', name: 'AMBIKA SALUNKE', amount: '452150.00' },
-  { id: 'EL12345680', name: 'RAJKIRAN SALUKE', amount: '455800.00' },
-  { id: 'EL12345681', name: 'AMIT SHARMA', amount: '254550.00' },
-  { id: 'EL12345682', name: 'SADDAM SHAIKH', amount: '1510000.00' },
+const noCurrencyLabels = new Set(['Upgraded Level', 'My Directs', 'Unlock Level', 'Rank']);
+
+const leaderboardTabs = [
+  { key: 'top', label: 'Top Earner', title: 'Top Earner' },
+  { key: 'monthly', label: 'Monthly Top Earner', title: 'Monthly Top Earner' },
+  { key: 'daily', label: 'Daily Top Earner', title: 'Daily Top Earner' },
+  { key: 'rewards', label: 'Rewards', title: 'Rewards' },
 ];
 
+const leaderboardData = {
+  top: [
+    { id: 'EL12345678', name: 'SONALI SHIRKE', amount: '156550.00' },
+    { id: 'EL12345679', name: 'AMBIKA SALUNKE', amount: '152150.00' },
+    { id: 'EL12345680', name: 'RAJKIRAN SALUKE', amount: '145800.00' },
+    { id: 'EL12345681', name: 'AMIT SHARMA', amount: '124550.00' },
+    { id: 'EL12345682', name: 'SADDAM SHAIKH', amount: '111000.00' },
+  ],
+  monthly: [
+    { id: 'EL12345671', name: 'NISHIKANT KAILAS SHIRKE', amount: '456550.00' },
+    { id: 'EL12345672', name: 'ANAMIKA RARTRYY SAXENA', amount: '352150.00' },
+    { id: 'EL12345673', name: 'AMRUTA RAJKIRAN SALKHE', amount: '255800.00' },
+    { id: 'EL12345674', name: 'NISHIKNAT KAILAS SHIRKE', amount: '224550.00' },
+    { id: 'EL12345675', name: 'ANAMIKA GHJHBJK SAXENA', amount: '201000.00' },
+  ],
+  daily: [
+    { id: 'EL12345688', name: 'PRIYA SHARMA', amount: '18550.00' },
+    { id: 'EL12345689', name: 'RAHUL KUMAR', amount: '17210.00' },
+    { id: 'EL12345690', name: 'SNEHA PATIL', amount: '16480.00' },
+    { id: 'EL12345691', name: 'VIKAS YADAV', amount: '15320.00' },
+    { id: 'EL12345692', name: 'POOJA VERMA', amount: '14990.00' },
+  ],
+  rewards: [
+    { id: 'EL12345651', name: 'MEENA JOSHI', amount: '25000.00' },
+    { id: 'EL12345652', name: 'ARUN PAWAR', amount: '18000.00' },
+    { id: 'EL12345653', name: 'KARAN MALHOTRA', amount: '15000.00' },
+    { id: 'EL12345654', name: 'TINA DAS', amount: '12000.00' },
+    { id: 'EL12345655', name: 'NARESH REDDY', amount: '10000.00' },
+  ],
+};
+
 function MemberDashboard() {
+  const [activeTab, setActiveTab] = useState('top');
+  const activeRows = leaderboardData[activeTab] || [];
+  const activeTabTitle = leaderboardTabs.find((tab) => tab.key === activeTab)?.title || 'Top Earner';
+
   return (
     <div className="user-dashboard1-member-dashboard-root">
       <div className="user-dashboard1-member-dashboard-header">
@@ -60,19 +96,35 @@ function MemberDashboard() {
       </div>
 
       <div className="user-dashboard1-member-dashboard-stats-grid">
-        {stats.map((stat, idx) => (
+        {stats.map((stat) => (
           <div className="user-dashboard1-member-dashboard-stat-card" key={stat.label}>
             
             <div className="user-dashboard1-member-dashboard-stat-content">
               <div className="user-dashboard1-member-dashboard-stat-label">{stat.label}</div>
-              <div className="user-dashboard1-member-dashboard-stat-value">₹ {stat.value}</div>
+              <div className="user-dashboard1-member-dashboard-stat-value">
+                {noCurrencyLabels.has(stat.label) ? stat.value : `₹ ${stat.value}`}
+              </div>
             </div>
           </div>
         ))}
       </div>
 
       <div className="user-dashboard1-member-dashboard-table-section">
-        <div className="user-dashboard1-member-dashboard-table-title">🏆 Daily Top Earner</div>
+        <div className="user-dashboard1-member-dashboard-table-title">🏆 {activeTabTitle}</div>
+        <div className="user-dashboard1-member-dashboard-table-tabs" role="tablist" aria-label="Earner Categories">
+          {leaderboardTabs.map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              role="tab"
+              aria-selected={activeTab === tab.key}
+              className={`user-dashboard1-member-dashboard-tab-btn ${activeTab === tab.key ? 'user-dashboard1-member-dashboard-tab-btn-active' : ''}`}
+              onClick={() => setActiveTab(tab.key)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
         <div className="user-dashboard1-member-dashboard-table-wrap">
           <table className="user-dashboard1-member-dashboard-table">
             <thead>
@@ -84,8 +136,8 @@ function MemberDashboard() {
               </tr>
             </thead>
             <tbody>
-              {topEarners.map((row, idx) => (
-                <tr key={row.id}>
+              {activeRows.map((row, idx) => (
+                <tr key={`${activeTab}-${row.id}`}>
                   <td>{idx + 1}</td>
                   <td>{row.id}</td>
                   <td>{row.name}</td>

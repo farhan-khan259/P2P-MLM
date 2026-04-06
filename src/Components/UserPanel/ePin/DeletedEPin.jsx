@@ -16,8 +16,8 @@ const DeletedEPin = () => {
                     <input type="text" placeholder="ePin No" />
                   </div>
                   <div className="buyepin-input-group">
-                    <label>Used Client ID</label>
-                    <input type="text" placeholder="Used Client ID" />
+                    <label>Used Member ID</label>
+                    <input type="text" placeholder="Used Member ID" />
                   </div>
                   <div className="buyepin-input-group">
                     <label>Status</label>
