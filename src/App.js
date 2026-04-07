@@ -54,6 +54,7 @@ import AllMembersList from './Components/Admin/Members/AllMembersList/AllMembers
 import DatewiseLevelIncome from './Components/UserPanel/Income/DatewiseLevelIncome/DatewiseLevelIncome';
 import ReceivedHelp from './Components/UserPanel/Payment/PaymentRequest/ReceivedHelp';
 import TransactionHistory from './Components/UserPanel/Transactions/TransactionHistory/TransactionHistory';
+import WelcomeLetter from './Components/UserPanel/PlanChartLetters/WelcomeLetter/WelcomeLetter';
 
 function App() {
   return (
@@ -82,7 +83,7 @@ function App() {
           <Route path="my-profile/update-trans-password" element={<UpdateTransPassword />} />
 
           <Route path="plan-chart-letters/business-plan-chart" element={<UserBlankPage />} />
-          <Route path="plan-chart-letters/welcome-letter" element={<UserBlankPage />} />
+          <Route path="plan-chart-letters/welcome-letter" element={<WelcomeLetter />} />
           <Route path="plan-chart-letters/business-card" element={<UserBlankPage />} />
           <Route path="plan-chart-letters/bank-information" element={<UserBlankPage />} />
 
