@@ -55,6 +55,12 @@ import DatewiseLevelIncome from './Components/UserPanel/Income/DatewiseLevelInco
 import ReceivedHelp from './Components/UserPanel/Payment/PaymentRequest/ReceivedHelp';
 import TransactionHistory from './Components/UserPanel/Transactions/TransactionHistory/TransactionHistory';
 import WelcomeLetter from './Components/UserPanel/PlanChartLetters/WelcomeLetter/WelcomeLetter';
+import JoiningPackage from './Components/UserPanel/Product/JoiningPackage/JoiningPackage';
+import ShoppingProducts from './Components/UserPanel/Product/ShoppingProducts/ShoppingProducts';
+import JoiningPackageAdmin from './Components/Admin/ProductsPackage/JoiningPackage/JoiningPackageAdmin';
+import ShoppingProductsAdmin from './Components/Admin/ProductsPackage/ShoppingProducts/ShoppingProductsAdmin';
+import AddJoiningPackage from './Components/Admin/ProductsPackage/JoiningPackage/AddJoiningPackage/AddJoiningPackage';
+import AddShoppingProducts from './Components/Admin/ProductsPackage/ShoppingProducts/AddShoppingProducts/AddShoppingProducts';
 
 function App() {
   return (
@@ -101,8 +107,10 @@ function App() {
           <Route path="donations/recieved-help" element={<ReceivedHelp />} />
           <Route path="donations/ReceivedHelp" element={<ReceivedHelp />} />
 
-          <Route path="product/product-list" element={<UserBlankPage />} />
-          <Route path="product/product-order" element={<UserBlankPage />} />
+          <Route path="product/joining-package" element={<JoiningPackage />} />
+          <Route path="product/shopping-products" element={<ShoppingProducts />} />
+          <Route path="product/product-list" element={<JoiningPackage />} />
+          <Route path="product/product-order" element={<ShoppingProducts />} />
           <Route path="product/delivery-status" element={<UserBlankPage />} />
 
           <Route path="epin/buy-epin" element={<BuyEPin />} />
@@ -163,8 +171,12 @@ function App() {
           <Route path="income-reports/level-income-reports" element={<LevelIncome />} />
           <Route path="income-reports/donation-report" element={<DonationReport />} />
 
-          <Route path="products-package/add-products" element={<AdminBlankPage />} />
-          <Route path="products-package/modify-product" element={<AdminBlankPage />} />
+          <Route path="products-package/Joining-Package" element={<JoiningPackageAdmin />} />
+          <Route path="products-package/Joining-Package/add-new" element={<AddJoiningPackage />} />
+          <Route path="products-package/shopping-products" element={<ShoppingProductsAdmin />} />
+          <Route path="products-package/shopping-products/add-new" element={<AddShoppingProducts />} />
+          <Route path="products-package/add-products" element={<JoiningPackageAdmin />} />
+          <Route path="products-package/modify-product" element={<ShoppingProductsAdmin />} />
           <Route path="products-package/rearrange-products" element={<AdminBlankPage />} />
 
           <Route path="product-order/new-orders" element={<AdminBlankPage />} />

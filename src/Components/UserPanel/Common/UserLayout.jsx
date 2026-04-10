@@ -44,8 +44,8 @@ const menuItems = [
     key: 'product',
     label: 'Products',
     children: [
-      { label: 'Product List', to: '/user/product/product-list' },
-      { label: 'Product Order', to: '/user/product/product-order' },
+      { label: 'Joining Package', to: '/user/product/joining-package' },
+      { label: 'Shopping Products', to: '/user/product/shopping-products' },
       { label: 'Delivery Status', to: '/user/product/delivery-status' }
     ]
   },

@@ -1,0 +1,118 @@
+@import '../../Common/UserLayout.css';
+
+.user-route-title {
+  font-size: clamp(28px, 3vw, 48px);
+  text-transform: lowercase;
+  letter-spacing: 0;
+}
+
+.user-product-panel {
+  background: #f3f4f6;
+  border-radius: 28px;
+  border: 1px solid #c6cad0;
+  padding: 22px;
+}
+
+.user-product-heading {
+  margin: 0 0 14px;
+  font-size: clamp(24px, 2.2vw, 38px);
+  color: #3b3b3b;
+  font-weight: 800;
+}
+
+.user-product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.user-product-card {
+  background: #f5f6f8;
+  border: 1px solid #a3a9b3;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.user-product-image-wrap {
+  height: 184px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background: #ffffff;
+}
+
+.user-product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.user-product-footer {
+  background: #1f3148;
+  padding: 10px;
+}
+
+.user-product-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.user-product-meta h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.user-product-meta span {
+  color: #00aee0;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.user-product-btn {
+  width: 100%;
+  border: 2px solid #10d5d7;
+  background: transparent;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 7px 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.user-product-btn:hover {
+  background: rgba(16, 213, 215, 0.14);
+}
+
+@media (max-width: 1280px) {
+  .user-product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 992px) {
+  .user-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .user-product-panel {
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .user-product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .user-product-image-wrap {
+    height: 220px;
+  }
+}

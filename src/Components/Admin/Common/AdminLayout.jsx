@@ -51,8 +51,8 @@ const menuItems = [
     key: 'productsPackage',
     label: 'Products/Package',
     children: [
-      { label: 'Add Products', to: '/products-package/add-products' },
-      { label: 'Modify Product', to: '/products-package/modify-product' },
+      { label: 'Joining Package', to: '/products-package/Joining-Package' },
+      { label: 'Shopping Products', to: '/products-package/shopping-products' },
       { label: 'Rearrange Products', to: '/products-package/rearrange-products' }
     ]
   },
