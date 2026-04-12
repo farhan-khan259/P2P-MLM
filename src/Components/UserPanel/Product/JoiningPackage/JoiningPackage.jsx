@@ -1,14 +1,14 @@
 import '../../Common/UserLayout.css';
 import './JoiningPackage.css';
-import saliconpads from '../../../../Assets/Pictures/saliconpads.jpeg';
-import elconanionpads from '../../../../Assets/Pictures/elconanionpads.jpeg';
-import calciumdietry from '../../../../Assets/Pictures/calciumdietry.jpeg';
+import saliconpads from '../../../../Assets/Pictures/pads.jpeg';
+import elconanionpads from '../../../../Assets/Pictures/fourpads.jpeg';
+import calciumdietry from '../../../../Assets/Pictures/calcium.jpeg';
 import diabecare from '../../../../Assets/Pictures/diabecare.jpeg';
 import omega3 from '../../../../Assets/Pictures/omega3.jpeg';
-import watchultra from '../../../../Assets/Pictures/watchultra.jpeg';
+import watchultra from '../../../../Assets/Pictures/smartwatch.jpeg';
 import watch from '../../../../Assets/Pictures/watch.jpeg';
-import handfree from '../../../../Assets/Pictures/handfree.jpeg';
-import headphones from '../../../../Assets/Pictures/images.png';
+import handfree from '../../../../Assets/Pictures/goldheadphones.jpeg';
+import headphones from '../../../../Assets/Pictures/headphones.jpeg';
 import laptop from '../../../../Assets/Pictures/laptop.jpeg';
 
 const joiningProducts = [
@@ -98,7 +98,7 @@ function JoiningPackage() {
   return (
     <div className="user-product-page">
       <div className="user-panel user-product-panel">
-        <h2 className="user-product-heading">JOINING PACKAGE</h2>
+        <h2 className="user-product-heading">Joining Package</h2>
 
         <div className="user-product-grid">
           {joiningProducts.map((product) => (

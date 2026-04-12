@@ -312,10 +312,8 @@
 
 .user-panel {
   background: var(--user-card-bg);
-  border: 1px solid var(--user-border-soft);
-  border-radius: 18px;
-  padding: 18px;
-  box-shadow: var(--user-shadow);
+  
+padding: 18px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }

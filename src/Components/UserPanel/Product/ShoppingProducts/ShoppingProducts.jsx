@@ -1,9 +1,10 @@
 import '../../Common/UserLayout.css';
 import './ShoppingProducts.css';
 import watch from '../../../../Assets/Pictures/watch.jpeg';
-import handfree from '../../../../Assets/Pictures/handfree.jpeg';
-import watchultra from '../../../../Assets/Pictures/watchultra.jpeg';
+import handfree from '../../../../Assets/Pictures/goldheadphones.jpeg';
+import watchultra from '../../../../Assets/Pictures/smartwatch.jpeg';
 import laptop from '../../../../Assets/Pictures/laptop.jpeg';
+import airpods from '../../../../Assets/Pictures/airpods.jpeg';
 
 const shoppingProducts = [
   {
@@ -28,13 +29,13 @@ const shoppingProducts = [
     id: 4,
     name: 'Ear Pods',
     price: 1200,
-    image: handfree
+    image: airpods
   },
   {
     id: 5,
     name: 'Bose Earphones',
     price: 1300,
-    image: handfree
+    image: airpods
   },
   {
     id: 6,
@@ -60,7 +61,7 @@ function ShoppingProducts() {
   return (
     <div className="user-product-page">
       <div className="user-panel user-product-panel">
-        <h2 className="user-product-heading">SHOPPING PRODUCTS</h2>
+        <h2 className="user-product-heading">Shopping Products</h2>
 
         <div className="user-product-grid">
           {shoppingProducts.map((product) => (

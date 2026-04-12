@@ -3,16 +3,18 @@ import React, { useState } from 'react';
 import '../Common/UserLayout.css';
 import './UserDashboard.css';
 import profileImage from '../../../Assets/Pictures/images.png';
+import productPads from '../../../Assets/Pictures/pads.jpeg';
+import productAirpods from '../../../Assets/Pictures/airpods.jpeg';
 
 const productImages = [
   {
-    src: require('../../../Assets/Pictures/sydney-artsakh-aug-31-2020-program-to-recycle-bottles-and-cans-with-10-cents-each-return-and-earn-2d3xt9f.jpg'),
-    name: 'Sydney Recycle Program'
+    src: productPads,
+    name: 'Elcon Anion Sanitary Pads'
   },
   {
-    src: require('../../../Assets/Pictures/gront-kollage_produktfoto_2-1-1280x839.jpg.webp'),
-    name: 'Gront Product'
-  },
+    src: productAirpods,
+    name: 'Wireless Airpods'
+  }
 ];
 
 const stats = [
@@ -150,7 +152,7 @@ function MemberDashboard() {
       </div>
 
       <div className="user-dashboard1-member-dashboard-products-section">
-        <div className="user-dashboard1-member-dashboard-products-title">📦 Our Products (Sydney & Gront)</div>
+        <div className="user-dashboard1-member-dashboard-products-title">📦 Featured Products</div>
         <div className="user-dashboard1-member-dashboard-products-grid">
           {productImages.map((img, idx) => (
             <div className="user-dashboard1-member-dashboard-product-card" key={idx}>
