@@ -44,7 +44,18 @@ const menuItems = [
     label: 'Income Reports',
     children: [
       { label: 'Level Income Reports', to: '/income-reports/level-income-reports' },
-      { label: 'Donation Report', to: '/income-reports/donation-report' }
+      { label: 'Donation Report', to: '/income-reports/donation-report' },
+      { label: 'TDS Report', to: '/income-report/Tds-Report' }
+    ]
+  },
+  {
+    key: 'deposits',
+    label: 'Deposits',
+    children: [
+      { label: 'Pending Deposits', to: '/deposits/pending-deposits' },
+      { label: 'Successful Deposits', to: '/deposits/successful-deposits' },
+      { label: 'Rejected Deposits', to: '/deposits/rejected-deposits' },
+      { label: 'All Deposits', to: '/deposits/all-deposits' }
     ]
   },
   {

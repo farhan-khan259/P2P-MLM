@@ -1,0 +1,124 @@
+@import '../../Common/AdminLayout.css';
+
+.success-deposits-page {
+  width: 100%;
+}
+
+.success-route-title {
+  margin: 0 0 10px;
+}
+
+.success-screen-title {
+  margin: 0 0 16px;
+}
+
+.success-panel {
+  border-radius: 28px;
+  padding: 24px;
+}
+
+.success-export-row {
+  justify-content: flex-end;
+  margin-bottom: 14px;
+}
+
+.success-export-btn {
+  min-width: 72px;
+}
+
+.success-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.success-filter-input {
+  flex: 1 1 160px;
+  min-width: 150px;
+}
+
+.success-size-select {
+  flex: 0 0 92px;
+  min-width: 92px;
+}
+
+.success-search-btn {
+  min-width: 110px;
+}
+
+.success-table {
+  min-width: 1180px;
+}
+
+.success-slip-btn {
+  border: none;
+  border-radius: 3px;
+  padding: 3px 7px;
+  background: #00a8e2;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.success-action-group {
+  display: flex;
+  gap: 4px;
+}
+
+.success-action {
+  border: none;
+  border-radius: 3px;
+  width: 30px;
+  height: 22px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.success-action.success {
+  background: #69d7b4;
+}
+
+.success-action.change {
+  background: #3c90d8;
+}
+
+.success-action.reject {
+  background: #ea5b70;
+}
+
+.success-legend {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 16px;
+  font-size: 13px;
+  color: #2f2f2f;
+}
+
+.success-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 768px) {
+  .success-panel {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .success-filter-input,
+  .success-search-btn,
+  .success-size-select {
+    min-width: 100%;
+    flex-basis: 100%;
+  }
+
+  .success-legend {
+    justify-content: flex-start;
+  }
+}

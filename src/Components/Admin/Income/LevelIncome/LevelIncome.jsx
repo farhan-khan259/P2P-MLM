@@ -110,8 +110,6 @@ function LevelIncome() {
       <h1 className="page-title" style={{ fontSize: '42px', marginBottom: '14px' }}>Level Income Reports</h1>
 
       <div className="panel" style={{ borderRadius: '28px', padding: '24px' }}>
-        <h2 className="section-title" style={{ fontSize: '34px', marginBottom: '14px' }}>LEVEL INCOME REPORT</h2>
-
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>
           <input className="text-input" style={{ maxWidth: '120px' }} placeholder="INCOME DATE" />
           <input className="text-input" style={{ maxWidth: '120px' }} placeholder="MEMBER ID" />

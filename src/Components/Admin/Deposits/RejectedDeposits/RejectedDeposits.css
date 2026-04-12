@@ -1,0 +1,124 @@
+@import '../../Common/AdminLayout.css';
+
+.rejected-deposits-page {
+  width: 100%;
+}
+
+.rejected-route-title {
+  margin: 0 0 10px;
+}
+
+.rejected-screen-title {
+  margin: 0 0 16px;
+}
+
+.rejected-panel {
+  border-radius: 28px;
+  padding: 24px;
+}
+
+.rejected-export-row {
+  justify-content: flex-end;
+  margin-bottom: 14px;
+}
+
+.rejected-export-btn {
+  min-width: 72px;
+}
+
+.rejected-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.rejected-filter-input {
+  flex: 1 1 160px;
+  min-width: 150px;
+}
+
+.rejected-size-select {
+  flex: 0 0 92px;
+  min-width: 92px;
+}
+
+.rejected-search-btn {
+  min-width: 110px;
+}
+
+.rejected-table {
+  min-width: 1180px;
+}
+
+.rejected-slip-btn {
+  border: none;
+  border-radius: 3px;
+  padding: 3px 7px;
+  background: #00a8e2;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.rejected-action-group {
+  display: flex;
+  gap: 4px;
+}
+
+.rejected-action {
+  border: none;
+  border-radius: 3px;
+  width: 30px;
+  height: 22px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rejected-action.success {
+  background: #69d7b4;
+}
+
+.rejected-action.change {
+  background: #3c90d8;
+}
+
+.rejected-action.reject {
+  background: #ea5b70;
+}
+
+.rejected-legend {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 16px;
+  font-size: 13px;
+  color: #2f2f2f;
+}
+
+.rejected-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 768px) {
+  .rejected-panel {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .rejected-filter-input,
+  .rejected-search-btn,
+  .rejected-size-select {
+    min-width: 100%;
+    flex-basis: 100%;
+  }
+
+  .rejected-legend {
+    justify-content: flex-start;
+  }
+}

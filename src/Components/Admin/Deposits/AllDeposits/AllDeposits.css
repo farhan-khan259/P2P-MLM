@@ -1,0 +1,124 @@
+@import '../../Common/AdminLayout.css';
+
+.all-deposits-page {
+  width: 100%;
+}
+
+.all-route-title {
+  margin: 0 0 10px;
+}
+
+.all-screen-title {
+  margin: 0 0 16px;
+}
+
+.all-panel {
+  border-radius: 28px;
+  padding: 24px;
+}
+
+.all-export-row {
+  justify-content: flex-end;
+  margin-bottom: 14px;
+}
+
+.all-export-btn {
+  min-width: 72px;
+}
+
+.all-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.all-filter-input {
+  flex: 1 1 160px;
+  min-width: 150px;
+}
+
+.all-size-select {
+  flex: 0 0 92px;
+  min-width: 92px;
+}
+
+.all-search-btn {
+  min-width: 110px;
+}
+
+.all-table {
+  min-width: 1180px;
+}
+
+.all-slip-btn {
+  border: none;
+  border-radius: 3px;
+  padding: 3px 7px;
+  background: #00a8e2;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.all-action-group {
+  display: flex;
+  gap: 4px;
+}
+
+.all-action {
+  border: none;
+  border-radius: 3px;
+  width: 30px;
+  height: 22px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.all-action.success {
+  background: #69d7b4;
+}
+
+.all-action.change {
+  background: #3c90d8;
+}
+
+.all-action.reject {
+  background: #ea5b70;
+}
+
+.all-legend {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 16px;
+  font-size: 13px;
+  color: #2f2f2f;
+}
+
+.all-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 768px) {
+  .all-panel {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .all-filter-input,
+  .all-search-btn,
+  .all-size-select {
+    min-width: 100%;
+    flex-basis: 100%;
+  }
+
+  .all-legend {
+    justify-content: flex-start;
+  }
+}

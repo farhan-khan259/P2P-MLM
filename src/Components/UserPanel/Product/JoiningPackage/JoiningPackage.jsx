@@ -2,60 +2,95 @@ import '../../Common/UserLayout.css';
 import './JoiningPackage.css';
 import saliconpads from '../../../../Assets/Pictures/saliconpads.jpeg';
 import elconanionpads from '../../../../Assets/Pictures/elconanionpads.jpeg';
-import calciiumdietry from '../../../../Assets/Pictures/calciiumdietry.jpeg';
 import calciumdietry from '../../../../Assets/Pictures/calciumdietry.jpeg';
 import diabecare from '../../../../Assets/Pictures/diabecare.jpeg';
 import omega3 from '../../../../Assets/Pictures/omega3.jpeg';
 import watchultra from '../../../../Assets/Pictures/watchultra.jpeg';
+import watch from '../../../../Assets/Pictures/watch.jpeg';
+import handfree from '../../../../Assets/Pictures/handfree.jpeg';
+import headphones from '../../../../Assets/Pictures/images.png';
+import laptop from '../../../../Assets/Pictures/laptop.jpeg';
 
 const joiningProducts = [
   {
     id: 1,
-    name: 'Sanitary Pads - 6',
+    name: 'Elcon Anion Sanitary Pads - 8',
+    category: 'Healthcare',
+    mrp: 350,
     price: 300,
     image: saliconpads
   },
   {
     id: 2,
-    name: 'Sanitary Pads - 32',
-    price: 900,
+    name: 'Elcon Anion Sanitary Pads - 32',
+    category: 'Healthcare',
+    mrp: 350,
+    price: 300,
     image: elconanionpads
   },
   {
     id: 3,
-    name: 'Protein Powder',
-    price: 2500,
-    image: calciiumdietry
-  },
-  {
-    id: 4,
-    name: 'Bone Fit',
-    price: 1500,
-    image: calciumdietry
-  },
-  {
-    id: 5,
-    name: 'Diabe Care',
-    price: 500,
+    name: 'Elcon Diabe Care - 8',
+    category: 'Healthcare',
+    mrp: 350,
+    price: 300,
     image: diabecare
   },
   {
-    id: 6,
-    name: 'Calcium',
-    price: 300,
-    image: calciumdietry
-  },
-  {
-    id: 7,
-    name: 'Omega - 3',
+    id: 4,
+    name: 'Elcon Omega -3',
+    category: 'Healthcare',
+    mrp: 350,
     price: 300,
     image: omega3
   },
   {
-    id: 8,
-    name: 'Slim Fit',
-    price: 900,
+    id: 5,
+    name: 'Elcon Calcium',
+    category: 'Healthcare',
+    mrp: 350,
+    price: 300,
+    image: calciumdietry
+  },
+  {
+    id: 6,
+    name: 'Elcon Smart Watch',
+    category: 'Healthcare',
+    mrp: 350,
+    price: 300,
     image: watchultra
+  },
+  {
+    id: 7,
+    name: 'Foce Watch',
+    category: 'Healthcare',
+    mrp: 350,
+    price: 300,
+    image: watch
+  },
+  {
+    id: 8,
+    name: 'Gold Head Phone',
+    category: 'Electronics Appliances',
+    mrp: 350,
+    price: 300,
+    image: handfree
+  },
+  {
+    id: 9,
+    name: 'Bose Head Phonos',
+    category: 'Electronics Appliances',
+    mrp: 350,
+    price: 300,
+    image: headphones
+  },
+  {
+    id: 10,
+    name: 'HP LAPTOP',
+    category: 'Healthcare',
+    mrp: 350,
+    price: 300,
+    image: laptop
   }
 ];
 
@@ -75,8 +110,17 @@ function JoiningPackage() {
               <div className="user-product-footer">
                 <div className="user-product-meta">
                   <h3>{product.name}</h3>
-                  <span>₹ {product.price}</span>
+                  <p>Category : {product.category}</p>
                 </div>
+
+                <div className="user-product-price-row">
+                  <span className="user-product-mrp">
+                    M.R.P <del>{product.mrp}</del>
+                  </span>
+                  <span className="user-product-offer-chip">₹</span>
+                  <span className="user-product-price">₹ {product.price}</span>
+                </div>
+
                 <button type="button" className="user-product-btn">
                   Add to cart
                 </button>

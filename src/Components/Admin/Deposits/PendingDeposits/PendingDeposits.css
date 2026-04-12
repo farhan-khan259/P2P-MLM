@@ -1,0 +1,124 @@
+@import '../../Common/AdminLayout.css';
+
+.pending-deposits-page {
+  width: 100%;
+}
+
+.pending-route-title {
+  margin: 0 0 10px;
+}
+
+.pending-screen-title {
+  margin: 0 0 16px;
+}
+
+.pending-panel {
+  border-radius: 28px;
+  padding: 24px;
+}
+
+.pending-export-row {
+  justify-content: flex-end;
+  margin-bottom: 14px;
+}
+
+.pending-export-btn {
+  min-width: 72px;
+}
+
+.pending-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.pending-filter-input {
+  flex: 1 1 160px;
+  min-width: 150px;
+}
+
+.pending-size-select {
+  flex: 0 0 92px;
+  min-width: 92px;
+}
+
+.pending-search-btn {
+  min-width: 110px;
+}
+
+.pending-table {
+  min-width: 1180px;
+}
+
+.pending-slip-btn {
+  border: none;
+  border-radius: 3px;
+  padding: 3px 7px;
+  background: #00a8e2;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.pending-action-group {
+  display: flex;
+  gap: 4px;
+}
+
+.pending-action {
+  border: none;
+  border-radius: 3px;
+  width: 30px;
+  height: 22px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pending-action.success {
+  background: #69d7b4;
+}
+
+.pending-action.change {
+  background: #3c90d8;
+}
+
+.pending-action.reject {
+  background: #ea5b70;
+}
+
+.pending-legend {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 16px;
+  font-size: 13px;
+  color: #2f2f2f;
+}
+
+.pending-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 768px) {
+  .pending-panel {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .pending-filter-input,
+  .pending-search-btn,
+  .pending-size-select {
+    min-width: 100%;
+    flex-basis: 100%;
+  }
+
+  .pending-legend {
+    justify-content: flex-start;
+  }
+}

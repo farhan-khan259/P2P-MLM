@@ -61,6 +61,11 @@ import JoiningPackageAdmin from './Components/Admin/ProductsPackage/JoiningPacka
 import ShoppingProductsAdmin from './Components/Admin/ProductsPackage/ShoppingProducts/ShoppingProductsAdmin';
 import AddJoiningPackage from './Components/Admin/ProductsPackage/JoiningPackage/AddJoiningPackage/AddJoiningPackage';
 import AddShoppingProducts from './Components/Admin/ProductsPackage/ShoppingProducts/AddShoppingProducts/AddShoppingProducts';
+import PendingDeposits from './Components/Admin/Deposits/PendingDeposits/PendingDeposits';
+import SuccessfulDeposits from './Components/Admin/Deposits/SuccessfulDeposits/SuccessfulDeposits';
+import RejectedDeposits from './Components/Admin/Deposits/RejectedDeposits/RejectedDeposits';
+import AllDeposits from './Components/Admin/Deposits/AllDeposits/AllDeposits';
+import TdsReport from './Components/Admin/Income/TdsReport/TdsReport';
 
 function App() {
   return (
@@ -170,6 +175,12 @@ function App() {
 
           <Route path="income-reports/level-income-reports" element={<LevelIncome />} />
           <Route path="income-reports/donation-report" element={<DonationReport />} />
+          <Route path="income-report/Tds-Report" element={<TdsReport />} />
+
+          <Route path="deposits/pending-deposits" element={<PendingDeposits />} />
+          <Route path="deposits/successful-deposits" element={<SuccessfulDeposits />} />
+          <Route path="deposits/rejected-deposits" element={<RejectedDeposits />} />
+          <Route path="deposits/all-deposits" element={<AllDeposits />} />
 
           <Route path="products-package/Joining-Package" element={<JoiningPackageAdmin />} />
           <Route path="products-package/Joining-Package/add-new" element={<AddJoiningPackage />} />
