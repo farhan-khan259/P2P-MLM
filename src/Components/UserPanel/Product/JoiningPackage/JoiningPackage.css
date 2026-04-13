@@ -23,6 +23,11 @@
   border: 1px solid #b9c0ca;
   border-radius: 10px;
   overflow: hidden;
+  transition: border 0.25s;
+}
+
+.user-product-card:hover {
+  border: 3px solid var(--primary, #00d4aa);
 }
 
 .user-product-image-wrap {
@@ -123,8 +128,12 @@
 }
 
 .user-product-btn:hover {
-  background: #1ee4d8;
-  color: #11313a;
+   
+  transition: all 0.25s ease;
+  background: var(--gradient-primary);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(0, 212, 170, 0.25);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 1280px) {

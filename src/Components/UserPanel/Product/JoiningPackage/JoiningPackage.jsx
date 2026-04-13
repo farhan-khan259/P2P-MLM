@@ -117,7 +117,7 @@ function JoiningPackage() {
                   <span className="user-product-mrp">
                     M.R.P <del>{product.mrp}</del>
                   </span>
-                  <span className="user-product-offer-chip">₹</span>
+                
                   <span className="user-product-price">₹ {product.price}</span>
                 </div>
 
