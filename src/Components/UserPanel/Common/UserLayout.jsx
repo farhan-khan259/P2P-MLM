@@ -8,7 +8,7 @@ const menuItems = [
     key: 'myProfile',
     label: 'My Profile',
     children: [
-      { label: 'Show Profile', to: '/user/my-profile/show-profile' },
+      { label: 'View Profile', to: '/user/my-profile/show-profile' },
       { label: 'Update Profile', to: '/user/profile/update-profile' },
       { label: 'Change Login Password', to: '/user/my-profile/change-login-password' },
       { label: 'Update Trans. Password', to: '/user/my-profile/update-trans-password' }
