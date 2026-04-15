@@ -1,29 +1,24 @@
 @import '../../Common/UserLayout.css';
 
-.user-page-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 24px;
-  color: #222;
-}
-
-.level-income-filters {
+.report-filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   margin: 16px 0;
 }
 
-.level-income-filters input,
-.level-income-filters select {
+.report-filters input,
+.report-filters select {
   border: 1px solid #ccd3db;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 10px 12px;
   min-height: 42px;
   font-size: 13px;
+  background: #fff;
+  color: #2d3748;
 }
 
-.table-toolbar {
+.report-toolbar {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
@@ -35,24 +30,19 @@
   background: rgba(0, 212, 170, 0.08);
 }
 
-.table-footer {
-  display: flex;
-  justify-content: center;
-  margin-top: 16px;
-}
-
-.pagination {
+.pagination-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
   justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
 }
 
 .page-btn {
   min-width: 36px;
   height: 36px;
-  border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
   background: #fff;
   color: #6d7e93;
   cursor: pointer;
@@ -65,25 +55,33 @@
   border-color: transparent;
 }
 
-@media (max-width: 900px) {
-  .level-income-filters > * {
+@media (max-width: 840px) {
+  .report-filters > * {
     flex: 1 1 100%;
+  }
+
+  .report-toolbar {
+    justify-content: center;
+  }
+
+  .user-table th,
+  .user-table td {
+    font-size: 0.82rem;
+    padding: 8px 6px;
   }
 }
 
 @media (max-width: 620px) {
   .user-page-title {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     margin-bottom: 12px;
   }
 
-  .user-table {
-    min-width: 760px;
+  .report-filters {
+    gap: 8px;
   }
 
-  .user-table th,
-  .user-table td {
-    padding: 8px 6px;
-    font-size: 0.82rem;
+  .user-table {
+    min-width: 800px;
   }
 }

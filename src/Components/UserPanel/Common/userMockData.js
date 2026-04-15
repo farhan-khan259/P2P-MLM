@@ -273,73 +273,66 @@ export const networkExplorerRows = [
 
 export const levelIncomeReportRows = [
   {
-    incomeDate: '06-02-2026',
-    memberId: 'MM101011',
-    memberName: 'SONALI SHIRKE',
+    incomeDate: '02-03-2024 12:57:37pm',
+    memberId: 'MM101010',
+    memberName: 'ANAMIKA SAXENA',
     levelNo: 1,
-    amount: 20,
-    tdsPercent: 5,
-    tdsAmount: 1,
-    netAmount: 19
+    levelId: 'MM101011',
+    fromMemberName: 'SONALI SHIRKE',
+    amount: 20
   },
   {
-    incomeDate: '06-02-2026',
+    incomeDate: '25-02-2024 12:57:37pm',
     memberId: 'MM101012',
-    memberName: 'AMBIKA SALUNKE',
+    memberName: 'ANAMIKA SAXENA',
     levelNo: 9,
-    amount: 20,
-    tdsPercent: 5,
-    tdsAmount: 1,
-    netAmount: 19
+    levelId: 'MM101012',
+    fromMemberName: 'AMBIKA SALUNKE',
+    amount: 20
   },
   {
-    incomeDate: '05-02-2026',
+    incomeDate: '25-02-2024 12:57:37pm',
     memberId: 'MM101013',
-    memberName: 'RAJKIRAN SALUKE',
+    memberName: 'ANAMIKA SAXENA',
     levelNo: 2,
-    amount: 20,
-    tdsPercent: 5,
-    tdsAmount: 1,
-    netAmount: 19
+    levelId: 'MM101013',
+    fromMemberName: 'RAJKIRAN SALUKE',
+    amount: 20
   },
   {
-    incomeDate: '05-02-2026',
+    incomeDate: '16-02-2024 12:57:37pm',
     memberId: 'MM101014',
-    memberName: 'AMIT SHARMA',
+    memberName: 'ANAMIKA SAXENA',
     levelNo: 1,
-    amount: 20,
-    tdsPercent: 5,
-    tdsAmount: 1,
-    netAmount: 19
+    levelId: 'MM101014',
+    fromMemberName: 'AMIT SHARMA',
+    amount: 20
   },
   {
-    incomeDate: '04-02-2026',
+    incomeDate: '10-02-2024 12:57:37pm',
     memberId: 'MM101015',
-    memberName: 'SADDAM SHAIKH',
+    memberName: 'ANAMIKA SAXENA',
     levelNo: 1,
-    amount: 20,
-    tdsPercent: 5,
-    tdsAmount: 1,
-    netAmount: 19
+    levelId: 'MM101015',
+    fromMemberName: 'SADDAM SHAIKH',
+    amount: 20
   },
   {
-    incomeDate: '04-02-2026',
+    incomeDate: '10-02-2024 12:57:37pm',
     memberId: 'MM101016',
-    memberName: 'THOMAS ANTHONY',
+    memberName: 'ANAMIKA SAXENA',
     levelNo: 2,
-    amount: 20,
-    tdsPercent: 5,
-    tdsAmount: 1,
-    netAmount: 19
+    levelId: 'MM101016',
+    fromMemberName: 'THOMAS ANTHONY',
+    amount: 20
   },
   {
-    incomeDate: '04-01-2026',
+    incomeDate: '05-02-2024 12:57:37pm',
     memberId: 'MM101017',
-    memberName: 'RAZMAN HUSSAIN',
+    memberName: 'ANAMIKA SAXENA',
     levelNo: 1,
-    amount: 20,
-    tdsPercent: 5,
-    tdsAmount: 1,
-    netAmount: 19
+    levelId: 'MM101017',
+    fromMemberName: 'RAZMAN HUSSAIN',
+    amount: 20
   }
 ];

@@ -3,18 +3,26 @@
 .level-income-filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 12px 0;
+  gap: 10px;
+  margin: 14px 0;
 }
 
 .level-income-filters input,
 .level-income-filters select {
   border: 1px solid #ccd3db;
-  border-radius: 8px;
-  padding: 8px 10px;
-  min-height: 38px;
-  font-size: 12px;
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-height: 42px;
+  font-size: 13px;
   background: #fff;
+  color: #2d3748;
+}
+
+.table-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
 .level-income-total-row td {
@@ -23,7 +31,7 @@
 }
 
 .level-income-total-row td:first-child,
-.level-income-total-row td:nth-child(7) {
+.level-income-total-row td:nth-child(8) {
   text-align: right;
 }
 
@@ -64,5 +72,11 @@
 
   .level-income-filters .user-btn-blue {
     width: 100%;
+  }
+}
+
+@media (max-width: 620px) {
+  .user-table {
+    min-width: 760px;
   }
 }

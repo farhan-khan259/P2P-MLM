@@ -40,6 +40,12 @@ import GivenHelp from './Components/UserPanel/Donations/GivenHelp';
 import PaymentRequestHistory from './Components/UserPanel/Payment/PaymentRequestHistory/PaymentRequestHistory';
 import UserLevelIncome from './Components/UserPanel/Income/LevelIncome/LevelIncome';
 import DonationsIncome from './Components/UserPanel/Income/DonationsIncome/DonationsIncome';
+import DatewiseLevelIncome from './Components/UserPanel/Income/DatewiseLevelIncome/DatewiseLevelIncome';
+import RepurchaseIncome from './Components/UserPanel/Income/RepurchaseIncome/RepurchaseIncome';
+import DatewiseRepurchaseIncome from './Components/UserPanel/Income/DatewiseRepurchaseIncome/DatewiseRepurchaseIncome';
+import AdminRepurchaseIncome from './Components/Admin/Income/RepurchaseIncome/RepurchaseIncome';
+import AdminDatewiseRepurchaseIncome from './Components/Admin/Income/DatewiseRepurchaseIncome/DatewiseRepurchaseIncome';
+import AdminDatewiseLevelIncome from './Components/Admin/Income/DatewiseLevelIncome/DatewiseLevelIncome';
 import CreateTicket from './Components/UserPanel/SupportTicket/CreateTicket/CreateTicket';
 import UserSignOut from './Components/UserPanel/SignOut/UserSignOut';
 import PublicLayout from './Components/Public/Common/PublicLayout';
@@ -51,12 +57,12 @@ import Gallery from './Components/Public/Gallery/Gallery';
 import Contact from './Components/Public/Contact/Contact';
 import Register from './Components/Public/Register/Register';
 import AllMembersList from './Components/Admin/Members/AllMembersList/AllMembersList';
-import DatewiseLevelIncome from './Components/UserPanel/Income/DatewiseLevelIncome/DatewiseLevelIncome';
 import ReceivedHelp from './Components/UserPanel/Payment/PaymentRequest/ReceivedHelp';
 import TransactionHistory from './Components/UserPanel/Transactions/TransactionHistory/TransactionHistory';
 import WelcomeLetter from './Components/UserPanel/PlanChartLetters/WelcomeLetter/WelcomeLetter';
 import JoiningPackage from './Components/UserPanel/Product/JoiningPackage/JoiningPackage';
 import ShoppingProducts from './Components/UserPanel/Product/ShoppingProducts/ShoppingProducts';
+import RepurchaseProducts from './Components/UserPanel/Product/RepurchaseProducts/RepurchaseProducts';
 import JoiningPackageAdmin from './Components/Admin/ProductsPackage/JoiningPackage/JoiningPackageAdmin';
 import ShoppingProductsAdmin from './Components/Admin/ProductsPackage/ShoppingProducts/ShoppingProductsAdmin';
 import AddJoiningPackage from './Components/Admin/ProductsPackage/JoiningPackage/AddJoiningPackage/AddJoiningPackage';
@@ -107,6 +113,8 @@ function App() {
           <Route path="income-report/level-income" element={<UserLevelIncome />} />
           <Route path="income-report/donations-income" element={<DonationsIncome />} />
           <Route path="income-report/Datewise-level-income" element={<DatewiseLevelIncome />} />
+          <Route path="income-report/Repurchase-income" element={<RepurchaseIncome />} />
+          <Route path="income-report/Datewise-Repurchase-income" element={<DatewiseRepurchaseIncome />} />
 
           <Route path="donations/given-help" element={<GivenHelp />} />
           <Route path="donations/recieved-help" element={<ReceivedHelp />} />
@@ -114,6 +122,7 @@ function App() {
 
           <Route path="product/joining-package" element={<JoiningPackage />} />
           <Route path="product/shopping-products" element={<ShoppingProducts />} />
+          <Route path="product/repurchase-products" element={<RepurchaseProducts />} />
           <Route path="product/product-list" element={<JoiningPackage />} />
           <Route path="product/product-order" element={<ShoppingProducts />} />
           <Route path="product/delivery-status" element={<UserBlankPage />} />
@@ -174,7 +183,10 @@ function App() {
           <Route path="network-reports/upgrade-reports" element={<Navigate to="/income-reports/donation-report" replace />} />
 
           <Route path="income-reports/level-income-reports" element={<LevelIncome />} />
+          <Route path="income-reports/datewise-level-income" element={<AdminDatewiseLevelIncome />} />
           <Route path="income-reports/donation-report" element={<DonationReport />} />
+          <Route path="income-report/Repurchase-income" element={<AdminRepurchaseIncome />} />
+          <Route path="income-report/Datewise-Repurchase-income" element={<AdminDatewiseRepurchaseIncome />} />
           <Route path="income-report/Tds-Report" element={<TdsReport />} />
 
           <Route path="deposits/pending-deposits" element={<PendingDeposits />} />

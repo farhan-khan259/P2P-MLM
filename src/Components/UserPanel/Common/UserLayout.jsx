@@ -29,6 +29,8 @@ const menuItems = [
     children: [
       { label: 'Level Income', to: '/user/income-report/level-income' },
       { label: 'Datewise Level Income', to: '/user/income-report/Datewise-level-income' },
+      { label: 'Repurchase Income', to: '/user/income-report/Repurchase-income' },
+      { label: 'Datewise Repurchase Income', to: '/user/income-report/Datewise-Repurchase-income' },
       { label: 'Donations Income', to: '/user/income-report/donations-income' }
     ]
   },
@@ -46,6 +48,7 @@ const menuItems = [
     children: [
       { label: 'Joining Package', to: '/user/product/joining-package' },
       { label: 'Shopping Products', to: '/user/product/shopping-products' },
+      { label: 'Repurchase Products', to: '/user/product/repurchase-products' },
       { label: 'Delivery Status', to: '/user/product/delivery-status' }
     ]
   },

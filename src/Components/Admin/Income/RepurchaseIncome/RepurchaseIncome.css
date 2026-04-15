@@ -44,7 +44,7 @@
 }
 
 .tds-table {
-  min-width: 1260px;
+  min-width: 980px;
 }
 
 @media (max-width: 768px) {

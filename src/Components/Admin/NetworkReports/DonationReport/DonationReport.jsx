@@ -166,7 +166,7 @@ function DonationReport() {
 
   return (
     <div>
-      <h1 className="page-title" style={{ fontSize: '42px', marginBottom: '14px' }}>Donation Report</h1>
+      <h2 className="section-title tds-screen-title">Donation Report</h2>
 
       <div className="panel" style={{ borderRadius: '28px', padding: '24px' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>

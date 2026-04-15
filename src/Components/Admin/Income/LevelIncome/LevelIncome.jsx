@@ -106,30 +106,35 @@ const totalNetAmount = levelIncomeRows.reduce((sum, row) => sum + row.netAmount,
 
 function LevelIncome() {
   return (
-    <div>
-      <h1 className="page-title" style={{ fontSize: '42px', marginBottom: '14px' }}>Level Income Reports</h1>
+    <div className="tds-report-page">
+      <h2 className="section-title tds-screen-title">Level Income Reports</h2>
 
-      <div className="panel" style={{ borderRadius: '28px', padding: '24px' }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>
-          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="INCOME DATE" />
-          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="MEMBER ID" />
-          <input className="text-input" style={{ maxWidth: '140px' }} placeholder="MEMBER NAME" />
-          <input className="text-input" style={{ maxWidth: '110px' }} placeholder="UNLOCK LEVEL" />
-          <input className="text-input" style={{ maxWidth: '130px' }} placeholder="FROM MEMBER ID" />
-          <input className="text-input" style={{ maxWidth: '150px' }} placeholder="FROM MEMBER NAME" />
-          <input className="text-input" style={{ maxWidth: '90px' }} placeholder="LEVEL NO" />
-          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="START DATE" />
-          <input className="text-input" style={{ maxWidth: '110px' }} placeholder="END DATE" />
-          <select className="select-input" style={{ maxWidth: '84px' }} defaultValue="10">
+      <section className="panel tds-panel">
+        <div className="btn-row tds-export-row">
+          <button type="button" className="btn-outline tds-export-btn">XLS</button>
+          <button type="button" className="btn-outline tds-export-btn">PDF</button>
+        </div>
+
+        <div className="tds-filter-row">
+          <input className="text-input tds-filter-input" placeholder="INCOME DATE" />
+          <input className="text-input tds-filter-input" placeholder="MEMBER ID" />
+          <input className="text-input tds-filter-input" placeholder="MEMBER NAME" />
+          <input className="text-input tds-filter-input" placeholder="UNLOCK LEVEL" />
+          <input className="text-input tds-filter-input" placeholder="FROM MEMBER ID" />
+          <input className="text-input tds-filter-input" placeholder="FROM MEMBER NAME" />
+          <input className="text-input tds-filter-input" placeholder="LEVEL NO" />
+          <input className="text-input tds-filter-input" placeholder="START DATE" />
+          <input className="text-input tds-filter-input" placeholder="END DATE" />
+          <select className="select-input tds-filter-input tds-size-select" defaultValue="10">
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-          <button className="btn-primary" type="button">Search</button>
+          <button className="btn-primary tds-search-btn" type="button">Search</button>
         </div>
 
-        <div className="table-wrap">
-          <table className="data-table" style={{ minWidth: '1260px' }}>
+        <div className="table-wrap tds-table-wrap">
+          <table className="data-table tds-table">
             <thead>
               <tr>
                 <th>S.NO</th>
@@ -188,7 +193,7 @@ function LevelIncome() {
             <button className="page-btn">&raquo;</button>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
