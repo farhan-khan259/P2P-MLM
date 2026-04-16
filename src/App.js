@@ -67,6 +67,9 @@ import JoiningPackageAdmin from './Components/Admin/ProductsPackage/JoiningPacka
 import ShoppingProductsAdmin from './Components/Admin/ProductsPackage/ShoppingProducts/ShoppingProductsAdmin';
 import AddJoiningPackage from './Components/Admin/ProductsPackage/JoiningPackage/AddJoiningPackage/AddJoiningPackage';
 import AddShoppingProducts from './Components/Admin/ProductsPackage/ShoppingProducts/AddShoppingProducts/AddShoppingProducts';
+import EpinFranchiseList from './Components/UserPanel/ePin/EpinFranchiseList/EpinFranchiseList';
+import AdminEpinFranchiseList from './Components/Admin/ePin/EpinFranchiseList/EpinFranchiseList';
+import AddEpinFranchise from './Components/Admin/ePin/AddEpinFranchise/AddEpinFranchise';
 import PendingDeposits from './Components/Admin/Deposits/PendingDeposits/PendingDeposits';
 import SuccessfulDeposits from './Components/Admin/Deposits/SuccessfulDeposits/SuccessfulDeposits';
 import RejectedDeposits from './Components/Admin/Deposits/RejectedDeposits/RejectedDeposits';
@@ -135,6 +138,7 @@ function App() {
           <Route path="epin/transfer-epin" element={<TransferEPin />} />
           <Route path="epin/epin-transfer-history" element={<EPinTransferHistory />} />
           <Route path="epin/deleted-epin" element={<DeletedEPin />} />
+          <Route path="epin-franchise/epin-franchise-list" element={<EpinFranchiseList />} />
 
           <Route path="transactions/main-wallet" element={<UserBlankPage />} />
           <Route path="transactions/transaction-history" element={<TransactionHistory />} />
@@ -166,6 +170,8 @@ function App() {
           <Route path="epin/generate-epin" element={<GenerateEPin />} />
           <Route path="epin/unused-epin" element={<UnusedEPin />} />
           <Route path="epin/used-epin" element={<UsedEPin />} />
+          <Route path="epin/epin-franchise" element={<AdminEpinFranchiseList />} />
+          <Route path="epin/epin-franchise/add-epin-franchise" element={<AddEpinFranchise />} />
           {/* Removed Admin ePin components from user panel routes. Use only user panel ePin components. */}
 
           <Route path="members/kyc-request" element={<KYCRequest />} />

@@ -7,13 +7,11 @@ const levelIncomeRows = [
     memberId: 'MM101010',
     memberName: 'AMBIKA SALUNKE',
     unlockLevel: 1,
-    fromMemberId: 'MM101011',
+    levelId: 'MM101011',
     fromMemberName: 'SONALI SHIRKE',
     levelNo: 1,
     amount: 20,
-    tdsPercent: '5%',
-    tdsAmount: 1,
-    netAmount: 19
+   
   },
   {
     sNo: 2,
@@ -21,13 +19,11 @@ const levelIncomeRows = [
     memberId: 'MM101011',
     memberName: 'RAJKIRAN SALUKE',
     unlockLevel: 9,
-    fromMemberId: 'MM101012',
+    levelId: 'MM101012',
     fromMemberName: 'AMBIKA SALUNKE',
     levelNo: 9,
     amount: 20,
-    tdsPercent: '5%',
-    tdsAmount: 1,
-    netAmount: 19
+ 
   },
   {
     sNo: 3,
@@ -35,13 +31,11 @@ const levelIncomeRows = [
     memberId: 'MM101012',
     memberName: 'AMIT SHARMA',
     unlockLevel: 2,
-    fromMemberId: 'MM101013',
+    levelId: 'MM101013',
     fromMemberName: 'RAJKIRAN SALUKE',
     levelNo: 2,
     amount: 20,
-    tdsPercent: '5%',
-    tdsAmount: 1,
-    netAmount: 19
+   
   },
   {
     sNo: 4,
@@ -49,13 +43,11 @@ const levelIncomeRows = [
     memberId: 'MM101013',
     memberName: 'SADDAM SHAIKH',
     unlockLevel: 1,
-    fromMemberId: 'MM101014',
+    levelId: 'MM101014',
     fromMemberName: 'AMIT SHARMA',
     levelNo: 1,
     amount: 20,
-    tdsPercent: '5%',
-    tdsAmount: 1,
-    netAmount: 19
+  
   },
   {
     sNo: 5,
@@ -63,13 +55,11 @@ const levelIncomeRows = [
     memberId: 'MM101014',
     memberName: 'THOMAS ANTHONY',
     unlockLevel: 1,
-    fromMemberId: 'MM101015',
+    levelId: 'MM101015',
     fromMemberName: 'SADDAM SHAIKH',
     levelNo: 1,
     amount: 20,
-    tdsPercent: '5%',
-    tdsAmount: 1,
-    netAmount: 19
+   
   },
   {
     sNo: 6,
@@ -77,13 +67,11 @@ const levelIncomeRows = [
     memberId: 'MM101015',
     memberName: 'RAZMAN HUSSAIN',
     unlockLevel: 2,
-    fromMemberId: 'MM101016',
+    levelId: 'MM101016',
     fromMemberName: 'THOMAS ANTHONY',
     levelNo: 1,
     amount: 20,
-    tdsPercent: '5%',
-    tdsAmount: 1,
-    netAmount: 19
+    
   },
   {
     sNo: 7,
@@ -91,13 +79,11 @@ const levelIncomeRows = [
     memberId: 'MM101016',
     memberName: 'SAMEER MIRZA',
     unlockLevel: 1,
-    fromMemberId: 'MM101017',
+    levelId: 'MM101017',
     fromMemberName: 'RAZMAN HUSSAIN',
     levelNo: 1,
     amount: 20,
-    tdsPercent: '5%',
-    tdsAmount: 1,
-    netAmount: 19
+  
   }
 ];
 
@@ -116,13 +102,11 @@ function LevelIncome() {
         </div>
 
         <div className="tds-filter-row">
-          <input className="text-input tds-filter-input" placeholder="INCOME DATE" />
+          
           <input className="text-input tds-filter-input" placeholder="MEMBER ID" />
           <input className="text-input tds-filter-input" placeholder="MEMBER NAME" />
-          <input className="text-input tds-filter-input" placeholder="UNLOCK LEVEL" />
-          <input className="text-input tds-filter-input" placeholder="FROM MEMBER ID" />
-          <input className="text-input tds-filter-input" placeholder="FROM MEMBER NAME" />
           <input className="text-input tds-filter-input" placeholder="LEVEL NO" />
+            <input className="text-input tds-filter-input" placeholder="LEVEL ID" />
           <input className="text-input tds-filter-input" placeholder="START DATE" />
           <input className="text-input tds-filter-input" placeholder="END DATE" />
           <select className="select-input tds-filter-input tds-size-select" defaultValue="10">
@@ -142,13 +126,11 @@ function LevelIncome() {
                 <th>MEMBER ID</th>
                 <th>MEMBER NAME</th>
                 <th>UNLOCK LEVEL</th>
-                <th>FROM MEMBER ID</th>
+               <th>LEVEL NO</th>
+                <th>LEVEL ID</th>
                 <th>FROM MEMBER NAME</th>
-                <th>LEVEL NO</th>
                 <th>AMOUNT</th>
-                <th>TDS%</th>
-                <th>TDS AMOUNT</th>
-                <th>NET AMOUNT</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -159,21 +141,15 @@ function LevelIncome() {
                   <td>{row.memberId}</td>
                   <td>{row.memberName}</td>
                   <td>{row.unlockLevel}</td>
-                  <td>{row.fromMemberId}</td>
-                  <td>{row.fromMemberName}</td>
                   <td>{row.levelNo}</td>
+                  <td>{row.levelId}</td>
+                  <td>{row.fromMemberName}</td>
+                 
                   <td>{row.amount}</td>
-                  <td>{row.tdsPercent}</td>
-                  <td>{row.tdsAmount}</td>
-                  <td>{row.netAmount}</td>
+                 
                 </tr>
               ))}
-              <tr>
-                <td colSpan="8" style={{ fontWeight: 700, textAlign: 'right' }}>TOTAL AMOUNT</td>
-                <td>{totalAmount}</td>
-                <td colSpan="2" style={{ fontWeight: 700, textAlign: 'right' }}>TOTAL NET AMOUNT</td>
-                <td>{totalNetAmount}</td>
-              </tr>
+             
             </tbody>
           </table>
         </div>

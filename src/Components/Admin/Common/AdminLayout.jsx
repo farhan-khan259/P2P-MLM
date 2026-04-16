@@ -14,7 +14,8 @@ const menuItems = [
       { label: 'Used ePin', to: '/epin/used-epin' },
       { label: 'All ePin', to: '/epin/all-epin' },
       { label: 'Delete ePin', to: '/epin/delete-epin' },
-      { label: 'Transfer History', to: '/epin/transfer-history' }
+      { label: 'Transfer History', to: '/epin/transfer-history' },
+      { label: 'ePin Franchise', to: '/epin/epin-franchise' }
     ]
   },
   {
