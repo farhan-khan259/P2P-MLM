@@ -70,25 +70,14 @@
   max-width: 380px;
   aspect-ratio: 1 / 1;
   border-radius: 28px;
-  background: radial-gradient(circle at 30% 30%, #111827 0%, transparent 15%),
-    radial-gradient(circle at 70% 30%, #111827 0%, transparent 15%),
-    linear-gradient(90deg, #111827 0 4%, transparent 4% 7%, #111827 7% 11%, transparent 11% 14%, #111827 14% 16%),
-    linear-gradient(180deg, #111827 0 4%, transparent 4% 7%, #111827 7% 11%, transparent 11% 14%, #111827 14% 16%);
-  background-size: 32px 32px;
-  position: relative;
+  object-fit: cover;
 }
 
-.add-epin-qr-image::after {
-  content: 'IHH';
-  position: absolute;
-  inset: 38%;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: #fff;
-  color: #111827;
-  font-weight: 700;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+.add-epin-qr-image,
+.add-epin-qr-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .add-epin-qr-actions {

@@ -1,3 +1,4 @@
+import qrCode from '../../../../Assets/Pictures/QR-Code.png';
 import './AddEpinFranchise.css';
 
 const franchise = {
@@ -20,7 +21,7 @@ function AddEpinFranchise() {
           <div className="add-epin-grid">
             <div className="add-epin-qr-column">
               <div className="add-epin-qr-box">
-                <div className="add-epin-qr-image" aria-hidden="true" />
+                <img src={qrCode} alt="Franchise QR code" className="add-epin-qr-image" />
               </div>
               <div className="add-epin-qr-actions">
                 <button type="button" className="btn-secondary add-epin-btn">SELECT</button>

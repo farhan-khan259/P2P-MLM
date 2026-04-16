@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import qrCode from '../../../../Assets/Pictures/QR-Code.png';
 import './EpinFranchiseList.css';
 
 const CopyIcon = ({ onClick }) => (
@@ -138,8 +139,7 @@ function EpinFranchiseList() {
               <article key={item.id} className="franchise-card">
                 <div className="franchise-card-image">
                   <div className="qr-frame">
-                    <div className="qr-blocks" />
-                    <div className="qr-logo">IHH</div>
+                    <img src={qrCode} alt="Franchise QR code" className="franchise-qr-image" />
                   </div>
                 </div>
                 <div className="franchise-card-details">
