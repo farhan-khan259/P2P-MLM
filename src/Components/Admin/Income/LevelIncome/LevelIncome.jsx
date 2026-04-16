@@ -87,9 +87,6 @@ const levelIncomeRows = [
   }
 ];
 
-const totalAmount = levelIncomeRows.reduce((sum, row) => sum + row.amount, 0);
-const totalNetAmount = levelIncomeRows.reduce((sum, row) => sum + row.netAmount, 0);
-
 function LevelIncome() {
   return (
     <div className="tds-report-page">

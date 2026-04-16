@@ -152,7 +152,10 @@ function EpinFranchiseList() {
                   </div>
                   <div className="franchise-upi-row">
                     <span className="franchise-upi">{item.upi}</span>
-                    <CopyIcon onClick={() => handleCopy(item.upi, item.id)} />
+                    <div className="franchise-copy-group">
+                      <CopyIcon onClick={() => handleCopy(item.upi, item.id)} />
+                      {copiedId === item.id && <span className="copy-notice">Copied</span>}
+                    </div>
                   </div>
                   <button type="button" className="franchise-share-btn">
                     Share Payment Screen Shot
