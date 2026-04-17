@@ -1,10 +1,12 @@
 import '../../Common/UserLayout.css';
 import './ShoppingProducts.css';
-import watch from '../../../../Assets/Pictures/ai1.jpeg';
-import handfree from '../../../../Assets/Pictures/ai2.jpeg';
-import watchultra from '../../../../Assets/Pictures/ai3.jpeg';
-import laptop from '../../../../Assets/Pictures/ai4.jpeg';
-import airpods from '../../../../Assets/Pictures/ai5.jpeg';
+import watch from '../../../../Assets/Pictures/watch.jpeg';
+import handfree from '../../../../Assets/Pictures/headphones.jpeg';
+import goldhandfree from '../../../../Assets/Pictures/goldheadphones.jpeg';
+import watchultra from '../../../../Assets/Pictures/smartwatch.jpeg';
+import laptop from '../../../../Assets/Pictures/laptop.jpeg';
+import airpods from '../../../../Assets/Pictures/airpods.jpeg';
+
 
 const shoppingProducts = [
   {
@@ -77,7 +79,7 @@ const shoppingProducts = [
     stock: 'In Stock',
     mrp: 375,
     price: 300,
-    image: handfree
+    image: goldhandfree
   },
   {
     id: 9,

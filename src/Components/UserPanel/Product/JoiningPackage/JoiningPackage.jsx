@@ -1,15 +1,15 @@
 import '../../Common/UserLayout.css';
 import './JoiningPackage.css';
-import saliconpads from '../../../../Assets/Pictures/ai1.jpeg';
-import elconanionpads from '../../../../Assets/Pictures/ai2.jpeg';
-import calciumdietry from '../../../../Assets/Pictures/ai3.jpeg';
-import diabecare from '../../../../Assets/Pictures/ai4.jpeg';
-import omega3 from '../../../../Assets/Pictures/ai5.jpeg';
-import watchultra from '../../../../Assets/Pictures/ai6.jpeg';
-import watch from '../../../../Assets/Pictures/ai7.jpeg';
-import handfree from '../../../../Assets/Pictures/ai8.jpeg';
-import headphones from '../../../../Assets/Pictures/ai9.jpeg';
-import laptop from '../../../../Assets/Pictures/ai10.jpeg';
+import saliconpads from '../../../../Assets/Pictures/pads.jpeg';
+import elconanionpads from '../../../../Assets/Pictures/fourpads.jpeg';
+import calciumdietry from '../../../../Assets/Pictures/calcium.jpeg';
+import diabecare from '../../../../Assets/Pictures/diabecare.jpeg';
+import omega3 from '../../../../Assets/Pictures/omega3.jpeg';
+import watchultra from '../../../../Assets/Pictures/smartwatch.jpeg';
+import watch from '../../../../Assets/Pictures/watch.jpeg';
+import handfree from '../../../../Assets/Pictures/goldheadphones.jpeg';
+import headphones from '../../../../Assets/Pictures/headphones.jpeg';
+import laptop from '../../../../Assets/Pictures/laptop.jpeg';
 
 const joiningProducts = [
   {
