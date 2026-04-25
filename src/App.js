@@ -1,3 +1,4 @@
+import RepurchaseProductsAdmin from './Components/Admin/ProductsPackage/RepurchaseProducts/RepurchaseProductsAdmin';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import AdminLayout from './Components/Admin/Common/AdminLayout';
@@ -67,6 +68,7 @@ import JoiningPackageAdmin from './Components/Admin/ProductsPackage/JoiningPacka
 import ShoppingProductsAdmin from './Components/Admin/ProductsPackage/ShoppingProducts/ShoppingProductsAdmin';
 import AddJoiningPackage from './Components/Admin/ProductsPackage/JoiningPackage/AddJoiningPackage/AddJoiningPackage';
 import AddShoppingProducts from './Components/Admin/ProductsPackage/ShoppingProducts/AddShoppingProducts/AddShoppingProducts';
+import AddRepurchaseProducts from './Components/Admin/ProductsPackage/RepurchaseProducts/AddRepurchaseProducts/AddRepurchaseProducts';
 import EpinFranchiseList from './Components/UserPanel/ePin/EpinFranchiseList/EpinFranchiseList';
 import AdminEpinFranchiseList from './Components/Admin/ePin/EpinFranchiseList/EpinFranchiseList';
 import AddEpinFranchise from './Components/Admin/ePin/AddEpinFranchise/AddEpinFranchise';
@@ -204,6 +206,8 @@ function App() {
           <Route path="products-package/Joining-Package/add-new" element={<AddJoiningPackage />} />
           <Route path="products-package/shopping-products" element={<ShoppingProductsAdmin />} />
           <Route path="products-package/shopping-products/add-new" element={<AddShoppingProducts />} />
+          <Route path="products-package/repurchase-products" element={<RepurchaseProductsAdmin />} />
+          <Route path="products-package/repurchase-products/add-new" element={<AddRepurchaseProducts />} />
           <Route path="products-package/add-products" element={<JoiningPackageAdmin />} />
           <Route path="products-package/modify-product" element={<ShoppingProductsAdmin />} />
           <Route path="products-package/rearrange-products" element={<AdminBlankPage />} />
