@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const shoppingRows = [
   {
     id: 1,
+    productCode: 'SP101',
     productName: 'Foce Watch',
     category: 'HEALTHCARE',
     hsnCode: '1001',
@@ -19,6 +20,7 @@ const shoppingRows = [
   },
   {
     id: 2,
+    productCode: 'SP102',
     productName: 'Head Phone',
     category: 'MENSWARE',
     hsnCode: '0102',
@@ -33,6 +35,7 @@ const shoppingRows = [
   },
   {
     id: 3,
+    productCode: 'SP103',
     productName: 'Smart Watch',
     category: 'HEALTHCARE',
     hsnCode: '1003',
@@ -47,6 +50,7 @@ const shoppingRows = [
   },
   {
     id: 4,
+    productCode: 'SP104',
     productName: 'Bose Earphones',
     category: 'ELECTRONICS',
     hsnCode: '1004',
@@ -61,6 +65,7 @@ const shoppingRows = [
   },
   {
     id: 5,
+    productCode: 'SP105',
     productName: 'Acer Laptop',
     category: 'ELECTRONICS',
     hsnCode: '2075',
@@ -75,6 +80,7 @@ const shoppingRows = [
   },
   {
     id: 6,
+    productCode: 'SP106',
     productName: 'HP Laptop',
     category: 'ELECTRONICS',
     hsnCode: '4445',
@@ -138,6 +144,7 @@ function ShoppingProductsAdmin() {
             <thead>
               <tr>
                 <th>S.NO</th>
+                <th>PRODUCT CODE</th>
                 <th>PRODUCT NAME</th>
                 <th>IMAGE</th>
                 <th>CATEGORY</th>
@@ -147,7 +154,7 @@ function ShoppingProductsAdmin() {
                 <th>DIS(%)</th>
                 <th>GST(%)</th>
                 <th>SHIPPING</th>
-                <th>LEVEL PLAN</th>
+                <th>B.V POINT</th>
                 <th>QUANTITY</th>
                 <th>ACTION</th>
                 <th>STATUS</th>
@@ -157,6 +164,7 @@ function ShoppingProductsAdmin() {
               {shoppingRows.map((row) => (
                 <tr key={row.id}>
                   <td>{row.id}</td>
+                  <td>{row.productCode && row.productCode.toUpperCase()}</td>
                   <td>{row.productName}</td>
                   <td>
                     <span className="admin-products-image-placeholder">IMG</span>

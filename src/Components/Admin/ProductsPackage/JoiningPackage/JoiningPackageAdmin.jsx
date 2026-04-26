@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const joiningPackageRows = [
   {
     id: 1,
+    productCode: 'JP101',
     productName: 'SANITORY PADS - 6',
     category: 'HEALTHCARE',
     hsnCode: '1001',
@@ -19,6 +20,7 @@ const joiningPackageRows = [
   },
   {
     id: 2,
+    productCode: 'JP102',
     productName: 'SANITORY PADS - 32',
     category: 'MENSWARE',
     hsnCode: '0102',
@@ -33,6 +35,7 @@ const joiningPackageRows = [
   },
   {
     id: 3,
+    productCode: 'JP103',
     productName: 'PROTEIN POWDER',
     category: 'HEALTHCARE',
     hsnCode: '1003',
@@ -47,6 +50,7 @@ const joiningPackageRows = [
   },
   {
     id: 4,
+    productCode: 'JP104',
     productName: 'BONE FIT',
     category: 'ELECTRONICS',
     hsnCode: '1004',
@@ -61,6 +65,7 @@ const joiningPackageRows = [
   },
   {
     id: 5,
+    productCode: 'JP105',
     productName: 'DIABE CARE',
     category: 'ELECTRONICS',
     hsnCode: '2075',
@@ -75,6 +80,7 @@ const joiningPackageRows = [
   },
   {
     id: 6,
+    productCode: 'JP106',
     productName: 'CALCIUM',
     category: 'ELECTRONICS',
     hsnCode: '4445',
@@ -138,7 +144,8 @@ function JoiningPackageAdmin() {
             <thead>
               <tr>
                 <th>S.NO</th>
-                <th>JOINING PACKAGE</th>
+                <th>PKG CODE</th>
+                <th>PACKAGE NAME</th>
                 <th>IMAGE</th>
                 <th>CATEGORY</th>
                 <th>HSN/CODE</th>
@@ -147,7 +154,7 @@ function JoiningPackageAdmin() {
                 <th>DIS(%)</th>
                 <th>GST(%)</th>
                 <th>SHIPPING</th>
-                <th>LEVEL PLAN</th>
+                <th>LEVEL POINT</th>
                 <th>QUANTITY</th>
                 <th>ACTION</th>
                 <th>STATUS</th>
@@ -157,6 +164,7 @@ function JoiningPackageAdmin() {
               {joiningPackageRows.map((row) => (
                 <tr key={row.id}>
                   <td>{row.id}</td>
+                  <td>{row.hsnCode ? `PKG${row.hsnCode}` : ''}</td>
                   <td>{row.productName}</td>
                   <td>
                     <span className="admin-products-image-placeholder">IMG</span>
