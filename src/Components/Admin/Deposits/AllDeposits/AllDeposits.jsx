@@ -1,4 +1,3 @@
-import { useMemo, useState } from 'react';
 import './AllDeposits.css';
 
 const allDepositRows = [
@@ -38,8 +37,8 @@ const allDepositRows = [
     paymentMode: 'Google Pay',
     amount: '250',
     utrNumber: '0445458555555',
-    status: 'Succeed',
-    remark: '20 pins'
+    status: 'Approve',
+    remark: '-'
   },
   {
     sno: 4,
@@ -95,56 +94,61 @@ const allDepositRows = [
   }
 ];
 
-function AllDeposits() {
-  const [filters, setFilters] = useState({ memberId: '', memberName: '', transactionId: '' });
-  const [pageSize, setPageSize] = useState('10');
+const actionButtons = [
+  { className: 'withdrawal-action-btn withdrawal-action-btn--approve', label: 'Approve', icon: '◌' },
+  { className: 'withdrawal-action-btn withdrawal-action-btn--succeed', label: 'Succeed', icon: '✓' },
+  { className: 'withdrawal-action-btn withdrawal-action-btn--reject', label: 'Reject', icon: '✕' },
+  { className: 'withdrawal-action-btn withdrawal-action-btn--reset', label: 'Change Status', icon: '↻' }
+];
 
-  const rows = useMemo(() => {
-    const memberId = filters.memberId.toLowerCase();
-    const memberName = filters.memberName.toLowerCase();
-
-    return allDepositRows
-      .filter((row) => {
-        return (
-          (!memberId || row.memberId.toLowerCase().includes(memberId)) &&
-          (!memberName || row.memberName.toLowerCase().includes(memberName)) &&
-          (!filters.transactionId || row.transactionId.includes(filters.transactionId))
-        );
-      })
-      .slice(0, Number(pageSize));
-  }, [filters, pageSize]);
-
-  const onFilterChange = (key) => (event) => {
-    setFilters((prev) => ({ ...prev, [key]: event.target.value }));
-  };
-
+function renderActionButtons() {
   return (
-    <div className="all-deposits-page">
-      
-      <h2 className="section-title all-screen-title">All Deposits</h2>
+    <div className="withdrawal-action-group" aria-label="Deposit actions">
+      {actionButtons.map((button) => (
+        <button key={button.label} type="button" className={button.className} aria-label={button.label}>
+          {button.icon}
+        </button>
+      ))}
+    </div>
+  );
+}
 
-      <section className="panel all-panel">
-        <div className="btn-row all-export-row">
-          <button type="button" className="btn-outline all-export-btn">XLS</button>
-          <button type="button" className="btn-outline all-export-btn">PDF</button>
+function AllDeposits() {
+  return (
+    <div className="tds-report-page">
+      <h2 className="section-title tds-screen-title">All Deposits</h2>
+
+      <section className="panel tds-panel">
+        <div className="btn-row tds-export-row" aria-label="Export options">
+          <button type="button" className="btn-outline tds-export-btn" aria-label="Export Excel">XLS</button>
+          <button type="button" className="btn-outline tds-export-btn" aria-label="Export PDF">PDF</button>
         </div>
 
-        <div className="all-filter-row">
-          <input type="date" className="text-input all-filter-input" />
-          <input type="date" className="text-input all-filter-input" />
-          <input type="text" className="text-input all-filter-input" placeholder="Member Id" value={filters.memberId} onChange={onFilterChange('memberId')} />
-          <input type="text" className="text-input all-filter-input" placeholder="Member Name" value={filters.memberName} onChange={onFilterChange('memberName')} />
-          <input type="text" className="text-input all-filter-input" placeholder="Transaction ID" value={filters.transactionId} onChange={onFilterChange('transactionId')} />
-          <select className="select-input all-filter-input all-size-select" value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
+        <div className="tds-filter-row">
+          <input className="text-input tds-filter-input" placeholder="Start Date" />
+          <input className="text-input tds-filter-input" placeholder="End Date" />
+          <input className="text-input tds-filter-input" placeholder="Member Id" />
+          <input className="text-input tds-filter-input" placeholder="Member Name" />
+          <input className="text-input tds-filter-input" placeholder="Transaction ID" />
+          <input className="text-input tds-filter-input" placeholder="Payment Mode" />
+          <input className="text-input tds-filter-input" placeholder="Utr Number" />
+          <select className="select-input tds-filter-input" defaultValue="">
+            <option value="">Status</option>
+            <option value="Pending">Pending</option>
+            <option value="Approve">Approve</option>
+            <option value="Succeed">Succeed</option>
+            <option value="Rejected">Rejected</option>
           </select>
-          <button type="button" className="btn-primary all-search-btn">Search</button>
+          <select className="select-input tds-filter-input tds-size-select" defaultValue="10">
+            <option value="10">10/50/100</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          <button className="btn-primary tds-search-btn" type="button">SERCH</button>
         </div>
 
-        <div className="table-wrap all-table-wrap">
-          <table className="data-table all-table">
+        <div className="table-wrap tds-table-wrap">
+          <table className="data-table tds-table">
             <thead>
               <tr>
                 <th>S.no</th>
@@ -163,7 +167,7 @@ function AllDeposits() {
               </tr>
             </thead>
             <tbody>
-              {rows.map((row) => (
+              {allDepositRows.map((row) => (
                 <tr key={`${row.sno}-${row.transactionId}`}>
                   <td>{row.sno}</td>
                   <td>{row.depositDate}</td>
@@ -172,25 +176,19 @@ function AllDeposits() {
                   <td>{row.mobileNo}</td>
                   <td>{row.transactionId}</td>
                   <td>{row.paymentMode}</td>
-                  <td>{row.amount}</td>
+                  <td>{Number(row.amount).toFixed(2)}</td>
                   <td>{row.utrNumber}</td>
-                  <td><button type="button" className="all-slip-btn">VIEW</button></td>
+                  <td><button type="button" className="deposit-slip-btn">VIEW</button></td>
                   <td>{row.status}</td>
-                  <td>
-                    <div className="all-action-group">
-                      <button type="button" className="all-action success">✓</button>
-                      <button type="button" className="all-action change">↻</button>
-                      <button type="button" className="all-action reject">✕</button>
-                    </div>
-                  </td>
-                  <td>{row.remark}</td>
+                  <td className="action-cell">{renderActionButtons()}</td>
+                  <td className="remark-cell">{row.remark}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-       
+        
       </section>
     </div>
   );

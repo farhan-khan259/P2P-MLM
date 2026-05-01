@@ -1,13 +1,13 @@
-import './PendingDeposits.css';
+import './ApproveDeposits.css';
 
-const pendingRows = [
-  { sno: 1, depositDate: '09-03-2029', memberId: 'EL20110380', memberName: 'Nishikant Shirke', mobileNo: '7020110380', transactionId: '42545555555535', paymentMode: 'Bank Transfer', amount: '500.00', utrNumber: '42545555555535', status: 'Pending', remark: '-' },
-  { sno: 2, depositDate: '08-03-2029', memberId: 'EL75615112', memberName: 'Sonali Shirke', mobileNo: '9175615112', transactionId: '0424422424222', paymentMode: 'Phone Pe', amount: '200.00', utrNumber: '0424422424222', status: 'Pending', remark: '-' },
-  { sno: 3, depositDate: '07-03-2029', memberId: 'EL22757474', memberName: 'Amruta Salunke', mobileNo: '9922757474', transactionId: '0445458555555', paymentMode: 'Google Pay', amount: '250.00', utrNumber: '0445458555555', status: 'Pending', remark: '-' },
-  { sno: 4, depositDate: '06-03-2029', memberId: 'EL20114787', memberName: 'Megha Shirke', mobileNo: '7020114787', transactionId: '2575757575777', paymentMode: 'Upi Id', amount: '1000.00', utrNumber: '2575757575777', status: 'Pending', remark: '-' },
-  { sno: 5, depositDate: '05-03-2029', memberId: 'EL22585845', memberName: 'Snehal Marne', mobileNo: '9822585845', transactionId: '4257577555778', paymentMode: 'Upi Id', amount: '500.00', utrNumber: '4257577555778', status: 'Pending', remark: '-' },
-  { sno: 6, depositDate: '04-03-2029', memberId: 'EL22834083', memberName: 'Guddi Katale', mobileNo: '9822834083', transactionId: '5424242444544', paymentMode: 'Upi Id', amount: '1500.00', utrNumber: '5424242444544', status: 'Pending', remark: '-' },
-  { sno: 7, depositDate: '03-03-2029', memberId: 'EL22834083', memberName: 'Guddi Katale', mobileNo: '9822834083', transactionId: '0455788887553', paymentMode: 'Upi Id', amount: '1000.00', utrNumber: '0455788887553', status: 'Succeed', remark: '-' }
+const approveRows = [
+  { sno: 1, depositDate: '09-03-2029', memberId: 'EL20110380', memberName: 'Nishikant Shirke', mobileNo: '7020110380', transactionId: '42545555555535', paymentMode: 'Bank Transfer', amount: '500.00', utrNumber: '42545555555535', status: 'Approve', remark: '-' },
+  { sno: 2, depositDate: '08-03-2029', memberId: 'EL75615112', memberName: 'Sonali Shirke', mobileNo: '9175615112', transactionId: '0424422424222', paymentMode: 'Phone Pe', amount: '200.00', utrNumber: '0424422424222', status: 'Approve', remark: '-' },
+  { sno: 3, depositDate: '07-03-2029', memberId: 'EL22757474', memberName: 'Amruta Salunke', mobileNo: '9922757474', transactionId: '0445458555555', paymentMode: 'Google Pay', amount: '250.00', utrNumber: '0445458555555', status: 'Approve', remark: '-' },
+  { sno: 4, depositDate: '06-03-2029', memberId: 'EL20114787', memberName: 'Megha Shirke', mobileNo: '7020114787', transactionId: '2575757575777', paymentMode: 'Upi Id', amount: '1000.00', utrNumber: '2575757575777', status: 'Approve', remark: '-' },
+  { sno: 5, depositDate: '05-03-2029', memberId: 'EL22585845', memberName: 'Snehal Marne', mobileNo: '9822585845', transactionId: '4257577555778', paymentMode: 'Upi Id', amount: '500.00', utrNumber: '4257577555778', status: 'Approve', remark: '-' },
+  { sno: 6, depositDate: '04-03-2029', memberId: 'EL22834083', memberName: 'Guddi Katale', mobileNo: '9822834083', transactionId: '5424242444544', paymentMode: 'Upi Id', amount: '1500.00', utrNumber: '5424242444544', status: 'Approve', remark: '-' },
+  { sno: 7, depositDate: '03-03-2029', memberId: 'EL22834083', memberName: 'Guddi Katale', mobileNo: '9822834083', transactionId: '0455788887553', paymentMode: 'Upi Id', amount: '1000.00', utrNumber: '0455788887553', status: 'Approve', remark: '-' }
 ];
 
 const actionButtons = [
@@ -29,10 +29,10 @@ function renderActionButtons() {
   );
 }
 
-function PendingDeposits() {
+function ApproveDeposits() {
   return (
     <div className="tds-report-page">
-      <h2 className="section-title tds-screen-title">Pending Deposits</h2>
+      <h2 className="section-title tds-screen-title">Approve Deposits</h2>
 
       <section className="panel tds-panel">
         <div className="btn-row tds-export-row" aria-label="Export options">
@@ -83,7 +83,7 @@ function PendingDeposits() {
               </tr>
             </thead>
             <tbody>
-              {pendingRows.map((row) => (
+              {approveRows.map((row) => (
                 <tr key={`${row.sno}-${row.transactionId}`}>
                   <td>{row.sno}</td>
                   <td>{row.depositDate}</td>
@@ -108,4 +108,4 @@ function PendingDeposits() {
   );
 }
 
-export default PendingDeposits;
+export default ApproveDeposits;

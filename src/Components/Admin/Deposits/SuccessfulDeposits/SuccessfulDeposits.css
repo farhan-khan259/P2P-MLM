@@ -1,94 +1,111 @@
 @import '../../Common/AdminLayout.css';
 
-.success-deposits-page {
+.tds-report-page {
   width: 100%;
 }
 
-.success-route-title {
-  margin: 0 0 10px;
-}
-
-.success-screen-title {
+.tds-screen-title {
   margin: 0 0 16px;
 }
 
-.success-panel {
+.tds-panel {
   border-radius: 28px;
   padding: 24px;
 }
 
-.success-export-row {
+.tds-export-row {
   justify-content: flex-end;
   margin-bottom: 14px;
 }
 
-.success-export-btn {
+.tds-export-btn {
   min-width: 72px;
 }
 
-.success-filter-row {
+.tds-filter-row {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 14px;
 }
 
-.success-filter-input {
-  flex: 1 1 160px;
-  min-width: 150px;
+.tds-filter-input {
+  flex: 1 1 110px;
+  min-width: 90px;
+  font-size: 11px;
+  padding: 8px 9px;
 }
 
-.success-size-select {
+.tds-size-select {
   flex: 0 0 92px;
   min-width: 92px;
 }
 
-.success-search-btn {
-  min-width: 110px;
+.tds-search-btn {
+  min-width: 92px;
 }
 
-.success-table {
-  min-width: 1180px;
+.tds-table {
+  min-width: 1380px;
 }
 
-.success-slip-btn {
-  border: none;
+.deposit-slip-btn {
+  border: 0;
   border-radius: 3px;
   padding: 3px 7px;
-  background: #00a8e2;
+  background: #0aa2d6;
   color: #fff;
   font-size: 11px;
   font-weight: 700;
 }
 
-.success-action-group {
-  display: flex;
+.withdrawal-action-group {
+  display: inline-flex;
   gap: 4px;
+  align-items: center;
 }
 
-.success-action {
-  border: none;
-  border-radius: 3px;
-  width: 30px;
+.withdrawal-action-btn {
   height: 22px;
-  color: #fff;
-  font-weight: 700;
+  height: 22px;
+  border: 0;
+  border-radius: 2px;
+  font-size: 12px;
+  line-height: 1;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  color: #fff;
 }
 
-.success-action.success {
-  background: #69d7b4;
+.withdrawal-action-btn--approve {
+  background: #f6b26b;
+  color: #ffffff;
 }
 
-.success-action.change {
-  background: #3c90d8;
+.withdrawal-action-btn--succeed {
+  background: #d9f2dd;
+  color: #15a34a;
 }
 
-.success-action.reject {
-  background: #ea5b70;
+.withdrawal-action-btn--reject {
+  background: #ffd9d9;
+  color: #f03e3e;
 }
 
-.success-legend {
+.withdrawal-action-btn--reset {
+  background: #7f97d9;
+  color: #fff;
+}
+
+.action-cell,
+.remark-cell {
+  text-align: center;
+}
+
+.deposit-legend {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -99,26 +116,26 @@
   color: #2f2f2f;
 }
 
-.success-legend-item {
+.deposit-legend-item {
   display: inline-flex;
   align-items: center;
   gap: 6px;
 }
 
 @media (max-width: 768px) {
-  .success-panel {
+  .tds-panel {
     padding: 12px;
     border-radius: 18px;
   }
 
-  .success-filter-input,
-  .success-search-btn,
-  .success-size-select {
+  .tds-filter-input,
+  .tds-search-btn,
+  .tds-size-select {
     min-width: 100%;
     flex-basis: 100%;
   }
 
-  .success-legend {
+  .deposit-legend {
     justify-content: flex-start;
   }
 }

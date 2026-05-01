@@ -70,6 +70,7 @@ import EpinFranchiseList from './Components/UserPanel/ePin/EpinFranchiseList/Epi
 import AdminEpinFranchiseList from './Components/Admin/ePin/EpinFranchiseList/EpinFranchiseList';
 import AddEpinFranchise from './Components/Admin/ePin/AddEpinFranchise/AddEpinFranchise';
 import PendingDeposits from './Components/Admin/Deposits/PendingDeposits/PendingDeposits';
+import ApproveDeposits from './Components/Admin/Deposits/ApproveDeposits/ApproveDeposits';
 import SuccessfulDeposits from './Components/Admin/Deposits/SuccessfulDeposits/SuccessfulDeposits';
 import RejectedDeposits from './Components/Admin/Deposits/RejectedDeposits/RejectedDeposits';
 import AllDeposits from './Components/Admin/Deposits/AllDeposits/AllDeposits';
@@ -208,6 +209,7 @@ function App() {
           <Route path="income-report/Daily-Payout-Report" element={<AdminDailyPayoutReport />} />
 
           <Route path="deposits/pending-deposits" element={<PendingDeposits />} />
+          <Route path="deposits/approve-deposits" element={<ApproveDeposits />} />
           <Route path="deposits/successful-deposits" element={<SuccessfulDeposits />} />
           <Route path="deposits/rejected-deposits" element={<RejectedDeposits />} />
           <Route path="deposits/all-deposits" element={<AllDeposits />} />

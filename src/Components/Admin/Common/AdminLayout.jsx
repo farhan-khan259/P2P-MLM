@@ -57,6 +57,7 @@ const menuItems = [
     label: 'Deposits',
     children: [
       { label: 'Pending Deposits', to: '/deposits/pending-deposits' },
+      { label: 'Approve Deposits', to: '/deposits/approve-deposits' },
       { label: 'Successful Deposits', to: '/deposits/successful-deposits' },
       { label: 'Rejected Deposits', to: '/deposits/rejected-deposits' },
       { label: 'All Deposits', to: '/deposits/all-deposits' }
