@@ -1,92 +1,109 @@
-import './DatewiseLevelIncome.css';
+import './DailyPayoutReport.css';
 
-const datewiseLevelIncomeRows = [
+const adminDailyPayoutData = [
   {
     sNo: 1,
-    incomeDate: '02-03-2024 12:57:37pm',
+    incomeDate: '06-02-2026',
     memberId: 'MM101011',
     memberName: 'ANAMIKA SAXENA',
-    unlockLevel: 1,
-    levelIncome: 820.0,
-    tds: 50.0,
-    adminCharge: 0.0,
-    netPayout: 820.0
+    levelIncome: 1200.00,
+    repurchaseIncome: 1000.00,
+    grossIncome: 2200.00,
+    tds: 110.00,
+    adminCharge: 110.00,
+    netPayable: 1980.00,
+    status: 'Credited To E-wallet'
   },
   {
     sNo: 2,
-    incomeDate: '25-02-2024 12:57:37pm',
+    incomeDate: '05-02-2026',
     memberId: 'MM101012',
     memberName: 'ANIKET CHOUGULE',
-    unlockLevel: 9,
-    levelIncome: 1020.0,
-    tds: 60.0,
-    adminCharge: 0.0,
-    netPayout: 1020.0
+    levelIncome: 1000.00,
+    repurchaseIncome: 1200.00,
+    grossIncome: 2200.00,
+    tds: 110.00,
+    adminCharge: 110.00,
+    netPayable: 1980.00,
+    status: 'Credited To E-wallet'
   },
   {
     sNo: 3,
-    incomeDate: '25-02-2024 12:57:37pm',
+    incomeDate: '04-02-2026',
     memberId: 'MM101013',
     memberName: 'RAJMATA SALUKE',
-    unlockLevel: 2,
-    levelIncome: 1000.0,
-    tds: 125.0,
-    adminCharge: 0.0,
-    netPayout: 1000.0
+    levelIncome: 2000.00,
+    repurchaseIncome: 2500.00,
+    grossIncome: 4500.00,
+    tds: 225.00,
+    adminCharge: 225.00,
+    netPayable: 4050.00,
+    status: 'Credited To E-wallet'
   },
   {
     sNo: 4,
-    incomeDate: '16-02-2024 12:57:37pm',
+    incomeDate: '03-02-2026',
     memberId: 'MM101014',
     memberName: 'SNEHAL MARNE',
-    unlockLevel: 1,
-    levelIncome: 2000.0,
-    tds: 12.5,
-    adminCharge: 0.0,
-    netPayout: 2000.0
+    levelIncome: 2400.00,
+    repurchaseIncome: 250.00,
+    grossIncome: 2650.00,
+    tds: 132.50,
+    adminCharge: 132.50,
+    netPayable: 2385.00,
+    status: 'Credited To E-wallet'
   },
   {
     sNo: 5,
-    incomeDate: '10-02-2024 12:57:37pm',
+    incomeDate: '02-02-2026',
     memberId: 'MM101015',
     memberName: 'SADDAM SHAIKH',
-    unlockLevel: 1,
-    levelIncome: 3020.0,
-    tds: 75.0,
-    adminCharge: 0.0,
-    netPayout: 3020.0
+    levelIncome: 900.00,
+    repurchaseIncome: 1500.00,
+    grossIncome: 2400.00,
+    tds: 120.00,
+    adminCharge: 120.00,
+    netPayable: 2160.00,
+    status: 'Credited To E-wallet'
   },
   {
     sNo: 6,
-    incomeDate: '07-02-2024 12:57:37pm',
+    incomeDate: '01-02-2026',
     memberId: 'MM101016',
     memberName: 'AMIT GADE',
-    unlockLevel: 2,
-    levelIncome: 1500.0,
-    tds: 90.0,
-    adminCharge: 0.0,
-    netPayout: 1500.0
+    levelIncome: 400.00,
+    repurchaseIncome: 1800.00,
+    grossIncome: 2200.00,
+    tds: 110.00,
+    adminCharge: 110.00,
+    netPayable: 1980.00,
+    status: 'Credited To E-wallet'
   },
   {
     sNo: 7,
-    incomeDate: '05-02-2024 12:57:37pm',
+    incomeDate: '30-01-2026',
     memberId: 'MM101017',
     memberName: 'PARAG GUJARATHI',
-    unlockLevel: 1,
-    levelIncome: 1400.0,
-    tds: 100.0,
-    adminCharge: 0.0,
-    netPayout: 1400.0
+    levelIncome: 500.00,
+    repurchaseIncome: 2000.00,
+    grossIncome: 2500.00,
+    tds: 125.00,
+    adminCharge: 125.00,
+    netPayable: 2250.00,
+    status: 'Credited To E-wallet'
   }
 ];
 
-function DatewiseLevelIncome() {
-  const totalTds = datewiseLevelIncomeRows.reduce((sum, row) => sum + row.tds, 0);
-  const totalNet = datewiseLevelIncomeRows.reduce((sum, row) => sum + row.netPayout, 0);
+function DailyPayoutReport() {
+  const totalPayoutAmount = adminDailyPayoutData.reduce(
+    (sum, row) => sum + row.netPayable,
+    0
+  );
 
   return (
     <div className="tds-report-page">
-      <h2 className="section-title tds-screen-title">Datewise Level Income</h2>
+      <h2 className="section-title tds-screen-title">Daily Payout Report</h2>
+
       <section className="panel tds-panel">
         <div className="btn-row tds-export-row">
           <button type="button" className="btn-outline tds-export-btn">XLS</button>
@@ -96,15 +113,14 @@ function DatewiseLevelIncome() {
         <div className="tds-filter-row">
           <input className="text-input tds-filter-input" placeholder="MEMBER ID" />
           <input className="text-input tds-filter-input" placeholder="MEMBER NAME" />
-          <input className="text-input tds-filter-input" placeholder="UNLOCK LEVEL NO" />
-          <input className="text-input tds-filter-input" placeholder="START DATE" />
-          <input className="text-input tds-filter-input" placeholder="END DATE" />
+          <input className="text-input tds-filter-input" type="date" placeholder="START DATE" />
+          <input className="text-input tds-filter-input" type="date" placeholder="END DATE" />
           <select className="select-input tds-filter-input tds-size-select" defaultValue="10">
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-          <button className="btn-primary tds-search-btn" type="button">Search</button>
+          <button className="btn-primary tds-search-btn" type="button">SERCH</button>
         </div>
 
         <div className="table-wrap tds-table-wrap">
@@ -112,35 +128,38 @@ function DatewiseLevelIncome() {
             <thead>
               <tr>
                 <th>S.NO</th>
-                <th>INCOME DATE & TIME</th>
+                <th>INCOME DATE</th>
                 <th>MEMBER ID</th>
                 <th>MEMBER NAME</th>
-                <th>UNLOCK LEVEL</th>
                 <th>LEVEL INCOME</th>
-                <th>TDS - 5 %</th>
-                <th>ADMIN - 0 %</th>
-                <th>NET PAYOUT</th>
+                <th>REPURCHASE INCOME</th>
+                <th>GROSS INCOME</th>
+                <th>TDS - 5%</th>
+                <th>ADMIN CHARGE - 5%</th>
+                <th>NET PAYABLE</th>
+                <th>STATUS</th>
               </tr>
             </thead>
             <tbody>
-              {datewiseLevelIncomeRows.map((row) => (
+              {adminDailyPayoutData.map((row) => (
                 <tr key={row.sNo}>
                   <td>{row.sNo}</td>
                   <td>{row.incomeDate}</td>
                   <td>{row.memberId}</td>
                   <td>{row.memberName}</td>
-                  <td>{row.unlockLevel}</td>
                   <td>{row.levelIncome.toFixed(2)}</td>
+                  <td>{row.repurchaseIncome.toFixed(2)}</td>
+                  <td>{row.grossIncome.toFixed(2)}</td>
                   <td>{row.tds.toFixed(2)}</td>
                   <td>{row.adminCharge.toFixed(2)}</td>
-                  <td>{row.netPayout.toFixed(2)}</td>
+                  <td>{row.netPayable.toFixed(2)}</td>
+                  <td>{row.status}</td>
                 </tr>
               ))}
               <tr className="summary-row">
-                <td colSpan="6" style={{ textAlign: 'right', fontWeight: 700 }}>TOTAL TDS FROM LEVEL INCOME</td>
-                <td>{totalTds.toFixed(2)}</td>
-                <td style={{ textAlign: 'right', fontWeight: 700 }}>TO E-WALLET</td>
-                <td>{totalNet.toFixed(2)}</td>
+                <td colSpan="9" style={{ textAlign: 'right', fontWeight: 700 }}>TOTAL PAYOUT AMOUNT</td>
+                <td>{totalPayoutAmount.toFixed(2)}</td>
+                <td></td>
               </tr>
             </tbody>
           </table>
@@ -166,4 +185,4 @@ function DatewiseLevelIncome() {
   );
 }
 
-export default DatewiseLevelIncome;
+export default DailyPayoutReport;

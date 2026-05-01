@@ -45,11 +45,11 @@ const menuItems = [
     label: 'Income Reports',
     children: [
       { label: 'Level Income Reports', to: '/income-reports/level-income-reports' },
-      { label: 'Datewise Level Income', to: '/income-reports/datewise-level-income' },
       { label: 'Repurchase Income', to: '/income-report/Repurchase-income' },
-      { label: 'Datewise Repurchase Income', to: '/income-report/Datewise-Repurchase-income' },
       { label: 'Donation Report', to: '/income-reports/donation-report' },
-      { label: 'TDS Report', to: '/income-report/Tds-Report' }
+        { label: 'TDS Report', to: '/income-report/Tds-Report' },
+        { label: 'Datewise Income', to: '/income-report/Datewise-income' },
+        { label: 'Daily Payout Report', to: '/income-report/Daily-Payout-Report' }
     ]
   },
   {
@@ -85,7 +85,10 @@ const menuItems = [
   {
     key: 'transaction',
     label: 'Transaction',
-    children: [{ label: 'Main Wallet', to: '/transaction/main-wallet' }]
+    children: [
+      { label: 'Main Wallet', to: '/transaction/main-wallet' },
+      { label: 'Transaction History', to: '/transactions/transaction-history' }
+    ]
   },
   {
     key: 'withdrawals',

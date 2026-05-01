@@ -28,10 +28,10 @@ const menuItems = [
     label: 'Income Report',
     children: [
       { label: 'Level Income', to: '/user/income-report/level-income' },
-      { label: 'Datewise Level Income', to: '/user/income-report/Datewise-level-income' },
       { label: 'Repurchase Income', to: '/user/income-report/Repurchase-income' },
-      { label: 'Datewise Repurchase Income', to: '/user/income-report/Datewise-Repurchase-income' },
-      { label: 'Donations Income', to: '/user/income-report/donations-income' }
+        { label: 'Donations Income', to: '/user/income-report/donations-income' },
+        { label: 'Datewise Income', to: '/user/income-report/Datewise-income' },
+        { label: 'Daily Payout Report', to: '/user/income-report/Daily-Payout-Report' }
     ]
   },
   {

@@ -47,6 +47,11 @@
   color: #6d7e93;
   cursor: pointer;
   font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.page-btn:hover {
+  border-color: #00d4aa;
 }
 
 .page-btn.active {
@@ -72,7 +77,20 @@
 }
 
 @media (max-width: 620px) {
+  .user-page-title {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+
+  .report-filters {
+    gap: 8px;
+  }
+
   .user-table {
-    min-width: 780px;
+    min-width: 800px;
+  }
+
+  .user-panel {
+    padding: 12px;
   }
 }

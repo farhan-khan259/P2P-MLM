@@ -1,88 +1,63 @@
-@import '../../Common/UserLayout.css';
+@import '../../Common/AdminLayout.css';
 
-.report-filters {
+.tds-report-page {
+  width: 100%;
+}
+
+.tds-screen-title {
+  margin: 0 0 16px;
+}
+
+.tds-panel {
+  border-radius: 28px;
+  padding: 24px;
+}
+
+.tds-export-row {
+  justify-content: flex-end;
+  margin-bottom: 14px;
+}
+
+.tds-export-btn {
+  min-width: 72px;
+}
+
+.tds-filter-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin: 16px 0;
-}
-
-.report-filters input,
-.report-filters select {
-  border: 1px solid #ccd3db;
-  border-radius: 8px;
-  padding: 10px 12px;
-  min-height: 42px;
-  font-size: 13px;
-  background: #fff;
-  color: #2d3748;
-}
-
-.table-toolbar {
-  display: flex;
-  justify-content: flex-end;
   gap: 10px;
   margin-bottom: 14px;
 }
 
-.report-total-row td {
-  font-weight: 700;
-  background: rgba(0, 212, 170, 0.08);
+.tds-filter-input {
+  flex: 1 1 170px;
+  min-width: 150px;
 }
 
-.pagination-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 14px;
+.tds-size-select {
+  flex: 0 0 92px;
+  min-width: 92px;
 }
 
-.page-btn {
-  min-width: 36px;
-  height: 36px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
-  background: #fff;
-  color: #6d7e93;
-  cursor: pointer;
-  font-weight: 600;
+.tds-search-btn {
+  min-width: 110px;
 }
 
-.page-btn.active {
-  background: linear-gradient(135deg, #00d4aa 0%, #6c63ff 100%);
-  color: #fff;
-  border-color: transparent;
+.tds-table {
+  min-width: 980px;
 }
 
-@media (max-width: 840px) {
-  .report-filters > * {
-    flex: 1 1 100%;
+@media (max-width: 768px) {
+  .tds-panel {
+    border-radius: 18px;
+    padding: 12px;
   }
 
-  .table-toolbar {
-    justify-content: center;
-  }
-
-  .user-table th,
-  .user-table td {
-    font-size: 0.82rem;
-    padding: 8px 6px;
-  }
-}
-
-@media (max-width: 620px) {
-  .user-page-title {
-    font-size: 1.3rem;
-    margin-bottom: 12px;
-  }
-
-  .report-filters {
-    gap: 8px;
-  }
-
-  .user-table {
-    min-width: 800px;
+  .tds-filter-input,
+  .tds-size-select,
+  .tds-search-btn {
+    min-width: 100%;
+    flex-basis: 100%;
   }
 }
 
