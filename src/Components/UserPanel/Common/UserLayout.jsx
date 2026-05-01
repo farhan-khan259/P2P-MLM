@@ -86,6 +86,13 @@ const menuItems = [
     ]
   },
   { key: 'kycRequest', label: 'KYC Request', to: '/user/kyc-request' },
+    {
+      key: 'payment',
+      label: 'Payment',
+      children: [
+        { label: 'Withdrawal History', to: '/user/payment/withdrawal-history' }
+      ]
+    },
   { key: 'ticketSupport', label: 'Ticket Support', to: '/user/ticket-support' },
   { key: 'newsEvents', label: 'News & Events', to: '/user/news-events' },
   { key: 'logout', label: 'Log Out', to: '/user/log-out' }

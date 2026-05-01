@@ -97,7 +97,8 @@ const menuItems = [
       { label: 'All Request', to: '/withdrawals/all-request' },
       { label: 'Approved Request', to: '/withdrawals/approved-request' },
       { label: 'Pending Request', to: '/withdrawals/pending-request' },
-      { label: 'Reject Request', to: '/withdrawals/reject-request' }
+      { label: 'Reject Request', to: '/withdrawals/reject-request' },
+      { label: 'Succeed Request', to: '/withdrawals/succeed-request' }
     ]
   },
   {

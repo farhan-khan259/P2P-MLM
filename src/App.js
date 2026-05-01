@@ -80,6 +80,12 @@ import UserDailyPayoutReport from './Components/UserPanel/Income/DailyPayoutRepo
 import AdminDatewiseIncome from './Components/Admin/Income/DatewiseIncome/DatewiseIncome';
 import AdminDailyPayoutReport from './Components/Admin/Income/DailyPayoutReport/DailyPayoutReport';
 import AdminLevelIncomeReports from './Components/Admin/Income/LevelIncomeReports/LevelIncomeReports';
+import WithdrawalHistory from './Components/UserPanel/Payment/WithdrawalHistory/WithdrawalHistory';
+import AllWithdrawalRequest from './Components/Admin/Payment/AllWithdrawalRequest/AllWithdrawalRequest';
+import PendingWithdrawalRequest from './Components/Admin/Payment/PendingWithdrawalRequest/PendingWithdrawalRequest';
+import ApproveWithdrawalRequest from './Components/Admin/Payment/ApproveWithdrawalRequest/ApproveWithdrawalRequest';
+import RejectWithdrawalRequest from './Components/Admin/Payment/RejectWithdrawalRequest/RejectWithdrawalRequest';
+import SucceedWithdrawalRequest from './Components/Admin/Payment/SucceedWithdrawalRequest/SucceedWithdrawalRequest';
 
 function App() {
   return (
@@ -161,6 +167,7 @@ function App() {
           <Route path="payment/self-payment-history" element={<SelfPaymentHistory />} />
           <Route path="payment/payment-request-history" element={<PaymentRequestHistory />} />
           <Route path="income/level-income" element={<UserLevelIncome />} />
+                    <Route path="payment/withdrawal-history" element={<WithdrawalHistory />} />
           <Route path="support/create-ticket" element={<CreateTicket />} />
           <Route path="sign-out" element={<UserSignOut />} />
 
@@ -225,10 +232,11 @@ function App() {
           <Route path="transactions/transaction-history" element={<AdminTransactionHistory />} />
           <Route path="transactions/transaction-history" element={<AdminTransactionHistory />} />
 
-          <Route path="withdrawals/all-request" element={<AdminBlankPage />} />
-          <Route path="withdrawals/approved-request" element={<AdminBlankPage />} />
-          <Route path="withdrawals/pending-request" element={<AdminBlankPage />} />
-          <Route path="withdrawals/reject-request" element={<AdminBlankPage />} />
+          <Route path="withdrawals/all-request" element={<AllWithdrawalRequest />} />
+          <Route path="withdrawals/approved-request" element={<ApproveWithdrawalRequest />} />
+          <Route path="withdrawals/pending-request" element={<PendingWithdrawalRequest />} />
+          <Route path="withdrawals/reject-request" element={<RejectWithdrawalRequest />} />
+          <Route path="withdrawals/succeed-request" element={<SucceedWithdrawalRequest />} />
 
           <Route path="settings/level-plan" element={<AdminBlankPage />} />
           <Route path="settings/manage-taxes-deduction" element={<AdminBlankPage />} />
