@@ -95,6 +95,13 @@ const menuItems = [
         { label: 'Withdrawal History', to: '/user/payment/withdrawal-history' }
       ]
     },
+    {
+      key: 'coupon',
+      label: 'Coupon',
+      children: [
+        { label: 'Discount Coupon', to: '/user/coupon/discount-coupon' }
+      ]
+    },
   { key: 'ticketSupport', label: 'Ticket Support', to: '/user/ticket-support' },
   { key: 'newsEvents', label: 'News & Events', to: '/user/news-events' },
   { key: 'logout', label: 'Log Out', to: '/user/log-out' }

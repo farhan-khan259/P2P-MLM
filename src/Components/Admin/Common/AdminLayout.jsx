@@ -113,6 +113,13 @@ const menuItems = [
     ]
   },
   {
+    key: 'coupon',
+    label: 'Coupon',
+    children: [
+      { label: 'Coupon Report', to: '/admin/coupon/coupon-report' }
+    ]
+  },
+  {
     key: 'newsPopup',
     label: 'News & Popup',
     children: [

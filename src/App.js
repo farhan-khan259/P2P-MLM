@@ -64,6 +64,8 @@ import JoiningPackage from './Components/UserPanel/Product/JoiningPackage/Joinin
 import ShoppingProducts from './Components/UserPanel/Product/ShoppingProducts/ShoppingProducts';
 import RepurchaseProducts from './Components/UserPanel/Product/RepurchaseProducts/RepurchaseProducts';
 import ProductDetails from './Components/UserPanel/Product/ProductDetails/ProductDetails';
+import CouponReport from './Components/Admin/Coupon/CouponReport/CouponReport';
+import DiscountCoupon from './Components/UserPanel/Coupon/DiscountCoupon/DiscountCoupon';
 import JoiningPackageAdmin from './Components/Admin/ProductsPackage/JoiningPackage/JoiningPackageAdmin';
 import ShoppingProductsAdmin from './Components/Admin/ProductsPackage/ShoppingProducts/ShoppingProductsAdmin';
 import AddJoiningPackage from './Components/Admin/ProductsPackage/JoiningPackage/AddJoiningPackage/AddJoiningPackage';
@@ -148,6 +150,7 @@ function App() {
           <Route path="product/my_cart" element={<MyCart />} />
           <Route path="product/product_details" element={<ProductDetails />} />
           <Route path="product/repurchase-products" element={<RepurchaseProducts />} />
+          <Route path="coupon/discount-coupon" element={<DiscountCoupon />} />
           <Route path="product/product-list" element={<JoiningPackage />} />
           <Route path="product/product-order" element={<ShoppingProducts />} />
           <Route path="product/delivery-status" element={<UserBlankPage />} />
@@ -230,6 +233,9 @@ function App() {
           <Route path="deposits/successful-deposits" element={<SuccessfulDeposits />} />
           <Route path="deposits/rejected-deposits" element={<RejectedDeposits />} />
           <Route path="deposits/all-deposits" element={<AllDeposits />} />
+
+          <Route path="coupon/coupon-report" element={<CouponReport />} />
+          <Route path="admin/coupon/coupon-report" element={<CouponReport />} />
 
           <Route path="products-package/Joining-Package" element={<JoiningPackageAdmin />} />
           <Route path="products-package/Joining-Package/add-new" element={<AddJoiningPackage />} />
