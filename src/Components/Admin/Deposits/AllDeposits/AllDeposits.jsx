@@ -119,11 +119,7 @@ function AllDeposits() {
       <h2 className="section-title tds-screen-title">All Deposits</h2>
 
       <section className="panel tds-panel">
-        <div className="btn-row tds-export-row" aria-label="Export options">
-          <button type="button" className="btn-outline tds-export-btn" aria-label="Export Excel">XLS</button>
-          <button type="button" className="btn-outline tds-export-btn" aria-label="Export PDF">PDF</button>
-        </div>
-
+        
         <div className="tds-filter-row">
           <input className="text-input tds-filter-input" placeholder="Start Date" />
           <input className="text-input tds-filter-input" placeholder="End Date" />
@@ -146,6 +142,12 @@ function AllDeposits() {
           </select>
           <button className="btn-primary tds-search-btn" type="button">SERCH</button>
         </div>
+
+        <div className="btn-row tds-export-row" aria-label="Export options">
+          <button type="button" className="btn-outline tds-export-btn" aria-label="Export Excel">XLS</button>
+          <button type="button" className="btn-outline tds-export-btn" aria-label="Export PDF">PDF</button>
+        </div>
+
 
         <div className="table-wrap tds-table-wrap">
           <table className="data-table tds-table">

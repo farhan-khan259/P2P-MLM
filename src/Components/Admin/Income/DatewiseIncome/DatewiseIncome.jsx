@@ -91,11 +91,7 @@ function DatewiseIncome() {
       <h2 className="section-title tds-screen-title">Datewise Income</h2>
 
       <section className="panel tds-panel">
-        <div className="btn-row tds-export-row">
-          <button type="button" className="btn-outline tds-export-btn">XLS</button>
-          <button type="button" className="btn-outline tds-export-btn">PDF</button>
-        </div>
-
+       
         <div className="tds-filter-row">
           <input className="text-input tds-filter-input" placeholder="TO MEMBER ID" />
           <input className="text-input tds-filter-input" placeholder="UNLOCK LEVEL" />
@@ -109,6 +105,12 @@ function DatewiseIncome() {
           </select>
           <button className="btn-primary tds-search-btn" type="button">SERCH</button>
         </div>
+
+         <div className="btn-row tds-export-row">
+          <button type="button" className="btn-outline tds-export-btn">XLS</button>
+          <button type="button" className="btn-outline tds-export-btn">PDF</button>
+        </div>
+
 
         <div className="table-wrap tds-table-wrap">
           <table className="data-table tds-table">

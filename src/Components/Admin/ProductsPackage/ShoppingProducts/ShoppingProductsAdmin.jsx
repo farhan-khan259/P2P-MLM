@@ -129,14 +129,10 @@ function ShoppingProductsAdmin() {
               Add New
             </button>
           </div>
-          <div className="admin-products-export-icons" aria-label="export-controls">
-            <button type="button" title="Export Excel">
-              XLS
-            </button>
-            <button type="button" title="Export PDF">
-              PDF
-            </button>
-          </div>
+            <div className="btn-row tds-export-row" aria-label="Export options">
+          <button type="button" className="btn-outline tds-export-btn" aria-label="Export Excel">XLS</button>
+          <button type="button" className="btn-outline tds-export-btn" aria-label="Export PDF">PDF</button>
+        </div>
         </div>
 
         <div className="table-wrap admin-products-table-wrap">

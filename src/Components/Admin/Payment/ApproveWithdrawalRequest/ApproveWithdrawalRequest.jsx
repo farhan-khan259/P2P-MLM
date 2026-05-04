@@ -85,10 +85,7 @@ function ApproveWithdrawalRequest() {
       <h2 className="section-title tds-screen-title">Approve Withdrawal Request</h2>
 
       <section className="panel tds-panel">
-        <div className="btn-row tds-export-row">
-          <button type="button" className="btn-outline tds-export-btn">XLS</button>
-          <button type="button" className="btn-outline tds-export-btn">PDF</button>
-        </div>
+       
 
         <div className="tds-filter-row">
           <input className="text-input tds-filter-input" placeholder="REQUEST ID" aria-label="Request ID" />
@@ -102,6 +99,11 @@ function ApproveWithdrawalRequest() {
             <option value="100">100</option>
           </select>
           <button className="btn-primary tds-search-btn" type="button">SERCH</button>
+        </div>
+
+         <div className="btn-row tds-export-row">
+          <button type="button" className="btn-outline tds-export-btn">XLS</button>
+          <button type="button" className="btn-outline tds-export-btn">PDF</button>
         </div>
 
         <div className="table-wrap tds-table-wrap">

@@ -95,10 +95,7 @@ function TdsReport() {
       <h2 className="section-title tds-screen-title">TDS Report</h2>
 
       <section className="panel tds-panel">
-        <div className="btn-row tds-export-row">
-          <button type="button" className="btn-outline tds-export-btn">XLS</button>
-          <button type="button" className="btn-outline tds-export-btn">PDF</button>
-        </div>
+       
 
         <div className="tds-filter-row">
           <input type="text" className="text-input tds-filter-input" placeholder="MEMBER ID" value={filters.memberId} onChange={onFilterChange('memberId')} />
@@ -111,6 +108,11 @@ function TdsReport() {
             <option value="50">50</option>
           </select>
           <button type="button" className="btn-primary tds-search-btn">Search</button>
+        </div>
+
+         <div className="btn-row tds-export-row">
+          <button type="button" className="btn-outline tds-export-btn">XLS</button>
+          <button type="button" className="btn-outline tds-export-btn">PDF</button>
         </div>
 
         <div className="table-wrap tds-table-wrap">
