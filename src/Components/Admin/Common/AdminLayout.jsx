@@ -107,7 +107,9 @@ const menuItems = [
     label: 'Settings',
     children: [
       { label: 'Level Plan', to: '/settings/level-plan' },
-      { label: 'Manage Taxes & Deduction', to: '/settings/manage-taxes-deduction' }
+      { label: 'Manage Taxes & Deduction', to: '/settings/manage-taxes-deduction' },
+      { label: 'Bank Account', to: '/admin/setting/bank-account' },
+      { label: 'Plan Setting', to: '/admin/setting/plan-setting' }
     ]
   },
   {

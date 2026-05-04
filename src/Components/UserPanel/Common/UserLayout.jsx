@@ -48,7 +48,9 @@ const menuItems = [
     children: [
       { label: 'Joining Package', to: '/user/product/joining-package' },
       { label: 'Shopping Products', to: '/user/product/shopping-products' },
+        
       { label: 'Repurchase Products', to: '/user/product/repurchase-products' },
+        { label: 'My Cart', to: '/user/product/my_cart' },
       { label: 'Delivery Status', to: '/user/product/delivery-status' }
     ]
   },

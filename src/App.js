@@ -75,6 +75,9 @@ import SuccessfulDeposits from './Components/Admin/Deposits/SuccessfulDeposits/S
 import RejectedDeposits from './Components/Admin/Deposits/RejectedDeposits/RejectedDeposits';
 import AllDeposits from './Components/Admin/Deposits/AllDeposits/AllDeposits';
 import TdsReport from './Components/Admin/Income/TdsReport/TdsReport';
+import MyCart from './Components/UserPanel/Product/MyCart/MyCart';
+import AdminBankAccount from './Components/Admin/Setting/BankAccount/BankAccount';
+import PlanSetting from './Components/Admin/Setting/PlanSetting/PlanSetting';
 
 import UserDatewiseIncome from './Components/UserPanel/Income/DatewiseIncome/DatewiseIncome';
 import UserDailyPayoutReport from './Components/UserPanel/Income/DailyPayoutReport/DailyPayoutReport';
@@ -137,6 +140,7 @@ function App() {
 
           <Route path="product/joining-package" element={<JoiningPackage />} />
           <Route path="product/shopping-products" element={<ShoppingProducts />} />
+          <Route path="product/my_cart" element={<MyCart />} />
           <Route path="product/repurchase-products" element={<RepurchaseProducts />} />
           <Route path="product/product-list" element={<JoiningPackage />} />
           <Route path="product/product-order" element={<ShoppingProducts />} />
@@ -174,6 +178,8 @@ function App() {
 
           <Route path="*" element={<Navigate to="/user/dashboard" replace />} />
         </Route>
+
+        {/* NOTE: admin settings routes are nested under AdminLayout below so sidebar shows */}
 
         <Route path="/" element={<AdminLayout />}>
           <Route index element={<Navigate to="/dashboard" replace />} />
@@ -242,6 +248,8 @@ function App() {
 
           <Route path="settings/level-plan" element={<AdminBlankPage />} />
           <Route path="settings/manage-taxes-deduction" element={<AdminBlankPage />} />
+          <Route path="admin/setting/bank-account" element={<AdminBankAccount />} />
+          <Route path="admin/setting/plan-setting" element={<PlanSetting />} />
 
           <Route path="news-popup/add-new" element={<AdminBlankPage />} />
           <Route path="news-popup/list-all" element={<AdminBlankPage />} />
