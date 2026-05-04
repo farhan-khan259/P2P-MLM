@@ -24,6 +24,7 @@
   border-radius: 18px;
   overflow: hidden;
   height: 337px;
+  cursor: pointer;
 
   transition:
     transform 0.3s ease,
@@ -32,6 +33,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.user-product-card:focus-visible {
+  outline: 3px solid rgba(0, 212, 170, 0.45);
+  outline-offset: 3px;
 }
 
 .user-product-card:hover {

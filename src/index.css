@@ -187,9 +187,7 @@ button {
 
 	[class*='auth-btn'],
 	[class*='btn'],
-	button {
-		min-height: 40px;
-	}
+	
 
 	[class*='data-table'],
 	[class*='user-table'],

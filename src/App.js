@@ -63,6 +63,7 @@ import WelcomeLetter from './Components/UserPanel/PlanChartLetters/WelcomeLetter
 import JoiningPackage from './Components/UserPanel/Product/JoiningPackage/JoiningPackage';
 import ShoppingProducts from './Components/UserPanel/Product/ShoppingProducts/ShoppingProducts';
 import RepurchaseProducts from './Components/UserPanel/Product/RepurchaseProducts/RepurchaseProducts';
+import ProductDetails from './Components/UserPanel/Product/ProductDetails/ProductDetails';
 import JoiningPackageAdmin from './Components/Admin/ProductsPackage/JoiningPackage/JoiningPackageAdmin';
 import ShoppingProductsAdmin from './Components/Admin/ProductsPackage/ShoppingProducts/ShoppingProductsAdmin';
 import AddJoiningPackage from './Components/Admin/ProductsPackage/JoiningPackage/AddJoiningPackage/AddJoiningPackage';
@@ -145,6 +146,7 @@ function App() {
           <Route path="product/joining-package" element={<JoiningPackage />} />
           <Route path="product/shopping-products" element={<ShoppingProducts />} />
           <Route path="product/my_cart" element={<MyCart />} />
+          <Route path="product/product_details" element={<ProductDetails />} />
           <Route path="product/repurchase-products" element={<RepurchaseProducts />} />
           <Route path="product/product-list" element={<JoiningPackage />} />
           <Route path="product/product-order" element={<ShoppingProducts />} />

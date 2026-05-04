@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import '../../Common/UserLayout.css';
 import './RepurchaseProducts.css';
 import calciumdietry from '../../../../Assets/Pictures/calcium.jpeg';
@@ -105,6 +106,12 @@ const repurchaseProducts = [
 ];
 
 function RepurchaseProducts() {
+  const navigate = useNavigate();
+
+  const handleProductClick = (product) => {
+    navigate('/user/product/product_details', { state: { product } });
+  };
+
   return (
     <div className="user-product-page">
       <div className="user-panel user-product-panel">
@@ -112,7 +119,19 @@ function RepurchaseProducts() {
 
         <div className="user-product-grid">
           {repurchaseProducts.map((product) => (
-            <article className="user-product-card" key={product.id}>
+            <article
+              className="user-product-card"
+              key={product.id}
+              role="button"
+              tabIndex={0}
+              onClick={() => handleProductClick(product)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  handleProductClick(product);
+                }
+              }}
+            >
               <div className="user-product-image-wrap">
                 <img src={product.image} alt={product.name} className="user-product-image" loading="lazy" />
               </div>
