@@ -191,6 +191,9 @@ function App() {
           <Route path="epin/generate-epin" element={<GenerateEPin />} />
           <Route path="epin/unused-epin" element={<UnusedEPin />} />
           <Route path="epin/used-epin" element={<UsedEPin />} />
+          <Route path="epin/all-epin" element={<ListAllEPin />} />
+          <Route path="epin/delete-epin" element={<DeletedEPin />} />
+          <Route path="epin/transfer-history" element={<TransferEPin />} />
           <Route path="epin/epin-franchise" element={<AdminEpinFranchiseList />} />
           <Route path="epin/epin-franchise/add-epin-franchise" element={<AddEpinFranchise />} />
           {/* Removed Admin ePin components from user panel routes. Use only user panel ePin components. */}
