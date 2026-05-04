@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import '../../Common/UserLayout.css';
 import './WithdrawalHistory.css';
 
@@ -60,6 +61,12 @@ function getStatusIcon(status) {
 }
 
 function WithdrawalHistory() {
+  const navigate = useNavigate();
+  
+  const handleWithdrawalNow = () => {
+    navigate('/user/payment/withdraw');
+  };
+
   return (
     <div>
       <h1 className="user-page-title">Withdrawal History</h1>
@@ -85,7 +92,7 @@ function WithdrawalHistory() {
         </div>
 
         <div className="table-toolbar">
-          <button className="user-btn-red" type="button">Withdrawal Now</button>
+          <button className="user-btn-red" type="button" onClick={handleWithdrawalNow}>Withdrawal Now</button>
         </div>
 
         <div className="table-wrap">

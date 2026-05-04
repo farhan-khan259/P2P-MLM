@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './MyCart.css';
 import omega from '../../../../Assets/Pictures/omega3.jpeg';
 import watch from '../../../../Assets/Pictures/watch.jpeg';
@@ -37,6 +38,12 @@ const CartItem = ({img, title, price, qty}) => (
 )
 
 export default function MyCart(){
+  const navigate = useNavigate();
+  
+  const handleOrderNow = () => {
+    navigate('/user/payment/complete-payment');
+  };
+
   return (
     <div className="mycart-page container">
      
@@ -78,7 +85,7 @@ export default function MyCart(){
         </div>
 
         <div className="mc-actions">
-          <button className="btn-order">Order Now</button>
+          <button className="btn-order" onClick={handleOrderNow}>Order Now</button>
          
         </div>
       </div>

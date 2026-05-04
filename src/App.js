@@ -78,6 +78,8 @@ import RejectedDeposits from './Components/Admin/Deposits/RejectedDeposits/Rejec
 import AllDeposits from './Components/Admin/Deposits/AllDeposits/AllDeposits';
 import TdsReport from './Components/Admin/Income/TdsReport/TdsReport';
 import MyCart from './Components/UserPanel/Product/MyCart/MyCart';
+import CompletePayment from './Components/UserPanel/Payment/CompletePayment/CompletePayment';
+import Withdraw from './Components/UserPanel/Payment/Withdraw/Withdraw';
 import AdminBankAccount from './Components/Admin/Setting/BankAccount/BankAccount';
 import PlanSetting from './Components/Admin/Setting/PlanSetting/PlanSetting';
 
@@ -173,8 +175,10 @@ function App() {
           <Route path="team/my-team" element={<MyTeam />} />
           <Route path="payment/self-payment-history" element={<SelfPaymentHistory />} />
           <Route path="payment/payment-request-history" element={<PaymentRequestHistory />} />
+          <Route path="payment/withdrawal-history" element={<WithdrawalHistory />} />
+          <Route path="payment/complete-payment" element={<CompletePayment />} />
+          <Route path="payment/withdraw" element={<Withdraw />} />
           <Route path="income/level-income" element={<UserLevelIncome />} />
-                    <Route path="payment/withdrawal-history" element={<WithdrawalHistory />} />
           <Route path="support/create-ticket" element={<CreateTicket />} />
           <Route path="sign-out" element={<UserSignOut />} />
 
