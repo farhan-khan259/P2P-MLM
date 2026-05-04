@@ -14,6 +14,8 @@ import LevelIncome from './Components/Admin/Income/LevelIncome/LevelIncome';
 import TicketHistory from './Components/Admin/SupportTicket/TicketHistory/TicketHistory';
 import SignOut from './Components/Admin/SignOut/SignOut';
 import EPinRequest from './Components/Admin/ePin/EPinRequest';
+import NewsList from './Components/Admin/NewsPopup/ListAll/ListAll';
+import NewsAdd from './Components/Admin/NewsPopup/AddNew/AddNew';
 import GenerateEPin from './Components/UserPanel/ePin/GenerateEPin';
 import UsedEPin from './Components/UserPanel/ePin/UsedEPin';
 import UnusedEPin from './Components/UserPanel/ePin/UnusedEPin';
@@ -251,8 +253,8 @@ function App() {
           <Route path="admin/setting/bank-account" element={<AdminBankAccount />} />
           <Route path="admin/setting/plan-setting" element={<PlanSetting />} />
 
-          <Route path="news-popup/add-new" element={<AdminBlankPage />} />
-          <Route path="news-popup/list-all" element={<AdminBlankPage />} />
+          <Route path="news-popup/add-new" element={<NewsAdd />} />
+          <Route path="news-popup/list-all" element={<NewsList />} />
 
           <Route path="support/support-section" element={<AdminBlankPage />} />
           <Route path="support/support-tickets" element={<TicketHistory />} />
