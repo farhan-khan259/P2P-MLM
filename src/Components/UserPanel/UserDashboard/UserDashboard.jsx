@@ -102,9 +102,6 @@ function MemberDashboard() {
     <div className="user-dashboard-shell">
       <div className="user-dashboard1-member-dashboard-root">
         <header className="user-dashboard-topbar">
-          
-          <div className="user-dashboard-topbar-title">Dashboard</div>
-          <button className="user-dashboard-icon-btn user-dashboard-cart-btn" type="button" aria-label="Cart">🛒</button>
         </header>
 
        

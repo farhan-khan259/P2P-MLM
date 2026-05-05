@@ -238,7 +238,10 @@ function UserLayout() {
           )}
             <span className="user-top-title">Dashboard</span>
           </div>
-          <div className="user-top-avatar">👤</div>
+          <div className="user-topbar-right">
+            <button className="user-topbar-cart-btn" type="button" aria-label="Cart">🛒</button>
+          
+          </div>
         </header>
 
         <section className="user-page-wrap">

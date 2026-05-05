@@ -136,6 +136,33 @@
   color: #fff;
 }
 
+.user-topbar-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.user-topbar-cart-btn {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.user-topbar-cart-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
 .member-label {
   font-size: 12px;
   font-weight: 700;
