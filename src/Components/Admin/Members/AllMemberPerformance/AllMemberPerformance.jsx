@@ -10,12 +10,13 @@ const memberPerformanceRows = [
     status: 'ACTIVE',
     joiningLevel: 2,
     unlockLevel: 2,
-    totalLevelIncome: 2000,
     rank: 1,
-    totalDonationIncome: 300,
     activeTeamCount: 100,
     inactiveTeamCount: 40,
     totalTeamCount: 140,
+    levelIncome: 2000,
+    repurchaseIncome: 2000,
+    donationIncome: 300,
     totalIncome: 6000
   },
   {
@@ -27,12 +28,13 @@ const memberPerformanceRows = [
     status: 'ACTIVE',
     joiningLevel: 9,
     unlockLevel: 4,
-    totalLevelIncome: 1000,
     rank: 2,
-    totalDonationIncome: 20000,
     activeTeamCount: 458,
     inactiveTeamCount: 8,
     totalTeamCount: 466,
+    levelIncome: 1000,
+    repurchaseIncome: 1000,
+    donationIncome: 20000,
     totalIncome: 21000
   },
   {
@@ -44,12 +46,13 @@ const memberPerformanceRows = [
     status: 'IN-ACTIVE',
     joiningLevel: 2,
     unlockLevel: 2,
-    totalLevelIncome: 800,
     rank: 2,
-    totalDonationIncome: 16000,
     activeTeamCount: 450,
     inactiveTeamCount: 50,
     totalTeamCount: 500,
+    levelIncome: 800,
+    repurchaseIncome: 800,
+    donationIncome: 16000,
     totalIncome: 16800
   },
   {
@@ -61,12 +64,13 @@ const memberPerformanceRows = [
     status: 'ACTIVE',
     joiningLevel: 1,
     unlockLevel: 1,
-    totalLevelIncome: 4400,
     rank: 4,
-    totalDonationIncome: 128000,
     activeTeamCount: 50,
     inactiveTeamCount: 0,
     totalTeamCount: 50,
+    levelIncome: 4400,
+    repurchaseIncome: 4400,
+    donationIncome: 128000,
     totalIncome: 132400
   },
   {
@@ -78,12 +82,13 @@ const memberPerformanceRows = [
     status: 'IN-ACTIVE',
     joiningLevel: 1,
     unlockLevel: 1,
-    totalLevelIncome: 25000,
     rank: 1,
-    totalDonationIncome: 64000,
     activeTeamCount: 125,
     inactiveTeamCount: 5,
     totalTeamCount: 130,
+    levelIncome: 25000,
+    repurchaseIncome: 25000,
+    donationIncome: 64000,
     totalIncome: 64000
   },
   {
@@ -95,12 +100,13 @@ const memberPerformanceRows = [
     status: 'ACTIVE',
     joiningLevel: 2,
     unlockLevel: 2,
-    totalLevelIncome: 50000,
     rank: 2,
-    totalDonationIncome: 32000,
     activeTeamCount: 45,
     inactiveTeamCount: 5,
     totalTeamCount: 50,
+    levelIncome: 50000,
+    repurchaseIncome: 50000,
+    donationIncome: 32000,
     totalIncome: 82000
   },
   {
@@ -112,12 +118,13 @@ const memberPerformanceRows = [
     status: 'ACTIVE',
     joiningLevel: 1,
     unlockLevel: 1,
-    totalLevelIncome: 60000,
     rank: 1,
-    totalDonationIncome: 16000,
     activeTeamCount: 60,
     inactiveTeamCount: 0,
     totalTeamCount: 60,
+    levelIncome: 60000,
+    repurchaseIncome: 60000,
+    donationIncome: 16000,
     totalIncome: 76000
   }
 ];
@@ -131,12 +138,13 @@ const exportColumns = [
   'STATUS',
   'JOINING LEVEL',
   'UNLOCK LEVEL',
-  'TOTAL LEVEL INCOME',
   'RANK',
-  'TOTAL DONATION INCOME',
   'ACTIVE TEAM COUNT',
   'IN-ACTIVE TEAM COUNT',
   'TOTAL TEAM COUNT',
+  'LEVEL INCOME',
+  'REPURCHASE INCOME',
+  'DONATION INCOME',
   'TOTAL INCOME'
 ];
 
@@ -150,12 +158,13 @@ function AllMemberPerformance() {
     row.status,
     row.joiningLevel,
     row.unlockLevel,
-    row.totalLevelIncome,
     row.rank,
-    row.totalDonationIncome,
     row.activeTeamCount,
     row.inactiveTeamCount,
     row.totalTeamCount,
+    row.levelIncome,
+    row.repurchaseIncome,
+    row.donationIncome,
     row.totalIncome
   ]));
 
@@ -216,8 +225,6 @@ function AllMemberPerformance() {
       <h1 className="page-title" style={{ fontSize: '42px', marginBottom: '14px' }}>All-Member-Performance</h1>
 
       <div className="panel" style={{ borderRadius: '28px', padding: '24px' }}>
-        <h2 className="section-title" style={{ fontSize: '34px', marginBottom: '14px' }}>ALL MEMBERS PERFORMANCE (TOTAL TEAM &amp; TOTAL INCOME)</h2>
-
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>
           <input className="text-input" style={{ maxWidth: '120px' }} placeholder="MEMBER ID" />
           <input className="text-input" style={{ maxWidth: '140px' }} placeholder="MEMBER NAME" />
@@ -255,7 +262,7 @@ function AllMemberPerformance() {
         </div>
 
         <div className="table-wrap">
-          <table className="data-table" style={{ minWidth: '1500px' }}>
+          <table className="data-table" style={{ minWidth: '1650px' }}>
             <thead>
               <tr>
                 <th>S.NO</th>
@@ -266,12 +273,13 @@ function AllMemberPerformance() {
                 <th>STATUS</th>
                 <th>JOINING LEVEL</th>
                 <th>UNLOCK LEVEL</th>
-                <th>TOTAL LEVEL INCOME</th>
                 <th>RANK</th>
-                <th>TOTAL DONATION INCOME</th>
                 <th>ACTIVE TEAM COUNT</th>
                 <th>IN-ACTIVE TEAM COUNT</th>
                 <th>TOTAL TEAM COUNT</th>
+                <th>LEVEL INCOME</th>
+                <th>REPURCHASE INCOME</th>
+                <th>DONATION INCOME</th>
                 <th>TOTAL INCOME</th>
               </tr>
             </thead>
@@ -286,12 +294,13 @@ function AllMemberPerformance() {
                   <td className={row.status === 'IN-ACTIVE' ? 'member-performance-status-inactive' : ''}>{row.status}</td>
                   <td>{row.joiningLevel}</td>
                   <td>{row.unlockLevel}</td>
-                  <td>{row.totalLevelIncome}</td>
                   <td>{row.rank}</td>
-                  <td>{row.totalDonationIncome}</td>
                   <td>{row.activeTeamCount}</td>
                   <td>{row.inactiveTeamCount}</td>
                   <td>{row.totalTeamCount}</td>
+                  <td>{row.levelIncome}</td>
+                  <td>{row.repurchaseIncome}</td>
+                  <td>{row.donationIncome}</td>
                   <td>{row.totalIncome}</td>
                 </tr>
               ))}
