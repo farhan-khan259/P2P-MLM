@@ -312,6 +312,7 @@
   border-radius: 4px;
   padding: 10px 8px 9px;
   min-height: 64px;
+  min-width: 0;
   border: 1px solid rgba(111, 99, 216, 0.45);
   box-shadow: none;
 }
@@ -521,6 +522,10 @@
 }
 
 @media (max-width: 480px) {
+  .user-dashboard1-member-dashboard-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .user-dashboard-shell {
     padding: 8px 0 18px;
   }
@@ -612,6 +617,10 @@
 }
 
 @media (max-width: 360px) {
+  .user-dashboard1-member-dashboard-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .user-dashboard1-member-dashboard-root {
     padding: 8px 8px 18px;
   }

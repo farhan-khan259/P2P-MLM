@@ -90,16 +90,7 @@ button {
 		max-width: 100%;
 	}
 
-	[class*='form-grid'],
-	[class*='grid-2'],
-	[class*='two-col'],
-	[class*='split-grid'],
-	[class*='cards-row'],
-	[class*='stats-grid'],
-	[class*='dashboard-grid'] {
-		grid-template-columns: 1fr !important;
-	}
-
+	
 	[class*='table-tools'],
 	[class*='table-toolbar'],
 	[class*='btn-row'],
