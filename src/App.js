@@ -98,6 +98,9 @@ import ApproveWithdrawalRequest from './Components/Admin/Payment/ApproveWithdraw
 import RejectWithdrawalRequest from './Components/Admin/Payment/RejectWithdrawalRequest/RejectWithdrawalRequest';
 import SucceedWithdrawalRequest from './Components/Admin/Payment/SucceedWithdrawalRequest/SucceedWithdrawalRequest';
 
+import AdminRankHoldersList from './Components/Admin/Rank/AdminRankHoldersList';
+import UserMyRank from './Components/UserPanel/Rank/UserMyRank';
+
 function App() {
   return (
     <BrowserRouter>
@@ -170,6 +173,7 @@ function App() {
 
           <Route path="ticket-support" element={<CreateTicket />} />
           <Route path="news-events" element={<UserBlankPage />} />
+          <Route path="rank/my-rank" element={<UserMyRank />} />
           <Route path="log-out" element={<UserSignOut />} />
 
           <Route path="profile/my-profile" element={<MyProfile />} />
@@ -275,6 +279,7 @@ function App() {
           <Route path="support/support-tickets" element={<TicketHistory />} />
           <Route path="support/chat-integration" element={<AdminBlankPage />} />
 
+          <Route path="rank/rank-holders-list" element={<AdminRankHoldersList />} />
           <Route path="last-login-date-time" element={<AdminBlankPage />} />
           <Route path="sign-out" element={<SignOut />} />
 

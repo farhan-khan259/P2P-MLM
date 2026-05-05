@@ -104,6 +104,7 @@ const menuItems = [
     },
   { key: 'ticketSupport', label: 'Ticket Support', to: '/user/ticket-support' },
   { key: 'newsEvents', label: 'News & Events', to: '/user/news-events' },
+  { key: 'rank', label: 'My Rank', to: '/user/rank/my-rank' },
   { key: 'logout', label: 'Log Out', to: '/user/log-out' }
 ];
 

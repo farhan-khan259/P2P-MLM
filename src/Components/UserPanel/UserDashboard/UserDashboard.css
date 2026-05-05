@@ -302,7 +302,7 @@
 
 .user-dashboard1-member-dashboard-stats-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   gap: 8px;
   margin-top: 14px;
 }
@@ -337,14 +337,16 @@
   padding-bottom: 6px;
   margin-bottom: 6px;
   border-bottom: 1px solid #d7dfeb;
+  overflow-wrap: anywhere;
 }
 
 .user-dashboard1-member-dashboard-stat-value {
-  font-size: 18px;
+  font-size: clamp(14px, 2.8vw, 18px);
   line-height: 1;
   font-weight: 800;
   color: #2d2f36;
   letter-spacing: -0.2px;
+  overflow-wrap: anywhere;
 }
 
 .user-dashboard1-member-dashboard-table-section {
@@ -523,7 +525,7 @@
 
 @media (max-width: 480px) {
   .user-dashboard1-member-dashboard-stats-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 
   .user-dashboard-shell {
@@ -618,7 +620,7 @@
 
 @media (max-width: 360px) {
   .user-dashboard1-member-dashboard-stats-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 
   .user-dashboard1-member-dashboard-root {

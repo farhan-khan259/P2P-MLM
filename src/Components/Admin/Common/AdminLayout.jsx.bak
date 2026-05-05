@@ -136,11 +136,6 @@ const menuItems = [
       { label: 'Chat Integration', to: '/support/chat-integration' }
     ]
   },
-  {
-    key: 'rank',
-    label: 'Rank',
-    to: '/rank/rank-holders-list'
-  },
   { key: 'lastLogin', label: 'Last Login Date & Time', to: '/last-login-date-time' },
   { key: 'signout', label: 'Sign Out', to: '/sign-out' }
 ];
