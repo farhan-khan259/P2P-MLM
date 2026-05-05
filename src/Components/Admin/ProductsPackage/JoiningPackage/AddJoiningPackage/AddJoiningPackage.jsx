@@ -20,11 +20,7 @@ function AddJoiningPackage() {
             <div className="admin-add-product-table" role="group" aria-label="basic-product-details">
               <label className="admin-add-product-row">
                 <span>Category</span>
-                <select defaultValue="Select">
-                  <option value="Select">Select</option>
-                  <option value="Healthcare">Healthcare</option>
-                  <option value="Personal Care">Personal Care</option>
-                </select>
+                <input type="text" defaultValue="Healthcare" />
               </label>
               <label className="admin-add-product-row">
                 <span>Product Name</span>
