@@ -139,61 +139,20 @@
     border-radius: 16px;
   }
 
+  /* Keep table layout on small screens and allow horizontal scrolling
+     so it matches the Level Income table behavior. */
   .user-orders-table {
-    min-width: 0;
+    min-width: 760px; /* allow the table to scroll inside .table-wrap */
   }
 
-  .user-orders-table thead {
-    display: none;
-  }
-
-  .user-orders-table,
-  .user-orders-table tbody,
-  .user-orders-table tr,
-  .user-orders-table td {
-    display: block;
-    width: 100%;
-  }
-
-  .user-orders-table tbody tr {
-    margin-bottom: 12px;
-    border: 1px solid rgba(0, 162, 214, 0.15);
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 10px 22px rgba(12, 52, 74, 0.06);
-    background: #ffffff;
-  }
-
-  .user-orders-table td {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    text-align: right;
-    white-space: normal;
-    border: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    padding: 11px 12px;
+  .user-orders-table thead th {
     font-size: 12px;
+    padding: 8px 10px;
   }
 
-  .user-orders-table td::before {
-    content: attr(data-label);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.6px;
-    color: #7990a8;
-    text-transform: uppercase;
-    text-align: left;
-    flex: 0 0 42%;
-  }
-
-  .user-orders-table td:last-child {
-    justify-content: flex-end;
-  }
-
-  .user-orders-table td:last-child::before {
-    margin-right: auto;
+  .user-orders-table td {
+    padding: 8px 10px;
+    font-size: 12px;
   }
 
   .user-order-detail-btn {

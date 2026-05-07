@@ -6,6 +6,7 @@ const dailyPayoutData = [
     sNo: 1,
     incomeDate: '06-02-2026',
     memberId: 'MM101011',
+    memberName: 'ANAMIKA SAXENA',
     levelIncome: 1200.00,
     repurchaseIncome: 1000.00,
     grossIncome: 2200.00,
@@ -17,7 +18,8 @@ const dailyPayoutData = [
   {
     sNo: 2,
     incomeDate: '05-02-2026',
-    memberId: 'MM101012',
+    memberId: 'MM101011',
+    memberName: 'ANAMIKA SAXENA',
     levelIncome: 1000.00,
     repurchaseIncome: 1200.00,
     grossIncome: 2200.00,
@@ -29,7 +31,8 @@ const dailyPayoutData = [
   {
     sNo: 3,
     incomeDate: '04-02-2026',
-    memberId: 'MM101013',
+    memberId: 'MM101011',
+    memberName: 'ANAMIKA SAXENA',
     levelIncome: 2000.00,
     repurchaseIncome: 2500.00,
     grossIncome: 4500.00,
@@ -41,7 +44,8 @@ const dailyPayoutData = [
   {
     sNo: 4,
     incomeDate: '03-02-2026',
-    memberId: 'MM101014',
+    memberId: 'MM101011',
+    memberName: 'ANAMIKA SAXENA',
     levelIncome: 2400.00,
     repurchaseIncome: 250.00,
     grossIncome: 2650.00,
@@ -53,7 +57,8 @@ const dailyPayoutData = [
   {
     sNo: 5,
     incomeDate: '02-02-2026',
-    memberId: 'MM101015',
+    memberId: 'MM101011',
+    memberName: 'ANAMIKA SAXENA',
     levelIncome: 900.00,
     repurchaseIncome: 1500.00,
     grossIncome: 2400.00,
@@ -65,7 +70,8 @@ const dailyPayoutData = [
   {
     sNo: 6,
     incomeDate: '01-02-2026',
-    memberId: 'MM101016',
+    memberId: 'MM101011',
+    memberName: 'ANAMIKA SAXENA',
     levelIncome: 400.00,
     repurchaseIncome: 1800.00,
     grossIncome: 2200.00,
@@ -77,7 +83,8 @@ const dailyPayoutData = [
   {
     sNo: 7,
     incomeDate: '30-01-2026',
-    memberId: 'MM101017',
+    memberId: 'MM101011',
+    memberName: 'ANAMIKA SAXENA',
     levelIncome: 500.00,
     repurchaseIncome: 2000.00,
     grossIncome: 2500.00,
@@ -121,6 +128,7 @@ function DailyPayoutReport() {
                 <th>S.NO</th>
                 <th>INCOME DATE</th>
                 <th>MEMBER ID</th>
+                   <th>MEMBER NAME</th>
                 <th>LEVEL INCOME</th>
                 <th>REPURCHASE INCOME</th>
                 <th>GROSS INCOME</th>
@@ -136,6 +144,7 @@ function DailyPayoutReport() {
                   <td>{row.sNo}</td>
                   <td>{row.incomeDate}</td>
                   <td>{row.memberId}</td>
+                        <td>{row.memberName}</td>
                   <td>{row.levelIncome.toFixed(2)}</td>
                   <td>{row.repurchaseIncome.toFixed(2)}</td>
                   <td>{row.grossIncome.toFixed(2)}</td>

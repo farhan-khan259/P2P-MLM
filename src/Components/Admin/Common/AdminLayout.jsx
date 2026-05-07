@@ -37,7 +37,7 @@ const menuItems = [
     children: [
       { label: 'Network Explorer', to: '/network-reports/network-explorer' },
       { label: 'Downline List', to: '/network-reports/downline-list' },
-      { label: 'Level Income Reports', to: '/network-reports/level-income-reports' }
+    
     ]
   },
   {

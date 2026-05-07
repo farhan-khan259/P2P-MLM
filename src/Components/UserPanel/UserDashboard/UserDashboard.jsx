@@ -129,7 +129,7 @@ function MemberDashboard() {
         </section>
 
         <div className="user-dashboard-news-bar" role="status" aria-live="polite">
-          <span className="user-dashboard-news-label">FLASH NEWS</span>
+          <span className="user-dashboard-news-label"> NEWS</span>
           <div className="user-dashboard-news-track">
             <div className="user-dashboard-news-marquee">KYC is mandatory! Complete your KYC to receive payouts.</div>
           </div>

@@ -66,7 +66,7 @@ const menuItems = [
       { label: 'Franchise List', to: '/user/epin-franchise/epin-franchise-list' },
       { label: 'Transfer ePin', to: '/user/epin/transfer-epin' },
       { label: 'ePin Transfer History', to: '/user/epin/epin-transfer-history' },
-      { label: 'Deleted ePin', to: '/user/epin/deleted-epin' }
+     
     ]
   },
   {

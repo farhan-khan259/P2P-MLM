@@ -25,7 +25,7 @@ const adminStats = [
 	{ label: 'Pending Payout', value: '₹ 60000' },
 	{ label: 'TDS Deducted 5%', value: '₹ 20000' },
 	{ label: 'Deducted Admin Charge 5%', value: '₹ 20000' },
-	{ label: 'Total Joining Members', value: '₹ 2000' },
+	{ label: 'Total Joining Members', value: ' 2000' },
 	{ label: "Today's Joining Members", value: '50' },
 	{ label: 'Active Members', value: '1500' },
 	{ label: 'In-Active Members', value: '500' },
@@ -95,7 +95,7 @@ function Dashboard() {
 				</section>
 
 				<div className="admin-dashboard-news-bar" role="status" aria-live="polite">
-					<span className="admin-dashboard-news-label">FLASH NEWS</span>
+					<span className="admin-dashboard-news-label"> NEWS</span>
 					<div className="admin-dashboard-news-track">
 						<div className="admin-dashboard-news-marquee">KYC is mandatory! Complete your KYC to receive payouts.</div>
 					</div>

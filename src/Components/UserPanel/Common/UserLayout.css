@@ -465,8 +465,12 @@ padding: 18px;
 }
 
 @media (max-width: 992px) {
+  /* Keep root as a column flex container so the main area can grow
+     and the footer remains pinned to the bottom on short pages. */
   .user-root {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
 
   .user-sidebar {
@@ -517,6 +521,17 @@ padding: 18px;
     z-index: 50;
     background: rgba(255, 255, 255, 0.92);
     border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .user-main {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .user-page-wrap {
+    flex: 1 1 auto;
   }
 
   .user-back-btn {
