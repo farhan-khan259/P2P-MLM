@@ -64,6 +64,8 @@ import JoiningPackage from './Components/UserPanel/Product/JoiningPackage/Joinin
 import ShoppingProducts from './Components/UserPanel/Product/ShoppingProducts/ShoppingProducts';
 import RepurchaseProducts from './Components/UserPanel/Product/RepurchaseProducts/RepurchaseProducts';
 import ProductDetails from './Components/UserPanel/Product/ProductDetails/ProductDetails';
+import MyOrders from './Components/UserPanel/Product/MyOrders/MyOrders';
+import OrderDetails from './Components/UserPanel/Product/MyOrders/OrderDetails';
 import CouponReport from './Components/Admin/Coupon/CouponReport/CouponReport';
 import DiscountCoupon from './Components/UserPanel/Coupon/DiscountCoupon/DiscountCoupon';
 import JoiningPackageAdmin from './Components/Admin/ProductsPackage/JoiningPackage/JoiningPackageAdmin';
@@ -153,6 +155,8 @@ function App() {
           <Route path="product/my_cart" element={<MyCart />} />
           <Route path="product/product_details" element={<ProductDetails />} />
           <Route path="product/repurchase-products" element={<RepurchaseProducts />} />
+          <Route path="product/my-orders" element={<MyOrders />} />
+          <Route path="product/my-orders/details/:orderNo" element={<OrderDetails />} />
           <Route path="coupon/discount-coupon" element={<DiscountCoupon />} />
           <Route path="product/product-list" element={<JoiningPackage />} />
           <Route path="product/product-order" element={<ShoppingProducts />} />

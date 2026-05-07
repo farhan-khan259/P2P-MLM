@@ -48,8 +48,8 @@ const menuItems = [
     children: [
       { label: 'Joining Package', to: '/user/product/joining-package' },
       { label: 'Shopping Products', to: '/user/product/shopping-products' },
-        
       { label: 'Repurchase Products', to: '/user/product/repurchase-products' },
+      { label: 'My Orders', to: '/user/product/my-orders' },
         { label: 'My Cart', to: '/user/product/my_cart' },
       { label: 'Delivery Status', to: '/user/product/delivery-status' }
     ]
@@ -125,13 +125,25 @@ function buildBreadcrumb(pathname) {
   return toTitleCase(segments[segments.length - 1]);
 }
 
+function getDefaultOpenSection(pathname) {
+  const matchedSection = menuItems.find((item) =>
+    item.children?.some((child) => pathname.startsWith(child.to))
+  );
+
+  return matchedSection?.key ?? null;
+}
+
 function UserLayout() {
   
   const location = useLocation();
   const breadcrumb = useMemo(() => buildBreadcrumb(location.pathname), [location.pathname]);
   const showBackButton = location.pathname !== '/user/dashboard';
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [openSection, setOpenSection] = useState(null);
+  const [openSection, setOpenSection] = useState(() => getDefaultOpenSection(location.pathname));
+
+  useEffect(() => {
+    setOpenSection(getDefaultOpenSection(location.pathname));
+  }, [location.pathname]);
 
   const toggleSection = (key) => {
     setOpenSection((prev) => (prev === key ? null : key));
