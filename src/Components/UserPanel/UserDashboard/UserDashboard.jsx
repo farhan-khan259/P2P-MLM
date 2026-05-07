@@ -17,18 +17,18 @@ const productImages = [
 ];
 
 const stats = [
-  { label: 'Total Earning', value: '450000.00' },
-  { label: 'Last Month Income', value: '45000.00' },
-  { label: 'Pending Help', value: '350000.00' },
-  { label: 'Given Help', value: '189585.00' },
-  { label: 'Received Help', value: '200000.00' },
-  { label: "Yesterday's Received Help", value: '16000.00' },
-  { label: 'Level Income', value: '60000.00' },
-  { label: "Yesterday's Level Income", value: '22500.00' },
-  { label: 'Repurchase Income', value: '40000.00' },
-  { label: "Yesterday's Repurchase Income", value: '500.00' },
-  { label: 'Total L + R Income', value: '100000.00' },
-  { label: "Yesterday's Total Income", value: '1500.00' },
+  { label: 'Total Earning', value: '₹ 450000' },
+  { label: 'Last Month Income', value: '₹ 45000' },
+  { label: 'Pending Help', value: '₹ 350000' },
+  { label: 'Given Help', value: '₹ 189585' },
+  { label: 'Received Help', value: '₹ 200000' },
+  { label: "Yesterday's Received Help", value: '₹ 16000' },
+  { label: 'Level Income', value: '₹ 60000' },
+  { label: "Yesterday's Level Income", value: '₹ 22500' },
+  { label: 'Repurchase Income', value: '₹ 40000' },
+  { label: "Yesterday's Repurchase Income", value: '₹ 500' },
+  { label: 'Total L + R Income', value: '₹ 100000' },
+  { label: "Yesterday's Total Income", value: '₹ 1500' },
   { label: 'Total Team', value: '150' },
   { label: "Yesterday's Joining", value: '16' },
   { label: 'Unlock Level', value: '10' },
@@ -46,32 +46,32 @@ const leaderboardTabs = [
 
 const leaderboardData = {
   top: [
-    { id: 'EL12345678', name: 'SONALI SHIRKE', amount: '156550.00' },
-    { id: 'EL12345679', name: 'AMBIKA SALUNKE', amount: '152150.00' },
-    { id: 'EL12345680', name: 'RAJKIRAN SALUKE', amount: '145800.00' },
-    { id: 'EL12345681', name: 'AMIT SHARMA', amount: '124550.00' },
-    { id: 'EL12345682', name: 'SADDAM SHAIKH', amount: '111000.00' }
+    { id: 'EL12345678', name: 'SONALI SHIRKE', amount: '₹ 156550' },
+    { id: 'EL12345679', name: 'AMBIKA SALUNKE', amount: '₹ 152150' },
+    { id: 'EL12345680', name: 'RAJKIRAN SALUKE', amount: '₹ 145800' },
+    { id: 'EL12345681', name: 'AMIT SHARMA', amount: '₹ 124550' },
+    { id: 'EL12345682', name: 'SADDAM SHAIKH', amount: '₹ 111000' }
   ],
   monthly: [
-    { id: 'EL12345671', name: 'NISHIKANT KAILAS SHIRKE', amount: '456550.00' },
-    { id: 'EL12345672', name: 'ANAMIKA SAXENA', amount: '352150.00' },
-    { id: 'EL12345673', name: 'AMRUTA RAJKIRAN SALKHE', amount: '255800.00' },
-    { id: 'EL12345674', name: 'NISHIKANT KAILAS SHIRKE', amount: '224550.00' },
-    { id: 'EL12345675', name: 'ANAMIKA SAXENA', amount: '201000.00' }
+    { id: 'EL12345671', name: 'NISHIKANT KAILAS SHIRKE', amount: '₹ 456550' },
+    { id: 'EL12345672', name: 'ANAMIKA SAXENA', amount: '₹ 352150' },
+    { id: 'EL12345673', name: 'AMRUTA RAJKIRAN SALKHE', amount: '₹ 255800' },
+    { id: 'EL12345674', name: 'NISHIKANT KAILAS SHIRKE', amount: '₹ 224550' },
+    { id: 'EL12345675', name: 'ANAMIKA SAXENA', amount: '₹ 201000' }
   ],
   daily: [
-    { id: 'EL12345688', name: 'PRIYA SHARMA', amount: '18550.00' },
-    { id: 'EL12345689', name: 'RAHUL KUMAR', amount: '17210.00' },
-    { id: 'EL12345690', name: 'SNEHA PATIL', amount: '16480.00' },
-    { id: 'EL12345691', name: 'VIKAS YADAV', amount: '15320.00' },
-    { id: 'EL12345692', name: 'POOJA VERMA', amount: '14990.00' }
+    { id: 'EL12345688', name: 'PRIYA SHARMA', amount: '₹ 18550' },
+    { id: 'EL12345689', name: 'RAHUL KUMAR', amount: '₹ 17210' },
+    { id: 'EL12345690', name: 'SNEHA PATIL', amount: '₹ 16480' },
+    { id: 'EL12345691', name: 'VIKAS YADAV', amount: '₹ 15320' },
+    { id: 'EL12345692', name: 'POOJA VERMA', amount: '₹ 14990' }
   ],
   rewards: [
-    { id: 'EL12345651', name: 'MEENA JOSHI', amount: '25000.00' },
-    { id: 'EL12345652', name: 'ARUN PAWAR', amount: '18000.00' },
-    { id: 'EL12345653', name: 'KARAN MALHOTRA', amount: '15000.00' },
-    { id: 'EL12345654', name: 'TINA DAS', amount: '12000.00' },
-    { id: 'EL12345655', name: 'NARESH REDDY', amount: '10000.00' }
+    { id: 'EL12345651', name: 'MEENA JOSHI', amount: '₹ 25000' },
+    { id: 'EL12345652', name: 'ARUN PAWAR', amount: '₹ 18000' },
+    { id: 'EL12345653', name: 'KARAN MALHOTRA', amount: '₹ 15000' },
+    { id: 'EL12345654', name: 'TINA DAS', amount: '₹ 12000' },
+    { id: 'EL12345655', name: 'NARESH REDDY', amount: '₹ 10000' }
   ]
 };
 
@@ -101,8 +101,7 @@ function MemberDashboard() {
   return (
     <div className="user-dashboard-shell">
       <div className="user-dashboard1-member-dashboard-root">
-        <header className="user-dashboard-topbar">
-        </header>
+     
 
        
 
@@ -193,7 +192,7 @@ function MemberDashboard() {
                     <td>{idx + 1}</td>
                     <td>{row.id}</td>
                     <td>{row.name}</td>
-                    <td>₹ {row.amount}</td>
+                    <td> {row.amount}</td>
                   </tr>
                 ))}
               </tbody>
