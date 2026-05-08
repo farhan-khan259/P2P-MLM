@@ -131,7 +131,7 @@ function RepurchaseIncome() {
                 <th>LEVEL NO</th>
                 <th>LEVEL ID</th>
                 <th>FROM MEMBER NAME</th>
-                <th>BV POIN</th>
+                <th>BV POINT</th>
                 <th>REPURCHASE INCOME</th>
               </tr>
             </thead>
@@ -150,7 +150,8 @@ function RepurchaseIncome() {
                 </tr>
               ))}
               <tr className="report-total-row">
-                <td colSpan="8">TOTAL REPURCHASE INCOME</td>
+                <td></td>
+                <td colSpan="7">TOTAL REPURCHASE INCOME</td>
                 <td>{totalRepurchase.toFixed(2)}</td>
               </tr>
             </tbody>

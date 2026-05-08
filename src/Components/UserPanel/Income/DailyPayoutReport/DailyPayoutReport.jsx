@@ -144,7 +144,7 @@ function DailyPayoutReport() {
                   <td>{row.sNo}</td>
                   <td>{row.incomeDate}</td>
                   <td>{row.memberId}</td>
-                        <td>{row.memberName}</td>
+                 <td>{row.memberName}</td>
                   <td>{row.levelIncome.toFixed(2)}</td>
                   <td>{row.repurchaseIncome.toFixed(2)}</td>
                   <td>{row.grossIncome.toFixed(2)}</td>
@@ -155,9 +155,11 @@ function DailyPayoutReport() {
                 </tr>
               ))}
               <tr className="report-total-row">
-                <td colSpan="8">TOTAL PAYOUT AMOUNT</td>
+                <td></td>
+                <td colSpan="08">TOTAL PAYOUT AMOUNT</td>
                 <td>{totalPayoutAmount.toFixed(2)}</td>
                 <td></td>
+          
               </tr>
             </tbody>
           </table>
