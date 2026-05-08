@@ -21,14 +21,14 @@
 }
 
 /* Rank Progression Section */
-.rank-progression-section {
+.user-rank-progression-section {
   background: var(--user-card-bg);
   border-radius: 16px;
   padding: 20px;
   box-shadow: var(--user-shadow);
 }
 
-.rank-section-title {
+.user-rank-section-title {
   margin: 0 0 16px 0;
   font-size: 16px;
   font-weight: 700;
@@ -37,7 +37,7 @@
   text-transform: uppercase;
 }
 
-.rank-progression-list {
+.user-rank-progression-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -45,7 +45,7 @@
   overflow-y: auto;
 }
 
-.rank-item {
+.user-rank-item {
   border: 1px solid var(--user-line-soft);
   border-radius: 10px;
   padding: 0;
@@ -54,24 +54,24 @@
   transition: all 0.2s ease;
 }
 
-.rank-item:hover {
+.user-rank-item:hover {
   border-color: var(--user-primary);
   background: rgba(0, 212, 170, 0.03);
 }
 
-.rank-item-expanded {
+.user-rank-item-expanded {
   border-color: var(--user-primary);
   background: rgba(0, 212, 170, 0.05);
 }
 
-.rank-item-header {
+.user-rank-item-header {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 12px;
 }
 
-.rank-circle {
+.user-rank-circle {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,32 +85,32 @@
   flex-shrink: 0;
 }
 
-.rank-info {
+.user-rank-info {
   display: flex;
   flex-direction: column;
   gap: 2px;
   flex: 1;
 }
 
-.rank-item-earning {
+.user-rank-item-earning {
   font-size: 12px;
   color: var(--user-primary);
   font-weight: 600;
 }
 
-.rank-item-name {
+.user-rank-item-name {
   font-size: 14px;
   font-weight: 700;
   color: var(--user-dark);
 }
 
-.rank-expand-icon {
+.user-rank-expand-icon {
   font-size: 12px;
   color: var(--user-primary);
   flex-shrink: 0;
 }
 
-.rank-item-detail {
+.user-rank-item-detail {
   padding: 0 12px 12px 12px;
   border-top: 1px solid var(--user-line-soft);
   font-size: 13px;
@@ -118,19 +118,19 @@
   line-height: 1.5;
 }
 
-.rank-item-detail p {
+.user-rank-item-detail p {
   margin: 6px 0;
 }
 
 /* Rank Status Section */
-.rank-status-section {
+.user-rank-status-section {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.current-rank-card,
-.next-rank-card {
+.user-rank-current-card,
+.user-rank-next-card {
   background: var(--user-card-bg);
   border-radius: 16px;
   padding: 20px;
@@ -138,7 +138,7 @@
   text-align: center;
 }
 
-.rank-card-title {
+.user-rank-card-title {
   margin: 0 0 12px 0;
   font-size: 12px;
   font-weight: 700;
@@ -147,7 +147,7 @@
   color: var(--user-primary);
 }
 
-.rank-badge {
+.user-rank-badge {
   display: inline-block;
   background: var(--user-gradient-primary);
   color: #fff;
@@ -158,7 +158,7 @@
   margin: 12px 0;
 }
 
-.next-rank-badge {
+.user-rank-next-badge {
   display: inline-block;
   background: var(--user-gradient-secondary);
   color: #fff;
@@ -169,8 +169,8 @@
   margin: 12px 0;
 }
 
-.rank-earning-display,
-.next-rank-earning-display {
+.user-rank-earning-display,
+.user-rank-next-earning-display {
   font-size: 32px;
   font-weight: 800;
   color: var(--user-dark);
@@ -179,7 +179,7 @@
   padding-bottom: 12px;
 }
 
-.rank-progress-bar {
+.user-rank-progress-bar {
   width: 100%;
   height: 8px;
   background: var(--user-line-soft);
@@ -188,39 +188,39 @@
   overflow: hidden;
 }
 
-.rank-progress-fill {
+.user-rank-progress-fill {
   height: 100%;
   background: var(--user-gradient-primary);
   border-radius: 4px;
   transition: width 0.3s ease;
 }
 
-.next-rank-progress-fill {
+.user-rank-next-progress-fill {
   height: 100%;
   background: var(--user-gradient-secondary);
   border-radius: 4px;
   transition: width 0.3s ease;
 }
 
-.rank-progress-text {
+.user-rank-progress-text {
   font-size: 12px;
   color: var(--user-dark);
   font-weight: 600;
 }
 
 /* Rank Holders Panel */
-.rank-holders-panel {
+.user-rank-holders-panel {
   background: var(--user-card-bg);
   border-radius: 16px;
   padding: 20px;
   box-shadow: var(--user-shadow);
 }
 
-.rank-holders-header {
+.user-rank-holders-header {
   margin-bottom: 16px;
 }
 
-.rank-holders-title {
+.user-rank-holders-title {
   margin: 0;
   font-size: 16px;
   font-weight: 700;
@@ -229,24 +229,24 @@
   text-transform: uppercase;
 }
 
-.rank-table-wrap {
+.user-rank-table-wrap {
   overflow-x: auto;
   border-radius: 12px;
   margin-bottom: 16px;
   border: 1px solid var(--user-line-soft);
 }
 
-.rank-data-table {
+.user-rank-data-table {
   width: 100%;
   border-collapse: collapse;
   background: var(--user-card-bg);
 }
 
-.rank-data-table thead {
+.user-rank-data-table thead {
   background: rgba(0, 212, 170, 0.1);
 }
 
-.rank-data-table th {
+.user-rank-data-table th {
   padding: 12px;
   text-align: left;
   font-weight: 700;
@@ -257,29 +257,18 @@
   border-bottom: 1px solid var(--user-line-soft);
 }
 
-.rank-data-table td {
+.user-rank-data-table td {
   padding: 12px;
   font-size: 13px;
   color: var(--user-dark);
   border-bottom: 1px solid var(--user-line-soft);
 }
 
-.rank-data-table tbody tr:hover {
+.user-rank-data-table tbody tr:hover {
   background: rgba(0, 212, 170, 0.03);
 }
 
-.rank-badge-small {
-  display: inline-block;
-  background: rgba(0, 212, 170, 0.2);
-  color: var(--user-primary);
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-
-.rank-select {
+.user-rank-select {
   width: 100%;
   min-height: 36px;
   padding: 6px 10px;
@@ -292,23 +281,24 @@
   transition: all 0.2s ease;
 }
 
-.rank-select:hover {
+.user-rank-select:hover {
   border-color: var(--user-primary);
   background: rgba(0, 212, 170, 0.03);
 }
 
-.rank-select:focus {
+.user-rank-select:focus {
   outline: none;
   border-color: var(--user-primary);
   box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
 }
 
-.rank-select option {
+.user-rank-select option {
   background: var(--user-card-bg);
   color: var(--user-dark);
   padding: 8px;
 }
-.rank-table-footer {
+
+.user-rank-table-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -319,12 +309,12 @@
   gap: 10px;
 }
 
-.rank-pagination {
+.user-rank-pagination {
   display: flex;
   gap: 4px;
 }
 
-.rank-page-btn {
+.user-rank-page-btn {
   width: 32px;
   height: 32px;
   border: 1px solid var(--user-line-soft);
@@ -337,13 +327,13 @@
   transition: all 0.2s ease;
 }
 
-.rank-page-btn:hover {
+.user-rank-page-btn:hover {
   border-color: var(--user-primary);
   background: rgba(0, 212, 170, 0.1);
   color: var(--user-primary);
 }
 
-.rank-page-btn.active {
+.user-rank-page-btn.active {
   background: var(--user-gradient-primary);
   color: #fff;
   border-color: var(--user-primary);
@@ -355,11 +345,11 @@
     grid-template-columns: 1fr;
   }
 
-  .rank-progression-section {
+  .user-rank-progression-section {
     max-height: 400px;
   }
 
-  .rank-progression-list {
+  .user-rank-progression-list {
     max-height: 350px;
   }
 }
@@ -378,59 +368,59 @@
     gap: 16px;
   }
 
-  .rank-progression-section,
-  .current-rank-card,
-  .next-rank-card,
-  .rank-holders-panel {
+  .user-rank-progression-section,
+  .user-rank-current-card,
+  .user-rank-next-card,
+  .user-rank-holders-panel {
     padding: 16px;
     border-radius: 12px;
   }
 
-  .rank-section-title,
-  .rank-holders-title {
+  .user-rank-section-title,
+  .user-rank-holders-title {
     font-size: 14px;
   }
 
-  .rank-item-header {
+  .user-rank-item-header {
     padding: 10px;
   }
 
-  .rank-circle {
+  .user-rank-circle {
     width: 36px;
     height: 36px;
     font-size: 14px;
   }
 
-  .rank-item-earning {
+  .user-rank-item-earning {
     font-size: 11px;
   }
 
-  .rank-item-name {
+  .user-rank-item-name {
     font-size: 13px;
   }
 
-  .rank-badge,
-  .next-rank-badge {
+  .user-rank-badge,
+  .user-rank-next-badge {
     padding: 8px 18px;
     font-size: 16px;
   }
 
-  .rank-earning-display,
-  .next-rank-earning-display {
+  .user-rank-earning-display,
+  .user-rank-next-earning-display {
     font-size: 28px;
   }
 
-  .rank-data-table th,
-  .rank-data-table td {
+  .user-rank-data-table th,
+  .user-rank-data-table td {
     padding: 8px;
     font-size: 12px;
   }
 
-  .rank-data-table th {
+  .user-rank-data-table th {
     font-size: 11px;
   }
 
-  .rank-table-footer {
+  .user-rank-table-footer {
     font-size: 12px;
   }
 }
@@ -450,121 +440,112 @@
     gap: 12px;
   }
 
-  .rank-progression-section,
-  .current-rank-card,
-  .next-rank-card,
-  .rank-holders-panel {
+  .user-rank-progression-section,
+  .user-rank-current-card,
+  .user-rank-next-card,
+  .user-rank-holders-panel {
     padding: 12px;
     border-radius: 10px;
   }
 
-  .rank-section-title,
-  .rank-holders-title {
+  .user-rank-section-title,
+  .user-rank-holders-title {
     font-size: 12px;
     margin-bottom: 10px;
   }
 
-  .rank-item-header {
+  .user-rank-item-header {
     padding: 8px;
     gap: 8px;
   }
 
-  .rank-circle {
+  .user-rank-circle {
     width: 32px;
     height: 32px;
     font-size: 12px;
   }
 
-  .rank-item-earning {
+  .user-rank-item-earning {
     font-size: 10px;
   }
 
-  .rank-item-name {
+  .user-rank-item-name {
     font-size: 12px;
   }
 
-  .rank-item-detail {
+  .user-rank-item-detail {
     font-size: 11px;
     padding: 0 8px 8px 8px;
   }
 
-  .rank-badge,
-  .next-rank-badge {
+  .user-rank-badge,
+  .user-rank-next-badge {
     padding: 6px 14px;
     font-size: 14px;
     margin: 8px 0;
   }
 
-  .rank-earning-display,
-  .next-rank-earning-display {
+  .user-rank-earning-display,
+  .user-rank-next-earning-display {
     font-size: 24px;
     margin: 8px 0;
   }
 
-  .rank-card-title {
+  .user-rank-card-title {
     font-size: 11px;
     margin-bottom: 8px;
   }
 
-  .rank-progress-bar {
+  .user-rank-progress-bar {
     margin: 10px 0 6px 0;
     height: 6px;
   }
 
-  .rank-progress-text {
+  .user-rank-progress-text {
     font-size: 11px;
   }
 
-  .rank-data-table th,
-  .rank-data-table td {
+  .user-rank-data-table th,
+  .user-rank-data-table td {
     padding: 6px;
     font-size: 11px;
   }
 
-  .rank-data-table th {
+  .user-rank-data-table th {
     font-size: 10px;
   }
 
-  .rank-badge-small {
-    padding: 3px 8px;
-    font-size: 10px;
-  }
-
-  .rank-table-footer {
+  .user-rank-table-footer {
     font-size: 11px;
     padding: 8px 0;
   }
 
-  .rank-page-btn {
+  .user-rank-page-btn {
     width: 28px;
     height: 28px;
     font-size: 11px;
   }
 
-  .rank-expansion-list {
-    max-height: 300px;
-  }
-
-  .rank-progression-list {
+  .user-rank-progression-list {
     max-height: 250px;
   }
 }
 
 /* Scrollbar styling for progression list */
-.rank-progression-list::-webkit-scrollbar {
+.user-rank-progression-list::-webkit-scrollbar {
   width: 6px;
 }
 
-.rank-progression-list::-webkit-scrollbar-track {
+.user-rank-progression-list::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.05);
   border-radius: 3px;
 }
 
-.rank-progression-list::-webkit-scrollbar-thumb {
+.user-rank-progression-list::-webkit-scrollbar-thumb {
   background: rgba(0, 212, 170, 0.4);
   border-radius: 3px;
 }
 
-.rank-progression-list::-webkit-scrollbar-thumb:hover {
+.user-rank-progression-list::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 212, 170, 0.6);
 }

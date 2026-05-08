@@ -16,10 +16,10 @@ const rankOptions = [
 ];
 
 function UserMyRank() {
-  const [expandedRank, setExpandedRank] = useState(5); // Gold rank is expanded by default
+  const [expandedRank, setExpandedRank] = useState(5);
   const [filteredData, setFilteredData] = useState(rankHoldersData);
-  const currentRank = rankProgressionData[5]; // Gold rank
-  const nextRank = rankProgressionData[6]; // Platinum rank
+  const currentRank = rankProgressionData[5];
+  const nextRank = rankProgressionData[6];
   const currentEarning = 16000;
 
   const toggleRank = (rankIndex) => {
@@ -41,29 +41,29 @@ function UserMyRank() {
 
       <div className="user-rank-panel">
         {/* Left Section - Rank Progression */}
-        <div className="rank-progression-section">
-          <h2 className="rank-section-title">RANK PROGRESSION</h2>
-          <div className="rank-progression-list">
+        <div className="user-rank-progression-section">
+          <h2 className="user-rank-section-title">RANK PROGRESSION</h2>
+          <div className="user-rank-progression-list">
             {rankProgressionData.map((rank, index) => (
               <div
                 key={index}
-                className={`rank-item ${expandedRank === index ? 'rank-item-expanded' : ''}`}
+                className={`user-rank-item ${expandedRank === index ? 'user-rank-item-expanded' : ''}`}
                 onClick={() => toggleRank(index)}
               >
-                <div className="rank-item-header">
-                  <div className="rank-circle">
+                <div className="user-rank-item-header">
+                  <div className="user-rank-circle">
                     {index + 1}
                   </div>
-                  <div className="rank-info">
-                    <span className="rank-item-earning">{rank.earning}</span>
-                    <span className="rank-item-name">{rank.name}</span>
+                  <div className="user-rank-info">
+                    <span className="user-rank-item-earning">{rank.earning}</span>
+                    <span className="user-rank-item-name">{rank.name}</span>
                   </div>
-                  <div className="rank-expand-icon">
+                  <div className="user-rank-expand-icon">
                     {expandedRank === index ? '▼' : '▶'}
                   </div>
                 </div>
                 {expandedRank === index && (
-                  <div className="rank-item-detail">
+                  <div className="user-rank-item-detail">
                     <p>Target Earning: ₹{rank.earning.toLocaleString()}</p>
                     <p>Achieve this rank by reaching the target earning amount.</p>
                   </div>
@@ -74,41 +74,41 @@ function UserMyRank() {
         </div>
 
         {/* Right Section - Current and Next Rank */}
-        <div className="rank-status-section">
-          <div className="current-rank-card">
-            <h3 className="rank-card-title">CURRENT RANK</h3>
-            <div className="rank-badge">
+        <div className="user-rank-status-section">
+          <div className="user-rank-current-card">
+            <h3 className="user-rank-card-title">CURRENT RANK</h3>
+            <div className="user-rank-badge">
               {currentRank.name}
             </div>
-            <div className="rank-earning-display">
+            <div className="user-rank-earning-display">
               {currentEarning}
             </div>
-            <div className="rank-progress-bar">
+            <div className="user-rank-progress-bar">
               <div
-                className="rank-progress-fill"
+                className="user-rank-progress-fill"
                 style={{ width: `${progressPercentage}%` }}
               ></div>
             </div>
-            <div className="rank-progress-text">
+            <div className="user-rank-progress-text">
               {currentEarning} / {currentRank.earning}
             </div>
           </div>
 
-          <div className="next-rank-card">
-            <h3 className="rank-card-title">NEXT RANK</h3>
-            <div className="next-rank-badge">
+          <div className="user-rank-next-card">
+            <h3 className="user-rank-card-title">NEXT RANK</h3>
+            <div className="user-rank-next-badge">
               {nextRank.name}
             </div>
-            <div className="next-rank-earning-display">
+            <div className="user-rank-next-earning-display">
               {nextRank.earning}
             </div>
-            <div className="rank-progress-bar">
+            <div className="user-rank-progress-bar">
               <div
-                className="next-rank-progress-fill"
+                className="user-rank-next-progress-fill"
                 style={{ width: `${Math.min(nextProgressPercentage, 100)}%` }}
               ></div>
             </div>
-            <div className="rank-progress-text">
+            <div className="user-rank-progress-text">
               {currentEarning} / {nextRank.earning}
             </div>
           </div>
@@ -116,13 +116,13 @@ function UserMyRank() {
       </div>
 
       {/* Rank Holders List */}
-      <div className="rank-holders-panel">
-        <div className="rank-holders-header">
-          <h2 className="rank-holders-title">RANK HOLDERS LIST</h2>
+      <div className="user-rank-holders-panel">
+        <div className="user-rank-holders-header">
+          <h2 className="user-rank-holders-title">RANK HOLDERS LIST</h2>
         </div>
 
-        <div className="rank-table-wrap">
-          <table className="rank-data-table">
+        <div className="user-rank-table-wrap">
+          <table className="user-rank-data-table">
             <thead>
               <tr>
                 <th>S.NO</th>
@@ -145,11 +145,9 @@ function UserMyRank() {
                   <td>{row.totalEarning}</td>
                   <td>
                     <select
-                      className="rank-select"
+                      className="user-rank-select"
                       value={row.selectRank}
-                      onChange={(e) =>
-                        handleSelectRank(index, e.target.value)
-                      }
+                      onChange={(e) => handleSelectRank(index, e.target.value)}
                     >
                       <option value="">Select</option>
                       {rankOptions.map((rank, idx) => (
@@ -165,14 +163,14 @@ function UserMyRank() {
           </table>
         </div>
 
-        <div className="rank-table-footer">
+        <div className="user-rank-table-footer">
           <span>Showing Page 1 of 1 From {filteredData.length} Rows</span>
-          <div className="rank-pagination">
-            <button className="rank-page-btn">&lt;&lt;</button>
-            <button className="rank-page-btn">&lt;</button>
-            <button className="rank-page-btn active">1</button>
-            <button className="rank-page-btn">&gt;</button>
-            <button className="rank-page-btn">&gt;&gt;</button>
+          <div className="user-rank-pagination">
+            <button className="user-rank-page-btn">&lt;&lt;</button>
+            <button className="user-rank-page-btn">&lt;</button>
+            <button className="user-rank-page-btn active">1</button>
+            <button className="user-rank-page-btn">&gt;</button>
+            <button className="user-rank-page-btn">&gt;&gt;</button>
           </div>
         </div>
       </div>

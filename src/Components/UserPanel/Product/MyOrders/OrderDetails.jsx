@@ -110,88 +110,85 @@ function OrderDetails() {
   };
 
   return (
-    <div className="user-order-details-page">
-      <div className="user-order-details-shell">
-      
-
+    <div className="order-details-page">
+      <div className="order-details-shell">
         <div className="order-details-toolbar">
           <h1 className="order-details-title">Order Details - {order.orderNo}</h1>
-
-          <button type="button" className="order-print-btn" onClick={handlePrintInvoice}>
+          <button type="button" className="order-details-print-btn" onClick={handlePrintInvoice}>
             <PrinterIcon />
             <span>Print Invoice</span>
           </button>
         </div>
 
-        <section className="order-info-grid">
-          <article className="order-info-card">
-            <div className="order-info-card__header">Order Overview</div>
-            <div className="order-info-list">
-              <div className="order-info-row">
-                <span className="order-info-label">Order No</span>
-                <span className="order-info-value">{order.orderNo}</span>
+        <section className="order-details-info-grid">
+          <article className="order-details-info-card">
+            <div className="order-details-info-card__header">Order Overview</div>
+            <div className="order-details-info-list">
+              <div className="order-details-info-row">
+                <span className="order-details-info-label">Order No</span>
+                <span className="order-details-info-value">{order.orderNo}</span>
               </div>
-              <div className="order-info-row">
-                <span className="order-info-label">Order Date</span>
-                <span className="order-info-value">{order.orderDate}</span>
+              <div className="order-details-info-row">
+                <span className="order-details-info-label">Order Date</span>
+                <span className="order-details-info-value">{order.orderDate}</span>
               </div>
-              <div className="order-info-row">
-                <span className="order-info-label">Payment Mode</span>
-                <span className="order-info-value">{order.paymentMode}</span>
+              <div className="order-details-info-row">
+                <span className="order-details-info-label">Payment Mode</span>
+                <span className="order-details-info-value">{order.paymentMode}</span>
               </div>
-              <div className="order-info-row">
-                <span className="order-info-label">Order Items</span>
-                <span className="order-info-value">{order.orderItems}</span>
+              <div className="order-details-info-row">
+                <span className="order-details-info-label">Order Items</span>
+                <span className="order-details-info-value">{order.orderItems}</span>
               </div>
-              <div className="order-info-row">
-                <span className="order-info-label">Order Status</span>
-                <span className="order-info-value">{order.orderStatus}</span>
+              <div className="order-details-info-row">
+                <span className="order-details-info-label">Order Status</span>
+                <span className="order-details-info-value">{order.orderStatus}</span>
               </div>
-              <div className="order-info-row">
-                <span className="order-info-label">Order Payment Status</span>
-                <span className="order-info-value">{order.paymentStatus}</span>
-              </div>
-            </div>
-          </article>
-
-          <article className="order-info-card">
-            <div className="order-info-card__header">Order Summary</div>
-            <div className="order-info-list">
-              <div className="order-info-row">
-                <span className="order-info-label">Total Price</span>
-                <span className="order-info-value">{order.totalPrice.toFixed(2)}</span>
-              </div>
-              <div className="order-info-row">
-                <span className="order-info-label">+ Shipping Charge</span>
-                <span className="order-info-value">+{order.shippingCharge.toFixed(2)}</span>
-              </div>
-              <div className="order-info-row">
-                <span className="order-info-label">- Discount Coupon</span>
-                <span className="order-info-value">{order.discountCoupon.toFixed(2)}</span>
-              </div>
-              <div className="order-info-row order-info-row--total">
-                <span className="order-info-label">Total</span>
-                <span className="order-info-value">{order.finalTotal.toFixed(2)}</span>
+              <div className="order-details-info-row">
+                <span className="order-details-info-label">Order Payment Status</span>
+                <span className="order-details-info-value">{order.paymentStatus}</span>
               </div>
             </div>
           </article>
 
-          <article className="order-info-card">
-            <div className="order-info-card__header">Shipping Information</div>
-            <div className="order-info-list">
+          <article className="order-details-info-card">
+            <div className="order-details-info-card__header">Order Summary</div>
+            <div className="order-details-info-list">
+              <div className="order-details-info-row">
+                <span className="order-details-info-label">Total Price</span>
+                <span className="order-details-info-value">{order.totalPrice.toFixed(2)}</span>
+              </div>
+              <div className="order-details-info-row">
+                <span className="order-details-info-label">+ Shipping Charge</span>
+                <span className="order-details-info-value">+{order.shippingCharge.toFixed(2)}</span>
+              </div>
+              <div className="order-details-info-row">
+                <span className="order-details-info-label">- Discount Coupon</span>
+                <span className="order-details-info-value">{order.discountCoupon.toFixed(2)}</span>
+              </div>
+              <div className="order-details-info-row order-details-info-row--total">
+                <span className="order-details-info-label">Total</span>
+                <span className="order-details-info-value">{order.finalTotal.toFixed(2)}</span>
+              </div>
+            </div>
+          </article>
+
+          <article className="order-details-info-card">
+            <div className="order-details-info-card__header">Shipping Information</div>
+            <div className="order-details-info-list">
               {order.shippingInformation.map((field) => (
-                <div className="order-info-row" key={field.label}>
-                  <span className="order-info-label">{getFieldLabel(field.label)}</span>
-                  <span className="order-info-value">{field.value}</span>
+                <div className="order-details-info-row" key={field.label}>
+                  <span className="order-details-info-label">{getFieldLabel(field.label)}</span>
+                  <span className="order-details-info-value">{field.value}</span>
                 </div>
               ))}
             </div>
           </article>
         </section>
 
-        <section className="order-items-card">
-          <div className="table-wrap order-items-table-wrap">
-            <table className="user-table order-items-table">
+        <section className="order-details-items-card">
+          <div className="order-details-table-wrap">
+            <table className="order-details-items-table">
               <thead>
                 <tr>
                   <th>Item / Product Name</th>
@@ -204,9 +201,9 @@ function OrderDetails() {
                 {order.items.map((item) => (
                   <tr key={item.name}>
                     <td data-label="Item / Product Name">
-                      <div className="order-item-product">
-                        <img className="order-item-thumb" src={item.image} alt={item.name} />
-                        <span className="order-item-name">{item.name}</span>
+                      <div className="order-details-item-product">
+                        <img className="order-details-item-thumb" src={item.image} alt={item.name} />
+                        <span className="order-details-item-name">{item.name}</span>
                       </div>
                     </td>
                     <td data-label="Price">{item.price.toFixed(2)}</td>
@@ -220,7 +217,7 @@ function OrderDetails() {
         </section>
 
         <div className="order-details-footer">
-          <button type="button" className="order-back-btn" onClick={handleBackToOrders}>
+          <button type="button" className="order-details-back-btn" onClick={handleBackToOrders}>
             Back to Orders
           </button>
         </div>
