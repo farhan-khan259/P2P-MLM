@@ -41,7 +41,7 @@ const donationRows = [
 
 const exportColumns = [
   'S.No', 'Donor Member ID', 'Donor Member Name', 'Receiver Member ID', 'Receiver Member Name', 'D. Amount',
-  'Rank', 'Payment Proof', 'Transaction ID', 'Request Date', 'Approve Date', 'Status'
+  'Rank', 'Request Date', 'Approve Date', 'Transaction ID', 'Slip', 'Status'
 ];
 
 const rankLabels = {
@@ -105,10 +105,10 @@ function DonationReport() {
     row.receiverMemberName,
     row.amount,
     row.rank,
-    row.paymentProof,
-    row.transactionId,
     row.requestDate,
     row.approveDate,
+    row.transactionId,
+    row.paymentProof,
     row.status
   ]));
 
@@ -200,21 +200,22 @@ function DonationReport() {
         </div>
 
         <div className="table-wrap">
-          <table className="data-table" style={{ minWidth: '1540px' }}>
+          <table className="data-table" style={{ minWidth: '1680px' }}>
             <thead>
               <tr>
                 <th>S.NO</th>
-                <th>DONAR MEMBER ID</th>
+                <th>DONAR MID</th>
                 <th>DONAR MEMBER NAME</th>
-                <th>RECEIVER MEMBER ID</th>
+                <th>RECEIVER MID</th>
                 <th>RECEIVER MEMBER NAME</th>
                 <th>D. AMOUNT</th>
                 <th>RANK</th>
-                <th>PAYMENT PROOF</th>
-                <th>TRANSACTION ID</th>
                 <th>REQUEST DATE</th>
-                <th>APROVE DATE</th>
+                <th>APPROVE DATE</th>
+                <th>TRANSACTION ID</th>
+                <th>SLIP</th>
                 <th>STATUS</th>
+                <th>ACTION</th>
               </tr>
             </thead>
             <tbody>
@@ -227,6 +228,9 @@ function DonationReport() {
                   <td>{row.receiverMemberName}</td>
                   <td>{row.amount}</td>
                   <td>{row.rank}</td>
+                  <td>{row.requestDate}</td>
+                  <td>{row.approveDate}</td>
+                  <td>{row.transactionId}</td>
                   <td>
                     {row.paymentProof ? (
                       <button className="btn-primary" type="button" style={{ padding: '5px 10px', fontSize: '11px' }}>
@@ -236,10 +240,20 @@ function DonationReport() {
                       '-'
                     )}
                   </td>
-                  <td>{row.transactionId}</td>
-                  <td>{row.requestDate}</td>
-                  <td>{row.approveDate}</td>
                   <td>{row.status}</td>
+                  <td>
+                    <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+                      <button className="action-btn accept-btn" type="button" title="Accept" style={{ background: '#e8f8f5', color: '#27ae60', border: '1px solid #27ae60' }}>
+                        ✓
+                      </button>
+                      <button className="action-btn reject-btn" type="button" title="Reject" style={{ background: '#fadbd8', color: '#e74c3c', border: '1px solid #e74c3c' }}>
+                        ✕
+                      </button>
+                      <button className="action-btn return-btn" type="button" title="Return" style={{ background: '#ebf5fb', color: '#3498db', border: '1px solid #3498db' }}>
+                        ↻
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>

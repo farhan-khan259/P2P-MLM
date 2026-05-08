@@ -6,8 +6,11 @@ export const rankHoldersData = [
     memberId: 'MM101016',
     memberName: 'SONALI SHIRKE',
     city: 'PUNE',
-    totalEarning: '120000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹300',
+    earning: '₹300',
+    rank: 'STARTER',
+    status: 'SHOW'
   },
   {
     id: 2,
@@ -16,8 +19,11 @@ export const rankHoldersData = [
     memberId: 'MM101015',
     memberName: 'AMBIKA SALUNKE',
     city: 'SATARA',
-    totalEarning: '350000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹1000',
+    earning: '₹2500',
+    rank: 'ACHIEVER',
+    status: 'SHOW'
   },
   {
     id: 3,
@@ -26,8 +32,11 @@ export const rankHoldersData = [
     memberId: 'MM101014',
     memberName: 'RAJKIRAN SALUKE',
     city: 'PUNE',
-    totalEarning: '450000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹2000',
+    earning: '₹6000',
+    rank: 'STAR',
+    status: 'SHOW'
   },
   {
     id: 4,
@@ -36,8 +45,11 @@ export const rankHoldersData = [
     memberId: 'MM101013',
     memberName: 'AMIT SHARMA',
     city: 'THANE',
-    totalEarning: '375000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹4000',
+    earning: '₹10000',
+    rank: 'BRONZE',
+    status: 'SHOW'
   },
   {
     id: 5,
@@ -46,8 +58,11 @@ export const rankHoldersData = [
     memberId: 'MM101012',
     memberName: 'SADDAM SHAIKH',
     city: 'KALYAN',
-    totalEarning: '280000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹8000',
+    earning: '₹50000',
+    rank: 'SILVER',
+    status: 'SHOW'
   },
   {
     id: 6,
@@ -56,8 +71,11 @@ export const rankHoldersData = [
     memberId: 'MM101011',
     memberName: 'GAURI DAFAL',
     city: 'DADAR',
-    totalEarning: '270000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹16000',
+    earning: '₹100000',
+    rank: 'GOLD',
+    status: 'SHOW'
   },
   {
     id: 7,
@@ -66,8 +84,11 @@ export const rankHoldersData = [
     memberId: 'MM101010',
     memberName: 'SNEHAL MARNE',
     city: 'SANGALI',
-    totalEarning: '290000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹32000',
+    earning: '₹250000',
+    rank: 'PLATINUM',
+    status: 'SHOW'
   },
   {
     id: 8,
@@ -76,8 +97,11 @@ export const rankHoldersData = [
     memberId: 'MM101009',
     memberName: 'PRAVIN SUTAR',
     city: 'NASHIK',
-    totalEarning: '340000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹64000',
+    earning: '₹500000',
+    rank: 'EMERALD',
+    status: 'SHOW'
   },
   {
     id: 9,
@@ -86,8 +110,11 @@ export const rankHoldersData = [
     memberId: 'MM101008',
     memberName: 'ARUN KULKARNI',
     city: 'NAGPUR',
-    totalEarning: '410000.00',
-    selectRank: 'GOLD'
+    directs: 10,
+    upgrade: '₹128000',
+    earning: '₹1000000',
+    rank: 'DIAMOND',
+    status: 'SHOW'
   },
   {
     id: 10,
@@ -96,57 +123,10 @@ export const rankHoldersData = [
     memberId: 'MM101007',
     memberName: 'PRIYA DESAI',
     city: 'MUMBAI',
-    totalEarning: '520000.00',
-    selectRank: 'PLATINUM'
-  },
-  {
-    id: 11,
-    sno: 11,
-    joiningDate: '20-01-2026',
-    memberId: 'MM101006',
-    memberName: 'RAJESH PATEL',
-    city: 'AHMEDABAD',
-    totalEarning: '650000.00',
-    selectRank: 'EMERALD'
-  },
-  {
-    id: 12,
-    sno: 12,
-    joiningDate: '15-01-2026',
-    memberId: 'MM101005',
-    memberName: 'NISHA VERMA',
-    city: 'DELHI',
-    totalEarning: '180000.00',
-    selectRank: 'BRONZE'
-  },
-  {
-    id: 13,
-    sno: 13,
-    joiningDate: '10-01-2026',
-    memberId: 'MM101004',
-    memberName: 'VIKRAM SINGH',
-    city: 'BANGALORE',
-    totalEarning: '420000.00',
-    selectRank: 'GOLD'
-  },
-  {
-    id: 14,
-    sno: 14,
-    joiningDate: '05-01-2026',
-    memberId: 'MM101003',
-    memberName: 'MEERA GUPTA',
-    city: 'KOLKATA',
-    totalEarning: '310000.00',
-    selectRank: 'STAR'
-  },
-  {
-    id: 15,
-    sno: 15,
-    joiningDate: '01-01-2026',
-    memberId: 'MM101002',
-    memberName: 'HARISH REDDY',
-    city: 'HYDERABAD',
-    totalEarning: '255000.00',
-    selectRank: 'ACHIEVER'
+    directs: 10,
+    upgrade: '₹256000',
+    earning: '₹5000000',
+    rank: 'CROWN DIAMOND',
+    status: 'SHOW'
   }
 ];

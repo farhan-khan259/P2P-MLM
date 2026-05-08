@@ -19,8 +19,10 @@ export const rankHoldersData = [
     memberId: 'MM101016',
     memberName: 'SONALI SHIRKE',
     city: 'PUNE',
-    totalEarning: '120000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹300',
+    earning: '₹300',
+    rank: 'STARTER'
   },
   {
     id: 2,
@@ -29,8 +31,10 @@ export const rankHoldersData = [
     memberId: 'MM101015',
     memberName: 'AMBIKA SALUNKE',
     city: 'SATARA',
-    totalEarning: '350000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹1000',
+    earning: '₹2500',
+    rank: 'ACHIEVER'
   },
   {
     id: 3,
@@ -39,8 +43,10 @@ export const rankHoldersData = [
     memberId: 'MM101014',
     memberName: 'RAJKIRAN SALUKE',
     city: 'PUNE',
-    totalEarning: '450000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹2000',
+    earning: '₹6000',
+    rank: 'STAR'
   },
   {
     id: 4,
@@ -49,8 +55,10 @@ export const rankHoldersData = [
     memberId: 'MM101013',
     memberName: 'AMIT SHARMA',
     city: 'THANE',
-    totalEarning: '375000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹4000',
+    earning: '₹10000',
+    rank: 'BRONZE'
   },
   {
     id: 5,
@@ -59,8 +67,10 @@ export const rankHoldersData = [
     memberId: 'MM101012',
     memberName: 'SADDAM SHAIKH',
     city: 'KALYAN',
-    totalEarning: '280000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹8000',
+    earning: '₹50000',
+    rank: 'SILVER'
   },
   {
     id: 6,
@@ -69,8 +79,10 @@ export const rankHoldersData = [
     memberId: 'MM101011',
     memberName: 'GAURI DAFAL',
     city: 'DADAR',
-    totalEarning: '270000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹16000',
+    earning: '₹100000',
+    rank: 'GOLD'
   },
   {
     id: 7,
@@ -79,8 +91,10 @@ export const rankHoldersData = [
     memberId: 'MM101010',
     memberName: 'SNEHAL MARNE',
     city: 'SANGALI',
-    totalEarning: '290000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹32000',
+    earning: '₹250000',
+    rank: 'PLATINUM'
   },
   {
     id: 8,
@@ -89,7 +103,33 @@ export const rankHoldersData = [
     memberId: 'MM101009',
     memberName: 'PRAVIN SUTAR',
     city: 'NASHIK',
-    totalEarning: '340000.00',
-    selectRank: 'SILVER'
+    directs: 10,
+    upgrade: '₹64000',
+    earning: '₹500000',
+    rank: 'EMERALD'
+  },
+  {
+    id: 9,
+    sno: 9,
+    joiningDate: '28-01-2026',
+    memberId: 'MM101008',
+    memberName: 'SHEHAL MARNE',
+    city: 'PUNE',
+    directs: 10,
+    upgrade: '₹128000',
+    earning: '₹1000000',
+    rank: 'DIAMOND'
+  },
+  {
+    id: 10,
+    sno: 10,
+    joiningDate: '02-02-2026',
+    memberId: 'MM101007',
+    memberName: 'RAHUL KAMBALE',
+    city: 'PUNE',
+    directs: 10,
+    upgrade: '₹256000',
+    earning: '₹5000000',
+    rank: 'CROWN DIAMOND'
   }
 ];

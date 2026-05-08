@@ -26,12 +26,6 @@ function UserMyRank() {
     setExpandedRank(expandedRank === rankIndex ? null : rankIndex);
   };
 
-  const handleSelectRank = (index, rank) => {
-    const updatedData = [...filteredData];
-    updatedData[index].selectRank = rank;
-    setFilteredData(updatedData);
-  };
-
   const progressPercentage = (currentEarning / currentRank.earning) * 100;
   const nextProgressPercentage = (currentEarning / nextRank.earning) * 100;
 
@@ -122,6 +116,7 @@ function UserMyRank() {
         </div>
 
         <div className="user-rank-table-wrap">
+          
           <table className="user-rank-data-table">
             <thead>
               <tr>
@@ -130,8 +125,10 @@ function UserMyRank() {
                 <th>MEMBER ID</th>
                 <th>MEMBER NAME</th>
                 <th>CITY</th>
-                <th>TOTAL EARNING</th>
-                <th>SELECT RANK</th>
+                <th>DIRECTS</th>
+                <th>UPGRADE</th>
+                <th>EARNING</th>
+                <th>RANK</th>
               </tr>
             </thead>
             <tbody>
@@ -142,21 +139,10 @@ function UserMyRank() {
                   <td>{row.memberId}</td>
                   <td>{row.memberName}</td>
                   <td>{row.city}</td>
-                  <td>{row.totalEarning}</td>
-                  <td>
-                    <select
-                      className="user-rank-select"
-                      value={row.selectRank}
-                      onChange={(e) => handleSelectRank(index, e.target.value)}
-                    >
-                      <option value="">Select</option>
-                      {rankOptions.map((rank, idx) => (
-                        <option key={idx} value={rank}>
-                          {rank}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
+                  <td>{row.directs}</td>
+                  <td>{row.upgrade}</td>
+                  <td>{row.earning}</td>
+                  <td>{row.rank}</td>
                 </tr>
               ))}
             </tbody>
@@ -172,6 +158,11 @@ function UserMyRank() {
             <button className="user-rank-page-btn">&gt;</button>
             <button className="user-rank-page-btn">&gt;&gt;</button>
           </div>
+        </div>
+        
+        <div style={{ marginTop: '16px', padding: '12px', background: '#f5f5f5', borderRadius: '8px', fontSize: '13px', color: '#333' }}>
+          <p style={{ margin: '0 0 8px 0', fontWeight: '600' }}>Target Earning: ₹ 1000000 *</p>
+          <p style={{ margin: '0', lineHeight: '1.4' }}>Achieve this prestigious rank by earning ₹1,000,000, building a team of 10 Active Directs, and upgrading your ID with a ₹16,000 donation contribution.</p>
         </div>
       </div>
     </div>
