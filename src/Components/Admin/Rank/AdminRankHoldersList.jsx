@@ -86,9 +86,13 @@ function AdminRankHoldersList() {
                   <td>{row.rank}</td>
                   <td>{row.status}</td>
                   <td>
-                    <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
-                      <button type="button" title="Accept" style={{ background: '#e8f8f5', color: '#27ae60', border: '1px solid #27ae60', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '14px' }}>✓</button>
-                      <button type="button" title="Reject" style={{ background: '#fadbd8', color: '#e74c3c', border: '1px solid #e74c3c', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '14px' }}>✕</button>
+                    <div className="rank-action-buttons">
+                      <button type="button" className="action-button action-button-show">
+                        SHOW
+                      </button>
+                      <button type="button" className="action-button action-button-hide">
+                        HIDE
+                      </button>
                     </div>
                   </td>
                 </tr>

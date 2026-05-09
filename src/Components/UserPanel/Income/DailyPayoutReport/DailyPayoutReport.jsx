@@ -1,104 +1,104 @@
-import '../../Common/UserLayout.css';
-import './DailyPayoutReport.css';
+import "../../Common/UserLayout.css";
+import "./DailyPayoutReport.css";
 
 const dailyPayoutData = [
   {
     sNo: 1,
-    incomeDate: '06-02-2026',
-    memberId: 'MM101011',
-    memberName: 'ANAMIKA SAXENA',
-    levelIncome: 1200.00,
-    repurchaseIncome: 1000.00,
-    grossIncome: 2200.00,
-    tds: 110.00,
-    adminCharge: 110.00,
-    netPayable: 1980.00,
-    status: 'Credited To E-wallet'
+    incomeDate: "06-02-2026",
+    memberId: "MM101011",
+    memberName: "ANAMIKA SAXENA",
+    levelIncome: 1200.0,
+    repurchaseIncome: 1000.0,
+    grossIncome: 2200.0,
+    tds: 110.0,
+    adminCharge: 110.0,
+    netPayable: 1980.0,
+    status: "Credited To E-wallet",
   },
   {
     sNo: 2,
-    incomeDate: '05-02-2026',
-    memberId: 'MM101011',
-    memberName: 'ANAMIKA SAXENA',
-    levelIncome: 1000.00,
-    repurchaseIncome: 1200.00,
-    grossIncome: 2200.00,
-    tds: 110.00,
-    adminCharge: 110.00,
-    netPayable: 1980.00,
-    status: 'Credited To E-wallet'
+    incomeDate: "05-02-2026",
+    memberId: "MM101011",
+    memberName: "ANAMIKA SAXENA",
+    levelIncome: 1000.0,
+    repurchaseIncome: 1200.0,
+    grossIncome: 2200.0,
+    tds: 110.0,
+    adminCharge: 110.0,
+    netPayable: 1980.0,
+    status: "Credited To E-wallet",
   },
   {
     sNo: 3,
-    incomeDate: '04-02-2026',
-    memberId: 'MM101011',
-    memberName: 'ANAMIKA SAXENA',
-    levelIncome: 2000.00,
-    repurchaseIncome: 2500.00,
-    grossIncome: 4500.00,
-    tds: 225.00,
-    adminCharge: 225.00,
-    netPayable: 4050.00,
-    status: 'Credited To E-wallet'
+    incomeDate: "04-02-2026",
+    memberId: "MM101011",
+    memberName: "ANAMIKA SAXENA",
+    levelIncome: 2000.0,
+    repurchaseIncome: 2500.0,
+    grossIncome: 4500.0,
+    tds: 225.0,
+    adminCharge: 225.0,
+    netPayable: 4050.0,
+    status: "Credited To E-wallet",
   },
   {
     sNo: 4,
-    incomeDate: '03-02-2026',
-    memberId: 'MM101011',
-    memberName: 'ANAMIKA SAXENA',
-    levelIncome: 2400.00,
-    repurchaseIncome: 250.00,
-    grossIncome: 2650.00,
-    tds: 132.50,
-    adminCharge: 132.50,
-    netPayable: 2385.00,
-    status: 'Credited To E-wallet'
+    incomeDate: "03-02-2026",
+    memberId: "MM101011",
+    memberName: "ANAMIKA SAXENA",
+    levelIncome: 2400.0,
+    repurchaseIncome: 250.0,
+    grossIncome: 2650.0,
+    tds: 132.5,
+    adminCharge: 132.5,
+    netPayable: 2385.0,
+    status: "Credited To E-wallet",
   },
   {
     sNo: 5,
-    incomeDate: '02-02-2026',
-    memberId: 'MM101011',
-    memberName: 'ANAMIKA SAXENA',
-    levelIncome: 900.00,
-    repurchaseIncome: 1500.00,
-    grossIncome: 2400.00,
-    tds: 120.00,
-    adminCharge: 120.00,
-    netPayable: 2160.00,
-    status: 'Credited To E-wallet'
+    incomeDate: "02-02-2026",
+    memberId: "MM101011",
+    memberName: "ANAMIKA SAXENA",
+    levelIncome: 900.0,
+    repurchaseIncome: 1500.0,
+    grossIncome: 2400.0,
+    tds: 120.0,
+    adminCharge: 120.0,
+    netPayable: 2160.0,
+    status: "Credited To E-wallet",
   },
   {
     sNo: 6,
-    incomeDate: '01-02-2026',
-    memberId: 'MM101011',
-    memberName: 'ANAMIKA SAXENA',
-    levelIncome: 400.00,
-    repurchaseIncome: 1800.00,
-    grossIncome: 2200.00,
-    tds: 110.00,
-    adminCharge: 110.00,
-    netPayable: 1980.00,
-    status: 'Credited To E-wallet'
+    incomeDate: "01-02-2026",
+    memberId: "MM101011",
+    memberName: "ANAMIKA SAXENA",
+    levelIncome: 400.0,
+    repurchaseIncome: 1800.0,
+    grossIncome: 2200.0,
+    tds: 110.0,
+    adminCharge: 110.0,
+    netPayable: 1980.0,
+    status: "Credited To E-wallet",
   },
   {
     sNo: 7,
-    incomeDate: '30-01-2026',
-    memberId: 'MM101011',
-    memberName: 'ANAMIKA SAXENA',
-    levelIncome: 500.00,
-    repurchaseIncome: 2000.00,
-    grossIncome: 2500.00,
-    tds: 125.00,
-    adminCharge: 125.00,
-    netPayable: 2250.00,
-    status: 'Credited To E-wallet'
-  }
+    incomeDate: "30-01-2026",
+    memberId: "MM101011",
+    memberName: "ANAMIKA SAXENA",
+    levelIncome: 500.0,
+    repurchaseIncome: 2000.0,
+    grossIncome: 2500.0,
+    tds: 125.0,
+    adminCharge: 125.0,
+    netPayable: 2250.0,
+    status: "Credited To E-wallet",
+  },
 ];
 
 function DailyPayoutReport() {
   const totalPayoutAmount = dailyPayoutData.reduce(
     (sum, row) => sum + row.netPayable,
-    0
+    0,
   );
 
   return (
@@ -113,12 +113,18 @@ function DailyPayoutReport() {
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-          <button className="user-btn-blue" type="button">SERCH</button>
+          <button className="user-btn-blue" type="button">
+            SERCH
+          </button>
         </div>
 
         <div className="table-toolbar">
-          <button className="user-btn-outline" type="button">Excel</button>
-          <button className="user-btn-outline" type="button">PDF</button>
+          <button className="user-btn-outline" type="button">
+            Excel
+          </button>
+          <button className="user-btn-outline" type="button">
+            PDF
+          </button>
         </div>
 
         <div className="table-wrap">
@@ -128,7 +134,7 @@ function DailyPayoutReport() {
                 <th>S.NO</th>
                 <th>INCOME DATE</th>
                 <th>MEMBER ID</th>
-                   <th>MEMBER NAME</th>
+                <th>MEMBER NAME</th>
                 <th>LEVEL INCOME</th>
                 <th>REPURCHASE INCOME</th>
                 <th>GROSS INCOME</th>
@@ -144,7 +150,7 @@ function DailyPayoutReport() {
                   <td>{row.sNo}</td>
                   <td>{row.incomeDate}</td>
                   <td>{row.memberId}</td>
-                 <td>{row.memberName}</td>
+                  <td>{row.memberName}</td>
                   <td>{row.levelIncome.toFixed(2)}</td>
                   <td>{row.repurchaseIncome.toFixed(2)}</td>
                   <td>{row.grossIncome.toFixed(2)}</td>
@@ -155,28 +161,57 @@ function DailyPayoutReport() {
                 </tr>
               ))}
               <tr className="report-total-row">
-                <td></td>
-                <td colSpan="08">TOTAL PAYOUT AMOUNT</td>
-                <td>{totalPayoutAmount.toFixed(2)}</td>
-                <td></td>
-          
+                <td
+                  colSpan="10"
+                  style={{
+                    textAlign: "end",
+                  }}
+                  className="report-total-label"
+                >
+                  TOTAL PAYOUT AMOUNT
+                </td>
+                <td className="report-total-value">
+                  {totalPayoutAmount.toFixed(2)}
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div className="pagination-row">
-          <button className="page-btn" type="button">«</button>
-          <button className="page-btn" type="button">‹</button>
-          <button className="page-btn active" type="button">1</button>
-          <button className="page-btn" type="button">2</button>
-          <button className="page-btn" type="button">3</button>
-          <button className="page-btn" type="button">4</button>
-          <button className="page-btn" type="button">5</button>
-          <button className="page-btn" type="button">6</button>
-          <button className="page-btn" type="button">7</button>
-          <button className="page-btn" type="button">›</button>
-          <button className="page-btn" type="button">»</button>
+          <button className="page-btn" type="button">
+            «
+          </button>
+          <button className="page-btn" type="button">
+            ‹
+          </button>
+          <button className="page-btn active" type="button">
+            1
+          </button>
+          <button className="page-btn" type="button">
+            2
+          </button>
+          <button className="page-btn" type="button">
+            3
+          </button>
+          <button className="page-btn" type="button">
+            4
+          </button>
+          <button className="page-btn" type="button">
+            5
+          </button>
+          <button className="page-btn" type="button">
+            6
+          </button>
+          <button className="page-btn" type="button">
+            7
+          </button>
+          <button className="page-btn" type="button">
+            ›
+          </button>
+          <button className="page-btn" type="button">
+            »
+          </button>
         </div>
       </div>
     </div>

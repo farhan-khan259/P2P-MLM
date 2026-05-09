@@ -29,11 +29,17 @@
   font-weight: 700;
   background: rgba(0, 212, 170, 0.08);
   padding: 14px 16px;
-  text-align: right;
 }
 
-.report-total-row td:first-child {
+.report-total-label {
   text-align: right;
+  padding-right: 14px;
+}
+
+.report-total-value {
+  text-align: right;
+  white-space: nowrap;
+  padding-right: 14px;
 }
 
 

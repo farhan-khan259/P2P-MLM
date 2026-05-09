@@ -1,88 +1,91 @@
-import '../../Common/UserLayout.css';
-import './RepurchaseIncome.css';
+import "../../Common/UserLayout.css";
+import "./RepurchaseIncome.css";
 
 const repurchaseIncomeRows = [
   {
     sNo: 1,
-    incomeDate: '02-03-2024 12:57:37pm',
-    memberId: 'MM101010',
-    memberName: 'ANAMIKA SAXENA',
+    incomeDate: "02-03-2024 12:57:37pm",
+    memberId: "MM101010",
+    memberName: "ANAMIKA SAXENA",
     levelNo: 1,
-    levelId: 'MM101011',
-    fromMemberName: 'SONALI SHIRKE',
+    levelId: "MM101011",
+    fromMemberName: "SONALI SHIRKE",
     bvPoin: 10,
-    repurchaseIncome: 10.0
+    repurchaseIncome: 10.0,
   },
   {
     sNo: 2,
-    incomeDate: '25-02-2024 12:57:37pm',
-    memberId: 'MM101010',
-    memberName: 'ANAMIKA SAXENA',
+    incomeDate: "25-02-2024 12:57:37pm",
+    memberId: "MM101010",
+    memberName: "ANAMIKA SAXENA",
     levelNo: 9,
-    levelId: 'MM101012',
-    fromMemberName: 'AMBIKA SALUNKE',
+    levelId: "MM101012",
+    fromMemberName: "AMBIKA SALUNKE",
     bvPoin: 20,
-    repurchaseIncome: 20.0
+    repurchaseIncome: 20.0,
   },
   {
     sNo: 3,
-    incomeDate: '25-02-2024 12:57:37pm',
-    memberId: 'MM101010',
-    memberName: 'ANAMIKA SAXENA',
+    incomeDate: "25-02-2024 12:57:37pm",
+    memberId: "MM101010",
+    memberName: "ANAMIKA SAXENA",
     levelNo: 2,
-    levelId: 'MM101013',
-    fromMemberName: 'RAJKIRAN SALUKE',
+    levelId: "MM101013",
+    fromMemberName: "RAJKIRAN SALUKE",
     bvPoin: 200,
-    repurchaseIncome: 200.0
+    repurchaseIncome: 200.0,
   },
   {
     sNo: 4,
-    incomeDate: '16-02-2024 12:57:37pm',
-    memberId: 'MM101010',
-    memberName: 'ANAMIKA SAXENA',
+    incomeDate: "16-02-2024 12:57:37pm",
+    memberId: "MM101010",
+    memberName: "ANAMIKA SAXENA",
     levelNo: 1,
-    levelId: 'MM101014',
-    fromMemberName: 'AMIT SHARMA',
+    levelId: "MM101014",
+    fromMemberName: "AMIT SHARMA",
     bvPoin: 20,
-    repurchaseIncome: 20.0
+    repurchaseIncome: 20.0,
   },
   {
     sNo: 5,
-    incomeDate: '10-02-2024 12:57:37pm',
-    memberId: 'MM101010',
-    memberName: 'ANAMIKA SAXENA',
+    incomeDate: "10-02-2024 12:57:37pm",
+    memberId: "MM101010",
+    memberName: "ANAMIKA SAXENA",
     levelNo: 1,
-    levelId: 'MM101015',
-    fromMemberName: 'SADDAM SHAIKH',
+    levelId: "MM101015",
+    fromMemberName: "SADDAM SHAIKH",
     bvPoin: 500,
-    repurchaseIncome: 500.0
+    repurchaseIncome: 500.0,
   },
   {
     sNo: 6,
-    incomeDate: '10-02-2024 12:57:37pm',
-    memberId: 'MM101010',
-    memberName: 'ANAMIKA SAXENA',
+    incomeDate: "10-02-2024 12:57:37pm",
+    memberId: "MM101010",
+    memberName: "ANAMIKA SAXENA",
     levelNo: 2,
-    levelId: 'MM101016',
-    fromMemberName: 'THOMAS ANTHONY',
+    levelId: "MM101016",
+    fromMemberName: "THOMAS ANTHONY",
     bvPoin: 800,
-    repurchaseIncome: 800.0
+    repurchaseIncome: 800.0,
   },
   {
     sNo: 7,
-    incomeDate: '05-02-2024 12:57:37pm',
-    memberId: 'MM101010',
-    memberName: 'ANAMIKA SAXENA',
+    incomeDate: "05-02-2024 12:57:37pm",
+    memberId: "MM101010",
+    memberName: "ANAMIKA SAXENA",
     levelNo: 1,
-    levelId: 'MM101017',
-    fromMemberName: 'RAZMAN HUSSAIN',
+    levelId: "MM101017",
+    fromMemberName: "RAZMAN HUSSAIN",
     bvPoin: 2000,
-    repurchaseIncome: 2000.0
-  }
+    repurchaseIncome: 2000.0,
+  },
 ];
 
 function RepurchaseIncome() {
-  const totalRepurchase = repurchaseIncomeRows.reduce((sum, row) => sum + row.repurchaseIncome, 0);
+  const totalRepurchase = repurchaseIncomeRows.reduce(
+    (sum, row) => sum + row.repurchaseIncome,
+    0,
+  );
 
   return (
     <div>
@@ -104,7 +107,11 @@ function RepurchaseIncome() {
             <option value="9">9</option>
           </select>
           <input type="text" placeholder="LEVEL ID" aria-label="Level ID" />
-          <input type="text" placeholder="FROM MEMBER NAME" aria-label="From Member Name" />
+          <input
+            type="text"
+            placeholder="FROM MEMBER NAME"
+            aria-label="From Member Name"
+          />
           <input type="text" placeholder="START DATE" aria-label="Start Date" />
           <input type="text" placeholder="END DATE" aria-label="End Date" />
           <select aria-label="Rows per page">
@@ -112,12 +119,18 @@ function RepurchaseIncome() {
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-          <button className="user-btn-blue" type="button">SEARCH</button>
+          <button className="user-btn-blue" type="button">
+            SEARCH
+          </button>
         </div>
 
         <div className="table-toolbar">
-          <button className="user-btn-outline" type="button">Excel</button>
-          <button className="user-btn-outline" type="button">PDF</button>
+          <button className="user-btn-outline" type="button">
+            Excel
+          </button>
+          <button className="user-btn-outline" type="button">
+            PDF
+          </button>
         </div>
 
         <div className="table-wrap">
@@ -150,24 +163,52 @@ function RepurchaseIncome() {
                 </tr>
               ))}
               <tr className="report-total-row">
-                <td></td>
-                <td colSpan="7">TOTAL REPURCHASE INCOME</td>
-                <td>{totalRepurchase.toFixed(2)}</td>
+                <td
+                  colSpan="8"
+                 style={{
+    
+    textAlign: "end",
+  }}
+                  className="report-total-label"
+                >
+                  TOTAL REPURCHASE INCOME
+                </td>
+                <td className="report-total-value">
+                  {totalRepurchase.toFixed(2)}
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div className="pagination-row">
-          <button className="page-btn" type="button">«</button>
-          <button className="page-btn active" type="button">1</button>
-          <button className="page-btn" type="button">2</button>
-          <button className="page-btn" type="button">3</button>
-          <button className="page-btn" type="button">4</button>
-          <button className="page-btn" type="button">5</button>
-          <button className="page-btn" type="button">6</button>
-          <button className="page-btn" type="button">7</button>
-          <button className="page-btn" type="button">»</button>
+          <button className="page-btn" type="button">
+            «
+          </button>
+          <button className="page-btn active" type="button">
+            1
+          </button>
+          <button className="page-btn" type="button">
+            2
+          </button>
+          <button className="page-btn" type="button">
+            3
+          </button>
+          <button className="page-btn" type="button">
+            4
+          </button>
+          <button className="page-btn" type="button">
+            5
+          </button>
+          <button className="page-btn" type="button">
+            6
+          </button>
+          <button className="page-btn" type="button">
+            7
+          </button>
+          <button className="page-btn" type="button">
+            »
+          </button>
         </div>
       </div>
     </div>

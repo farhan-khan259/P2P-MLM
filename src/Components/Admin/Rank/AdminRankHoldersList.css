@@ -98,6 +98,42 @@
   color: var(--dark);
 }
 
+.rank-action-buttons {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+}
+
+.action-button {
+  min-width: 34px;
+  padding: 2px 8px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.action-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.action-button-show {
+  background: #18a558;
+  border-color: #18a558;
+}
+
+.action-button-hide {
+  background: #e53935;
+  border-color: #e53935;
+}
+
 .table-wrap {
   overflow-x: auto;
   border-radius: 12px;
@@ -242,6 +278,12 @@
     font-size: 12px;
   }
 
+  .action-button {
+    min-width: 30px;
+    padding: 2px 6px;
+    font-size: 8px;
+  }
+
   .table-footer {
     flex-direction: column;
     align-items: flex-start;
@@ -280,6 +322,16 @@
   .data-table td {
     padding: 6px;
     font-size: 11px;
+  }
+
+  .rank-action-buttons {
+    gap: 4px;
+  }
+
+  .action-button {
+    min-width: 28px;
+    padding: 2px 5px;
+    font-size: 7px;
   }
 
   .rank-title {
