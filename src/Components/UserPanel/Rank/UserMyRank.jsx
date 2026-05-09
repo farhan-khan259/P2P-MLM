@@ -2,22 +2,9 @@ import { useState } from 'react';
 import './UserMyRank.css';
 import { rankProgressionData, rankHoldersData } from './userRankMockData';
 
-const rankOptions = [
-  'STARTER',
-  'ACHIEVER',
-  'STAR',
-  'BRONZE',
-  'SILVER',
-  'GOLD',
-  'PLATINUM',
-  'EMERALD',
-  'DIAMOND',
-  'CROWN DIAMOND'
-];
-
 function UserMyRank() {
   const [expandedRank, setExpandedRank] = useState(5);
-  const [filteredData, setFilteredData] = useState(rankHoldersData);
+  const filteredData = rankHoldersData;
   const currentRank = rankProgressionData[5];
   const nextRank = rankProgressionData[6];
   const currentEarning = 16000;
