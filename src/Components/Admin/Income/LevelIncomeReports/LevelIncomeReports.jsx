@@ -87,34 +87,32 @@ function LevelIncomeReports() {
   );
 
   return (
-    <div className="tds-report-page">
-      <h2 className="section-title tds-screen-title">Level Income Reports</h2>
+    <div className="level-income-report-page">
+      <h2 className="level-income-screen-title">Level Income Reports</h2>
 
-      <section className="panel tds-panel">
-        
-        <div className="tds-filter-row">
-          <input className="text-input tds-filter-input" placeholder="MEMBER ID" />
-          <input className="text-input tds-filter-input" placeholder="MEMBER NAME" />
-          <input className="text-input tds-filter-input" placeholder="LEVEL NO" />
-          <input className="text-input tds-filter-input" placeholder="LEVEL ID" />
-          <input className="text-input tds-filter-input" type="date" placeholder="START DATE" />
-          <input className="text-input tds-filter-input" type="date" placeholder="END DATE" />
-          <select className="select-input tds-filter-input tds-size-select" defaultValue="10">
+      <section className="panel level-income-panel">
+        <div className="level-income-filter-row">
+          <input className="text-input level-income-filter-input" placeholder="MEMBER ID" />
+          <input className="text-input level-income-filter-input" placeholder="MEMBER NAME" />
+          <input className="text-input level-income-filter-input" placeholder="LEVEL NO" />
+          <input className="text-input level-income-filter-input" placeholder="LEVEL ID" />
+          <input className="text-input level-income-filter-input" type="date" placeholder="START DATE" />
+          <input className="text-input level-income-filter-input" type="date" placeholder="END DATE" />
+          <select className="select-input level-income-filter-input level-income-size-select" defaultValue="10">
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-          <button className="btn-primary tds-search-btn" type="button">SERCH</button>
+          <button className="btn-primary level-income-search-btn" type="button">SERCH</button>
         </div>
 
-        <div className="btn-row tds-export-row">
-          <button type="button" className="btn-outline tds-export-btn">XLS</button>
-          <button type="button" className="btn-outline tds-export-btn">PDF</button>
+        <div className="level-income-export-row">
+          <button type="button" className="btn-outline level-income-export-btn">XLS</button>
+          <button type="button" className="btn-outline level-income-export-btn">PDF</button>
         </div>
 
-
-        <div className="table-wrap tds-table-wrap">
-          <table className="data-table tds-table">
+        <div className="table-wrap level-income-table-wrap">
+          <table className="data-table level-income-table">
             <thead>
               <tr>
                 <th>S.NO</th>
@@ -142,27 +140,29 @@ function LevelIncomeReports() {
                   <td>{row.amount.toFixed(2)}</td>
                 </tr>
               ))}
-              <tr className="summary-row">
-                <td colSpan="8" style={{ textAlign: 'right', fontWeight: 700 }}>TOTAL AMOUNT</td>
+              <tr className="level-income-summary-row">
+                <td colSpan="8" style={{ textAlign: 'right', fontWeight: 700 }}>
+                  TOTAL AMOUNT
+                </td>
                 <td>{totalAmount.toFixed(2)}</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <div className="table-footer">
-          <div className="pagination">
-            <button className="page-btn">«</button>
-            <button className="page-btn">‹</button>
-            <button className="page-btn active">1</button>
-            <button className="page-btn">2</button>
-            <button className="page-btn">3</button>
-            <button className="page-btn">4</button>
-            <button className="page-btn">5</button>
-            <button className="page-btn">6</button>
-            <button className="page-btn">7</button>
-            <button className="page-btn">›</button>
-            <button className="page-btn">»</button>
+        <div className="level-income-table-footer">
+          <div className="level-income-pagination">
+            <button className="level-income-page-btn">«</button>
+            <button className="level-income-page-btn">‹</button>
+            <button className="level-income-page-btn level-income-active">1</button>
+            <button className="level-income-page-btn">2</button>
+            <button className="level-income-page-btn">3</button>
+            <button className="level-income-page-btn">4</button>
+            <button className="level-income-page-btn">5</button>
+            <button className="level-income-page-btn">6</button>
+            <button className="level-income-page-btn">7</button>
+            <button className="level-income-page-btn">›</button>
+            <button className="level-income-page-btn">»</button>
           </div>
         </div>
       </section>

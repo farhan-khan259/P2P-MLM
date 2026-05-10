@@ -90,33 +90,30 @@ function TdsReport() {
   };
 
   return (
-    <div className="tds-report-page">
-    
-      <h2 className="section-title tds-screen-title">TDS Report</h2>
+    <div className="tds-report-report-page">
+      <h2 className="tds-report-screen-title">TDS Report</h2>
 
-      <section className="panel tds-panel">
-       
-
-        <div className="tds-filter-row">
-          <input type="text" className="text-input tds-filter-input" placeholder="MEMBER ID" value={filters.memberId} onChange={onFilterChange('memberId')} />
-          <input type="text" className="text-input tds-filter-input" placeholder="PAN NO" value={filters.panNo} onChange={onFilterChange('panNo')} />
-          <input type="date" className="text-input tds-filter-input" value={filters.startDate} onChange={onFilterChange('startDate')} />
-          <input type="date" className="text-input tds-filter-input" value={filters.endDate} onChange={onFilterChange('endDate')} />
-          <select className="select-input tds-filter-input tds-size-select" value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
+      <section className="panel tds-report-panel">
+        <div className="tds-report-filter-row">
+          <input type="text" className="text-input tds-report-filter-input" placeholder="MEMBER ID" value={filters.memberId} onChange={onFilterChange('memberId')} />
+          <input type="text" className="text-input tds-report-filter-input" placeholder="PAN NO" value={filters.panNo} onChange={onFilterChange('panNo')} />
+          <input type="date" className="text-input tds-report-filter-input" value={filters.startDate} onChange={onFilterChange('startDate')} />
+          <input type="date" className="text-input tds-report-filter-input" value={filters.endDate} onChange={onFilterChange('endDate')} />
+          <select className="select-input tds-report-filter-input tds-report-size-select" value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>
           </select>
-          <button type="button" className="btn-primary tds-search-btn">Search</button>
+          <button type="button" className="btn-primary tds-report-search-btn">Search</button>
         </div>
 
-         <div className="btn-row tds-export-row">
-          <button type="button" className="btn-outline tds-export-btn">XLS</button>
-          <button type="button" className="btn-outline tds-export-btn">PDF</button>
+        <div className="tds-report-export-row">
+          <button type="button" className="btn-outline tds-report-export-btn">XLS</button>
+          <button type="button" className="btn-outline tds-report-export-btn">PDF</button>
         </div>
 
-        <div className="table-wrap tds-table-wrap">
-          <table className="data-table tds-table">
+        <div className="table-wrap tds-report-table-wrap">
+          <table className="data-table tds-report-table">
             <thead>
               <tr>
                 <th>S.NO</th>
@@ -144,19 +141,19 @@ function TdsReport() {
           </table>
         </div>
 
-        <div className="table-footer" style={{ justifyContent: 'center', marginTop: '12px' }}>
-          <div className="pagination">
-            <button type="button" className="page-btn">&laquo;</button>
-            <button type="button" className="page-btn">&lsaquo;</button>
-            <button type="button" className="page-btn active">1</button>
-            <button type="button" className="page-btn">2</button>
-            <button type="button" className="page-btn">3</button>
-            <button type="button" className="page-btn">4</button>
-            <button type="button" className="page-btn">5</button>
-            <button type="button" className="page-btn">6</button>
-            <button type="button" className="page-btn">7</button>
-            <button type="button" className="page-btn">&rsaquo;</button>
-            <button type="button" className="page-btn">&raquo;</button>
+        <div className="tds-report-table-footer">
+          <div className="tds-report-pagination">
+            <button type="button" className="tds-report-page-btn">&laquo;</button>
+            <button type="button" className="tds-report-page-btn">&lsaquo;</button>
+            <button type="button" className="tds-report-page-btn tds-report-active">1</button>
+            <button type="button" className="tds-report-page-btn">2</button>
+            <button type="button" className="tds-report-page-btn">3</button>
+            <button type="button" className="tds-report-page-btn">4</button>
+            <button type="button" className="tds-report-page-btn">5</button>
+            <button type="button" className="tds-report-page-btn">6</button>
+            <button type="button" className="tds-report-page-btn">7</button>
+            <button type="button" className="tds-report-page-btn">&rsaquo;</button>
+            <button type="button" className="tds-report-page-btn">&raquo;</button>
           </div>
         </div>
       </section>

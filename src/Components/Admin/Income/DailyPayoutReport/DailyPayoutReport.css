@@ -1,53 +1,85 @@
 @import '../../Common/AdminLayout.css';
 
-.tds-report-page {
+/* ========== DAILY PAYOUT REPORT - COMPLETE STYLES ========== */
+
+.daily-payout-report-report-page {
   width: 100%;
 }
 
-.tds-screen-title {
+.daily-payout-report-screen-title {
   margin: 0 0 16px;
 }
 
-.tds-panel {
+.daily-payout-report-panel {
   border-radius: 28px;
   padding: 24px;
 }
 
-.tds-export-row {
+.daily-payout-report-export-row {
+  display: flex;
   justify-content: flex-end;
+  gap: 10px;
   margin-bottom: 14px;
 }
 
-.tds-export-btn {
+.daily-payout-report-export-btn {
   min-width: 72px;
 }
 
-.tds-filter-row {
+.daily-payout-report-filter-row {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 14px;
 }
 
-.tds-filter-input {
+.daily-payout-report-filter-input {
   flex: 1 1 170px;
   min-width: 150px;
 }
 
-.tds-size-select {
+.daily-payout-report-size-select {
   flex: 0 0 92px;
   min-width: 92px;
 }
 
-.tds-search-btn {
+.daily-payout-report-search-btn {
   min-width: 110px;
 }
 
-.tds-table {
+/* Table wrapper for responsive scrolling */
+.daily-payout-report-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+.daily-payout-report-table {
+  width: 100%;
   min-width: 1200px;
 }
 
-.page-btn {
+/* Summary row */
+.daily-payout-report-summary-row td {
+  font-weight: 700;
+  background: rgba(0, 212, 170, 0.08);
+}
+
+/* Pagination */
+.daily-payout-report-table-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.daily-payout-report-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.daily-payout-report-page-btn {
   min-width: 36px;
   height: 36px;
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -60,48 +92,32 @@
   margin: 0 4px;
 }
 
-.page-btn:hover {
+.daily-payout-report-page-btn:hover {
   border-color: #00d4aa;
 }
 
-.page-btn.active {
+.daily-payout-report-active {
   background: linear-gradient(135deg, #00d4aa 0%, #6c63ff 100%);
   color: #fff;
   border-color: transparent;
 }
 
-.table-footer {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.pagination {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-}
-
-.summary-row td {
-  font-weight: 700;
-  background: rgba(0, 212, 170, 0.08);
-}
+/* ========== RESPONSIVE STYLES ========== */
 
 @media (max-width: 768px) {
-  .tds-panel {
+  .daily-payout-report-panel {
     border-radius: 18px;
     padding: 12px;
   }
 
-  .tds-filter-input,
-  .tds-size-select,
-  .tds-search-btn {
+  .daily-payout-report-filter-input,
+  .daily-payout-report-size-select,
+  .daily-payout-report-search-btn {
     min-width: 100%;
     flex-basis: 100%;
   }
 
-  .tds-table {
+  .daily-payout-report-table {
     min-width: 950px;
   }
 
@@ -113,21 +129,21 @@
 }
 
 @media (max-width: 480px) {
-  .tds-panel {
+  .daily-payout-report-panel {
     border-radius: 12px;
     padding: 8px;
   }
 
-  .tds-screen-title {
+  .daily-payout-report-screen-title {
     font-size: 1.2rem;
     margin-bottom: 12px;
   }
 
-  .tds-table {
+  .daily-payout-report-table {
     min-width: 850px;
   }
 
-  .page-btn {
+  .daily-payout-report-page-btn {
     min-width: 32px;
     height: 32px;
     font-size: 0.8rem;

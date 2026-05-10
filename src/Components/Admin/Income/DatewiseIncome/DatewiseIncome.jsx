@@ -87,33 +87,31 @@ function DatewiseIncome() {
   );
 
   return (
-    <div className="tds-report-page">
-      <h2 className="section-title tds-screen-title">Datewise Income</h2>
+    <div className="datewise-income-report-page">
+      <h2 className="datewise-income-screen-title">Datewise Income</h2>
 
-      <section className="panel tds-panel">
-       
-        <div className="tds-filter-row">
-          <input className="text-input tds-filter-input" placeholder="TO MEMBER ID" />
-          <input className="text-input tds-filter-input" placeholder="UNLOCK LEVEL" />
-          <input className="text-input tds-filter-input" placeholder="TOTAL ID'S" />
-          <input className="text-input tds-filter-input" type="date" placeholder="START DATE" />
-          <input className="text-input tds-filter-input" type="date" placeholder="END DATE" />
-          <select className="select-input tds-filter-input tds-size-select" defaultValue="10">
+      <section className="panel datewise-income-panel">
+        <div className="datewise-income-filter-row">
+          <input className="text-input datewise-income-filter-input" placeholder="TO MEMBER ID" />
+          <input className="text-input datewise-income-filter-input" placeholder="UNLOCK LEVEL" />
+          <input className="text-input datewise-income-filter-input" placeholder="TOTAL ID'S" />
+          <input className="text-input datewise-income-filter-input" type="date" placeholder="START DATE" />
+          <input className="text-input datewise-income-filter-input" type="date" placeholder="END DATE" />
+          <select className="select-input datewise-income-filter-input datewise-income-size-select" defaultValue="10">
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-          <button className="btn-primary tds-search-btn" type="button">SERCH</button>
+          <button className="btn-primary datewise-income-search-btn" type="button">SERCH</button>
         </div>
 
-         <div className="btn-row tds-export-row">
-          <button type="button" className="btn-outline tds-export-btn">XLS</button>
-          <button type="button" className="btn-outline tds-export-btn">PDF</button>
+        <div className="datewise-income-export-row">
+          <button type="button" className="btn-outline datewise-income-export-btn">XLS</button>
+          <button type="button" className="btn-outline datewise-income-export-btn">PDF</button>
         </div>
 
-
-        <div className="table-wrap tds-table-wrap">
-          <table className="data-table tds-table">
+        <div className="table-wrap datewise-income-table-wrap">
+          <table className="data-table datewise-income-table">
             <thead>
               <tr>
                 <th>S.NO</th>
@@ -141,7 +139,7 @@ function DatewiseIncome() {
                   <td>{row.dailyIncome.toFixed(2)}</td>
                 </tr>
               ))}
-              <tr className="summary-row">
+              <tr className="datewise-income-summary-row">
                 <td colSpan="8" style={{ textAlign: 'right', fontWeight: 700 }}>TOTAL AMOUNT</td>
                 <td>{totalAmount.toFixed(2)}</td>
               </tr>
@@ -149,19 +147,19 @@ function DatewiseIncome() {
           </table>
         </div>
 
-        <div className="table-footer">
-          <div className="pagination">
-            <button className="page-btn">«</button>
-            <button className="page-btn">‹</button>
-            <button className="page-btn active">1</button>
-            <button className="page-btn">2</button>
-            <button className="page-btn">3</button>
-            <button className="page-btn">4</button>
-            <button className="page-btn">5</button>
-            <button className="page-btn">6</button>
-            <button className="page-btn">7</button>
-            <button className="page-btn">›</button>
-            <button className="page-btn">»</button>
+        <div className="datewise-income-table-footer">
+          <div className="datewise-income-pagination">
+            <button className="datewise-income-page-btn">«</button>
+            <button className="datewise-income-page-btn">‹</button>
+            <button className="datewise-income-page-btn datewise-income-active">1</button>
+            <button className="datewise-income-page-btn">2</button>
+            <button className="datewise-income-page-btn">3</button>
+            <button className="datewise-income-page-btn">4</button>
+            <button className="datewise-income-page-btn">5</button>
+            <button className="datewise-income-page-btn">6</button>
+            <button className="datewise-income-page-btn">7</button>
+            <button className="datewise-income-page-btn">›</button>
+            <button className="datewise-income-page-btn">»</button>
           </div>
         </div>
       </section>

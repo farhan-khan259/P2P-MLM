@@ -84,33 +84,31 @@ function RepurchaseIncome() {
   const totalRepurchase = repurchaseIncomeRows.reduce((sum, row) => sum + row.repurchaseIncome, 0);
 
   return (
-    <div className="tds-report-page">
-      <h2 className="section-title tds-screen-title">Repurchase Income</h2>
+    <div className="repurchase-income-report-page">
+      <h2 className="repurchase-income-screen-title">Repurchase Income</h2>
 
-      <section className="panel tds-panel">
-       
-
-        <div className="tds-filter-row">
-          <input className="text-input tds-filter-input" placeholder="LEVEL NO" />
-          <input className="text-input tds-filter-input" placeholder="LEVEL ID" />
-          <input className="text-input tds-filter-input" placeholder="FROM MEMBER NAME" />
-          <input className="text-input tds-filter-input" placeholder="START DATE" />
-          <input className="text-input tds-filter-input" placeholder="END DATE" />
-          <select className="select-input tds-filter-input tds-size-select" defaultValue="10">
+      <section className="panel repurchase-income-panel">
+        <div className="repurchase-income-filter-row">
+          <input className="text-input repurchase-income-filter-input" placeholder="LEVEL NO" />
+          <input className="text-input repurchase-income-filter-input" placeholder="LEVEL ID" />
+          <input className="text-input repurchase-income-filter-input" placeholder="FROM MEMBER NAME" />
+          <input className="text-input repurchase-income-filter-input" placeholder="START DATE" />
+          <input className="text-input repurchase-income-filter-input" placeholder="END DATE" />
+          <select className="select-input repurchase-income-filter-input repurchase-income-size-select" defaultValue="10">
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-          <button className="btn-primary tds-search-btn" type="button">Search</button>
+          <button className="btn-primary repurchase-income-search-btn" type="button">Search</button>
         </div>
 
-         <div className="btn-row tds-export-row">
-          <button type="button" className="btn-outline tds-export-btn">XLS</button>
-          <button type="button" className="btn-outline tds-export-btn">PDF</button>
+        <div className="repurchase-income-export-row">
+          <button type="button" className="btn-outline repurchase-income-export-btn">XLS</button>
+          <button type="button" className="btn-outline repurchase-income-export-btn">PDF</button>
         </div>
 
-        <div className="table-wrap tds-table-wrap">
-          <table className="data-table tds-table">
+        <div className="table-wrap repurchase-income-table-wrap">
+          <table className="data-table repurchase-income-table">
             <thead>
               <tr>
                 <th>S.NO</th>
@@ -138,7 +136,7 @@ function RepurchaseIncome() {
                   <td>{row.repurchaseIncome.toFixed(2)}</td>
                 </tr>
               ))}
-              <tr className="summary-row">
+              <tr className="repurchase-income-summary-row">
                 <td colSpan="8" style={{ textAlign: 'right', fontWeight: 700 }}>TOTAL AMOUNT</td>
                 <td>{totalRepurchase.toFixed(2)}</td>
               </tr>
@@ -146,19 +144,19 @@ function RepurchaseIncome() {
           </table>
         </div>
 
-        <div className="table-footer">
-          <div className="pagination">
-            <button className="page-btn">«</button>
-            <button className="page-btn">‹</button>
-            <button className="page-btn active">1</button>
-            <button className="page-btn">2</button>
-            <button className="page-btn">3</button>
-            <button className="page-btn">4</button>
-            <button className="page-btn">5</button>
-            <button className="page-btn">6</button>
-            <button className="page-btn">7</button>
-            <button className="page-btn">›</button>
-            <button className="page-btn">»</button>
+        <div className="repurchase-income-table-footer">
+          <div className="repurchase-income-pagination">
+            <button className="repurchase-income-page-btn">«</button>
+            <button className="repurchase-income-page-btn">‹</button>
+            <button className="repurchase-income-page-btn repurchase-income-active">1</button>
+            <button className="repurchase-income-page-btn">2</button>
+            <button className="repurchase-income-page-btn">3</button>
+            <button className="repurchase-income-page-btn">4</button>
+            <button className="repurchase-income-page-btn">5</button>
+            <button className="repurchase-income-page-btn">6</button>
+            <button className="repurchase-income-page-btn">7</button>
+            <button className="repurchase-income-page-btn">›</button>
+            <button className="repurchase-income-page-btn">»</button>
           </div>
         </div>
       </section>

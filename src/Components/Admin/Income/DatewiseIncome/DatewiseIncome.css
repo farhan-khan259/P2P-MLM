@@ -1,53 +1,85 @@
 @import '../../Common/AdminLayout.css';
 
-.tds-report-page {
+/* ========== DATEWISE INCOME - COMPLETE STYLES ========== */
+
+.datewise-income-report-page {
   width: 100%;
 }
 
-.tds-screen-title {
+.datewise-income-screen-title {
   margin: 0 0 16px;
 }
 
-.tds-panel {
+.datewise-income-panel {
   border-radius: 28px;
   padding: 24px;
 }
 
-.tds-export-row {
+.datewise-income-export-row {
+  display: flex;
   justify-content: flex-end;
+  gap: 10px;
   margin-bottom: 14px;
 }
 
-.tds-export-btn {
+.datewise-income-export-btn {
   min-width: 72px;
 }
 
-.tds-filter-row {
+.datewise-income-filter-row {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 14px;
 }
 
-.tds-filter-input {
+.datewise-income-filter-input {
   flex: 1 1 170px;
   min-width: 150px;
 }
 
-.tds-size-select {
+.datewise-income-size-select {
   flex: 0 0 92px;
   min-width: 92px;
 }
 
-.tds-search-btn {
+.datewise-income-search-btn {
   min-width: 110px;
 }
 
-.tds-table {
+/* Table wrapper for responsive scrolling */
+.datewise-income-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+.datewise-income-table {
+  width: 100%;
   min-width: 1050px;
 }
 
-.page-btn {
+/* Summary row */
+.datewise-income-summary-row td {
+  font-weight: 700;
+  background: rgba(0, 212, 170, 0.08);
+}
+
+/* Pagination */
+.datewise-income-table-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.datewise-income-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.datewise-income-page-btn {
   min-width: 36px;
   height: 36px;
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -60,48 +92,32 @@
   margin: 0 4px;
 }
 
-.page-btn:hover {
+.datewise-income-page-btn:hover {
   border-color: #00d4aa;
 }
 
-.page-btn.active {
+.datewise-income-active {
   background: linear-gradient(135deg, #00d4aa 0%, #6c63ff 100%);
   color: #fff;
   border-color: transparent;
 }
 
-.table-footer {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.pagination {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-}
-
-.summary-row td {
-  font-weight: 700;
-  background: rgba(0, 212, 170, 0.08);
-}
+/* ========== RESPONSIVE STYLES ========== */
 
 @media (max-width: 768px) {
-  .tds-panel {
+  .datewise-income-panel {
     border-radius: 18px;
     padding: 12px;
   }
 
-  .tds-filter-input,
-  .tds-size-select,
-  .tds-search-btn {
+  .datewise-income-filter-input,
+  .datewise-income-size-select,
+  .datewise-income-search-btn {
     min-width: 100%;
     flex-basis: 100%;
   }
 
-  .tds-table {
+  .datewise-income-table {
     min-width: 900px;
   }
 
@@ -113,21 +129,21 @@
 }
 
 @media (max-width: 480px) {
-  .tds-panel {
+  .datewise-income-panel {
     border-radius: 12px;
     padding: 8px;
   }
 
-  .tds-screen-title {
+  .datewise-income-screen-title {
     font-size: 1.2rem;
     margin-bottom: 12px;
   }
 
-  .tds-table {
+  .datewise-income-table {
     min-width: 800px;
   }
 
-  .page-btn {
+  .datewise-income-page-btn {
     min-width: 32px;
     height: 32px;
     font-size: 0.8rem;

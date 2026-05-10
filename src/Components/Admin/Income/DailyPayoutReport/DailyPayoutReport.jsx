@@ -101,32 +101,30 @@ function DailyPayoutReport() {
   );
 
   return (
-    <div className="tds-report-page">
-      <h2 className="section-title tds-screen-title">Daily Payout Report</h2>
+    <div className="daily-payout-report-report-page">
+      <h2 className="daily-payout-report-screen-title">Daily Payout Report</h2>
 
-      <section className="panel tds-panel">
-      
-
-        <div className="tds-filter-row">
-          <input className="text-input tds-filter-input" placeholder="MEMBER ID" />
-          <input className="text-input tds-filter-input" placeholder="MEMBER NAME" />
-          <input className="text-input tds-filter-input" type="date" placeholder="START DATE" />
-          <input className="text-input tds-filter-input" type="date" placeholder="END DATE" />
-          <select className="select-input tds-filter-input tds-size-select" defaultValue="10">
+      <section className="panel daily-payout-report-panel">
+        <div className="daily-payout-report-filter-row">
+          <input className="text-input daily-payout-report-filter-input" placeholder="MEMBER ID" />
+          <input className="text-input daily-payout-report-filter-input" placeholder="MEMBER NAME" />
+          <input className="text-input daily-payout-report-filter-input" type="date" placeholder="START DATE" />
+          <input className="text-input daily-payout-report-filter-input" type="date" placeholder="END DATE" />
+          <select className="select-input daily-payout-report-filter-input daily-payout-report-size-select" defaultValue="10">
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-          <button className="btn-primary tds-search-btn" type="button">SERCH</button>
+          <button className="btn-primary daily-payout-report-search-btn" type="button">SERCH</button>
         </div>
 
-          <div className="btn-row tds-export-row">
-          <button type="button" className="btn-outline tds-export-btn">XLS</button>
-          <button type="button" className="btn-outline tds-export-btn">PDF</button>
+        <div className="daily-payout-report-export-row">
+          <button type="button" className="btn-outline daily-payout-report-export-btn">XLS</button>
+          <button type="button" className="btn-outline daily-payout-report-export-btn">PDF</button>
         </div>
 
-        <div className="table-wrap tds-table-wrap">
-          <table className="data-table tds-table">
+        <div className="table-wrap daily-payout-report-table-wrap">
+          <table className="data-table daily-payout-report-table">
             <thead>
               <tr>
                 <th>S.NO</th>
@@ -158,28 +156,29 @@ function DailyPayoutReport() {
                   <td>{row.status}</td>
                 </tr>
               ))}
-              <tr className="summary-row">
-                <td colSpan="9" style={{ textAlign: 'right', fontWeight: 700 }}>TOTAL PAYOUT AMOUNT</td>
+              <tr className="daily-payout-report-summary-row">
+                <td colSpan="10" style={{ textAlign: 'right', fontWeight: 700 }}>TOTAL PAYOUT AMOUNT</td>
                 <td>{totalPayoutAmount.toFixed(2)}</td>
-                <td></td>
+               
+               
               </tr>
             </tbody>
           </table>
         </div>
 
-        <div className="table-footer">
-          <div className="pagination">
-            <button className="page-btn">«</button>
-            <button className="page-btn">‹</button>
-            <button className="page-btn active">1</button>
-            <button className="page-btn">2</button>
-            <button className="page-btn">3</button>
-            <button className="page-btn">4</button>
-            <button className="page-btn">5</button>
-            <button className="page-btn">6</button>
-            <button className="page-btn">7</button>
-            <button className="page-btn">›</button>
-            <button className="page-btn">»</button>
+        <div className="daily-payout-report-table-footer">
+          <div className="daily-payout-report-pagination">
+            <button className="daily-payout-report-page-btn">«</button>
+            <button className="daily-payout-report-page-btn">‹</button>
+            <button className="daily-payout-report-page-btn daily-payout-report-active">1</button>
+            <button className="daily-payout-report-page-btn">2</button>
+            <button className="daily-payout-report-page-btn">3</button>
+            <button className="daily-payout-report-page-btn">4</button>
+            <button className="daily-payout-report-page-btn">5</button>
+            <button className="daily-payout-report-page-btn">6</button>
+            <button className="daily-payout-report-page-btn">7</button>
+            <button className="daily-payout-report-page-btn">›</button>
+            <button className="daily-payout-report-page-btn">»</button>
           </div>
         </div>
       </section>
