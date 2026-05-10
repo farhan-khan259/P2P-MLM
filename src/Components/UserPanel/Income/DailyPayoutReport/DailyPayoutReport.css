@@ -29,6 +29,7 @@
   font-weight: 700;
   background: rgba(0, 212, 170, 0.08);
   padding: 14px 16px;
+  text-align: end;
 }
 
 .report-total-label {

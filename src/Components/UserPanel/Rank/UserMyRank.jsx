@@ -2,15 +2,30 @@ import { useState } from 'react';
 import './UserMyRank.css';
 import { rankProgressionData, rankHoldersData } from './userRankMockData';
 
+const rankOptions = rankProgressionData.map((rank) => rank.name);
+
 function UserMyRank() {
   const [expandedRank, setExpandedRank] = useState(5);
-  const filteredData = rankHoldersData;
+  const [selectedRankFilter, setSelectedRankFilter] = useState('');
+  const [filteredData, setFilteredData] = useState(rankHoldersData);
   const currentRank = rankProgressionData[5];
   const nextRank = rankProgressionData[6];
   const currentEarning = 16000;
 
+  const formatCurrency = (value) => `₹${value.toLocaleString('en-IN')}`;
+
   const toggleRank = (rankIndex) => {
     setExpandedRank(expandedRank === rankIndex ? null : rankIndex);
+  };
+
+  const handleSearchClick = () => {
+    if (selectedRankFilter) {
+      setFilteredData(
+        rankHoldersData.filter((holder) => holder.rank === selectedRankFilter)
+      );
+    } else {
+      setFilteredData(rankHoldersData);
+    }
   };
 
   const progressPercentage = (currentEarning / currentRank.earning) * 100;
@@ -45,8 +60,8 @@ function UserMyRank() {
                 </div>
                 {expandedRank === index && (
                   <div className="user-rank-item-detail">
-                    <p>Target Earning: ₹{rank.earning.toLocaleString()}</p>
-                    <p>Achieve this rank by reaching the target earning amount.</p>
+                    <p>Target Earning: {formatCurrency(rank.targetEarning)}</p>
+                    <p>Achieve this prestigious rank with 10 Active Directs and {formatCurrency(rank.upgradeAmount)} id upgrade donation contribution.</p>
                   </div>
                 )}
               </div>
@@ -102,6 +117,24 @@ function UserMyRank() {
           <h2 className="user-rank-holders-title">RANK HOLDERS LIST</h2>
         </div>
 
+        <div className="user-rank-filter-grid">
+          <select
+            className="user-rank-select"
+            value={selectedRankFilter}
+            onChange={(e) => setSelectedRankFilter(e.target.value)}
+          >
+            <option value="">All Ranks</option>
+            {rankOptions.map((rank, index) => (
+              <option key={index} value={rank}>
+                {rank}
+              </option>
+            ))}
+          </select>
+          <button type="button" className="user-rank-search-btn" onClick={handleSearchClick}>
+            Search
+          </button>
+        </div>
+
         <div className="user-rank-table-wrap">
           
           <table className="user-rank-data-table">
@@ -147,10 +180,7 @@ function UserMyRank() {
           </div>
         </div>
         
-        <div style={{ marginTop: '16px', padding: '12px', background: '#f5f5f5', borderRadius: '8px', fontSize: '13px', color: '#333' }}>
-          <p style={{ margin: '0 0 8px 0', fontWeight: '600' }}>Target Earning: ₹ 1000000 *</p>
-          <p style={{ margin: '0', lineHeight: '1.4' }}>Achieve this prestigious rank by earning ₹1,000,000, building a team of 10 Active Directs, and upgrading your ID with a ₹16,000 donation contribution.</p>
-        </div>
+        
       </div>
     </div>
   );

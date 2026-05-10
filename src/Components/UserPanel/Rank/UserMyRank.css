@@ -229,6 +229,32 @@
   text-transform: uppercase;
 }
 
+.user-rank-filter-grid {
+  display: grid;
+  grid-template-columns: 200px 120px;
+  gap: 8px;
+  margin-bottom: 14px;
+  align-items: center;
+}
+
+.user-rank-search-btn {
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--user-gradient-primary);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.user-rank-search-btn:hover {
+  box-shadow: var(--user-shadow-hover);
+  transform: translateY(-1px);
+}
+
 .user-rank-table-wrap {
   overflow-x: auto;
   border-radius: 12px;
@@ -352,6 +378,10 @@
   .user-rank-progression-list {
     max-height: 350px;
   }
+
+  .user-rank-filter-grid {
+    grid-template-columns: 1fr 120px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -428,6 +458,10 @@
 @media (max-width: 520px) {
   .user-rank-container {
     padding: 12px;
+  }
+
+  .user-rank-filter-grid {
+    grid-template-columns: 1fr;
   }
 
   .user-rank-page-title {

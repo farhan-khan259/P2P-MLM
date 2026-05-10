@@ -1,14 +1,14 @@
 export const rankProgressionData = [
-  { earning: 300, name: 'STARTER' },
-  { earning: 1000, name: 'ACHIEVER' },
-  { earning: 2000, name: 'STAR' },
-  { earning: 4000, name: 'BRONZE' },
-  { earning: 8000, name: 'SILVER' },
-  { earning: 16000, name: 'GOLD' },
-  { earning: 32000, name: 'PLATINUM' },
-  { earning: 64000, name: 'EMERALD' },
-  { earning: 128000, name: 'DIAMOND' },
-  { earning: 256000, name: 'CROWN DIAMOND' }
+  { earning: 300, name: 'STARTER', targetEarning: 3000, upgradeAmount: 300 },
+  { earning: 1000, name: 'ACHIEVER', targetEarning: 25000, upgradeAmount: 1000 },
+  { earning: 2000, name: 'STAR', targetEarning: 50000, upgradeAmount: 2000 },
+  { earning: 4000, name: 'BRONZE', targetEarning: 100000, upgradeAmount: 4000 },
+  { earning: 8000, name: 'SILVER', targetEarning: 500000, upgradeAmount: 8000 },
+  { earning: 16000, name: 'GOLD', targetEarning: 1000000, upgradeAmount: 16000 },
+  { earning: 32000, name: 'PLATINUM', targetEarning: 2500000, upgradeAmount: 32000 },
+  { earning: 64000, name: 'EMERALD', targetEarning: 5000000, upgradeAmount: 64000 },
+  { earning: 128000, name: 'DIAMOND', targetEarning: 10000000, upgradeAmount: 128000 },
+  { earning: 256000, name: 'CROWN DIAMOND', targetEarning: 50000000, upgradeAmount: 256000 }
 ];
 
 export const rankHoldersData = [
