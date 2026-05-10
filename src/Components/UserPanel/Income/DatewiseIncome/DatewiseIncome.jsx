@@ -128,7 +128,9 @@ function DatewiseIncome() {
                 </tr>
               ))}
               <tr className="report-total-row">
-                <td colSpan="7">TOTAL AMOUNT</td>
+                <td style={{
+                    textAlign: "end",
+                  }} colSpan="7">TOTAL AMOUNT</td>
                 <td>{totalAmount.toFixed(2)}</td>
               </tr>
             </tbody>
