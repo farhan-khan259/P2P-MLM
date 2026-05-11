@@ -1,16 +1,15 @@
-import '../../Common/AdminLayout.css';
 import './TransactionHistory.css';
 
-const transactionRows = [
+const transactionHistoryData = [
   {
     sNo: 1,
     dateTime: '01-02-2026 12:57:37PM',
     transactionId: '123456355538',
     memberId: 'MM101011',
     description: 'DAILY PAYOUT',
-    credit: 1200.0,
-    debit: '',
-    balance: 1200.0
+    credit: 1200.00,
+    debit: 0.00,
+    balance: 1200.00
   },
   {
     sNo: 2,
@@ -18,9 +17,9 @@ const transactionRows = [
     transactionId: '124575545575',
     memberId: 'MM101012',
     description: 'DAILY PAYOUT',
-    credit: 2500.0,
-    debit: '',
-    balance: 3700.0
+    credit: 2500.00,
+    debit: 0.00,
+    balance: 3700.00
   },
   {
     sNo: 3,
@@ -28,9 +27,9 @@ const transactionRows = [
     transactionId: '123456789555',
     memberId: 'MM101013',
     description: 'DAILY PAYOUT',
-    credit: 3000.0,
-    debit: '',
-    balance: 6700.0
+    credit: 3000.00,
+    debit: 0.00,
+    balance: 6700.00
   },
   {
     sNo: 4,
@@ -38,9 +37,9 @@ const transactionRows = [
     transactionId: '123456789045',
     memberId: 'MM101014',
     description: 'DAILY PAYOUT',
-    credit: 2400.0,
-    debit: '',
-    balance: 9100.0
+    credit: 2400.00,
+    debit: 0.00,
+    balance: 9100.00
   },
   {
     sNo: 5,
@@ -48,9 +47,9 @@ const transactionRows = [
     transactionId: '1234567890892',
     memberId: 'MM101015',
     description: 'PRODUCT PURCHASE',
-    credit: '',
-    debit: 400.0,
-    balance: 8700.0
+    credit: 0.00,
+    debit: 400.00,
+    balance: 8700.00
   },
   {
     sNo: 6,
@@ -58,9 +57,9 @@ const transactionRows = [
     transactionId: '123456789066',
     memberId: 'MM101016',
     description: 'DAILY PAYOUT',
-    credit: 1250.0,
-    debit: '',
-    balance: 9950.0
+    credit: 1250.00,
+    debit: 0.00,
+    balance: 9950.00
   },
   {
     sNo: 7,
@@ -68,75 +67,79 @@ const transactionRows = [
     transactionId: '123456789456',
     memberId: 'MM101017',
     description: 'EPIN GENERATION',
-    credit: '',
-    debit: 2500.0,
-    balance: 7450.0
+    credit: 0.00,
+    debit: 2500.00,
+    balance: 7450.00
   }
 ];
 
-function formatAmount(value) {
-  return typeof value === 'number' ? value.toFixed(2) : '';
-}
-
 function TransactionHistory() {
-  const totalCredit = transactionRows.reduce((sum, row) => sum + (row.credit || 0), 0);
-  const totalDebit = transactionRows.reduce((sum, row) => sum + (row.debit || 0), 0);
-  const totalBalance = transactionRows[transactionRows.length - 1].balance;
+  const totalCredit = transactionHistoryData.reduce(
+    (sum, row) => sum + row.credit,
+    0
+  );
+
+  const totalDebit = transactionHistoryData.reduce(
+    (sum, row) => sum + row.debit,
+    0
+  );
+
+  const totalBalance = transactionHistoryData[transactionHistoryData.length - 1].balance;
 
   return (
-    <div className="tds-report-page">
-      <h2 className="section-title tds-screen-title">Transaction History</h2>
+    <div className="admintransactionhistory-report-page">
+      <h2 className="admintransactionhistory-screen-title">Transaction History</h2>
 
-      <section className="panel tds-panel">
-       
-        <div className="tds-filter-row">
-          <input className="text-input tds-filter-input" placeholder="MEMBER ID" aria-label="Member ID" />
-          <input className="text-input tds-filter-input" placeholder="TRANSACTION ID" aria-label="Transaction ID" />
-          <input className="text-input tds-filter-input" placeholder="START DATE" aria-label="Start Date" />
-          <input className="text-input tds-filter-input" placeholder="END DATE" aria-label="End Date" />
-          <select className="select-input tds-filter-input tds-size-select" aria-label="Rows per page" defaultValue="10">
+      <section className="panel admintransactionhistory-panel">
+        <div className="admintransactionhistory-filter-row">
+          <input className="text-input admintransactionhistory-filter-input" placeholder="MEMBER ID" />
+          <input className="text-input admintransactionhistory-filter-input" placeholder="TRANSACTION ID" />
+          <input className="text-input admintransactionhistory-filter-input" type="date" placeholder="START DATE" />
+          <input className="text-input admintransactionhistory-filter-input" type="date" placeholder="END DATE" />
+          <select className="select-input admintransactionhistory-filter-input admintransactionhistory-size-select" defaultValue="10">
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-          <button className="btn-primary tds-search-btn" type="button">Search</button>
-          
-        </div>
-         <div className="btn-row tds-export-row">
-          <button type="button" className="btn-outline tds-export-btn">XLS</button>
-          <button type="button" className="btn-outline tds-export-btn">PDF</button>
+          <button className="btn-primary admintransactionhistory-search-btn" type="button">SEARCH</button>
         </div>
 
+        <div className="admintransactionhistory-export-row">
+          <button type="button" className="btn-outline admintransactionhistory-export-btn">XLS</button>
+          <button type="button" className="btn-outline admintransactionhistory-export-btn">PDF</button>
+        </div>
 
-        <div className="table-wrap tds-table-wrap">
-          <table className="data-table tds-table">
+        <div className="table-wrap admintransactionhistory-table-wrap">
+          <table className="data-table admintransactionhistory-table">
             <thead>
               <tr>
                 <th>S.NO</th>
                 <th>TRANSACTION DATE & TIME</th>
                 <th>TRANSACTION ID</th>
                 <th>MEMBER ID</th>
-                <th>DISCRIPTIONS</th>
+                <th>DESCRIPTIONS</th>
                 <th>CREDIT</th>
                 <th>DEBIT</th>
                 <th>BALANCE</th>
               </tr>
             </thead>
             <tbody>
-              {transactionRows.map((row) => (
+              {transactionHistoryData.map((row) => (
                 <tr key={row.sNo}>
                   <td>{row.sNo}</td>
                   <td>{row.dateTime}</td>
                   <td>{row.transactionId}</td>
                   <td>{row.memberId}</td>
                   <td>{row.description}</td>
-                  <td>{formatAmount(row.credit)}</td>
-                  <td>{formatAmount(row.debit)}</td>
-                  <td>{formatAmount(row.balance)}</td>
+                  <td>{row.credit.toFixed(2)}</td>
+                  <td>{row.debit.toFixed(2)}</td>
+                  <td>{row.balance.toFixed(2)}</td>
                 </tr>
               ))}
-              <tr className="summary-row">
-                <td colSpan="5" style={{ textAlign: 'right', fontWeight: 700 }}>TOTAL</td>
+              <tr className="admintransactionhistory-summary-row">
+                <td colSpan="5" style={{ textAlign: 'right', fontWeight: 700 }}>
+                  TOTAL
+                </td>
                 <td>{totalCredit.toFixed(2)}</td>
                 <td>{totalDebit.toFixed(2)}</td>
                 <td>{totalBalance.toFixed(2)}</td>
@@ -145,19 +148,19 @@ function TransactionHistory() {
           </table>
         </div>
 
-        <div className="table-footer">
-          <div className="pagination">
-            <button className="page-btn">«</button>
-            <button className="page-btn">‹</button>
-            <button className="page-btn active">1</button>
-            <button className="page-btn">2</button>
-            <button className="page-btn">3</button>
-            <button className="page-btn">4</button>
-            <button className="page-btn">5</button>
-            <button className="page-btn">6</button>
-            <button className="page-btn">7</button>
-            <button className="page-btn">›</button>
-            <button className="page-btn">»</button>
+        <div className="admintransactionhistory-table-footer">
+          <div className="admintransactionhistory-pagination">
+            <button className="admintransactionhistory-page-btn">«</button>
+            <button className="admintransactionhistory-page-btn">‹</button>
+            <button className="admintransactionhistory-page-btn admintransactionhistory-active">1</button>
+            <button className="admintransactionhistory-page-btn">2</button>
+            <button className="admintransactionhistory-page-btn">3</button>
+            <button className="admintransactionhistory-page-btn">4</button>
+            <button className="admintransactionhistory-page-btn">5</button>
+            <button className="admintransactionhistory-page-btn">6</button>
+            <button className="admintransactionhistory-page-btn">7</button>
+            <button className="admintransactionhistory-page-btn">›</button>
+            <button className="admintransactionhistory-page-btn">»</button>
           </div>
         </div>
       </section>

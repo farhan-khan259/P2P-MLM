@@ -102,12 +102,14 @@ import SucceedWithdrawalRequest from './Components/Admin/Payment/SucceedWithdraw
 
 import AdminRankHoldersList from './Components/Admin/Rank/AdminRankHoldersList';
 import UserMyRank from './Components/UserPanel/Rank/UserMyRank';
+import InvoicePage from './Components/UserPanel/Product/MyOrders/InvoicePage';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/invoice" element={<InvoicePage />} />
 
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Home />} />

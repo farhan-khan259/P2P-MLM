@@ -102,7 +102,10 @@ function OrderDetails() {
   const order = useMemo(() => orderDetailsById[orderNo] ?? fallbackOrder, [orderNo]);
 
   const handlePrintInvoice = () => {
-    window.print();
+    // Store invoice data in localStorage
+    localStorage.setItem('invoiceData', JSON.stringify(order));
+    // Open invoice in a new window
+    window.open('/invoice', 'Invoice', 'width=900,height=600,scrollbars=yes');
   };
 
   const handleBackToOrders = () => {
