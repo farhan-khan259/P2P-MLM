@@ -162,7 +162,7 @@ function DailyPayoutReport() {
               ))}
               <tr className="report-total-row">
                 <td
-                  colSpan="10"
+                  colSpan="09"
                   style={{
                     textAlign: "end",
                   }}
@@ -170,9 +170,10 @@ function DailyPayoutReport() {
                 >
                   TOTAL PAYOUT AMOUNT
                 </td>
-                <td className="report-total-value">
+                <td  colSpan="02" className="report-total-value">
                   {totalPayoutAmount.toFixed(2)}
                 </td>
+              
               </tr>
             </tbody>
           </table>

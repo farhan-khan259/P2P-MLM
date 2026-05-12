@@ -76,11 +76,14 @@ const menuItems = [
     key: 'productOrder',
     label: 'Product Order',
     children: [
-      { label: 'New Orders', to: '/product-order/new-orders' },
+      { label: 'All Orders', to: '/product-order/all-orders' },
       { label: 'Pending Orders', to: '/product-order/pending-orders' },
+      { label: 'Confirm Orders', to: '/product-order/confirm-orders' },
+      { label: 'Processing Orders', to: '/product-order/processing-orders' },
+      { label: 'Dispatched Orders', to: '/product-order/dispatched-orders' },
       { label: 'Delivered Orders', to: '/product-order/delivered-orders' },
-      { label: 'Rejected Orders', to: '/product-order/rejected-orders' },
-      { label: 'All Orders', to: '/product-order/all-orders' }
+      { label: 'Returned Orders', to: '/product-order/returned-orders' },
+      { label: 'Cancelled Orders', to: '/product-order/cancelled-orders' }
     ]
   },
   {

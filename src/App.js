@@ -94,15 +94,19 @@ import AdminDatewiseIncome from './Components/Admin/Income/DatewiseIncome/Datewi
 import AdminDailyPayoutReport from './Components/Admin/Income/DailyPayoutReport/DailyPayoutReport';
 import AdminLevelIncomeReports from './Components/Admin/Income/LevelIncomeReports/LevelIncomeReports';
 import WithdrawalHistory from './Components/UserPanel/Payment/WithdrawalHistory/WithdrawalHistory';
-import AllWithdrawalRequest from './Components/Admin/Payment/AllWithdrawalRequest/AllWithdrawalRequest';
-import PendingWithdrawalRequest from './Components/Admin/Payment/PendingWithdrawalRequest/PendingWithdrawalRequest';
-import ApproveWithdrawalRequest from './Components/Admin/Payment/ApproveWithdrawalRequest/ApproveWithdrawalRequest';
-import RejectWithdrawalRequest from './Components/Admin/Payment/RejectWithdrawalRequest/RejectWithdrawalRequest';
 import SucceedWithdrawalRequest from './Components/Admin/Payment/SucceedWithdrawalRequest/SucceedWithdrawalRequest';
 
 import AdminRankHoldersList from './Components/Admin/Rank/AdminRankHoldersList';
 import UserMyRank from './Components/UserPanel/Rank/UserMyRank';
 import InvoicePage from './Components/UserPanel/Product/MyOrders/InvoicePage';
+import AllOrders from './Components/Admin/ProductOrder/AllOrders/AllOrders';
+import PendingOrders from './Components/Admin/ProductOrder/PendingOrders/PendingOrders';
+import ConfirmOrders from './Components/Admin/ProductOrder/ConfirmOrders/ConfirmOrders';
+import ProcessingOrders from './Components/Admin/ProductOrder/ProcessingOrders/ProcessingOrders';
+import DispatchedOrders from './Components/Admin/ProductOrder/DispatchedOrders/DispatchedOrders';
+import DeliveredOrders from './Components/Admin/ProductOrder/DeliveredOrders/DeliveredOrders';
+import ReturnedOrders from './Components/Admin/ProductOrder/ReturnedOrders/ReturnedOrders';
+import CancelledOrders from './Components/Admin/ProductOrder/CancelledOrders/CancelledOrders';
 
 function App() {
   return (
@@ -257,20 +261,17 @@ function App() {
           <Route path="products-package/modify-product" element={<ShoppingProductsAdmin />} />
           <Route path="products-package/rearrange-products" element={<AdminBlankPage />} />
 
-          <Route path="product-order/new-orders" element={<AdminBlankPage />} />
-          <Route path="product-order/pending-orders" element={<AdminBlankPage />} />
-          <Route path="product-order/delivered-orders" element={<AdminBlankPage />} />
-          <Route path="product-order/rejected-orders" element={<AdminBlankPage />} />
-          <Route path="product-order/all-orders" element={<AdminBlankPage />} />
+          <Route path="product-order/all-orders" element={<AllOrders />} />
+          <Route path="product-order/pending-orders" element={<PendingOrders />} />
+          <Route path="product-order/confirm-orders" element={<ConfirmOrders />} />
+          <Route path="product-order/processing-orders" element={<ProcessingOrders />} />
+          <Route path="product-order/dispatched-orders" element={<DispatchedOrders />} />
+          <Route path="product-order/delivered-orders" element={<DeliveredOrders />} />
+          <Route path="product-order/returned-orders" element={<ReturnedOrders />} />
+          <Route path="product-order/cancelled-orders" element={<CancelledOrders />} />
 
           <Route path="transaction/main-wallet" element={<AdminBlankPage />} />
           <Route path="transactions/transaction-history" element={<AdminTransactionHistory />} />
-          <Route path="transactions/transaction-history" element={<AdminTransactionHistory />} />
-
-          <Route path="withdrawals/all-request" element={<AllWithdrawalRequest />} />
-          <Route path="withdrawals/approved-request" element={<ApproveWithdrawalRequest />} />
-          <Route path="withdrawals/pending-request" element={<PendingWithdrawalRequest />} />
-          <Route path="withdrawals/reject-request" element={<RejectWithdrawalRequest />} />
           <Route path="withdrawals/succeed-request" element={<SucceedWithdrawalRequest />} />
 
           <Route path="settings/level-plan" element={<AdminBlankPage />} />
