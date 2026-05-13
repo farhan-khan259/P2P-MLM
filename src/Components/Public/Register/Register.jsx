@@ -5,6 +5,18 @@ import PublicPageHeader from '../Common/PublicPageHeader';
 import './Register.css';
 
 const INDIA_COUNTRY_CODE = 'IN';
+const joiningPackageOptions = [
+  'Elcon Anion Sanitary Pads - 8',
+  'Elcon Anion Sanitary Pads - 32',
+  'Elcon Diabe Care - 8',
+  'Elcon Omega -3',
+  'Elcon Calcium',
+  'Elcon Smart Watch',
+  'Foce Watch',
+  'Gold Head Phone',
+  'Bose Head Phonos',
+  'HP LAPTOP'
+];
 
 function Register() {
   const [country, setCountry] = useState(INDIA_COUNTRY_CODE);
@@ -107,7 +119,7 @@ function Register() {
 
                 <div className="register-field">
                   <label htmlFor="aadharNo">
-                    Aadhar No <span className="register-required">*</span>
+                    Aadhaar No <span className="register-required">*</span>
                   </label>
                   <input id="aadharNo" type="text" placeholder="Enter Aadhar number" />
                 </div>
@@ -191,6 +203,22 @@ function Register() {
                 <div className="register-field">
                   <label htmlFor="pincode">Pincode</label>
                   <input id="pincode" type="text" placeholder="Enter your pincode" />
+                </div>
+
+                <div className="register-field">
+                  <label htmlFor="joiningPackage">
+                    Joining Package <span className="register-required">*</span>
+                  </label>
+                  <select id="joiningPackage" defaultValue="">
+                    <option value="" disabled>
+                      Select Joining Package
+                    </option>
+                    {joiningPackageOptions.map((packageName) => (
+                      <option key={packageName} value={packageName}>
+                        {packageName}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className="register-field register-lock-field">
