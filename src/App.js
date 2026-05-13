@@ -93,6 +93,10 @@ import UserDailyPayoutReport from './Components/UserPanel/Income/DailyPayoutRepo
 import AdminDatewiseIncome from './Components/Admin/Income/DatewiseIncome/DatewiseIncome';
 import AdminDailyPayoutReport from './Components/Admin/Income/DailyPayoutReport/DailyPayoutReport';
 import AdminLevelIncomeReports from './Components/Admin/Income/LevelIncomeReports/LevelIncomeReports';
+import AllWithdrawalRequest from './Components/Admin/Payment/AllWithdrawalRequest/AllWithdrawalRequest';
+import ApproveWithdrawalRequest from './Components/Admin/Payment/ApproveWithdrawalRequest/ApproveWithdrawalRequest';
+import PendingWithdrawalRequest from './Components/Admin/Payment/PendingWithdrawalRequest/PendingWithdrawalRequest';
+import RejectWithdrawalRequest from './Components/Admin/Payment/RejectWithdrawalRequest/RejectWithdrawalRequest';
 import WithdrawalHistory from './Components/UserPanel/Payment/WithdrawalHistory/WithdrawalHistory';
 import SucceedWithdrawalRequest from './Components/Admin/Payment/SucceedWithdrawalRequest/SucceedWithdrawalRequest';
 
@@ -272,6 +276,10 @@ function App() {
 
           <Route path="transaction/main-wallet" element={<AdminBlankPage />} />
           <Route path="transactions/transaction-history" element={<AdminTransactionHistory />} />
+          <Route path="withdrawals/all-request" element={<AllWithdrawalRequest />} />
+          <Route path="withdrawals/approved-request" element={<ApproveWithdrawalRequest />} />
+          <Route path="withdrawals/pending-request" element={<PendingWithdrawalRequest />} />
+          <Route path="withdrawals/reject-request" element={<RejectWithdrawalRequest />} />
           <Route path="withdrawals/succeed-request" element={<SucceedWithdrawalRequest />} />
 
           <Route path="settings/level-plan" element={<AdminBlankPage />} />
