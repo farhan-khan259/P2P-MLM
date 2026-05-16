@@ -23,7 +23,9 @@ import ListAllEPin from './Components/UserPanel/ePin/ListAllEPin';
 import TransferEPin from './Components/UserPanel/ePin/TransferEPin';
 import EPinTransferHistory from './Components/UserPanel/ePin/EPinTransferHistory';
 import DeletedEPin from './Components/UserPanel/ePin/DeletedEPin';
-import AdminLogin from './Components/Admin/AdminLogin/AdminLogin';
+import AdminLogin from './Components/AdminLogin';
+import ProtectedRoute from './Components/ProtectedRoute';
+import AdminRoute from './Components/AdminRoute';
 import UserLayout from './Components/UserPanel/Common/UserLayout';
 import UserBlankPage from './Components/UserPanel/Common/UserBlankPage';
 import BuyEPin from './Components/UserPanel/Common/BuyEPin';
@@ -116,8 +118,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/login" element={<UserLogin />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/invoice" element={<InvoicePage />} />
+        <Route path="/invoice" element={<ProtectedRoute><InvoicePage /></ProtectedRoute>} />
 
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Home />} />
@@ -130,7 +134,7 @@ function App() {
           <Route path="user-login" element={<UserLogin />} />
         </Route>
 
-        <Route path="/user" element={<UserLayout />}>
+        <Route path="/user" element={<ProtectedRoute><UserLayout /></ProtectedRoute>}>
           <Route index element={<Navigate to="/user/dashboard" replace />} />
           <Route path="dashboard" element={<UserDashboard />} />
 
@@ -210,7 +214,7 @@ function App() {
 
         {/* NOTE: admin settings routes are nested under AdminLayout below so sidebar shows */}
 
-        <Route path="/" element={<AdminLayout />}>
+        <Route path="/" element={<AdminRoute><AdminLayout /></AdminRoute>}>
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
 

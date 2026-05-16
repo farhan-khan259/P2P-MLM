@@ -1,6 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Country, State } from 'country-state-city';
 import '../../../Public/Register/Register.css';
+import { getProfile, updateProfile, updateNomineeDetails } from '../../../../api/authService';
 
 function UpdateProfile() {
   const [form, setForm] = useState({
@@ -20,9 +21,48 @@ function UpdateProfile() {
     nomineeMobile: '',
   });
 
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+
   const countryOptions = useMemo(() => Country.getAllCountries(), []);
   const stateOptions = useMemo(() => State.getStatesOfCountry(form.country), [form.country]);
 
+  // Load user profile on mount
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const response = await getProfile();
+        if (response.success && response.data) {
+          const { name, contactNo, dateOfBirth, address, city, state, country, pincode, nomineeDetails } = response.data;
+          setForm((prev) => ({
+            ...prev,
+            fullName: name || '',
+            mobile: contactNo || '',
+            dob: dateOfBirth ? new Date(dateOfBirth).toISOString().split('T')[0] : '',
+            email: response.data.email || '',
+            address: address || '',
+            city: city || '',
+            state: state || '',
+            country: country || 'IN',
+            pincode: pincode || '',
+            nomineeName: nomineeDetails?.nomineeName || '',
+            nomineeRelation: nomineeDetails?.nomineeRelation || '',
+            nomineeAge: nomineeDetails?.nomineeAge || '',
+            nomineeMobile: nomineeDetails?.nomineeMobile || '',
+          }));
+        }
+      } catch (err) {
+        console.error('Error loading profile:', err);
+        setError('Failed to load profile');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -32,12 +72,64 @@ function UpdateProfile() {
     }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setMessage('');
+    setError('');
+
+    try {
+      // Update profile
+      await updateProfile({
+        name: form.fullName,
+        contactNo: form.mobile,
+        dateOfBirth: form.dob,
+        address: form.address,
+        city: form.city,
+        state: form.state,
+        country: form.country,
+        pincode: form.pincode,
+      });
+
+      // Update nominee details
+      await updateNomineeDetails({
+        nomineeName: form.nomineeName,
+        nomineeRelation: form.nomineeRelation,
+        nomineeAge: form.nomineeAge,
+        nomineeMobile: form.nomineeMobile,
+      });
+
+      setMessage('Profile updated successfully!');
+      setTimeout(() => setMessage(''), 3000);
+    } catch (err) {
+      setError(err.message || 'Failed to update profile');
+      console.error('Error updating profile:', err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <section className="public-page">
+        <div className="public-container">
+          <div className="register-card">
+            <h2 className="register-title">Update Profile</h2>
+            <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="public-page">
       <div className="public-container">
         <div className="register-card">
           <h2 className="register-title">Update Profile</h2>
-          <form className="register-form" noValidate>
+          {message && <div style={{ padding: '10px', marginBottom: '10px', backgroundColor: '#d4edda', color: '#155724', borderRadius: '4px' }}>{message}</div>}
+          {error && <div style={{ padding: '10px', marginBottom: '10px', backgroundColor: '#f8d7da', color: '#721c24', borderRadius: '4px' }}>{error}</div>}
+          <form className="register-form" onSubmit={handleSubmit} noValidate>
             <div className="register-grid">
               {/* Personal Details */}
               <div className="register-field">
@@ -50,7 +142,7 @@ function UpdateProfile() {
               </div>
               <div className="register-field">
                 <label htmlFor="email">Email</label>
-                <input id="email" name="email" value={form.email} onChange={handleChange} type="email" placeholder="Email" />
+                <input id="email" name="email" value={form.email} onChange={handleChange} type="email" placeholder="Email" disabled />
               </div>
               <div className="register-field">
                 <label htmlFor="dob">DOB</label>
@@ -117,7 +209,9 @@ function UpdateProfile() {
                 <input id="nomineeMobile" name="nomineeMobile" value={form.nomineeMobile} onChange={handleChange} type="tel" placeholder="Nominee Mobile" />
               </div>
             </div>
-            <button type="submit" className="register-submit-btn">Update</button>
+            <button type="submit" className="register-submit-btn" disabled={submitting}>
+              {submitting ? 'Updating...' : 'Update'}
+            </button>
           </form>
         </div>
       </div>

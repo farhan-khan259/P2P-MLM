@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../Common/UserLayout.css';
 import './UserDashboard.css';
+import { getUserDashboard } from '../../../api/dashboardService';
 import dashboard1 from '../../../Assets/Pictures/dashbaord1.jpeg';
 import dashboard2 from '../../../Assets/Pictures/dashbaord2.jpeg';
 import dashboard3 from '../../../Assets/Pictures/dashbaord3.jpeg';
@@ -16,68 +17,10 @@ const productImages = [
   { src: productAirpods, name: 'Wireless Airpods' }
 ];
 
-const stats = [
-  { label: 'Total Earning', value: '₹ 450000' },
-  { label: 'Last Month Income', value: '₹ 45000' },
-  { label: 'Pending Help', value: '₹ 350000' },
-  { label: 'Given Help', value: '₹ 189585' },
-  { label: 'Received Help', value: '₹ 200000' },
-  { label: "Yesterday's Received Help", value: '₹ 16000' },
-  { label: 'Level Income', value: '₹ 60000' },
-  { label: "Yesterday's Level Income", value: '₹ 22500' },
-  { label: 'Repurchase Income', value: '₹ 40000' },
-  { label: "Yesterday's Repurchase Income", value: '₹ 500' },
-  { label: 'Total L + R Income', value: '₹ 100000' },
-  { label: "Yesterday's Total Income", value: '₹ 1500' },
-  { label: 'Total Team', value: '150' },
-  { label: "Yesterday's Joining", value: '16' },
-  { label: 'Unlock Level', value: '10' },
-  { label: 'My Directs', value: '10' },
-  { label: 'Upgraded Level', value: '6' },
-  { label: 'Rank', value: 'GOLD' }
-];
-
-const leaderboardTabs = [
-  { key: 'top', label: 'Top Earner', title: 'Top Earner' },
-  { key: 'monthly', label: 'Monthly Top Earner', title: 'Monthly Top Earner' },
-  { key: 'daily', label: 'Daily Top Earner', title: 'Daily Top Earner' },
-  { key: 'rewards', label: 'Rewards', title: 'Rewards' }
-];
-
-const leaderboardData = {
-  top: [
-    { id: 'EL12345678', name: 'SONALI SHIRKE', amount: '₹ 156550' },
-    { id: 'EL12345679', name: 'AMBIKA SALUNKE', amount: '₹ 152150' },
-    { id: 'EL12345680', name: 'RAJKIRAN SALUKE', amount: '₹ 145800' },
-    { id: 'EL12345681', name: 'AMIT SHARMA', amount: '₹ 124550' },
-    { id: 'EL12345682', name: 'SADDAM SHAIKH', amount: '₹ 111000' }
-  ],
-  monthly: [
-    { id: 'EL12345671', name: 'NISHIKANT KAILAS SHIRKE', amount: '₹ 456550' },
-    { id: 'EL12345672', name: 'ANAMIKA SAXENA', amount: '₹ 352150' },
-    { id: 'EL12345673', name: 'AMRUTA RAJKIRAN SALKHE', amount: '₹ 255800' },
-    { id: 'EL12345674', name: 'NISHIKANT KAILAS SHIRKE', amount: '₹ 224550' },
-    { id: 'EL12345675', name: 'ANAMIKA SAXENA', amount: '₹ 201000' }
-  ],
-  daily: [
-    { id: 'EL12345688', name: 'PRIYA SHARMA', amount: '₹ 18550' },
-    { id: 'EL12345689', name: 'RAHUL KUMAR', amount: '₹ 17210' },
-    { id: 'EL12345690', name: 'SNEHA PATIL', amount: '₹ 16480' },
-    { id: 'EL12345691', name: 'VIKAS YADAV', amount: '₹ 15320' },
-    { id: 'EL12345692', name: 'POOJA VERMA', amount: '₹ 14990' }
-  ],
-  rewards: [
-    { id: 'EL12345651', name: 'MEENA JOSHI', amount: '₹ 25000' },
-    { id: 'EL12345652', name: 'ARUN PAWAR', amount: '₹ 18000' },
-    { id: 'EL12345653', name: 'KARAN MALHOTRA', amount: '₹ 15000' },
-    { id: 'EL12345654', name: 'TINA DAS', amount: '₹ 12000' },
-    { id: 'EL12345655', name: 'NARESH REDDY', amount: '₹ 10000' }
-  ]
-};
-
 function MemberDashboard() {
   const [activeTab, setActiveTab] = useState('top');
   const [activeSlide, setActiveSlide] = useState(0);
+  const [memberInfo, setMemberInfo] = useState(null);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -87,8 +30,48 @@ function MemberDashboard() {
     return () => window.clearInterval(timer);
   }, []);
 
-  const activeRows = leaderboardData[activeTab] || [];
-  const activeTabTitle = leaderboardTabs.find((tab) => tab.key === activeTab)?.title || 'Top Earner';
+  useEffect(() => {
+    let mounted = true;
+    const fetch = async () => {
+      try {
+        const res = await getUserDashboard();
+        if (mounted && res?.success) setMemberInfo(res.data);
+      } catch (err) {
+        // ignore
+      }
+    };
+    fetch();
+    return () => (mounted = false);
+  }, []);
+
+  // Build stats array with real data where available
+  const stats = [
+    { label: 'Total Earning', value: memberInfo?.totalEarning || '---' },
+    { label: 'Last Month Income', value: memberInfo?.lastMonthIncome || '---' },
+    { label: 'Pending Help', value: memberInfo?.pendingHelp || '---' },
+    { label: 'Given Help', value: memberInfo?.givenHelp || '---' },
+    { label: 'Received Help', value: memberInfo?.receivedHelp || '---' },
+    { label: "Yesterday's Received Help", value: memberInfo?.yesterdayReceivedHelp || '---' },
+    { label: 'Level Income', value: memberInfo?.levelIncome || '---' },
+    { label: "Yesterday's Level Income", value: memberInfo?.yesterdayLevelIncome || '---' },
+    { label: 'Repurchase Income', value: memberInfo?.repurchaseIncome || '---' },
+    { label: "Yesterday's Repurchase Income", value: memberInfo?.yesterdayRepurchaseIncome || '---' },
+    { label: 'Total L + R Income', value: memberInfo?.totalLRIncome || '---' },
+    { label: "Yesterday's Total Income", value: memberInfo?.yesterdayTotalIncome || '---' },
+    { label: 'Total Team', value: memberInfo?.totalTeam || '---' },
+    { label: "Yesterday's Joining", value: memberInfo?.yesterdayJoining || '---' },
+    { label: 'Unlock Level', value: memberInfo?.unlockLevel || '---' },
+    { label: 'My Directs', value: memberInfo?.referralsCount || 0 },
+    { label: 'Upgraded Level', value: memberInfo?.upgradedLevel || '---' },
+    { label: 'Rank', value: memberInfo?.rank || '---' }
+  ];
+
+  const leaderboardTabs = [
+    { key: 'top', label: 'Top Earner', title: 'Top Earner' },
+    { key: 'monthly', label: 'Monthly Top Earner', title: 'Monthly Top Earner' },
+    { key: 'daily', label: 'Daily Top Earner', title: 'Daily Top Earner' },
+    { key: 'rewards', label: 'Rewards', title: 'Rewards' }
+  ];
 
   const goToPreviousSlide = () => {
     setActiveSlide((current) => (current - 1 + bannerSlides.length) % bannerSlides.length);
@@ -138,8 +121,8 @@ function MemberDashboard() {
         <section className="user-dashboard1-member-dashboard-header">
           <div className="user-dashboard1-member-dashboard-profile-card">
             <div className="user-dashboard1-member-dashboard-profile-info">
-              <div className="user-dashboard1-member-dashboard-profile-name">NISHIKANT KAILAS SHIRKE</div>
-              <div className="user-dashboard1-member-dashboard-profile-meta">MEMBER ID : EL12345678 | REGISTER DATE : 23.06.2026</div>
+              <div className="user-dashboard1-member-dashboard-profile-name">{memberInfo?.name || 'Member Name'}</div>
+              <div className="user-dashboard1-member-dashboard-profile-meta">MEMBER ID : {memberInfo?.memberId || '---'} | REGISTER DATE : {memberInfo?.registeredAt ? new Date(memberInfo.registeredAt).toLocaleDateString() : '---'}</div>
             </div>
           </div>
           <div className="user-dashboard1-member-dashboard-actions">
@@ -161,7 +144,7 @@ function MemberDashboard() {
         </div>
 
         <section className="user-dashboard1-member-dashboard-table-section">
-          <div className="user-dashboard1-member-dashboard-table-title">🏆 {activeTabTitle}</div>
+          <div className="user-dashboard1-member-dashboard-table-title">🏆 {leaderboardTabs.find((tab) => tab.key === activeTab)?.title || 'Top Earner'}</div>
           <div className="user-dashboard1-member-dashboard-table-tabs" role="tablist" aria-label="Earner Categories">
             {leaderboardTabs.map((tab) => (
               <button
@@ -187,14 +170,20 @@ function MemberDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {activeRows.map((row, idx) => (
-                  <tr key={`${activeTab}-${row.id}`}>
-                    <td>{idx + 1}</td>
-                    <td>{row.id}</td>
-                    <td>{row.name}</td>
-                    <td> {row.amount}</td>
+                {activeTab === 'top' && (memberInfo?.recentReferrals || []).length > 0 ? (
+                  memberInfo.recentReferrals.map((row, idx) => (
+                    <tr key={row._id || `${idx}-${row.memberId}`}>
+                      <td>{idx + 1}</td>
+                      <td>{row.memberId || '---'}</td>
+                      <td>{row.name || '---'}</td>
+                      <td>---</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" style={{ textAlign: 'center', color: '#999' }}>No data available</td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>

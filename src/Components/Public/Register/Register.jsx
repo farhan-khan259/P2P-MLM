@@ -1,7 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { City, Country, State } from 'country-state-city';
 import { getDistricts } from 'india-state-district';
 import PublicPageHeader from '../Common/PublicPageHeader';
+import { registerUser, getSponsorDetails } from '../../../api/authService';
 import './Register.css';
 
 const INDIA_COUNTRY_CODE = 'IN';
@@ -19,12 +21,62 @@ const joiningPackageOptions = [
 ];
 
 function Register() {
+  const navigate = useNavigate();
+  const [sponsorId, setSponsorId] = useState('');
+  const [sponsorName, setSponsorName] = useState('');
+  const [applicantName, setApplicantName] = useState('');
+  const [contactNo, setContactNo] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [aadharNo, setAadharNo] = useState('');
+  const [address, setAddress] = useState('');
   const [country, setCountry] = useState(INDIA_COUNTRY_CODE);
   const [state, setState] = useState('');
   const [district, setDistrict] = useState('');
   const [city, setCity] = useState('');
+  const [pincode, setPincode] = useState('');
+  const [joiningPackage, setJoiningPackage] = useState('');
+  const [epin, setEpin] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [sponsorLoading, setSponsorLoading] = useState(false);
+  const [sponsorError, setSponsorError] = useState('');
 
   const countryOptions = useMemo(() => Country.getAllCountries(), []);
+
+  // Auto-fetch sponsor name when sponsor ID is entered
+  useEffect(() => {
+    if (!sponsorId || sponsorId.trim() === '') {
+      setSponsorName('');
+      setSponsorError('');
+      return;
+    }
+
+    const fetchSponsor = async () => {
+      setSponsorLoading(true);
+      setSponsorError('');
+      try {
+        const response = await getSponsorDetails(sponsorId);
+        if (response.success && response.data) {
+          setSponsorName(response.data.name || '');
+          setSponsorError('');
+        }
+      } catch (err) {
+        const errorMessage = err?.response?.data?.message || 'Sponsor not found';
+        setSponsorError(errorMessage);
+        setSponsorName('');
+      } finally {
+        setSponsorLoading(false);
+      }
+    };
+
+    // Debounce to avoid too many API calls while typing
+    const timer = setTimeout(fetchSponsor, 500);
+    return () => clearTimeout(timer);
+  }, [sponsorId]);
 
   const stateOptions = useMemo(() => {
     if (!country) return [];
@@ -65,6 +117,54 @@ function Register() {
     setCity('');
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError('');
+
+    if (password !== confirmPassword) {
+      setError('Password and confirm password do not match');
+      return;
+    }
+
+    if (!acceptedTerms) {
+      setError('You must agree to the Terms & Conditions');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const data = await registerUser({
+        sponsorId,
+        sponsorName,
+        name: applicantName,
+        contactNo,
+        dateOfBirth,
+        email,
+        aadharNo,
+        address,
+        country,
+        state,
+        district,
+        city,
+        pincode,
+        joiningPackage,
+        epin,
+        password,
+        acceptedTerms,
+      });
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      navigate('/user/dashboard');
+    } catch (requestError) {
+      const message = requestError?.response?.data?.message || 'Registration failed';
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <PublicPageHeader title="Registration" />
@@ -73,18 +173,41 @@ function Register() {
           <div className="register-card">
             <h2 className="register-title">Registration Form</h2>
 
-            <form className="register-form" noValidate>
+            {error ? <div className="register-error-message">{error}</div> : null}
+
+            <form className="register-form" noValidate onSubmit={handleSubmit}>
               <div className="register-grid">
                 <div className="register-field">
                   <label htmlFor="sponsorId">
                     Sponsor ID <span className="register-required">*</span>
                   </label>
-                  <input id="sponsorId" type="text" placeholder="Enter sponsor ID" />
+                  <input
+                    id="sponsorId"
+                    type="text"
+                    placeholder="Enter sponsor ID"
+                    value={sponsorId}
+                    onChange={(event) => setSponsorId(event.target.value)}
+                  />
+                  {sponsorError && <div style={{ fontSize: '12px', color: '#dc3545', marginTop: '4px' }}>{sponsorError}</div>}
                 </div>
 
                 <div className="register-field">
-                  <label htmlFor="sponsorName">Sponsor Name</label>
-                  <input id="sponsorName" type="text" placeholder="Enter sponsor name" />
+                  <label htmlFor="sponsorName">
+                    Sponsor Name
+                    {sponsorLoading && <span style={{ marginLeft: '8px', color: '#666' }}>Loading...</span>}
+                  </label>
+                  <input
+                    id="sponsorName"
+                    type="text"
+                    placeholder="Sponsor name will auto-populate"
+                    value={sponsorName}
+                    onChange={(event) => setSponsorName(event.target.value)}
+                    readOnly={sponsorId && sponsorName && !sponsorError}
+                    style={{ 
+                      backgroundColor: sponsorId && sponsorName && !sponsorError ? '#f5f5f5' : '#fff',
+                      cursor: sponsorId && sponsorName && !sponsorError ? 'not-allowed' : 'text'
+                    }}
+                  />
                 </div>
 
                 <div className="register-field register-full-row">
@@ -94,7 +217,9 @@ function Register() {
                   <input
                     id="applicantName"
                     type="text"
-                    placeholder="Enter applicant's name as per Addharcard"
+                    placeholder="Enter applicant's name as per AadhaarCard"
+                    value={applicantName}
+                    onChange={(event) => setApplicantName(event.target.value)}
                   />
                 </div>
 
@@ -102,31 +227,60 @@ function Register() {
                   <label htmlFor="contactNo">
                     Contact No <span className="register-required">*</span>
                   </label>
-                  <input id="contactNo" type="tel" placeholder="Enter contact number" />
+                  <input
+                    id="contactNo"
+                    type="tel"
+                    placeholder="Enter contact number"
+                    value={contactNo}
+                    onChange={(event) => setContactNo(event.target.value)}
+                  />
                 </div>
 
                 <div className="register-field">
                   <label htmlFor="dateOfBirth">Date of Birth</label>
-                  <input id="dateOfBirth" type="date" />
+                  <input
+                    id="dateOfBirth"
+                    type="date"
+                    value={dateOfBirth}
+                    onChange={(event) => setDateOfBirth(event.target.value)}
+                  />
                 </div>
 
                 <div className="register-field">
                   <label htmlFor="email">
                     Email <span className="register-required">*</span>
                   </label>
-                  <input id="email" type="email" placeholder="Enter your email address" />
+                  <input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                  />
                 </div>
 
                 <div className="register-field">
                   <label htmlFor="aadharNo">
                     Aadhaar No <span className="register-required">*</span>
                   </label>
-                  <input id="aadharNo" type="text" placeholder="Enter Aadhar number" />
+                  <input
+                    id="aadharNo"
+                    type="text"
+                    placeholder="Enter Aadhaar number"
+                    value={aadharNo}
+                    onChange={(event) => setAadharNo(event.target.value)}
+                  />
                 </div>
 
                 <div className="register-field register-full-row">
                   <label htmlFor="address">Address</label>
-                  <textarea id="address" rows="3" placeholder="Enter your address" />
+                  <textarea
+                    id="address"
+                    rows="3"
+                    placeholder="Enter your address"
+                    value={address}
+                    onChange={(event) => setAddress(event.target.value)}
+                  />
                 </div>
 
                 <div className="register-field">
@@ -202,14 +356,20 @@ function Register() {
 
                 <div className="register-field">
                   <label htmlFor="pincode">Pincode</label>
-                  <input id="pincode" type="text" placeholder="Enter your pincode" />
+                  <input
+                    id="pincode"
+                    type="text"
+                    placeholder="Enter your pincode"
+                    value={pincode}
+                    onChange={(event) => setPincode(event.target.value)}
+                  />
                 </div>
 
                 <div className="register-field">
                   <label htmlFor="joiningPackage">
                     Joining Package <span className="register-required">*</span>
                   </label>
-                  <select id="joiningPackage" defaultValue="">
+                  <select id="joiningPackage" value={joiningPackage} onChange={(event) => setJoiningPackage(event.target.value)}>
                     <option value="" disabled>
                       Select Joining Package
                     </option>
@@ -225,7 +385,13 @@ function Register() {
                   <label htmlFor="epin">
                     E Pin <span className="register-required">*</span>
                   </label>
-                  <input id="epin" type="text" placeholder="Enter E pin" />
+                  <input
+                    id="epin"
+                    type="text"
+                    placeholder="Enter E pin"
+                    value={epin}
+                    onChange={(event) => setEpin(event.target.value)}
+                  />
                   <span className="register-lock-icon" aria-hidden="true">
                     🔒
                   </span>
@@ -235,7 +401,13 @@ function Register() {
                   <label htmlFor="password">
                     Password <span className="register-required">*</span>
                   </label>
-                  <input id="password" type="password" placeholder="Enter your password" />
+                  <input
+                    id="password"
+                    type="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                  />
                   <span className="register-lock-icon" aria-hidden="true">
                     🔒
                   </span>
@@ -249,6 +421,8 @@ function Register() {
                     id="confirmPassword"
                     type="password"
                     placeholder="Re-enter your password"
+                    value={confirmPassword}
+                    onChange={(event) => setConfirmPassword(event.target.value)}
                   />
                   <span className="register-lock-icon" aria-hidden="true">
                     🔒
@@ -257,11 +431,15 @@ function Register() {
               </div>
 
               <label className="register-terms">
-                <input type="checkbox" /> I agree to the <a href="/">Terms &amp; Conditions.</a>
+                <input type="checkbox" checked={acceptedTerms} onChange={(event) => setAcceptedTerms(event.target.checked)} /> I agree to the <a href="/">Terms &amp; Conditions.</a>
               </label>
 
-              <button type="submit" className="register-submit-btn">
-                Submit
+              <div style={{ padding: '10px 12px',marginLeft : '0px', marginBlock: '16px', backgroundColor: '#f0f4ff', border: '1px solid #d4e0ff', borderRadius: '6px', fontSize: '13px', color: '#333', fontWeight: '500' }}>
+                <strong>Note:</strong> One Person, One ID Policy
+              </div>
+
+              <button type="submit" className="register-submit-btn" disabled={loading}>
+                {loading ? 'Submitting...' : 'Submit'}
               </button>
             </form>
           </div>
