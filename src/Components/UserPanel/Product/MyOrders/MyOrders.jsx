@@ -87,9 +87,9 @@ function MyOrders() {
                     <td data-label="ORDER NO">{order.orderNo}</td>
                     <td data-label="ORDER DATE">{order.orderDate}</td>
                     <td data-label="ITEMS">{order.items}</td>
-                    <td data-label="TOTAL PAID">{order.totalPaid.toFixed(2)}</td>
-                    <td data-label="PAY MODE">{order.payMode}</td>
-                    <td data-label="PAY STATUS">{order.payStatus}</td>
+                    <td data-label="TOTAL PAID">{Number(order.totalPaid ?? order.finalTotal ?? order.totalPrice ?? 0).toFixed(2)}</td>
+                    <td data-label="PAY MODE">{order.payMode ?? order.paymentMode}</td>
+                    <td data-label="PAY STATUS">{order.payStatus ?? order.paymentStatus}</td>
                     <td data-label="ORDER STATUS" className={getStatusClass(order.orderStatus)}>
                       {order.orderStatus}
                     </td>

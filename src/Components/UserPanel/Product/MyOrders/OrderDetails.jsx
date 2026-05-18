@@ -38,24 +38,28 @@ function OrderDetails() {
     loadOrder();
   }, [orderNo]);
 
-  const fallbackOrder = useMemo(() => {
-    return {
-      orderNo,
-      orderDate: '23-04-2026 04.36 PM',
-      paymentMode: 'E-wallet',
-      orderItems: 0,
-      orderStatus: 'Pending',
-      paymentStatus: 'Paid',
-      totalPrice: 0,
-      shippingCharge: 0,
-      discountCoupon: 0,
-      finalTotal: 0,
-      shippingInformation: [],
-      items: [],
-    };
-  }, [orderNo]);
+  const fallbackOrder = useMemo(() => ({
+    orderNo,
+    orderDate: '23-04-2026 04.36 PM',
+    paymentMode: 'E-wallet',
+    orderItems: 0,
+    orderStatus: 'Pending',
+    paymentStatus: 'Paid',
+    totalPrice: 0,
+    shippingCharge: 0,
+    discountCoupon: 0,
+    finalTotal: 0,
+    shippingInformation: [],
+    items: [],
+  }), [orderNo]);
 
   const activeOrder = order || fallbackOrder;
+
+  // Normalize numeric fields to avoid crashes when backend uses different names
+  const totalPrice = Number(activeOrder.totalPrice ?? activeOrder.finalTotal ?? 0);
+  const shippingCharge = Number(activeOrder.shippingCharge ?? 0);
+  const discountCoupon = Number(activeOrder.discountCoupon ?? 0);
+  const finalTotal = Number(activeOrder.finalTotal ?? activeOrder.totalPrice ?? totalPrice);
 
   const handlePrintInvoice = () => {
     localStorage.setItem('invoiceData', JSON.stringify(activeOrder));
@@ -113,19 +117,19 @@ function OrderDetails() {
             <div className="order-details-info-list">
               <div className="order-details-info-row">
                 <span className="order-details-info-label">Total Price</span>
-                <span className="order-details-info-value">{activeOrder.totalPrice.toFixed(2)}</span>
+                <span className="order-details-info-value">{totalPrice.toFixed(2)}</span>
               </div>
               <div className="order-details-info-row">
                 <span className="order-details-info-label">+ Shipping Charge</span>
-                <span className="order-details-info-value">+{activeOrder.shippingCharge.toFixed(2)}</span>
+                <span className="order-details-info-value">+{shippingCharge.toFixed(2)}</span>
               </div>
               <div className="order-details-info-row">
                 <span className="order-details-info-label">- Discount Coupon</span>
-                <span className="order-details-info-value">{activeOrder.discountCoupon.toFixed(2)}</span>
+                <span className="order-details-info-value">{discountCoupon.toFixed(2)}</span>
               </div>
               <div className="order-details-info-row order-details-info-row--total">
                 <span className="order-details-info-label">Total</span>
-                <span className="order-details-info-value">{activeOrder.finalTotal.toFixed(2)}</span>
+                <span className="order-details-info-value">{finalTotal.toFixed(2)}</span>
               </div>
             </div>
           </article>

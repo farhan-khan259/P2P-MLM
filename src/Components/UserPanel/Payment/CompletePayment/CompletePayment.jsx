@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './CompletePayment.css';
 import { checkoutCart, getCart } from '../../../../api/productsService';
+import { getProfile } from '../../../../api/authService';
 
 const CompletePayment = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const CompletePayment = () => {
   const [cartItems, setCartItems] = useState([]);
   const [orderAmount, setOrderAmount] = useState(Number(location.state?.orderAmount || 0));
   const [isLoadingCart, setIsLoadingCart] = useState(true);
+  const [paymentBalances, setPaymentBalances] = useState({ eWallet: '', rWallet: '' });
 
   const bankDetails = {
     bankName: 'State Bank Of India',
@@ -26,8 +28,8 @@ const CompletePayment = () => {
   };
 
   const paymentModes = {
-    'e-wallet': { label: 'E-Wallet', amount: '₹ 120000' },
-    'r-wallet': { label: 'R-Wallet', amount: '₹ 6000' },
+    'e-wallet': { label: 'E-Wallet', amount: paymentBalances.eWallet ? `₹ ${paymentBalances.eWallet}` : '' },
+    'r-wallet': { label: 'R-Wallet', amount: paymentBalances.rWallet ? `₹ ${paymentBalances.rWallet}` : '' },
     'upi': { label: 'UPI ID', amount: '' },
     'bank': { label: 'BANK TRANSFER', amount: '' }
   };
@@ -58,6 +60,26 @@ const CompletePayment = () => {
     };
 
     loadCart();
+  }, []);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const res = await getProfile();
+        const data = res.data || {};
+
+        // If backend exposes wallet balances, map them here.
+        // Common field names may be `eWallet`, `rWallet`, `wallet` etc.
+        setPaymentBalances({
+          eWallet: data.eWallet ?? data.eWalletBalance ?? data.wallet ?? '',
+          rWallet: data.rWallet ?? data.rWalletBalance ?? data.rewardWallet ?? ''
+        });
+      } catch (err) {
+        // ignore - keep balances empty
+      }
+    };
+
+    loadProfile();
   }, []);
 
   const readFileAsDataUrl = (file) => {
