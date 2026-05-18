@@ -1,79 +1,8 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../Common/UserLayout.css';
 import './MyOrders.css';
-
-const orders = [
-  {
-    sNo: 1,
-    orderNo: 'ORD1001',
-    orderDate: '21-01-2026',
-    items: '2 ITEMS',
-    totalPaid: 1550,
-    payMode: 'E-WALLET',
-    payStatus: 'PAID',
-    orderStatus: 'PENDING'
-  },
-  {
-    sNo: 2,
-    orderNo: 'ORD1002',
-    orderDate: '20-01-2026',
-    items: '2 ITEMS',
-    totalPaid: 1400,
-    payMode: 'E-WALLET',
-    payStatus: 'PAID',
-    orderStatus: 'CONFIRMED'
-  },
-  {
-    sNo: 3,
-    orderNo: 'ORD1003',
-    orderDate: '19-01-2026',
-    items: '1 ITEMS',
-    totalPaid: 1660,
-    payMode: 'E-WALLET',
-    payStatus: 'PAID',
-    orderStatus: 'PROCESSING'
-  },
-  {
-    sNo: 4,
-    orderNo: 'ORD1004',
-    orderDate: '18-01-2026',
-    items: '5 ITEMS',
-    totalPaid: 1500,
-    payMode: 'R-WALLET',
-    payStatus: 'PAID',
-    orderStatus: 'DISPATCHED'
-  },
-  {
-    sNo: 5,
-    orderNo: 'ORD1005',
-    orderDate: '17-01-2026',
-    items: '1 ITEMS',
-    totalPaid: 1250,
-    payMode: 'R-WALLET',
-    payStatus: 'PAID',
-    orderStatus: 'DELIVERED'
-  },
-  {
-    sNo: 6,
-    orderNo: 'ORD1006',
-    orderDate: '16-01-2026',
-    items: '1 ITEMS',
-    totalPaid: 2200,
-    payMode: 'E-WALLET',
-    payStatus: 'PAID',
-    orderStatus: 'RETURNED'
-  },
-  {
-    sNo: 7,
-    orderNo: 'ORD1007',
-    orderDate: '15-01-2026',
-    items: '2 ITEMS',
-    totalPaid: 1900,
-    payMode: 'E-WALLET',
-    payStatus: 'PAID',
-    orderStatus: 'CANCELLED'
-  }
-];
+import { getOrders } from '../../../../api/productsService';
 
 function DetailIcon() {
   return (
@@ -87,7 +16,7 @@ function DetailIcon() {
 }
 
 function getStatusClass(status) {
-  switch (status) {
+  switch (String(status || '').toUpperCase()) {
     case 'PENDING':
       return 'order-status order-status--pending';
     case 'CONFIRMED':
@@ -109,6 +38,20 @@ function getStatusClass(status) {
 
 function MyOrders() {
   const navigate = useNavigate();
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    const loadOrders = async () => {
+      try {
+        const response = await getOrders();
+        setOrders(response.orders || []);
+      } catch (error) {
+        setOrders([]);
+      }
+    };
+
+    loadOrders();
+  }, []);
 
   const openOrderDetails = (orderNo) => {
     navigate(`/user/product/my-orders/details/${orderNo}`);
@@ -138,9 +81,9 @@ function MyOrders() {
                 </tr>
               </thead>
               <tbody>
-                {orders.map((order) => (
+                {orders.length ? orders.map((order, index) => (
                   <tr key={order.orderNo}>
-                    <td data-label="S. NO">{order.sNo}</td>
+                    <td data-label="S. NO">{index + 1}</td>
                     <td data-label="ORDER NO">{order.orderNo}</td>
                     <td data-label="ORDER DATE">{order.orderDate}</td>
                     <td data-label="ITEMS">{order.items}</td>
@@ -161,7 +104,11 @@ function MyOrders() {
                       </button>
                     </td>
                   </tr>
-                ))}
+                )) : (
+                  <tr>
+                    <td colSpan="9" style={{ textAlign: 'center' }}>No orders found.</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

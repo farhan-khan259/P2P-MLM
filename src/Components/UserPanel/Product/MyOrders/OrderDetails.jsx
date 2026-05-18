@@ -1,85 +1,9 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../Common/UserLayout.css';
 import './OrderDetails.css';
-import firstItemImage from '../../../../Assets/Pictures/fourpads.jpeg';
-import secondItemImage from '../../../../Assets/Pictures/slimfit.jpeg';
-
-const orderDetailsById = {
-  ORD1001: {
-    orderNo: 'ORD1001',
-    orderDate: '23-04-2026 04.36 PM',
-    paymentMode: 'E-wallet',
-    orderItems: 2,
-    orderStatus: 'Pending',
-    paymentStatus: 'Paid',
-    totalPrice: 1600.0,
-    shippingCharge: 50.0,
-    discountCoupon: 100.0,
-    finalTotal: 1550.0,
-    shippingInformation: [
-      { label: 'Name', value: 'Nishikant Kailas Shirke' },
-      { label: 'Contact No', value: '+917020110380' },
-      { label: 'Address', value: 'B-901, Oxford Paradise,' },
-      { label: 'Area', value: 'Vidya Valley School Road Susgaon' },
-      { label: 'State,City', value: 'Maharashtra , Pune' },
-      { label: 'Pin Code', value: '411021' }
-    ],
-    items: [
-      {
-        name: 'Elcon Anion Sanitary Pad - 40',
-        price: 1000,
-        quantity: 1,
-        totalPrice: 1000,
-        image: firstItemImage
-      },
-      {
-        name: 'Slim Fit',
-        price: 300,
-        quantity: 2,
-        totalPrice: 600,
-        image: secondItemImage
-      }
-    ]
-  }
-};
-
-const fallbackOrder = {
-  orderNo: 'ORD1001',
-  orderDate: '23-04-2026 04.36 PM',
-  paymentMode: 'E-wallet',
-  orderItems: 2,
-  orderStatus: 'Pending',
-  paymentStatus: 'Paid',
-  totalPrice: 1600.0,
-  shippingCharge: 50.0,
-  discountCoupon: 100.0,
-  finalTotal: 1550.0,
-  shippingInformation: [
-    { label: 'Name', value: 'Nishikant Kailas Shirke' },
-    { label: 'Contact No', value: '+917020110380' },
-    { label: 'Address', value: 'B-901, Oxford Paradise,' },
-    { label: 'Area', value: 'Vidya Valley School Road Susgaon' },
-    { label: 'State,City', value: 'Maharashtra , Pune' },
-    { label: 'Pin Code', value: '411021' }
-  ],
-  items: [
-    {
-      name: 'Elcon Anion Sanitary Pad - 40',
-      price: 1000,
-      quantity: 1,
-      totalPrice: 1000,
-      image: firstItemImage
-    },
-    {
-      name: 'Slim Fit',
-      price: 300,
-      quantity: 2,
-      totalPrice: 600,
-      image: secondItemImage
-    }
-  ]
-};
+import { getOrderByNo } from '../../../../api/productsService';
+import { resolveProductImage } from '../productImages';
 
 function PrinterIcon() {
   return (
@@ -99,13 +23,43 @@ function getFieldLabel(label) {
 function OrderDetails() {
   const { orderNo } = useParams();
   const navigate = useNavigate();
-  const order = useMemo(() => orderDetailsById[orderNo] ?? fallbackOrder, [orderNo]);
+  const [order, setOrder] = useState(null);
+
+  useEffect(() => {
+    const loadOrder = async () => {
+      try {
+        const response = await getOrderByNo(orderNo);
+        setOrder(response.order);
+      } catch (error) {
+        setOrder(null);
+      }
+    };
+
+    loadOrder();
+  }, [orderNo]);
+
+  const fallbackOrder = useMemo(() => {
+    return {
+      orderNo,
+      orderDate: '23-04-2026 04.36 PM',
+      paymentMode: 'E-wallet',
+      orderItems: 0,
+      orderStatus: 'Pending',
+      paymentStatus: 'Paid',
+      totalPrice: 0,
+      shippingCharge: 0,
+      discountCoupon: 0,
+      finalTotal: 0,
+      shippingInformation: [],
+      items: [],
+    };
+  }, [orderNo]);
+
+  const activeOrder = order || fallbackOrder;
 
   const handlePrintInvoice = () => {
-    // Store invoice data in localStorage
-    localStorage.setItem('invoiceData', JSON.stringify(order));
-    // Open invoice in a new window
-    window.open('/invoice', 'Invoice', 'width=900,height=600,scrollbars=yes');
+    localStorage.setItem('invoiceData', JSON.stringify(activeOrder));
+    window.open(`/invoice?orderNo=${activeOrder.orderNo}`, 'Invoice', 'width=900,height=600,scrollbars=yes');
   };
 
   const handleBackToOrders = () => {
@@ -116,7 +70,7 @@ function OrderDetails() {
     <div className="order-details-page">
       <div className="order-details-shell">
         <div className="order-details-toolbar">
-          <h1 className="order-details-title">Order Details - {order.orderNo}</h1>
+          <h1 className="order-details-title">Order Details - {activeOrder.orderNo}</h1>
           <button type="button" className="order-details-print-btn" onClick={handlePrintInvoice}>
             <PrinterIcon />
             <span>Print Invoice</span>
@@ -129,27 +83,27 @@ function OrderDetails() {
             <div className="order-details-info-list">
               <div className="order-details-info-row">
                 <span className="order-details-info-label">Order No</span>
-                <span className="order-details-info-value">{order.orderNo}</span>
+                <span className="order-details-info-value">{activeOrder.orderNo}</span>
               </div>
               <div className="order-details-info-row">
                 <span className="order-details-info-label">Order Date</span>
-                <span className="order-details-info-value">{order.orderDate}</span>
+                <span className="order-details-info-value">{activeOrder.orderDate}</span>
               </div>
               <div className="order-details-info-row">
                 <span className="order-details-info-label">Payment Mode</span>
-                <span className="order-details-info-value">{order.paymentMode}</span>
+                <span className="order-details-info-value">{activeOrder.paymentMode}</span>
               </div>
               <div className="order-details-info-row">
                 <span className="order-details-info-label">Order Items</span>
-                <span className="order-details-info-value">{order.orderItems}</span>
+                <span className="order-details-info-value">{activeOrder.orderItems}</span>
               </div>
               <div className="order-details-info-row">
                 <span className="order-details-info-label">Order Status</span>
-                <span className="order-details-info-value">{order.orderStatus}</span>
+                <span className="order-details-info-value">{activeOrder.orderStatus}</span>
               </div>
               <div className="order-details-info-row">
                 <span className="order-details-info-label">Order Payment Status</span>
-                <span className="order-details-info-value">{order.paymentStatus}</span>
+                <span className="order-details-info-value">{activeOrder.paymentStatus}</span>
               </div>
             </div>
           </article>
@@ -159,19 +113,19 @@ function OrderDetails() {
             <div className="order-details-info-list">
               <div className="order-details-info-row">
                 <span className="order-details-info-label">Total Price</span>
-                <span className="order-details-info-value">{order.totalPrice.toFixed(2)}</span>
+                <span className="order-details-info-value">{activeOrder.totalPrice.toFixed(2)}</span>
               </div>
               <div className="order-details-info-row">
                 <span className="order-details-info-label">+ Shipping Charge</span>
-                <span className="order-details-info-value">+{order.shippingCharge.toFixed(2)}</span>
+                <span className="order-details-info-value">+{activeOrder.shippingCharge.toFixed(2)}</span>
               </div>
               <div className="order-details-info-row">
                 <span className="order-details-info-label">- Discount Coupon</span>
-                <span className="order-details-info-value">{order.discountCoupon.toFixed(2)}</span>
+                <span className="order-details-info-value">{activeOrder.discountCoupon.toFixed(2)}</span>
               </div>
               <div className="order-details-info-row order-details-info-row--total">
                 <span className="order-details-info-label">Total</span>
-                <span className="order-details-info-value">{order.finalTotal.toFixed(2)}</span>
+                <span className="order-details-info-value">{activeOrder.finalTotal.toFixed(2)}</span>
               </div>
             </div>
           </article>
@@ -179,7 +133,7 @@ function OrderDetails() {
           <article className="order-details-info-card">
             <div className="order-details-info-card__header">Shipping Information</div>
             <div className="order-details-info-list">
-              {order.shippingInformation.map((field) => (
+              {activeOrder.shippingInformation.map((field) => (
                 <div className="order-details-info-row" key={field.label}>
                   <span className="order-details-info-label">{getFieldLabel(field.label)}</span>
                   <span className="order-details-info-value">{field.value}</span>
@@ -201,11 +155,11 @@ function OrderDetails() {
                 </tr>
               </thead>
               <tbody>
-                {order.items.map((item) => (
+                {activeOrder.items.map((item) => (
                   <tr key={item.name}>
                     <td data-label="Item / Product Name">
                       <div className="order-details-item-product">
-                        <img className="order-details-item-thumb" src={item.image} alt={item.name} />
+                        <img className="order-details-item-thumb" src={resolveProductImage(item.imageKey || item.name)} alt={item.name} />
                         <span className="order-details-item-name">{item.name}</span>
                       </div>
                     </td>

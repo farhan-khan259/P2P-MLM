@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MyCart.css';
-import omega from '../../../../Assets/Pictures/omega3.jpeg';
-import watch from '../../../../Assets/Pictures/watch.jpeg';
-import calcium from '../../../../Assets/Pictures/calcium.jpeg';
-import slimfit from '../../../../Assets/Pictures/slimfit.jpeg';
+import { clearCart, checkoutCart, getCart, removeCartItem, updateCartItem } from '../../../../api/productsService';
+import { resolveProductImage } from '../productImages';
 
 const DeleteIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -15,33 +13,78 @@ const DeleteIcon = () => (
   </svg>
 )
 
-const CartItem = ({img, title, price, qty}) => (
+const CartItem = ({ item, onRemove, onQuantityChange }) => (
   <div className="mc-item">
     <div className="mc-item-left">
-      <img src={img} alt="product" />
+      <img src={resolveProductImage(item)} alt="product" />
     </div>
     <div className="mc-item-mid">
-      <div className="mc-title">{title}</div>
-      <div className="mc-bv">B.V. Point : 100</div>
+      <div className="mc-title">{item.productName}</div>
+      <div className="mc-bv">B.V. Point : {item.bvPoint || 0}</div>
       <div className="mc-qty">
-        <button className="qty-btn">-</button>
-        <span className="qty-val">{qty}</span>
-        <button className="qty-btn">+</button>
+        <button className="qty-btn" onClick={() => onQuantityChange(item, Math.max(1, item.quantity - 1))}>-</button>
+        <span className="qty-val">{item.quantity}</span>
+        <button className="qty-btn" onClick={() => onQuantityChange(item, item.quantity + 1)}>+</button>
       </div>
     </div>
     <div className="mc-item-right">
-      <div className="mc-price">₹{price}x{qty}= </div>
-      <div className="mc-total"> ₹{price * qty}</div>
-      <button className="mc-delete" aria-label="Delete item"><DeleteIcon/></button>
+      <div className="mc-price">₹{item.price}x{item.quantity}= </div>
+      <div className="mc-total"> ₹{item.totalPrice}</div>
+      <button className="mc-delete" aria-label="Delete item" onClick={() => onRemove(item)}><DeleteIcon/></button>
     </div>
   </div>
 )
 
 export default function MyCart(){
   const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [summary, setSummary] = useState({ subtotal: 0, bvPoint: 0 });
+
+  const loadCart = async () => {
+    setLoading(true);
+    try {
+      const response = await getCart();
+      setCartItems(response.cart?.items || []);
+    } catch (error) {
+      setCartItems([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadCart();
+  }, []);
+
+  useEffect(() => {
+    const subtotal = cartItems.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0);
+    const bvPoint = cartItems.reduce((sum, item) => sum + Number(item.bvPoint || 0) * Number(item.quantity || 0), 0);
+    setSummary({ subtotal, bvPoint });
+  }, [cartItems]);
   
   const handleOrderNow = () => {
-    navigate('/user/payment/complete-payment');
+    navigate('/user/payment/complete-payment', {
+      state: {
+        orderAmount: summary.subtotal,
+        bvPoint: summary.bvPoint,
+      },
+    });
+  };
+
+  const handleRemove = async (item) => {
+    await removeCartItem(item.productId);
+    loadCart();
+  };
+
+  const handleQuantityChange = async (item, quantity) => {
+    await updateCartItem(item.productId, quantity);
+    loadCart();
+  };
+
+  const handleClearCart = async () => {
+    await clearCart();
+    loadCart();
   };
 
   return (
@@ -49,29 +92,39 @@ export default function MyCart(){
      
       <div className="mc-top-row">
         <h3 className="mc-header">My Cart</h3>
-        <button className="mc-clear">X Clear Cart</button>
+        <button className="mc-clear" onClick={handleClearCart}>X Clear Cart</button>
       </div>
 
       <div className="mc-box">
-        <CartItem img={omega} title="Elcon Omega - 3" price={550} qty={1} />
-        <CartItem img={watch} title="Elcon Foce Watch" price={1200} qty={1} />
-        <CartItem img={calcium} title="Elcon Calcium" price={600} qty={2} />
-        <CartItem img={slimfit} title="Elcon Slim Fit" price={575} qty={2} />
+        {loading ? (
+          <div style={{ padding: '20px', textAlign: 'center' }}>Loading cart...</div>
+        ) : cartItems.length ? (
+          cartItems.map((item) => (
+            <CartItem
+              key={item.productId}
+              item={item}
+              onRemove={handleRemove}
+              onQuantityChange={handleQuantityChange}
+            />
+          ))
+        ) : (
+          <div style={{ padding: '20px', textAlign: 'center' }}>Your cart is empty.</div>
+        )}
       </div>
 
       <div className="mc-summary">
         <h4>Order Summery</h4>
-        <div className="mc-row"><span>Total B.V Point =</span><strong>400</strong></div>
+        <div className="mc-row"><span>Total B.V Point =</span><strong>{summary.bvPoint}</strong></div>
 
         <div className="mc-coupon-row">
           <input className="mc-coupon-input" placeholder="Apply Coupon Code" />
           <button className="mc-coupon-apply">Apply</button>
         </div>
 
-        <div className="mc-row"><span>Sub Total</span><strong>₹ 4100.00</strong></div>
+        <div className="mc-row"><span>Sub Total</span><strong>₹ {summary.subtotal.toFixed(2)}</strong></div>
         <div className="mc-row"><span>Shipping Charge</span><strong>₹ 0.00</strong></div>
         <div className="mc-row coupon"><span>Coupon Discount</span><strong>- ₹ 00.00</strong></div>
-        <div className="mc-total-row"><span>Total Amount</span><strong>₹ 4100.00</strong></div>
+        <div className="mc-total-row"><span>Total Amount</span><strong>₹ {summary.subtotal.toFixed(2)}</strong></div>
 
         <div className="mc-address">
           <div className="mc-address-head">Product Delivery Address

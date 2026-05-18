@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './CompletePayment.css';
+import { checkoutCart, getCart } from '../../../../api/productsService';
 
 const CompletePayment = () => {
-  const [selectedPaymentMode, setSelectedPaymentMode] = useState('e-wallet');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [selectedPaymentMode, setSelectedPaymentMode] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
   const [transactionPassword, setTransactionPassword] = useState('');
   const [reenterPassword, setReenterPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [orderAmount, setOrderAmount] = useState(Number(location.state?.orderAmount || 0));
+  const [isLoadingCart, setIsLoadingCart] = useState(true);
 
   const bankDetails = {
     bankName: 'State Bank Of India',
@@ -27,11 +35,49 @@ const CompletePayment = () => {
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setUploadedFile(file.name);
+      setUploadedFile(file);
     }
   };
 
-  const handlePayNow = () => {
+  useEffect(() => {
+    const loadCart = async () => {
+      try {
+        const response = await getCart();
+        const items = response.cart?.items || [];
+        setCartItems(items);
+
+        const subtotal = items.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0);
+        if (items.length) {
+          setOrderAmount(subtotal);
+        }
+      } catch (error) {
+        setCartItems([]);
+      } finally {
+        setIsLoadingCart(false);
+      }
+    };
+
+    loadCart();
+  }, []);
+
+  const readFileAsDataUrl = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error('Unable to read payment screenshot'));
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handlePayNow = async () => {
+    if (!selectedPaymentMode) {
+      alert('Please select a payment mode');
+      return;
+    }
+    if (!uploadedFile) {
+      alert('Please upload payment screenshot');
+      return;
+    }
     if (!transactionPassword || !reenterPassword) {
       alert('Please enter both passwords');
       return;
@@ -40,7 +86,24 @@ const CompletePayment = () => {
       alert('Passwords do not match');
       return;
     }
-    alert('Payment processing...');
+
+    setIsSubmitting(true);
+    try {
+      const paymentScreenshot = await readFileAsDataUrl(uploadedFile);
+
+      const response = await checkoutCart({
+        paymentMode: paymentModes[selectedPaymentMode].label,
+        transactionPassword,
+        confirmTransactionPassword: reenterPassword,
+        paymentScreenshot,
+      });
+
+      navigate(`/user/product/my-orders/details/${response.order.orderNo}`);
+    } catch (error) {
+      alert(error?.response?.data?.message || 'Payment could not be completed');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -127,13 +190,27 @@ const CompletePayment = () => {
               <span className="rupee-icon">₹</span>
               Order Amount (₹)
             </h3>
-            <div className="amount-display">4100.00</div>
+            <div className="amount-display">{isLoadingCart ? 'Loading...' : orderAmount.toFixed(2)}</div>
+
+            {cartItems.length > 0 && (
+              <div className="proof-section" style={{ marginTop: '14px' }}>
+                <label className="proof-label">Selected Cart Items</label>
+                <div style={{ display: 'grid', gap: '8px', marginTop: '8px' }}>
+                  {cartItems.map((item) => (
+                    <div key={item.productId} style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', fontSize: '13px' }}>
+                      <span>{item.productName} x {item.quantity}</span>
+                      <strong>₹ {Number(item.totalPrice || 0).toFixed(2)}</strong>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="proof-section">
               <label className="proof-label">Upload Payment Proof Screen Shot</label>
               <div className="file-upload-area">
                 {uploadedFile ? (
-                  <span className="file-name">{uploadedFile}</span>
+                  <span className="file-name">{uploadedFile.name}</span>
                 ) : (
                   <input
                     type="file"
@@ -167,8 +244,8 @@ const CompletePayment = () => {
               />
             </div>
 
-            <button className="pay-now-btn" onClick={handlePayNow}>
-              Pay Now
+            <button className="pay-now-btn" onClick={handlePayNow} disabled={isSubmitting}>
+              {isSubmitting ? 'Processing...' : 'Pay Now'}
             </button>
           </div>
         </div>

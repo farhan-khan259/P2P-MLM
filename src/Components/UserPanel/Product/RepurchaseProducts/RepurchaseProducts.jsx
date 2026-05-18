@@ -1,115 +1,38 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../Common/UserLayout.css';
 import './RepurchaseProducts.css';
-import calciumdietry from '../../../../Assets/Pictures/calcium.jpeg';
-import diabecare from '../../../../Assets/Pictures/diabecare.jpeg';
-import omega3 from '../../../../Assets/Pictures/omega3.jpeg';
-import saliconpads from '../../../../Assets/Pictures/pads.jpeg';
-import elconanionpads from '../../../../Assets/Pictures/fourpads.jpeg';
-import watch from '../../../../Assets/Pictures/watch.jpeg';
-import watchultra from '../../../../Assets/Pictures/smartwatch.jpeg';
-import handfree from '../../../../Assets/Pictures/goldheadphones.jpeg';
-import headphones from '../../../../Assets/Pictures/headphones.jpeg';
-import laptop from '../../../../Assets/Pictures/laptop.jpeg';
-
-const repurchaseProducts = [
-  {
-    id: 1,
-    name: 'Elcon Calcium - 60 Tab',
-    category: 'Healthcare',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: calciumdietry
-  },
-  {
-    id: 2,
-    name: 'Elcon Omega 3 - 60 Tab',
-    category: 'Healthcare',
-    stock: 'Out of Stock',
-    mrp: 350,
-    price: 300,
-    image: omega3
-  },
-  {
-    id: 3,
-    name: 'Elcon Diabe Care - 60 Tab',
-    category: 'Healthcare',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: diabecare
-  },
-  {
-    id: 4,
-    name: 'Elcon Anion Sanitary Pads - 32',
-    category: 'Healthcare',
-    stock: 'Out of Stock',
-    mrp: 350,
-    price: 300,
-    image: elconanionpads
-  },
-  {
-    id: 5,
-    name: 'Elcon Anion Sanitary Pads - 8',
-    category: 'Healthcare',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: saliconpads
-  },
-  {
-    id: 6,
-    name: 'Gold Head Phone',
-    category: 'Electronics',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: handfree
-  },
-  {
-    id: 7,
-    name: 'Bose Head Phone',
-    category: 'Electronics',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: headphones
-  },
-  {
-    id: 8,
-    name: 'Foce Watch',
-    category: 'Electronics',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: watch
-  },
-  {
-    id: 9,
-    name: 'HP Laptop - 2026',
-    category: 'Electronics',
-    stock: 'Out of Stock',
-    mrp: 350,
-    price: 300,
-    image: laptop
-  },
-  {
-    id: 10,
-    name: 'Smart Watch',
-    category: 'Electronics',
-    stock: 'In Stock',
-    mrp: 375,
-    price: 325,
-    image: watchultra
-  }
-];
+import { addCartItem, getPublicProducts } from '../../../../api/productsService';
+import { resolveProductImage } from '../productImages';
 
 function RepurchaseProducts() {
   const navigate = useNavigate();
+  const [repurchaseProducts, setRepurchaseProducts] = useState([]);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await getPublicProducts('repurchase');
+        setRepurchaseProducts(response.products || []);
+      } catch (error) {
+        setRepurchaseProducts([]);
+      }
+    };
+
+    loadProducts();
+  }, []);
 
   const handleProductClick = (product) => {
     navigate('/user/product/product_details', { state: { product } });
+  };
+
+  const handleAddToCart = async (product) => {
+    try {
+      await addCartItem(product._id || product.id || product.productCode, 1);
+      navigate('/user/product/my_cart');
+    } catch (error) {
+      navigate('/user/product/my_cart');
+    }
   };
 
   return (
@@ -121,7 +44,7 @@ function RepurchaseProducts() {
           {repurchaseProducts.map((product) => (
             <article
               className="user-product-card"
-              key={product.id}
+              key={product.id || product.productCode}
               role="button"
               tabIndex={0}
               onClick={() => handleProductClick(product)}
@@ -133,12 +56,17 @@ function RepurchaseProducts() {
               }}
             >
               <div className="user-product-image-wrap">
-                <img src={product.image} alt={product.name} className="user-product-image" loading="lazy" />
+                <img
+                  src={resolveProductImage(product)}
+                  alt={product.productName || product.name}
+                  className="user-product-image"
+                  loading="lazy"
+                />
               </div>
 
               <div className="user-product-footer">
                 <div className="user-product-meta">
-                  <h3>{product.name}</h3>
+                  <h3>{product.productName || product.name}</h3>
                   <div className="user-product-meta-row">
                     <span className={`user-product-stock ${product.stock === 'In Stock' ? 'in-stock' : 'out-stock'}`}>
                       {product.stock}
@@ -154,7 +82,10 @@ function RepurchaseProducts() {
                   <span className="user-product-price">₹ {product.price}</span>
                 </div>
 
-                <button type="button" className="user-product-btn">
+                <button type="button" className="user-product-btn" onClick={(event) => {
+                  event.stopPropagation();
+                  handleAddToCart(product);
+                }}>
                   Add to cart
                 </button>
               </div>

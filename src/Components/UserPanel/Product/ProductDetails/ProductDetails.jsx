@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './ProductDetails.css';
 import fallbackOne from '../../../../Assets/Pictures/ai1.jpeg';
@@ -6,6 +6,8 @@ import fallbackTwo from '../../../../Assets/Pictures/ai2.jpeg';
 import fallbackThree from '../../../../Assets/Pictures/ai3.jpeg';
 import fallbackFour from '../../../../Assets/Pictures/ai6.jpeg';
 import fallbackFive from '../../../../Assets/Pictures/ai7.jpeg';
+import { addCartItem, getProductById } from '../../../../api/productsService';
+import { getProductImages, resolveProductImage } from '../productImages';
 
 const tabConfig = {
   description: {
@@ -43,51 +45,90 @@ const tabConfig = {
 };
 
 const buildDetails = (product) => {
-  const name = product?.name || 'Calcium';
+  const name = product?.productName || product?.name || 'Product';
   const category = product?.category || 'Health Care Products';
   const price = product?.price ?? 350;
   const mrp = product?.mrp ?? 375;
-  const isElectronics = /electronic|watch|head|laptop|phone|pod/i.test(`${name} ${category}`);
+  const productCode = product?.productCode || `PDT-${String(product?.id || 101).padStart(3, '0')}`;
+  const hsnCode = product?.hsnCode || (/electronic|watch|head|laptop|phone|pod/i.test(`${name} ${category}`) ? '8517' : '4440');
+  const levelPoint = product?.levelPoint ?? product?.levelPlan ?? (/electronic|watch|head|laptop|phone|pod/i.test(`${name} ${category}`) ? 100 : 200);
+  const bvPoint = product?.bvPoint ?? product?.bv ?? 0;
+  const size = product?.size || (/electronic|watch|head|laptop|phone|pod/i.test(`${name} ${category}`) ? 'Standard' : 'XL');
+  const color = product?.color || (/electronic|watch|head|laptop|phone|pod/i.test(`${name} ${category}`) ? 'Black' : 'Green');
 
   return [
     { label: 'PRODUCT NAME', value: name },
-    { label: 'PRODUCT CODE', value: `PDT-${String(product?.id || 101).padStart(3, '0')}` },
+    { label: 'PRODUCT CODE', value: productCode },
     { label: 'CATEGORY', value: category },
-    { label: 'HSN CODE', value: isElectronics ? '8517' : '4440' },
+    { label: 'HSN CODE', value: hsnCode },
     { label: 'M.R.P PRICE', value: `₹ ${mrp} (Inclusive of all taxes)` },
     { label: 'DP PRICE', value: `₹ ${price} (Inclusive of all taxes)` },
     { label: 'DELIVERY CHARGE', value: 'free' },
-    { label: 'LEVEL POINT', value: isElectronics ? '100' : '200' },
-    { label: 'B.V POINT', value: isElectronics ? '0' : '0' },
-    { label: 'SIZE', value: isElectronics ? 'Standard' : 'XL' },
-    { label: 'COLOR', value: isElectronics ? 'Black' : 'Green' },
-    { label: 'WEIGHT', value: '500gm' },
-    { label: 'DIMENSION', value: '300mm x 200mm x 100mm' }
+    { label: 'LEVEL POINT', value: String(levelPoint) },
+    { label: 'B.V POINT', value: String(bvPoint) },
+    { label: 'SIZE', value: size },
+    { label: 'COLOR', value: color },
+    { label: 'WEIGHT', value: product?.weight || '500gm' },
+    { label: 'DIMENSION', value: product?.dimension || '300mm x 200mm x 100mm' }
   ];
 };
 
 const ProductDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const product = location.state?.product;
+  const [product, setProduct] = useState(location.state?.product || null);
   const [activeTab, setActiveTab] = useState('description');
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
+  useEffect(() => {
+    const loadProduct = async () => {
+      const productIdentifier =
+        location.state?.product?.id ||
+        location.state?.product?._id ||
+        location.state?.product?.productCode ||
+        new URLSearchParams(location.search).get('productId');
+
+      if (product?.description || product?.specifications || product?.features) {
+        return;
+      }
+
+      if (!productIdentifier) {
+        return;
+      }
+
+      try {
+        const response = await getProductById(productIdentifier);
+        setProduct(response.product);
+      } catch (error) {
+        setProduct(location.state?.product || null);
+      }
+    };
+
+    loadProduct();
+  }, [location.state, location.search, product]);
+
   const galleryImages = useMemo(() => {
-    const images = [
-      product?.image || fallbackOne,
+    const productImages = getProductImages(product);
+
+    if (productImages.length) {
+      return productImages.slice(0, 5);
+    }
+
+    return [
+      resolveProductImage(product) || fallbackOne,
       fallbackTwo,
       fallbackThree,
       fallbackFour,
       fallbackFive
-    ];
-
-    return images.filter(Boolean).slice(0, 5);
+    ].filter(Boolean).slice(0, 5);
   }, [product]);
 
   const details = useMemo(() => buildDetails(product), [product]);
 
   const activeTabData = tabConfig[activeTab];
+  const descriptionText = product?.description || activeTabData.content[0];
+  const specificationText = product?.specifications || activeTabData.content[0];
+  const featuresText = product?.features || activeTabData.content[0];
 
   const handlePrevious = () => {
     setActiveImageIndex((current) => (current === 0 ? galleryImages.length - 1 : current - 1));
@@ -98,7 +139,18 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = () => {
-    navigate('/user/product/my_cart');
+    if (!product?.id && !product?._id && !product?.productCode) {
+      navigate('/user/product/my_cart');
+      return;
+    }
+
+    addCartItem(product._id || product.id || product.productCode, 1)
+      .then(() => {
+        navigate('/user/product/my_cart');
+      })
+      .catch(() => {
+        navigate('/user/product/my_cart');
+      });
   };
 
   return (
@@ -117,7 +169,7 @@ const ProductDetails = () => {
               <div className="carousel-image-wrap">
                 <img
                   src={galleryImages[activeImageIndex]}
-                  alt={product?.name || 'Product preview'}
+                  alt={product?.productName || product?.name || 'Product preview'}
                   className="carousel-image"
                 />
               </div>
@@ -173,12 +225,14 @@ const ProductDetails = () => {
           <div className="product-tab-panel" role="tabpanel">
             {activeTab !== 'pdf' ? (
               <>
-                <p className="product-tab-lead">{activeTabData.content[0]}</p>
+                <p className="product-tab-lead">{activeTab === 'description' ? descriptionText : activeTab === 'specification' ? specificationText : featuresText}</p>
                 {activeTab === 'description' ? (
-                  <p className="product-tab-copy">{activeTabData.content[1]}</p>
+                  <p className="product-tab-copy">{product?.features || activeTabData.content[1]}</p>
                 ) : (
                   <ul className="product-tab-list">
-                    {activeTabData.content.map((item) => (
+                    {(String(activeTab === 'specification' ? specificationText : featuresText)
+                      .split('\n')
+                      .filter(Boolean)).map((item) => (
                       <li key={item}>{item}</li>
                     ))}
                   </ul>

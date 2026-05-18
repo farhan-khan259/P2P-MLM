@@ -46,3 +46,8 @@ export const changePassword = async (passwordData) => {
 	return response.data;
 };
 
+export const updateTransactionPassword = async (passwordData) => {
+	const response = await apiClient.put('/profile/transaction-password', passwordData);
+	return response.data;
+};
+

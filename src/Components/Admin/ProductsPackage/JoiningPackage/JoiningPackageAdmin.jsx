@@ -1,102 +1,25 @@
 import '../../Common/AdminLayout.css';
 import './JoiningPackageAdmin.css';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const joiningPackageRows = [
-  {
-    id: 1,
-    productCode: 'JP101',
-    productName: 'SANITORY PADS - 6',
-    category: 'HEALTHCARE',
-    hsnCode: '1001',
-    mrp: 950,
-    dpPrice: 300,
-    discount: 0,
-    gst: 0,
-    shipping: 0,
-    levelPlan: 200,
-    quantity: 500,
-    status: 'SHOWING'
-  },
-  {
-    id: 2,
-    productCode: 'JP102',
-    productName: 'SANITORY PADS - 32',
-    category: 'MENSWARE',
-    hsnCode: '0102',
-    mrp: 1000,
-    dpPrice: 750,
-    discount: 0,
-    gst: 0,
-    shipping: 0,
-    levelPlan: 200,
-    quantity: 200,
-    status: 'HIDEN'
-  },
-  {
-    id: 3,
-    productCode: 'JP103',
-    productName: 'PROTEIN POWDER',
-    category: 'HEALTHCARE',
-    hsnCode: '1003',
-    mrp: 1050,
-    dpPrice: 1000,
-    discount: 0,
-    gst: 0,
-    shipping: 0,
-    levelPlan: 200,
-    quantity: 250,
-    status: 'SHOWING'
-  },
-  {
-    id: 4,
-    productCode: 'JP104',
-    productName: 'BONE FIT',
-    category: 'ELECTRONICS',
-    hsnCode: '1004',
-    mrp: 1050,
-    dpPrice: 1000,
-    discount: 0,
-    gst: 0,
-    shipping: 0,
-    levelPlan: 200,
-    quantity: 1000,
-    status: 'SHOWING'
-  },
-  {
-    id: 5,
-    productCode: 'JP105',
-    productName: 'DIABE CARE',
-    category: 'ELECTRONICS',
-    hsnCode: '2075',
-    mrp: 3500,
-    dpPrice: 3500,
-    discount: 0,
-    gst: 0,
-    shipping: 0,
-    levelPlan: 200,
-    quantity: 500,
-    status: 'SHOWING'
-  },
-  {
-    id: 6,
-    productCode: 'JP106',
-    productName: 'CALCIUM',
-    category: 'ELECTRONICS',
-    hsnCode: '4445',
-    mrp: '',
-    dpPrice: '',
-    discount: '',
-    gst: '',
-    shipping: '',
-    levelPlan: '',
-    quantity: '',
-    status: ''
-  }
-];
+import { getAdminProducts } from '../../../../api/productsService';
 
 function JoiningPackageAdmin() {
   const navigate = useNavigate();
+  const [joiningPackageRows, setJoiningPackageRows] = useState([]);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await getAdminProducts('joining');
+        setJoiningPackageRows(response.products || []);
+      } catch (error) {
+        setJoiningPackageRows([]);
+      }
+    };
+
+    loadProducts();
+  }, []);
 
   return (
     <div>
@@ -161,9 +84,9 @@ function JoiningPackageAdmin() {
               </tr>
             </thead>
             <tbody>
-              {joiningPackageRows.map((row) => (
-                <tr key={row.id}>
-                  <td>{row.id}</td>
+              {joiningPackageRows.map((row, index) => (
+                <tr key={row.id || row.productCode}>
+                  <td>{index + 1}</td>
                   <td>{row.hsnCode ? `PKG${row.hsnCode}` : ''}</td>
                   <td>{row.productName}</td>
                   <td>

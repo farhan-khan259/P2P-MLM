@@ -1,19 +1,25 @@
 import '../../Common/AdminLayout.css';
 import './RepurchaseProductsAdmin.css';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const repurchaseRows = [
-  { id: 1, productCode: 'RP101', productName: 'Foce Watch', category: 'HEALTHCARE', hsnCode: '1001', mrp: 950, dpPrice: 300, discount: 0, gst: 0, shipping: 0, bv: 100, quantity: 500, status: 'SHOWING' },
-  { id: 2, productCode: 'RP102', productName: 'Head Phone', category: 'MENSWARE', hsnCode: '0102', mrp: 1000, dpPrice: 750, discount: 0, gst: 0, shipping: 0, bv: 100, quantity: 200, status: 'HIDDEN' },
-  { id: 3, productCode: 'RP103', productName: 'Smart Watch', category: 'HEALTHCARE', hsnCode: '1003', mrp: 1050, dpPrice: 1000, discount: 0, gst: 0, shipping: 0, bv: 100, quantity: 250, status: 'SHOWING' },
-  { id: 4, productCode: 'RP104', productName: 'Bose Earphones', category: 'ELECTRONICS', hsnCode: '1004', mrp: 1050, dpPrice: 1000, discount: 0, gst: 0, shipping: 0, bv: 100, quantity: 1000, status: 'SHOWING' },
-  { id: 5, productCode: 'RP105', productName: 'Acer Laptop', category: 'ELECTRONICS', hsnCode: '2075', mrp: 3500, dpPrice: 3500, discount: 0, gst: 0, shipping: 0, bv: 100, quantity: 500, status: 'SHOWING' },
-  { id: 6, productCode: 'RP106', productName: 'HP Laptop', category: 'ELECTRONICS', hsnCode: '4445', mrp: 1000, dpPrice: 1000, discount: 0, gst: 0, shipping: 0, bv: 100, quantity: 1000, status: 'SHOWING' },
-  { id: 7, productCode: 'RP107', productName: 'HP Laptop', category: 'ELECTRONICS', hsnCode: '4445', mrp: 1000, dpPrice: 1000, discount: 0, gst: 0, shipping: 0, bv: 100, quantity: 500, status: 'SHOWING' }
-];
+import { getAdminProducts } from '../../../../api/productsService';
 
 function RepurchaseProductsAdmin() {
   const navigate = useNavigate();
+  const [repurchaseRows, setRepurchaseRows] = useState([]);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await getAdminProducts('repurchase');
+        setRepurchaseRows(response.products || []);
+      } catch (error) {
+        setRepurchaseRows([]);
+      }
+    };
+
+    loadProducts();
+  }, []);
   return (
     <div>
       <section className="panel admin-products-panel">
@@ -77,9 +83,9 @@ function RepurchaseProductsAdmin() {
               </tr>
             </thead>
             <tbody>
-              {repurchaseRows.map((row) => (
-                <tr key={row.id}>
-                  <td>{row.id}</td>
+              {repurchaseRows.map((row, index) => (
+                <tr key={row.id || row.productCode}>
+                  <td>{index + 1}</td>
                   <td>{row.productCode}</td>
                   <td>{row.productName}</td>
                   <td>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Invoice.css';
 import elconLogo from '../../../../Assets/Pictures/dashbaord1.jpeg';
+import { resolveProductImage } from '../productImages';
 
 function Invoice({ invoiceData, onClose }) {
   const [isReadyToPrint, setIsReadyToPrint] = useState(false);
@@ -82,7 +83,16 @@ function Invoice({ invoiceData, onClose }) {
               <tbody>
                 {invoiceData?.items?.map((item, index) => (
                   <tr key={index}>
-                    <td className="invoice-product-name">{item.name}</td>
+                    <td className="invoice-product-name">
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                        <img
+                          src={resolveProductImage(item.imageKey || item.name)}
+                          alt={item.name}
+                          style={{ width: '34px', height: '34px', objectFit: 'cover', borderRadius: '6px' }}
+                        />
+                        {item.name}
+                      </span>
+                    </td>
                     <td className="invoice-text-center">{item.price.toFixed(2)}</td>
                     <td className="invoice-text-center">{item.quantity}</td>
                     <td className="invoice-text-center">{item.totalPrice.toFixed(2)}</td>

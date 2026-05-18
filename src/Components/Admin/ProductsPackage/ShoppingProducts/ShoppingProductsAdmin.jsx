@@ -1,102 +1,25 @@
 import '../../Common/AdminLayout.css';
 import './ShoppingProductsAdmin.css';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const shoppingRows = [
-  {
-    id: 1,
-    productCode: 'SP101',
-    productName: 'Foce Watch',
-    category: 'HEALTHCARE',
-    hsnCode: '1001',
-    mrp: 950,
-    dpPrice: 300,
-    discount: 0,
-    gst: 0,
-    shipping: 0,
-    levelPlan: 200,
-    quantity: 500,
-    status: 'SHOWING'
-  },
-  {
-    id: 2,
-    productCode: 'SP102',
-    productName: 'Head Phone',
-    category: 'MENSWARE',
-    hsnCode: '0102',
-    mrp: 1000,
-    dpPrice: 750,
-    discount: 0,
-    gst: 0,
-    shipping: 0,
-    levelPlan: 200,
-    quantity: 200,
-    status: 'HIDEN'
-  },
-  {
-    id: 3,
-    productCode: 'SP103',
-    productName: 'Smart Watch',
-    category: 'HEALTHCARE',
-    hsnCode: '1003',
-    mrp: 1050,
-    dpPrice: 1000,
-    discount: 0,
-    gst: 0,
-    shipping: 0,
-    levelPlan: 200,
-    quantity: 250,
-    status: 'SHOWING'
-  },
-  {
-    id: 4,
-    productCode: 'SP104',
-    productName: 'Bose Earphones',
-    category: 'ELECTRONICS',
-    hsnCode: '1004',
-    mrp: 1050,
-    dpPrice: 1000,
-    discount: 0,
-    gst: 0,
-    shipping: 0,
-    levelPlan: 200,
-    quantity: 1000,
-    status: 'SHOWING'
-  },
-  {
-    id: 5,
-    productCode: 'SP105',
-    productName: 'Acer Laptop',
-    category: 'ELECTRONICS',
-    hsnCode: '2075',
-    mrp: 3500,
-    dpPrice: 3500,
-    discount: 0,
-    gst: 0,
-    shipping: 0,
-    levelPlan: 200,
-    quantity: 500,
-    status: 'SHOWING'
-  },
-  {
-    id: 6,
-    productCode: 'SP106',
-    productName: 'HP Laptop',
-    category: 'ELECTRONICS',
-    hsnCode: '4445',
-    mrp: '',
-    dpPrice: '',
-    discount: '',
-    gst: '',
-    shipping: '',
-    levelPlan: '',
-    quantity: '',
-    status: ''
-  }
-];
+import { getAdminProducts } from '../../../../api/productsService';
 
 function ShoppingProductsAdmin() {
   const navigate = useNavigate();
+  const [shoppingRows, setShoppingRows] = useState([]);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await getAdminProducts('shopping');
+        setShoppingRows(response.products || []);
+      } catch (error) {
+        setShoppingRows([]);
+      }
+    };
+
+    loadProducts();
+  }, []);
 
   return (
     <div>
@@ -129,10 +52,14 @@ function ShoppingProductsAdmin() {
               Add New
             </button>
           </div>
-            <div className="btn-row tds-export-row" aria-label="Export options">
-          <button type="button" className="btn-outline tds-export-btn" aria-label="Export Excel">XLS</button>
-          <button type="button" className="btn-outline tds-export-btn" aria-label="Export PDF">PDF</button>
-        </div>
+          <div className="admin-products-export-icons" aria-label="export-controls">
+            <button type="button" title="Export Excel">
+              XLS
+            </button>
+            <button type="button" title="Export PDF">
+              PDF
+            </button>
+          </div>
         </div>
 
         <div className="table-wrap admin-products-table-wrap">
@@ -157,9 +84,9 @@ function ShoppingProductsAdmin() {
               </tr>
             </thead>
             <tbody>
-              {shoppingRows.map((row) => (
-                <tr key={row.id}>
-                  <td>{row.id}</td>
+              {shoppingRows.map((row, index) => (
+                <tr key={row.id || row.productCode}>
+                  <td>{index + 1}</td>
                   <td>{row.productCode && row.productCode.toUpperCase()}</td>
                   <td>{row.productName}</td>
                   <td>

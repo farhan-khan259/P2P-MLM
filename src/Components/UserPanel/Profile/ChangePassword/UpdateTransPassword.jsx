@@ -1,6 +1,7 @@
 import '../../Common/UserLayout.css';
 import './UpdateTransPassword.css';
 import { useState } from 'react';
+import { updateTransactionPassword } from '../../../../api/authService';
 
 function UpdateTransPassword() {
   const [form, setForm] = useState({
@@ -16,7 +17,18 @@ function UpdateTransPassword() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add submit logic here
+    updateTransactionPassword({
+      currentPassword: form.currentPassword,
+      newPassword: form.newPassword,
+      confirmPassword: form.confirmPassword,
+    })
+      .then((response) => {
+        window.alert(response.message || 'Transaction password updated successfully');
+        setForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+      })
+      .catch((error) => {
+        window.alert(error?.response?.data?.message || 'Unable to update transaction password');
+      });
   };
 
   return (

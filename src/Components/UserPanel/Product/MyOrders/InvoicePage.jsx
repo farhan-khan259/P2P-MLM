@@ -1,25 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import './Invoice.css';
 import elconLogo from '../../../../Assets/Pictures/dashbaord1.jpeg';
+import { getOrderByNo } from '../../../../api/productsService';
+import { resolveProductImage } from '../productImages';
 
 function InvoicePage() {
   const [invoiceData, setInvoiceData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get invoice data from localStorage
-    const storedData = localStorage.getItem('invoiceData');
-    if (storedData) {
-      try {
-        const data = JSON.parse(storedData);
-        setInvoiceData(data);
-        // Clear the data after retrieval
-        localStorage.removeItem('invoiceData');
-      } catch (error) {
-        console.error('Error parsing invoice data:', error);
+    const loadInvoice = async () => {
+      const params = new URLSearchParams(window.location.search);
+      const orderNo = params.get('orderNo');
+
+      const storedData = localStorage.getItem('invoiceData');
+      if (storedData) {
+        try {
+          const data = JSON.parse(storedData);
+          setInvoiceData(data);
+          localStorage.removeItem('invoiceData');
+          setLoading(false);
+          return;
+        } catch (error) {
+          localStorage.removeItem('invoiceData');
+        }
       }
-    }
-    setLoading(false);
+
+      if (orderNo) {
+        try {
+          const response = await getOrderByNo(orderNo);
+          setInvoiceData(response.order);
+        } catch (error) {
+          setInvoiceData(null);
+        }
+      }
+
+      setLoading(false);
+    };
+
+    loadInvoice();
   }, []);
 
   const handlePrint = () => {
@@ -105,7 +124,16 @@ function InvoicePage() {
               <tbody>
                 {invoiceData?.items?.map((item, index) => (
                   <tr key={index}>
-                    <td className="invoice-product-name">{item.name}</td>
+                    <td className="invoice-product-name">
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                        <img
+                          src={resolveProductImage(item.imageKey || item.name)}
+                          alt={item.name}
+                          style={{ width: '34px', height: '34px', objectFit: 'cover', borderRadius: '6px' }}
+                        />
+                        {item.name}
+                      </span>
+                    </td>
                     <td className="invoice-text-center">{item.price.toFixed(2)}</td>
                     <td className="invoice-text-center">{item.quantity}</td>
                     <td className="invoice-text-center">{item.totalPrice.toFixed(2)}</td>

@@ -1,115 +1,38 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../Common/UserLayout.css';
 import './JoiningPackage.css';
-import saliconpads from '../../../../Assets/Pictures/pads.jpeg';
-import elconanionpads from '../../../../Assets/Pictures/fourpads.jpeg';
-import calciumdietry from '../../../../Assets/Pictures/calcium.jpeg';
-import diabecare from '../../../../Assets/Pictures/diabecare.jpeg';
-import omega3 from '../../../../Assets/Pictures/omega3.jpeg';
-import watchultra from '../../../../Assets/Pictures/smartwatch.jpeg';
-import watch from '../../../../Assets/Pictures/watch.jpeg';
-import handfree from '../../../../Assets/Pictures/goldheadphones.jpeg';
-import headphones from '../../../../Assets/Pictures/headphones.jpeg';
-import laptop from '../../../../Assets/Pictures/laptop.jpeg';
-
-const joiningProducts = [
-  {
-    id: 1,
-    name: 'Elcon Anion Sanitary Pads - 8',
-    category: 'Healthcare',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: saliconpads
-  },
-  {
-    id: 2,
-    name: 'Elcon Anion Sanitary Pads - 32',
-    category: 'Healthcare',
-    stock: 'Out of Stock',
-    mrp: 350,
-    price: 300,
-    image: elconanionpads
-  },
-  {
-    id: 3,
-    name: 'Elcon Diabe Care - 8',
-    category: 'Healthcare',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: diabecare
-  },
-  {
-    id: 4,
-    name: 'Elcon Omega -3',
-    category: 'Healthcare',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: omega3
-  },
-  {
-    id: 5,
-    name: 'Elcon Calcium',
-    category: 'Healthcare',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: calciumdietry
-  },
-  {
-    id: 6,
-    name: 'Elcon Smart Watch',
-    category: 'Healthcare',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: watchultra
-  },
-  {
-    id: 7,
-    name: 'Foce Watch',
-    category: 'Healthcare',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: watch
-  },
-  {
-    id: 8,
-    name: 'Gold Head Phone',
-    category: 'Electronics Appliances',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: handfree
-  },
-  {
-    id: 9,
-    name: 'Bose Head Phonos',
-    category: 'Electronics Appliances',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: headphones
-  },
-  {
-    id: 10,
-    name: 'HP LAPTOP',
-    category: 'Electronics',
-    stock: 'In Stock',
-    mrp: 350,
-    price: 300,
-    image: laptop
-  }
-];
+import { addCartItem, getPublicProducts } from '../../../../api/productsService';
+import { resolveProductImage } from '../productImages';
 
 function JoiningPackage() {
   const navigate = useNavigate();
+  const [joiningProducts, setJoiningProducts] = useState([]);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await getPublicProducts('joining');
+        setJoiningProducts(response.products || []);
+      } catch (error) {
+        setJoiningProducts([]);
+      }
+    };
+
+    loadProducts();
+  }, []);
 
   const handleProductClick = (product) => {
     navigate('/user/product/product_details', { state: { product } });
+  };
+
+  const handleAddToCart = async (product) => {
+    try {
+      await addCartItem(product._id || product.id || product.productCode, 1);
+      navigate('/user/product/my_cart');
+    } catch (error) {
+      navigate('/user/product/my_cart');
+    }
   };
 
   return (
@@ -121,7 +44,7 @@ function JoiningPackage() {
           {joiningProducts.map((product) => (
             <article
               className="user-product-card"
-              key={product.id}
+              key={product.id || product.productCode}
               role="button"
               tabIndex={0}
               onClick={() => handleProductClick(product)}
@@ -133,12 +56,17 @@ function JoiningPackage() {
               }}
             >
               <div className="user-product-image-wrap">
-                <img src={product.image} alt={product.name} className="user-product-image" loading="lazy" />
+                <img
+                  src={resolveProductImage(product)}
+                  alt={product.productName || product.name}
+                  className="user-product-image"
+                  loading="lazy"
+                />
               </div>
 
               <div className="user-product-footer">
                 <div className="user-product-meta">
-                  <h3>{product.name}</h3>
+                  <h3>{product.productName || product.name}</h3>
                   <div className="user-product-meta-row">
                     <span className={`user-product-stock ${product.stock === 'In Stock' ? 'in-stock' : 'out-stock'}`}>
                       {product.stock}
@@ -154,7 +82,10 @@ function JoiningPackage() {
                   <span className="user-product-price">₹ {product.price}</span>
                 </div>
 
-                <button type="button" className="user-product-btn">
+                <button type="button" className="user-product-btn" onClick={(event) => {
+                  event.stopPropagation();
+                  handleAddToCart(product);
+                }}>
                   Add to cart
                 </button>
               </div>
