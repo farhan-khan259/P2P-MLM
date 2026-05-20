@@ -1,28 +1,60 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Withdraw.css';
+import { getProfile } from '../../../../api/authService';
+import { createWithdrawalRequest, getMyWithdrawalSummary } from '../../../../api/paymentService';
 
 const Withdraw = () => {
   const [withdrawalAmount, setWithdrawalAmount] = useState('');
   const [selectedTransfer, setSelectedTransfer] = useState('bank');
   const [transactionPassword, setTransactionPassword] = useState('');
   const [reenterPassword, setReenterPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [walletData, setWalletData] = useState({
+    eWalletBalance: 0,
+    rWalletBalance: 0,
+    totalEarning: 0,
+    totalWithdrawal: 0,
+  });
+  const [bankDetails, setBankDetails] = useState({
+    bankName: '-',
+    branch: '-',
+    accountHolder: '-',
+    accountNo: '-',
+    accountType: '-',
+    ifscCode: '-',
+    upiId: '-',
+  });
 
-  const walletData = {
-    eWalletBalance: 5000.00,
-    rWalletBalance: 0.00,
-    totalEarning: 155000.00,
-    totalWithdrawal: 150000.00
-  };
+  useEffect(() => {
+    const loadWithdrawData = async () => {
+      try {
+        const [profileResponse, summaryResponse] = await Promise.all([getProfile(), getMyWithdrawalSummary()]);
+        const profile = profileResponse.data || {};
+        const summary = summaryResponse.data || {};
 
-  const bankDetails = {
-    bankName: 'State Bank Of India',
-    branch: 'Warse Pune',
-    accountHolder: 'Amruta Salunke',
-    accountNo: '458885485685',
-    accountType: 'Saving Account',
-    ifscCode: 'Sbin004736',
-    upiId: 'amruta.salunke@oksbi'
-  };
+        setBankDetails({
+          bankName: profile.bankDetails?.bankName || '-',
+          branch: profile.bankDetails?.bankBranch || '-',
+          accountHolder: profile.bankDetails?.holderName || profile.name || '-',
+          accountNo: profile.bankDetails?.accountNo || '-',
+          accountType: profile.bankDetails?.accountType || 'Saving Account',
+          ifscCode: profile.bankDetails?.ifsc || '-',
+          upiId: profile.paymentDetails?.upiId || '-',
+        });
+
+        setWalletData({
+          eWalletBalance: Number(summary.eWalletBalance ?? profile.walletBalance ?? 0),
+          rWalletBalance: Number(summary.rWalletBalance ?? 0),
+          totalEarning: Number(summary.totalEarning ?? profile.walletBalance ?? 0),
+          totalWithdrawal: Number(summary.totalWithdrawal ?? 0),
+        });
+      } catch (error) {
+        // Keep fallback values when the profile or summary request fails.
+      }
+    };
+
+    loadWithdrawData();
+  }, []);
 
   const transactionFee = 0; // Dynamic based on amount
   const youWillReceive = withdrawalAmount ? (parseFloat(withdrawalAmount) - transactionFee) : 0;
@@ -44,7 +76,25 @@ const Withdraw = () => {
       alert('Passwords do not match');
       return;
     }
-    alert(`Withdrawal of ₹${withdrawalAmount} initiated successfully!`);
+    setIsSubmitting(true);
+    createWithdrawalRequest({
+      amount: withdrawalAmount,
+      paymentMethod: selectedTransfer,
+      transactionPassword,
+      confirmTransactionPassword: reenterPassword,
+    })
+      .then(() => {
+        alert(`Withdrawal of ₹${withdrawalAmount} initiated successfully!`);
+        setWithdrawalAmount('');
+        setTransactionPassword('');
+        setReenterPassword('');
+      })
+      .catch((error) => {
+        alert(error?.response?.data?.message || 'Unable to initiate withdrawal');
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   return (
@@ -166,8 +216,8 @@ const Withdraw = () => {
               />
             </div>
 
-            <button className="confirm-withdrawal-btn" onClick={handleConfirmWithdrawal}>
-              Confirm Withdrawal
+            <button className="confirm-withdrawal-btn" onClick={handleConfirmWithdrawal} disabled={isSubmitting}>
+              {isSubmitting ? 'Processing...' : 'Confirm Withdrawal'}
             </button>
           </div>
         </div>

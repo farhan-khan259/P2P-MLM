@@ -1,49 +1,8 @@
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../Common/UserLayout.css';
 import './WithdrawalHistory.css';
-
-const withdrawalData = [
-  {
-    sNo: 1,
-    requestDate: '22-04-2026 07:06 PM',
-    requestId: '987HSU29FHJ9',
-    amount: 1000.00,
-    charges: 0.00,
-    netAmount: 1000.00,
-    paymentMethod: 'UPI ID',
-    status: 'Pending'
-  },
-  {
-    sNo: 2,
-    requestDate: '20-04-2026 08:06 PM',
-    requestId: '457HSU29FJK3',
-    amount: 5000.00,
-    charges: 0.00,
-    netAmount: 5000.00,
-    paymentMethod: 'Bank Transfer',
-    status: 'Approve'
-  },
-  {
-    sNo: 3,
-    requestDate: '02-04-2026 07:06 PM',
-    requestId: '127GHU29FJK1',
-    amount: 2000.00,
-    charges: 0.00,
-    netAmount: 2000.00,
-    paymentMethod: 'Bank Transfer',
-    status: 'Succeed'
-  },
-  {
-    sNo: 4,
-    requestDate: '01-04-2026 07:06 PM',
-    requestId: '787GHU29FJK1',
-    amount: 3000.00,
-    charges: 0.00,
-    netAmount: 3000.00,
-    paymentMethod: 'Bank Transfer',
-    status: 'Reject'
-  }
-];
+import { getMyWithdrawalHistory } from '../../../../api/paymentService';
 
 function getStatusIcon(status) {
   switch (status) {
@@ -62,6 +21,33 @@ function getStatusIcon(status) {
 
 function WithdrawalHistory() {
   const navigate = useNavigate();
+  const [withdrawalData, setWithdrawalData] = useState([]);
+  const [filters, setFilters] = useState({ requestId: '', amount: '', status: '', startDate: '', endDate: '' });
+  const [pageSize, setPageSize] = useState('10');
+
+  useEffect(() => {
+    const loadHistory = async () => {
+      try {
+        const response = await getMyWithdrawalHistory();
+        setWithdrawalData(response.data || []);
+      } catch (error) {
+        setWithdrawalData([]);
+      }
+    };
+
+    loadHistory();
+  }, []);
+
+  const filteredRows = useMemo(() => {
+    return withdrawalData.filter((row) => {
+      const byRequestId = !filters.requestId || row.requestId.toLowerCase().includes(filters.requestId.toLowerCase());
+      const byAmount = !filters.amount || String(Number(row.amount || 0)).includes(filters.amount);
+      const byStatus = !filters.status || row.status === filters.status;
+      return byRequestId && byAmount && byStatus;
+    });
+  }, [filters, withdrawalData]);
+
+  const visibleRows = filteredRows.slice(0, Number(pageSize));
   
   const handleWithdrawalNow = () => {
     navigate('/user/payment/withdraw');
@@ -72,18 +58,18 @@ function WithdrawalHistory() {
       <h1 className="user-page-title">Withdrawal History</h1>
       <div className="user-panel">
         <div className="report-filters">
-          <input type="text" placeholder="REQUEST ID" aria-label="Request ID" />
-          <input type="text" placeholder="AMOUNT" aria-label="Amount" />
-          <select aria-label="Status">
+          <input type="text" placeholder="REQUEST ID" aria-label="Request ID" value={filters.requestId} onChange={(event) => setFilters((prev) => ({ ...prev, requestId: event.target.value }))} />
+          <input type="text" placeholder="AMOUNT" aria-label="Amount" value={filters.amount} onChange={(event) => setFilters((prev) => ({ ...prev, amount: event.target.value }))} />
+          <select aria-label="Status" value={filters.status} onChange={(event) => setFilters((prev) => ({ ...prev, status: event.target.value }))}>
             <option value="">STATUS</option>
             <option value="Pending">Pending</option>
             <option value="Approve">Approve</option>
             <option value="Succeed">Succeed</option>
             <option value="Reject">Reject</option>
           </select>
-          <input type="text" placeholder="START DATE" aria-label="Start Date" />
-          <input type="text" placeholder="END DATE" aria-label="End Date" />
-          <select aria-label="Rows per page">
+          <input type="text" placeholder="START DATE" aria-label="Start Date" value={filters.startDate} onChange={(event) => setFilters((prev) => ({ ...prev, startDate: event.target.value }))} />
+          <input type="text" placeholder="END DATE" aria-label="End Date" value={filters.endDate} onChange={(event) => setFilters((prev) => ({ ...prev, endDate: event.target.value }))} />
+          <select aria-label="Rows per page" value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
@@ -111,7 +97,7 @@ function WithdrawalHistory() {
               </tr>
             </thead>
             <tbody>
-              {withdrawalData.map((row) => (
+              {visibleRows.length > 0 ? visibleRows.map((row) => (
                 <tr key={row.sNo}>
                   <td>{row.sNo}</td>
                   <td>{row.requestDate}</td>
@@ -131,7 +117,11 @@ function WithdrawalHistory() {
                     </button>
                   </td>
                 </tr>
-              ))}
+              )) : (
+                <tr>
+                  <td colSpan="9">No withdrawal requests found</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

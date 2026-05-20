@@ -1,64 +1,6 @@
+import { useEffect, useState } from 'react';
 import './SucceedWithdrawalRequest.css';
-
-const succeedWithdrawalRequests = [
-  {
-    sNo: 1,
-    requestDate: '20-04-2026 07:06 PM',
-    requestId: '78YSHU29FJK3',
-    memberId: 'EL20110380',
-    memberName: 'Nishikant Shirke',
-    mobileNo: '7020110380',
-    upiId: '7020110380@zyb',
-    bankAccountNo: '4587020110380',
-    bankName: 'State Bank Of India',
-    branch: 'Pashan',
-    ifscCode: 'SBIN000887P',
-    amount: 1000.0,
-    charges: 0.0,
-    netAmount: 1000.0,
-    paymentMethod: 'UPI ID',
-    status: 'Succeed',
-    remark: '-'
-  },
-  {
-    sNo: 2,
-    requestDate: '20-04-2026 07:06 PM',
-    requestId: '78YGHU29FJK1',
-    memberId: 'EL75615112',
-    memberName: 'Sonali Shirke',
-    mobileNo: '9175615112',
-    upiId: '9175615112@zyb',
-    bankAccountNo: '4589175615112',
-    bankName: 'HDFC Bank',
-    branch: 'Baner',
-    ifscCode: 'HDFC688BP',
-    amount: 5000.0,
-    charges: 0.0,
-    netAmount: 5000.0,
-    paymentMethod: 'BANK TRANSFER',
-    status: 'Succeed',
-    remark: '-'
-  },
-  {
-    sNo: 3,
-    requestDate: '20-04-2026 07:06 PM',
-    requestId: '78YGHU29FJK1',
-    memberId: 'EL22757474',
-    memberName: 'Amruta Salunke',
-    mobileNo: '9922757474',
-    upiId: '9922757474@zyb',
-    bankAccountNo: '7859922757474',
-    bankName: 'ICICI Bank',
-    branch: 'Bavdhan',
-    ifscCode: 'ICICR4334U',
-    amount: 2000.0,
-    charges: 0.0,
-    netAmount: 2000.0,
-    paymentMethod: 'BANK TRANSFER',
-    status: 'Succeed',
-    remark: '-'
-  }
-];
+import { getAdminWithdrawalRequests, updateWithdrawalRequestStatus } from '../../../../api/paymentService';
 
 const actionButtons = [
   { className: 'withdrawal-action-btn withdrawal-action-btn--approve', label: 'Approve', icon: '◌' },
@@ -67,11 +9,21 @@ const actionButtons = [
   { className: 'withdrawal-action-btn withdrawal-action-btn--reset', label: 'Change Status', icon: '↻' }
 ];
 
-function renderActionButtons() {
+function renderActionButtons(requestId, reloadRows) {
   return (
     <div className="withdrawal-action-group" aria-label="Withdrawal actions">
       {actionButtons.map((button) => (
-        <button key={button.label} type="button" className={button.className} aria-label={button.label}>
+        <button
+          key={button.label}
+          type="button"
+          className={button.className}
+          aria-label={button.label}
+          onClick={async () => {
+            const nextStatus = button.label === 'Change Status' ? 'Pending' : button.label;
+            await updateWithdrawalRequestStatus(requestId, { status: nextStatus });
+            reloadRows();
+          }}
+        >
           {button.icon}
         </button>
       ))}
@@ -80,6 +32,27 @@ function renderActionButtons() {
 }
 
 function SucceedWithdrawalRequest() {
+  const [withdrawalRows, setWithdrawalRows] = useState([]);
+  const [pageSize, setPageSize] = useState('10');
+  const [loading, setLoading] = useState(true);
+
+  const loadRows = async () => {
+    try {
+      const response = await getAdminWithdrawalRequests('Succeed');
+      setWithdrawalRows(response.data || []);
+    } catch (error) {
+      setWithdrawalRows([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadRows();
+  }, []);
+
+  const visibleRows = withdrawalRows.slice(0, Number(pageSize));
+
   return (
     <div className="tds-report-page">
       <h2 className="section-title tds-screen-title">Succeed Withdrawal Request</h2>
@@ -92,7 +65,7 @@ function SucceedWithdrawalRequest() {
           <input className="text-input tds-filter-input" placeholder="AMOUNT" aria-label="Amount" />
           <input className="text-input tds-filter-input" placeholder="START DATE" aria-label="Start Date" />
           <input className="text-input tds-filter-input" placeholder="END DATE" aria-label="End Date" />
-          <select className="select-input tds-filter-input tds-size-select" aria-label="Rows per page" defaultValue="10">
+          <select className="select-input tds-filter-input tds-size-select" aria-label="Rows per page" value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
@@ -132,7 +105,11 @@ function SucceedWithdrawalRequest() {
               </tr>
             </thead>
             <tbody>
-              {succeedWithdrawalRequests.map((row) => (
+              {loading ? (
+                <tr>
+                  <td colSpan="18">Loading...</td>
+                </tr>
+              ) : visibleRows.length > 0 ? visibleRows.map((row) => (
                 <tr key={row.sNo}>
                   <td>{row.sNo}</td>
                   <td>{row.requestDate}</td>
@@ -150,10 +127,14 @@ function SucceedWithdrawalRequest() {
                   <td>{row.netAmount.toFixed(2)}</td>
                   <td>{row.paymentMethod}</td>
                   <td>{row.status}</td>
-                  <td className="action-cell">{renderActionButtons()}</td>
+                  <td className="action-cell">{renderActionButtons(row.requestId, loadRows)}</td>
                   <td className="remark-cell">{row.remark}</td>
                 </tr>
-              ))}
+              )) : (
+                <tr>
+                  <td colSpan="18">No succeeded withdrawal requests found</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

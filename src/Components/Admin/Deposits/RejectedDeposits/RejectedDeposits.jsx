@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import './RejectedDeposits.css';
+import { getAdminDepositRequests, updateDepositRequestStatus } from '../../../../api/paymentService';
 
 const rejectedRows = [
   {
@@ -101,11 +103,11 @@ const actionButtons = [
   { className: 'withdrawal-action-btn withdrawal-action-btn--reset', label: 'Change Status', icon: '↻' }
 ];
 
-function renderActionButtons() {
+function renderActionButtons(orderNo, reloadRows) {
   return (
     <div className="withdrawal-action-group" aria-label="Deposit actions">
       {actionButtons.map((button) => (
-        <button key={button.label} type="button" className={button.className} aria-label={button.label}>
+        <button key={button.label} type="button" className={button.className} aria-label={button.label} onClick={async () => { const nextStatus = button.label === 'Reject' ? 'Rejected' : button.label === 'Change Status' ? 'Pending' : button.label; await updateDepositRequestStatus(orderNo, { status: nextStatus }); reloadRows(); }}>
           {button.icon}
         </button>
       ))}
@@ -114,6 +116,27 @@ function renderActionButtons() {
 }
 
 function RejectedDeposits() {
+  const [depositRows, setDepositRows] = useState([]);
+  const [pageSize, setPageSize] = useState('10');
+  const [loading, setLoading] = useState(true);
+
+  const loadRows = async () => {
+    try {
+      const response = await getAdminDepositRequests('Rejected');
+      setDepositRows(response.data || []);
+    } catch (error) {
+      setDepositRows([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadRows();
+  }, []);
+
+  const visibleRows = depositRows.slice(0, Number(pageSize));
+
 
   return (
     <div className="tds-report-page">
@@ -137,8 +160,8 @@ function RejectedDeposits() {
             <option value="Succeed">Succeed</option>
             <option value="Rejected">Rejected</option>
           </select>
-          <select className="select-input tds-filter-input tds-size-select" defaultValue="10">
-            <option value="10">10/50/100</option>
+          <select className="select-input tds-filter-input tds-size-select" value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
+            <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
@@ -170,7 +193,9 @@ function RejectedDeposits() {
               </tr>
             </thead>
             <tbody>
-              {rejectedRows.map((row) => (
+              {loading ? (
+                <tr><td colSpan="13">Loading...</td></tr>
+              ) : visibleRows.length > 0 ? visibleRows.map((row) => (
                 <tr key={`${row.sno}-${row.transactionId}`}>
                   <td>{row.sno}</td>
                   <td>{row.depositDate}</td>
@@ -183,10 +208,10 @@ function RejectedDeposits() {
                   <td>{row.utrNumber}</td>
                   <td><button type="button" className="deposit-slip-btn">VIEW</button></td>
                   <td>{row.status}</td>
-                  <td className="action-cell">{renderActionButtons()}</td>
+                  <td className="action-cell">{renderActionButtons(row.transactionId, loadRows)}</td>
                   <td className="remark-cell">{row.remark}</td>
                 </tr>
-              ))}
+              )) : (<tr><td colSpan="13">No rejected deposits found</td></tr>)}
             </tbody>
           </table>
         </div>

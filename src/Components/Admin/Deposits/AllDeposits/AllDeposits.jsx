@@ -1,98 +1,6 @@
+import { useEffect, useState } from 'react';
 import './AllDeposits.css';
-
-const allDepositRows = [
-  {
-    sno: 1,
-    depositDate: '09-03-2029',
-    memberId: 'EL20110380',
-    memberName: 'Nishikant Shirke',
-    mobileNo: '7020110380',
-    transactionId: '42545555555535',
-    paymentMode: 'Bank Transfer',
-    amount: '500',
-    utrNumber: '42545555555535',
-    status: 'Pending',
-    remark: '-'
-  },
-  {
-    sno: 2,
-    depositDate: '08-03-2029',
-    memberId: 'EL75615112',
-    memberName: 'Sonali Shirke',
-    mobileNo: '9175615112',
-    transactionId: '0424422424222',
-    paymentMode: 'Phone Pe',
-    amount: '200',
-    utrNumber: '0424422424222',
-    status: 'Pending',
-    remark: '-'
-  },
-  {
-    sno: 3,
-    depositDate: '07-03-2029',
-    memberId: 'EL22757474',
-    memberName: 'Amruta Salunke',
-    mobileNo: '9922757474',
-    transactionId: '0445458555555',
-    paymentMode: 'Google Pay',
-    amount: '250',
-    utrNumber: '0445458555555',
-    status: 'Approve',
-    remark: '-'
-  },
-  {
-    sno: 4,
-    depositDate: '06-03-2029',
-    memberId: 'EL20114787',
-    memberName: 'Megha Shirke',
-    mobileNo: '7020114787',
-    transactionId: '2575757575777',
-    paymentMode: 'Upi Id',
-    amount: '1000',
-    utrNumber: '2575757575777',
-    status: 'Succeed',
-    remark: 'W wallet'
-  },
-  {
-    sno: 5,
-    depositDate: '05-03-2029',
-    memberId: 'EL22585845',
-    memberName: 'Snehal Marne',
-    mobileNo: '9822585845',
-    transactionId: '4257577555778',
-    paymentMode: 'Upi Id',
-    amount: '500',
-    utrNumber: '4257577555778',
-    status: 'Succeed',
-    remark: 'e wallet'
-  },
-  {
-    sno: 6,
-    depositDate: '04-03-2029',
-    memberId: 'EL22834083',
-    memberName: 'Guddi Katale',
-    mobileNo: '9822834083',
-    transactionId: '5424242444544',
-    paymentMode: 'Upi Id',
-    amount: '1500',
-    utrNumber: '5424242444544',
-    status: 'Rejected',
-    remark: 'wrong slip'
-  },
-  {
-    sno: 7,
-    depositDate: '03-03-2029',
-    memberId: 'EL22834083',
-    memberName: 'Guddi Katale',
-    mobileNo: '9822834083',
-    transactionId: '0455788887553',
-    paymentMode: 'Upi Id',
-    amount: '1000',
-    utrNumber: '0455788887553',
-    status: 'Rejected',
-    remark: 'wrong slip'
-  }
-];
+import { getAdminDepositRequests, updateDepositRequestStatus } from '../../../../api/paymentService';
 
 const actionButtons = [
   { className: 'withdrawal-action-btn withdrawal-action-btn--approve', label: 'Approve', icon: '◌' },
@@ -101,11 +9,21 @@ const actionButtons = [
   { className: 'withdrawal-action-btn withdrawal-action-btn--reset', label: 'Change Status', icon: '↻' }
 ];
 
-function renderActionButtons() {
+function renderActionButtons(orderNo, reloadRows) {
   return (
     <div className="withdrawal-action-group" aria-label="Deposit actions">
       {actionButtons.map((button) => (
-        <button key={button.label} type="button" className={button.className} aria-label={button.label}>
+        <button
+          key={button.label}
+          type="button"
+          className={button.className}
+          aria-label={button.label}
+          onClick={async () => {
+            const nextStatus = button.label === 'Reject' ? 'Rejected' : button.label === 'Change Status' ? 'Pending' : button.label;
+            await updateDepositRequestStatus(orderNo, { status: nextStatus });
+            reloadRows();
+          }}
+        >
           {button.icon}
         </button>
       ))}
@@ -114,6 +32,27 @@ function renderActionButtons() {
 }
 
 function AllDeposits() {
+  const [depositRows, setDepositRows] = useState([]);
+  const [pageSize, setPageSize] = useState('10');
+  const [loading, setLoading] = useState(true);
+
+  const loadRows = async () => {
+    try {
+      const response = await getAdminDepositRequests();
+      setDepositRows(response.data || []);
+    } catch (error) {
+      setDepositRows([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadRows();
+  }, []);
+
+  const visibleRows = depositRows.slice(0, Number(pageSize));
+
   return (
     <div className="tds-report-page">
       <h2 className="section-title tds-screen-title">All Deposits</h2>
@@ -135,8 +74,8 @@ function AllDeposits() {
             <option value="Succeed">Succeed</option>
             <option value="Rejected">Rejected</option>
           </select>
-          <select className="select-input tds-filter-input tds-size-select" defaultValue="10">
-            <option value="10">10/50/100</option>
+          <select className="select-input tds-filter-input tds-size-select" value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
+            <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
@@ -169,7 +108,11 @@ function AllDeposits() {
               </tr>
             </thead>
             <tbody>
-              {allDepositRows.map((row) => (
+              {loading ? (
+                <tr>
+                  <td colSpan="13">Loading...</td>
+                </tr>
+              ) : visibleRows.length > 0 ? visibleRows.map((row) => (
                 <tr key={`${row.sno}-${row.transactionId}`}>
                   <td>{row.sno}</td>
                   <td>{row.depositDate}</td>
@@ -182,10 +125,14 @@ function AllDeposits() {
                   <td>{row.utrNumber}</td>
                   <td><button type="button" className="deposit-slip-btn">VIEW</button></td>
                   <td>{row.status}</td>
-                  <td className="action-cell">{renderActionButtons()}</td>
+                  <td className="action-cell">{renderActionButtons(row.transactionId, loadRows)}</td>
                   <td className="remark-cell">{row.remark}</td>
                 </tr>
-              ))}
+              )) : (
+                <tr>
+                  <td colSpan="13">No deposits found</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
