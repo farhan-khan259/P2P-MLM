@@ -230,7 +230,7 @@ function App() {
           {/* Removed Admin ePin components from user panel routes. Use only user panel ePin components. */}
 
           <Route path="members/kyc-request" element={<KYCRequest />} />
-          <Route path="members/all-members" element={<AllMemberPerformance />} />
+          <Route path="members/all-members" element={<AllMembersList />} />
           <Route path="members/all-member-performance" element={<AllMemberPerformance />} />
           <Route path="members/active-members" element={<MembersLocation />} />
        

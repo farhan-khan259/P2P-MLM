@@ -63,6 +63,17 @@ const menuItems = [
       { label: 'All Deposits', to: '/deposits/all-deposits' }
     ]
   },
+   {
+    key: 'withdrawals',
+    label: 'Withdrawals',
+    children: [
+      { label: 'All Request', to: '/withdrawals/all-request' },
+      { label: 'Approved Request', to: '/withdrawals/approved-request' },
+      { label: 'Pending Request', to: '/withdrawals/pending-request' },
+      { label: 'Reject Request', to: '/withdrawals/reject-request' },
+      { label: 'Succeed Request', to: '/withdrawals/succeed-request' }
+    ]
+  },
   {
     key: 'productsPackage',
     label: 'Products/Package',
@@ -94,17 +105,7 @@ const menuItems = [
       { label: 'Transaction History', to: '/transactions/transaction-history' }
     ]
   },
-  {
-    key: 'withdrawals',
-    label: 'Withdrawals',
-    children: [
-      { label: 'All Request', to: '/withdrawals/all-request' },
-      { label: 'Approved Request', to: '/withdrawals/approved-request' },
-      { label: 'Pending Request', to: '/withdrawals/pending-request' },
-      { label: 'Reject Request', to: '/withdrawals/reject-request' },
-      { label: 'Succeed Request', to: '/withdrawals/succeed-request' }
-    ]
-  },
+ 
   {
     key: 'settings',
     label: 'Settings',

@@ -1,50 +1,7 @@
 import { useMemo, useState } from 'react';
 import './MembersLocation.css';
-
-const membersLocationRows = [
-  {
-    srNo: '1', memberId: 'MM101011', name: 'AMBIKA SALUNKE', mobile: '+91 7020456118',
-    dob: '05-02-2026', joinDate: '05-02-2026', adharNo: '7020456118', panNo: 'BHVPS0875T',
-    address: 'PASHAN', state: 'BIHAR', district: 'PUNE', city: 'PUNE', pinCode: '411021',
-    emailId: 'ASDEG@GMAIL.COM', status: 'ACTIVE'
-  },
-  {
-    srNo: '2', memberId: 'MM101012', name: 'RAJKIRAN SALUKE', mobile: '+91 8650114455',
-    dob: '06-02-2026', joinDate: '06-02-2026', adharNo: '8650114455', panNo: 'AOUPS0875K',
-    address: 'SANGAVI', state: 'BIHAR', district: 'PCMC', city: 'PCMC', pinCode: '411027',
-    emailId: 'ASDEG@GMAIL.COM', status: 'ACTIVE'
-  },
-  {
-    srNo: '3', memberId: 'MM101013', name: 'AMIT SHARMA', mobile: '+91 7020178456',
-    dob: '05-02-2026', joinDate: '05-02-2026', adharNo: '7020178456', panNo: 'BHPPS0584T',
-    address: 'SUSGAON', state: 'BIHAR', district: 'PUNE', city: 'PUNE', pinCode: '411045',
-    emailId: 'ASDEG@GMAIL.COM', status: 'IN-ACTIVE'
-  },
-  {
-    srNo: '4', memberId: 'MM101014', name: 'SADDAM SHAIKH', mobile: '+91 7020145858',
-    dob: '05-02-2026', joinDate: '05-02-2026', adharNo: '7020145858', panNo: 'FHJPS0855T',
-    address: 'MAHANGE', state: 'BIHAR', district: 'PATANA', city: 'PATANA', pinCode: '411025',
-    emailId: 'BGFHF@GMAIL.COM', status: 'ACTIVE'
-  },
-  {
-    srNo: '5', memberId: 'MM101015', name: 'THOMAS ANTHONY', mobile: '+91 9270110118',
-    dob: '05-02-2026', joinDate: '05-02-2026', adharNo: '9270110118', panNo: 'GHGPS1275T',
-    address: 'SHIVAE', state: 'BIHAR', district: 'THANE', city: 'THANE', pinCode: '411021',
-    emailId: 'BGFHF@GMAIL.COM', status: 'IN-ACTIVE'
-  },
-  {
-    srNo: '6', memberId: 'MM101016', name: 'RAZMAN HUSSAIN', mobile: '+91 9450110118',
-    dob: '05-02-2026', joinDate: '05-02-2026', adharNo: '9450110118', panNo: 'AHWKL085T',
-    address: 'WARJE', state: 'BIHAR', district: 'NAGAR', city: 'NAGAR', pinCode: '411021',
-    emailId: '', status: 'ACTIVE'
-  },
-  {
-    srNo: '7', memberId: 'MM101017', name: 'SAMEER MIRZA', mobile: '+91 7020110785',
-    dob: '05-01-2026', joinDate: '05-01-2026', adharNo: '7020110785', panNo: 'DEVPS0889T',
-    address: 'DATTWADI', state: 'BIHAR', district: 'SATARA', city: 'SATARA', pinCode: '411021',
-    emailId: '', status: 'ACTIVE'
-  }
-];
+import { useEffect } from 'react';
+import { getMembersLocation } from '../../../../api/membersService';
 
 const exportColumns = [
   'S.No', 'Member ID', 'Name', 'Mobile', 'D.O.B', 'Join Date', 'Adhar No', 'Pan No',
@@ -52,6 +9,7 @@ const exportColumns = [
 ];
 
 function MembersLocation() {
+  const [membersLocationRows, setMembersLocationRows] = useState([]);
   const [filters, setFilters] = useState({
     memberId: '',
     name: '',
@@ -64,6 +22,22 @@ function MembersLocation() {
   });
   const [searchText, setSearchText] = useState('');
   const [pageSize, setPageSize] = useState('10');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadMembersLocation = async () => {
+      try {
+        const response = await getMembersLocation();
+        setMembersLocationRows(response.data || []);
+      } catch (error) {
+        setMembersLocationRows([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadMembersLocation();
+  }, []);
 
   const filteredRows = useMemo(() => {
     return membersLocationRows.filter((row) => {
@@ -76,8 +50,9 @@ function MembersLocation() {
       const byState = !filters.state || row.state.toLowerCase().includes(filters.state.toLowerCase());
       const byCity = !filters.city || row.city.toLowerCase().includes(filters.city.toLowerCase());
       const byStatus = !filters.status || row.status === filters.status;
-      const byStartDate = !filters.startDate || row.joinDate >= filters.startDate;
-      const byEndDate = !filters.endDate || row.joinDate <= filters.endDate;
+      const joinDateValue = row.joinDateRaw ? new Date(row.joinDateRaw).toISOString().slice(0, 10) : '';
+      const byStartDate = !filters.startDate || joinDateValue >= filters.startDate;
+      const byEndDate = !filters.endDate || joinDateValue <= filters.endDate;
 
       return inGlobalSearch && byMember && byName && byMobile && byState && byCity && byStatus && byStartDate && byEndDate;
     });
@@ -212,7 +187,11 @@ function MembersLocation() {
               </tr>
             </thead>
             <tbody>
-              {visibleRows.map((row) => (
+              {loading ? (
+                <tr>
+                  <td colSpan="15">Loading...</td>
+                </tr>
+              ) : visibleRows.length > 0 ? visibleRows.map((row) => (
                 <tr key={row.srNo}>
                   <td>{row.srNo}</td>
                   <td>{row.memberId}</td>
@@ -230,7 +209,11 @@ function MembersLocation() {
                   <td>{row.emailId}</td>
                   <td>{row.status}</td>
                 </tr>
-              ))}
+              )) : (
+                <tr>
+                  <td colSpan="15">No members found</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

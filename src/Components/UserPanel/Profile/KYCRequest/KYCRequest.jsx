@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './KYCRequest.css';
+import { getProfile } from '../../../../api/authService';
+import { submitKycRequest } from '../../../../api/membersService';
 
 const initialFormData = {
   bankName: '',
@@ -17,13 +19,71 @@ const initialFormData = {
 
 function KYCRequest() {
   const [formData, setFormData] = useState(initialFormData);
+  const [aadharFrontImage, setAadharFrontImage] = useState('');
+  const [aadharBackImage, setAadharBackImage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const response = await getProfile();
+        const data = response.data || {};
+
+        setFormData({
+          bankName: data.bankDetails?.bankName || '',
+          bankBranch: data.bankDetails?.bankBranch || '',
+          accountHolderName: data.bankDetails?.holderName || '',
+          bankAccountNumber: data.bankDetails?.accountNo || '',
+          ifscCode: data.bankDetails?.ifsc || '',
+          googlePayNumber: data.paymentDetails?.googlePay || '',
+          phonePeNumber: data.paymentDetails?.phonePe || '',
+          paytmNumber: data.paymentDetails?.payTm || '',
+          upiId: data.paymentDetails?.upiId || '',
+          aadharCardNumber: data.aadharNo || '',
+          panNo: data.panNo || '',
+        });
+      } catch (error) {
+        // Keep the form editable even when profile preload fails.
+      }
+    };
+
+    loadProfile();
+  }, []);
 
   const handleChange = (key) => (event) => {
     setFormData((prev) => ({ ...prev, [key]: event.target.value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleFileChange = (setter) => (event) => {
+    const file = event.target.files?.[0];
+
+    if (!file) {
+      setter('');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => setter(String(reader.result || ''));
+    reader.readAsDataURL(file);
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    setIsSubmitting(true);
+    try {
+      await submitKycRequest({
+        ...formData,
+        aadharFrontImage,
+        aadharBackImage,
+      });
+
+      alert('KYC request submitted successfully');
+    } catch (error) {
+      alert(error?.response?.data?.message || 'Unable to submit KYC request');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -152,13 +212,15 @@ function KYCRequest() {
             </div>
 
             <label className="kyc-label" htmlFor="aadharFrontImage">Aadhar Card Front Image</label>
-            <input id="aadharFrontImage" className="kyc-file-input" type="file" />
+            <input id="aadharFrontImage" className="kyc-file-input" type="file" onChange={handleFileChange(setAadharFrontImage)} />
 
             <label className="kyc-label" htmlFor="aadharBackImage">Aadhar Card Back Image</label>
-            <input id="aadharBackImage" className="kyc-file-input" type="file" />
+            <input id="aadharBackImage" className="kyc-file-input" type="file" onChange={handleFileChange(setAadharBackImage)} />
 
             <div className="kyc-submit-row">
-              <button className="btn-primary kyc-submit-btn" type="submit">Submit KYC</button>
+              <button className="btn-primary kyc-submit-btn" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Submitting...' : 'Submit KYC'}
+              </button>
             </div>
           </form>
         </div>

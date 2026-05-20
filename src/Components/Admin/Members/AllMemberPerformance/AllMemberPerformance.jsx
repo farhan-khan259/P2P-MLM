@@ -1,133 +1,6 @@
+import { useEffect, useMemo, useState } from 'react';
 import './AllMemberPerformance.css';
-
-const memberPerformanceRows = [
-  {
-    sNo: 1,
-    memberId: 'MM101011',
-    memberName: 'AMBIKA SALUNKE',
-    mobile: '+91 7020456118',
-    joinDate: '05-02-2026',
-    status: 'ACTIVE',
-    joiningLevel: 2,
-    unlockLevel: 2,
-    rank: 1,
-    activeTeamCount: 100,
-    inactiveTeamCount: 40,
-    totalTeamCount: 140,
-    levelIncome: 2000,
-    repurchaseIncome: 2000,
-    donationIncome: 300,
-    totalIncome: 6000
-  },
-  {
-    sNo: 2,
-    memberId: 'MM101012',
-    memberName: 'RAJKIRAN SALUKE',
-    mobile: '+91 8650114455',
-    joinDate: '06-02-2026',
-    status: 'ACTIVE',
-    joiningLevel: 9,
-    unlockLevel: 4,
-    rank: 2,
-    activeTeamCount: 458,
-    inactiveTeamCount: 8,
-    totalTeamCount: 466,
-    levelIncome: 1000,
-    repurchaseIncome: 1000,
-    donationIncome: 20000,
-    totalIncome: 21000
-  },
-  {
-    sNo: 3,
-    memberId: 'MM101013',
-    memberName: 'AMIT SHARMA',
-    mobile: '+91 7020178456',
-    joinDate: '05-02-2026',
-    status: 'IN-ACTIVE',
-    joiningLevel: 2,
-    unlockLevel: 2,
-    rank: 2,
-    activeTeamCount: 450,
-    inactiveTeamCount: 50,
-    totalTeamCount: 500,
-    levelIncome: 800,
-    repurchaseIncome: 800,
-    donationIncome: 16000,
-    totalIncome: 16800
-  },
-  {
-    sNo: 4,
-    memberId: 'MM101014',
-    memberName: 'SADDAM SHAIKH',
-    mobile: '+91 7020145858',
-    joinDate: '05-02-2026',
-    status: 'ACTIVE',
-    joiningLevel: 1,
-    unlockLevel: 1,
-    rank: 4,
-    activeTeamCount: 50,
-    inactiveTeamCount: 0,
-    totalTeamCount: 50,
-    levelIncome: 4400,
-    repurchaseIncome: 4400,
-    donationIncome: 128000,
-    totalIncome: 132400
-  },
-  {
-    sNo: 5,
-    memberId: 'MM101015',
-    memberName: 'THOMAS ANTHONY',
-    mobile: '+91 9270110118',
-    joinDate: '05-02-2026',
-    status: 'IN-ACTIVE',
-    joiningLevel: 1,
-    unlockLevel: 1,
-    rank: 1,
-    activeTeamCount: 125,
-    inactiveTeamCount: 5,
-    totalTeamCount: 130,
-    levelIncome: 25000,
-    repurchaseIncome: 25000,
-    donationIncome: 64000,
-    totalIncome: 64000
-  },
-  {
-    sNo: 6,
-    memberId: 'MM101016',
-    memberName: 'RAZMAN HUSSAIN',
-    mobile: '+91 9450110118',
-    joinDate: '05-02-2026',
-    status: 'ACTIVE',
-    joiningLevel: 2,
-    unlockLevel: 2,
-    rank: 2,
-    activeTeamCount: 45,
-    inactiveTeamCount: 5,
-    totalTeamCount: 50,
-    levelIncome: 50000,
-    repurchaseIncome: 50000,
-    donationIncome: 32000,
-    totalIncome: 82000
-  },
-  {
-    sNo: 7,
-    memberId: 'MM101017',
-    memberName: 'SAMEER MIRZA',
-    mobile: '+91 7020110785',
-    joinDate: '05-01-2026',
-    status: 'ACTIVE',
-    joiningLevel: 1,
-    unlockLevel: 1,
-    rank: 1,
-    activeTeamCount: 60,
-    inactiveTeamCount: 0,
-    totalTeamCount: 60,
-    levelIncome: 60000,
-    repurchaseIncome: 60000,
-    donationIncome: 16000,
-    totalIncome: 76000
-  }
-];
+import { getMemberPerformance } from '../../../../api/membersService';
 
 const exportColumns = [
   'S.NO',
@@ -149,6 +22,58 @@ const exportColumns = [
 ];
 
 function AllMemberPerformance() {
+  const [memberPerformanceRows, setMemberPerformanceRows] = useState([]);
+  const [filters, setFilters] = useState({
+    memberId: '',
+    memberName: '',
+    status: '',
+    joiningLevel: '',
+    unlockLevel: '',
+    rank: '',
+    startDate: '',
+    endDate: '',
+  });
+  const [pageSize, setPageSize] = useState('10');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadPerformanceRows = async () => {
+      try {
+        const response = await getMemberPerformance();
+        setMemberPerformanceRows(response.data || []);
+      } catch (error) {
+        setMemberPerformanceRows([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPerformanceRows();
+  }, []);
+
+  const handleFilterChange = (key) => (event) => {
+    setFilters((prev) => ({ ...prev, [key]: event.target.value }));
+  };
+
+  const filteredRows = useMemo(() => {
+    return memberPerformanceRows.filter((row) => {
+      const joinDateValue = row.joinDateRaw ? new Date(row.joinDateRaw).toISOString().slice(0, 10) : '';
+
+      const byMemberId = !filters.memberId || row.memberId.toLowerCase().includes(filters.memberId.toLowerCase());
+      const byName = !filters.memberName || row.memberName.toLowerCase().includes(filters.memberName.toLowerCase());
+      const byStatus = !filters.status || row.status === filters.status;
+      const byJoiningLevel = !filters.joiningLevel || String(row.joiningLevel) === filters.joiningLevel;
+      const byUnlockLevel = !filters.unlockLevel || String(row.unlockLevel) === filters.unlockLevel;
+      const byRank = !filters.rank || String(row.rank).toLowerCase().includes(filters.rank.toLowerCase());
+      const byStartDate = !filters.startDate || joinDateValue >= filters.startDate;
+      const byEndDate = !filters.endDate || joinDateValue <= filters.endDate;
+
+      return byMemberId && byName && byStatus && byJoiningLevel && byUnlockLevel && byRank && byStartDate && byEndDate;
+    });
+  }, [filters, memberPerformanceRows]);
+
+  const visibleRows = filteredRows.slice(0, Number(pageSize));
+
   const formatRowsForExport = (rows) => rows.map((row) => ([
     row.sNo,
     row.memberId,
@@ -226,29 +151,29 @@ function AllMemberPerformance() {
 
       <div className="panel" style={{ borderRadius: '28px', padding: '24px' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>
-          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="MEMBER ID" />
-          <input className="text-input" style={{ maxWidth: '140px' }} placeholder="MEMBER NAME" />
-          <select className="select-input" style={{ maxWidth: '98px' }} defaultValue="">
+          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="MEMBER ID" value={filters.memberId} onChange={handleFilterChange('memberId')} />
+          <input className="text-input" style={{ maxWidth: '140px' }} placeholder="MEMBER NAME" value={filters.memberName} onChange={handleFilterChange('memberName')} />
+          <select className="select-input" style={{ maxWidth: '98px' }} value={filters.status} onChange={handleFilterChange('status')}>
             <option value="">STATUS</option>
             <option value="ACTIVE">ACTIVE</option>
             <option value="IN-ACTIVE">IN-ACTIVE</option>
           </select>
-          <select className="select-input" style={{ maxWidth: '110px' }} defaultValue="">
+          <select className="select-input" style={{ maxWidth: '110px' }} value={filters.joiningLevel} onChange={handleFilterChange('joiningLevel')}>
             <option value="">JOINING LEVEL</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="9">9</option>
           </select>
-          <select className="select-input" style={{ maxWidth: '110px' }} defaultValue="">
+          <select className="select-input" style={{ maxWidth: '110px' }} value={filters.unlockLevel} onChange={handleFilterChange('unlockLevel')}>
             <option value="">UNLOCK LEVEL</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="4">4</option>
           </select>
-          <input className="text-input" style={{ maxWidth: '90px' }} placeholder="RANK" />
-          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="START DATE" />
-          <input className="text-input" style={{ maxWidth: '110px' }} placeholder="END DATE" />
-          <select className="select-input" style={{ maxWidth: '84px' }} defaultValue="10">
+          <input className="text-input" style={{ maxWidth: '90px' }} placeholder="RANK" value={filters.rank} onChange={handleFilterChange('rank')} />
+          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="START DATE" type="date" value={filters.startDate} onChange={handleFilterChange('startDate')} />
+          <input className="text-input" style={{ maxWidth: '110px' }} placeholder="END DATE" type="date" value={filters.endDate} onChange={handleFilterChange('endDate')} />
+          <select className="select-input" style={{ maxWidth: '84px' }} value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
@@ -284,7 +209,11 @@ function AllMemberPerformance() {
               </tr>
             </thead>
             <tbody>
-              {memberPerformanceRows.map((row) => (
+              {loading ? (
+                <tr>
+                  <td colSpan="16">Loading...</td>
+                </tr>
+              ) : visibleRows.length > 0 ? visibleRows.map((row) => (
                 <tr key={row.sNo}>
                   <td>{row.sNo}</td>
                   <td>{row.memberId}</td>
@@ -303,7 +232,11 @@ function AllMemberPerformance() {
                   <td>{row.donationIncome}</td>
                   <td>{row.totalIncome}</td>
                 </tr>
-              ))}
+              )) : (
+                <tr>
+                  <td colSpan="16">No member performance found</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

@@ -15,7 +15,7 @@ const CompletePayment = () => {
   const [cartItems, setCartItems] = useState([]);
   const [orderAmount, setOrderAmount] = useState(Number(location.state?.orderAmount || 0));
   const [isLoadingCart, setIsLoadingCart] = useState(true);
-  const [paymentBalances, setPaymentBalances] = useState({ eWallet: '', rWallet: '' });
+  const [paymentBalances, setPaymentBalances] = useState({ eWallet: '' });
 
   const bankDetails = {
     bankName: 'State Bank Of India',
@@ -29,7 +29,6 @@ const CompletePayment = () => {
 
   const paymentModes = {
     'e-wallet': { label: 'E-Wallet', amount: paymentBalances.eWallet ? `₹ ${paymentBalances.eWallet}` : '' },
-    'r-wallet': { label: 'R-Wallet', amount: paymentBalances.rWallet ? `₹ ${paymentBalances.rWallet}` : '' },
     'upi': { label: 'UPI ID', amount: '' },
     'bank': { label: 'BANK TRANSFER', amount: '' }
   };
@@ -69,10 +68,9 @@ const CompletePayment = () => {
         const data = res.data || {};
 
         // If backend exposes wallet balances, map them here.
-        // Common field names may be `eWallet`, `rWallet`, `wallet` etc.
+        // Common field names may be `eWallet` or `wallet`.
         setPaymentBalances({
           eWallet: data.eWallet ?? data.eWalletBalance ?? data.wallet ?? '',
-          rWallet: data.rWallet ?? data.rWalletBalance ?? data.rewardWallet ?? ''
         });
       } catch (err) {
         // ignore - keep balances empty
@@ -162,36 +160,42 @@ const CompletePayment = () => {
             ))}
           </div>
 
-          {/* Bank Account Details - Show when Bank Transfer is selected */}
-          {selectedPaymentMode === 'bank' && (
+          {/* Bank Account Details - Show when Bank Transfer or UPI is selected */}
+          {(selectedPaymentMode === 'bank' || selectedPaymentMode === 'upi') && (
             <div className="bank-details-card">
-              <h4 className="details-title">Bank Account Details</h4>
+              <h4 className="details-title">
+                {selectedPaymentMode === 'upi' ? 'UPI Details' : 'Bank Account Details'}
+              </h4>
               <table className="bank-details-table">
                 <tbody>
-                  <tr>
-                    <td className="detail-label">Bank Name</td>
-                    <td className="detail-value">{bankDetails.bankName}</td>
-                  </tr>
-                  <tr>
-                    <td className="detail-label">Bank Branch</td>
-                    <td className="detail-value">{bankDetails.branch}</td>
-                  </tr>
-                  <tr>
-                    <td className="detail-label">A/c Holder Name</td>
-                    <td className="detail-value">{bankDetails.accountHolder}</td>
-                  </tr>
-                  <tr>
-                    <td className="detail-label">A/c No.</td>
-                    <td className="detail-value">{bankDetails.accountNo}</td>
-                  </tr>
-                  <tr>
-                    <td className="detail-label">A/c Type</td>
-                    <td className="detail-value">{bankDetails.accountType}</td>
-                  </tr>
-                  <tr>
-                    <td className="detail-label">IFSC Code</td>
-                    <td className="detail-value">{bankDetails.ifscCode}</td>
-                  </tr>
+                  {selectedPaymentMode === 'bank' && (
+                    <>
+                      <tr>
+                        <td className="detail-label">Bank Name</td>
+                        <td className="detail-value">{bankDetails.bankName}</td>
+                      </tr>
+                      <tr>
+                        <td className="detail-label">Bank Branch</td>
+                        <td className="detail-value">{bankDetails.branch}</td>
+                      </tr>
+                      <tr>
+                        <td className="detail-label">A/c Holder Name</td>
+                        <td className="detail-value">{bankDetails.accountHolder}</td>
+                      </tr>
+                      <tr>
+                        <td className="detail-label">A/c No.</td>
+                        <td className="detail-value">{bankDetails.accountNo}</td>
+                      </tr>
+                      <tr>
+                        <td className="detail-label">A/c Type</td>
+                        <td className="detail-value">{bankDetails.accountType}</td>
+                      </tr>
+                      <tr>
+                        <td className="detail-label">IFSC Code</td>
+                        <td className="detail-value">{bankDetails.ifscCode}</td>
+                      </tr>
+                    </>
+                  )}
                   <tr className="upi-row">
                     <td className="detail-label">UPI ID :</td>
                     <td className="detail-value">

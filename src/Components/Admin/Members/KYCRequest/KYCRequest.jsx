@@ -1,126 +1,6 @@
+import { useEffect, useMemo, useState } from 'react';
 import './KYCRequest.css';
-
-const kycRows = [
-  {
-    sNo: 1,
-    status: 'APPROVED',
-    memberId: 'MM101011',
-    name: 'AMBIKA SALUNKE',
-    mobile: '+91 7020456118',
-    googlePay: '+91 7020456118',
-    phonePe: '+91 7020456118',
-    upiId: '+91 7020456118',
-    panNo: 'BHWPS0867P',
-    adharNo: '12345689012',
-    accountHolder: 'AMBIKA SALUNKE',
-    accountNo: '52345689077',
-    bankName: 'SBI BANK',
-    branch: 'PASHAN',
-    ifscCode: 'PASHAN'
-  },
-  {
-    sNo: 2,
-    status: 'PENDING',
-    memberId: 'MM101012',
-    name: 'RAJKIRAN SALUKE',
-    mobile: '+91 8650114455',
-    googlePay: '+91 8650114455',
-    phonePe: '+91 8650114455',
-    upiId: '+91 8650114455',
-    panNo: 'BHWPS0867P',
-    adharNo: '12345689012',
-    accountHolder: 'RAJKIRAN SALUKE',
-    accountNo: '54345441244',
-    bankName: 'HDFC BANK',
-    branch: 'SUSROAD',
-    ifscCode: 'SUSROAD'
-  },
-  {
-    sNo: 3,
-    status: 'REJECT',
-    memberId: 'MM101013',
-    name: 'AMIT SHARMA',
-    mobile: '+91 7020178456',
-    googlePay: '+91 7020178456',
-    phonePe: '+91 7020178456',
-    upiId: '+91 7020178456',
-    panNo: 'BHWPS0867P',
-    adharNo: '12345689012',
-    accountHolder: 'AMIT SHARMA',
-    accountNo: '64344628242',
-    bankName: 'SBI BANK',
-    branch: 'PASHAN',
-    ifscCode: 'PASHAN'
-  },
-  {
-    sNo: 4,
-    status: 'APPROVED',
-    memberId: 'MM101014',
-    name: 'SADDAM SHAIKH',
-    mobile: '+91 7020145858',
-    googlePay: '+91 7020145858',
-    phonePe: '+91 7020145858',
-    upiId: '+91 7020145858',
-    panNo: 'BHWPS0867P',
-    adharNo: '12345689012',
-    accountHolder: 'SADDAM SHAIKH',
-    accountNo: '7234568922',
-    bankName: 'HDFC BANK',
-    branch: 'PASHAN',
-    ifscCode: 'PASHAN'
-  },
-  {
-    sNo: 5,
-    status: 'PENDING',
-    memberId: 'MM101015',
-    name: 'THOMAS ANTHONY',
-    mobile: '+91 9270110118',
-    googlePay: '+91 9270110118',
-    phonePe: '+91 9270110118',
-    upiId: '+91 9270110118',
-    panNo: 'BHWPS0867P',
-    adharNo: '12345689012',
-    accountHolder: 'THOMAS ANTHONY',
-    accountNo: '4177747744',
-    bankName: 'SBI BANK',
-    branch: 'PASHAN',
-    ifscCode: 'PASHAN'
-  },
-  {
-    sNo: 6,
-    status: 'PENDING',
-    memberId: 'MM101016',
-    name: 'RAZMAN HUSSAIN',
-    mobile: '+91 9450110118',
-    googlePay: '+91 9450110118',
-    phonePe: '+91 9450110118',
-    upiId: '+91 9450110118',
-    panNo: 'BHWPS0867P',
-    adharNo: '12345689012',
-    accountHolder: 'RAZMAN HUSSAIN',
-    accountNo: '12345641477',
-    bankName: 'SBI BANK',
-    branch: 'PASHAN',
-    ifscCode: 'PASHAN'
-  },
-  {
-    sNo: 7,
-    status: 'PENDING',
-    memberId: 'MM101017',
-    name: 'SAMEER MIRZA',
-    mobile: '+91 7020110785',
-    googlePay: '+91 7020110785',
-    phonePe: '+91 7020110785',
-    upiId: '+91 7020110785',
-    panNo: 'BHWPS0867P',
-    adharNo: '12345689012',
-    accountHolder: 'SAMEER MIRZA',
-    accountNo: '12524222012',
-    bankName: 'HDFC BANK',
-    branch: 'PASHAN',
-    ifscCode: 'PASHAN'
-  }
-];
+import { getAdminKycRequests } from '../../../../api/membersService';
 
 const exportColumns = [
   'S.NO',
@@ -141,6 +21,52 @@ const exportColumns = [
 ];
 
 function KYCRequest() {
+  const [kycRows, setKycRows] = useState([]);
+  const [filters, setFilters] = useState({
+    memberId: '',
+    name: '',
+    mobile: '',
+    adharNo: '',
+    panNo: '',
+    status: '',
+  });
+  const [pageSize, setPageSize] = useState('10');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadKycRequests = async () => {
+      try {
+        const response = await getAdminKycRequests();
+        setKycRows(response.data || []);
+      } catch (error) {
+        setKycRows([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadKycRequests();
+  }, []);
+
+  const handleFilterChange = (key) => (event) => {
+    setFilters((prev) => ({ ...prev, [key]: event.target.value }));
+  };
+
+  const filteredRows = useMemo(() => {
+    return kycRows.filter((row) => {
+      const byMember = !filters.memberId || row.memberId.toLowerCase().includes(filters.memberId.toLowerCase());
+      const byName = !filters.name || row.name.toLowerCase().includes(filters.name.toLowerCase());
+      const byMobile = !filters.mobile || row.mobile.toLowerCase().includes(filters.mobile.toLowerCase());
+      const byAadhar = !filters.adharNo || row.adharNo.toLowerCase().includes(filters.adharNo.toLowerCase());
+      const byPan = !filters.panNo || row.panNo.toLowerCase().includes(filters.panNo.toLowerCase());
+      const byStatus = !filters.status || row.status === filters.status;
+
+      return byMember && byName && byMobile && byAadhar && byPan && byStatus;
+    });
+  }, [filters, kycRows]);
+
+  const visibleRows = filteredRows.slice(0, Number(pageSize));
+
   const formatRowsForExport = (rows) => rows.map((row) => ([
     row.sNo,
     row.status,
@@ -216,21 +142,21 @@ function KYCRequest() {
       <h1 className="page-title" style={{ fontSize: '42px', marginBottom: '14px' }}>KYC Request</h1>
 
       <div className="panel" style={{ borderRadius: '28px', padding: '24px' }}>
-        <h2 className="section-title" style={{ fontSize: '34px', marginBottom: '14px' }}>KYC LIST</h2>
+       
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>
-          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="MEMBER ID" />
-          <input className="text-input" style={{ maxWidth: '140px' }} placeholder="NAME" />
-          <input className="text-input" style={{ maxWidth: '130px' }} placeholder="MOBILE" />
-          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="ADHAR NO" />
-          <input className="text-input" style={{ maxWidth: '110px' }} placeholder="PAN NO" />
-          <select className="select-input" style={{ maxWidth: '98px' }} defaultValue="">
+          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="MEMBER ID" value={filters.memberId} onChange={handleFilterChange('memberId')} />
+          <input className="text-input" style={{ maxWidth: '140px' }} placeholder="NAME" value={filters.name} onChange={handleFilterChange('name')} />
+          <input className="text-input" style={{ maxWidth: '130px' }} placeholder="MOBILE" value={filters.mobile} onChange={handleFilterChange('mobile')} />
+          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="ADHAR NO" value={filters.adharNo} onChange={handleFilterChange('adharNo')} />
+          <input className="text-input" style={{ maxWidth: '110px' }} placeholder="PAN NO" value={filters.panNo} onChange={handleFilterChange('panNo')} />
+          <select className="select-input" style={{ maxWidth: '98px' }} value={filters.status} onChange={handleFilterChange('status')}>
                 <option value="">STATUS</option>
                 <option value="APPROVED">APPROVED</option>
                 <option value="PENDING">PENDING</option>
                 <option value="REJECT">REJECT</option>
               </select>
-          <select className="select-input" style={{ maxWidth: '84px' }} defaultValue="10">
+          <select className="select-input" style={{ maxWidth: '84px' }} value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
@@ -268,7 +194,11 @@ function KYCRequest() {
                 </tr>
               </thead>
               <tbody>
-                {kycRows.map((row) => (
+                {loading ? (
+                  <tr>
+                    <td colSpan="17">Loading...</td>
+                  </tr>
+                ) : visibleRows.length > 0 ? visibleRows.map((row) => (
                   <tr key={row.sNo}>
                     <td>{row.sNo}</td>
                     <td>
@@ -300,7 +230,11 @@ function KYCRequest() {
                     <td>{row.branch}</td>
                     <td>{row.ifscCode}</td>
                   </tr>
-                ))}
+                )) : (
+                  <tr>
+                    <td colSpan="17">No KYC requests found</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

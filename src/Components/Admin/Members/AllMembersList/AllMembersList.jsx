@@ -1,39 +1,82 @@
-import React from "react";
+import { useEffect, useMemo, useState } from 'react';
 import "./AllMembersList.css";
-
-const membersData = [
-  { sNo: 1, sponsorId: "MM101010", memberId: "MM101011", name: "AMBIKA SALUNKE", mobile: "+91 7020456118", joinDate: "05-02-2026", jLevel: 21, city: "PUNE", status: "ACTIVE", password: "123456", transPassword: "ABC@123", wallet: "0.00" },
-  { sNo: 2, sponsorId: "MM101011", memberId: "MM101012", name: "RAJKIRAN SALUKE", mobile: "+91 8650114455", joinDate: "06-02-2026", jLevel: 9, city: "PCMC", status: "ACTIVE", password: "123456", transPassword: "123456", wallet: "0.00" },
-  { sNo: 3, sponsorId: "MM101012", memberId: "MM101013", name: "AMIT SHARMA", mobile: "+91 7020178456", joinDate: "05-02-2026", jLevel: 2, city: "PUNE", status: "IN-ACTIVE", password: "123456", transPassword: "123456", wallet: "0.00" },
-  { sNo: 4, sponsorId: "MM101013", memberId: "MM101014", name: "SADDAM SHAIKH", mobile: "+91 7020145858", joinDate: "05-02-2026", jLevel: 1, city: "PATANA", status: "ACTIVE", password: "ABCDEF", transPassword: "ABCDEF", wallet: "0.00" },
-  { sNo: 5, sponsorId: "MM101014", memberId: "MM101015", name: "THOMAS ANTHONY", mobile: "+91 9271011018", joinDate: "05-02-2026", jLevel: 1, city: "THANE", status: "IN-ACTIVE", password: "123456", transPassword: "123456", wallet: "0.00" },
-  { sNo: 6, sponsorId: "MM101015", memberId: "MM101016", name: "RAZMAN HUSSAIN", mobile: "+91 9450110118", joinDate: "05-02-2026", jLevel: 2, city: "NAGAR", status: "ACTIVE", password: "123456", transPassword: "123456", wallet: "0.00" },
-  { sNo: 7, sponsorId: "MM101016", memberId: "MM101017", name: "SAMEER MIRZA", mobile: "+917020110785", joinDate: "05-01-2026", jLevel: 1, city: "SATARA", status: "ACTIVE", password: "123456", transPassword: "123466", wallet: "0.00" },
-];
+import { getAllMembersList } from '../../../../api/membersService';
 
 const AllMembersList = () => {
+  const [membersData, setMembersData] = useState([]);
+  const [filters, setFilters] = useState({
+    sponsorId: '',
+    memberId: '',
+    name: '',
+    mobile: '',
+    city: '',
+    status: '',
+    startDate: '',
+    endDate: '',
+  });
+  const [pageSize, setPageSize] = useState('10');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadMembers = async () => {
+      try {
+        const response = await getAllMembersList();
+        setMembersData(response.data || []);
+      } catch (error) {
+        setMembersData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadMembers();
+  }, []);
+
+  const handleFilterChange = (key) => (event) => {
+    setFilters((prev) => ({ ...prev, [key]: event.target.value }));
+  };
+
+  const filteredMembers = useMemo(() => {
+    return membersData.filter((member) => {
+      const joinDateValue = member.joinDateRaw ? new Date(member.joinDateRaw).toISOString().slice(0, 10) : '';
+
+      const bySponsor = !filters.sponsorId || member.sponsorId.toLowerCase().includes(filters.sponsorId.toLowerCase());
+      const byMember = !filters.memberId || member.memberId.toLowerCase().includes(filters.memberId.toLowerCase());
+      const byName = !filters.name || member.name.toLowerCase().includes(filters.name.toLowerCase());
+      const byMobile = !filters.mobile || member.mobile.toLowerCase().includes(filters.mobile.toLowerCase());
+      const byCity = !filters.city || member.city.toLowerCase().includes(filters.city.toLowerCase());
+      const byStatus = !filters.status || member.status === filters.status;
+      const byStartDate = !filters.startDate || joinDateValue >= filters.startDate;
+      const byEndDate = !filters.endDate || joinDateValue <= filters.endDate;
+
+      return bySponsor && byMember && byName && byMobile && byCity && byStatus && byStartDate && byEndDate;
+    });
+  }, [filters, membersData]);
+
+  const visibleMembers = filteredMembers.slice(0, Number(pageSize));
+
   return (
     <div>
       <h1 className="page-title" style={{ fontSize: '42px', marginBottom: '14px' }}>All-Members-List</h1>
 
       <div className="panel" style={{ borderRadius: '28px', padding: '24px' }}>
-        <h2 className="section-title" style={{ fontSize: '34px', marginBottom: '14px' }}>ALL MEMBERS LIST</h2>
+       
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>
-          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="SPONSOR ID" />
-          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="MEMBER ID" />
-          <input className="text-input" style={{ maxWidth: '140px' }} placeholder="NAME" />
-          <input className="text-input" style={{ maxWidth: '130px' }} placeholder="MOBILE" />
-          <input className="text-input" style={{ maxWidth: '110px' }} placeholder="CITY" />
+          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="SPONSOR ID" value={filters.sponsorId} onChange={handleFilterChange('sponsorId')} />
+          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="MEMBER ID" value={filters.memberId} onChange={handleFilterChange('memberId')} />
+          <input className="text-input" style={{ maxWidth: '140px' }} placeholder="NAME" value={filters.name} onChange={handleFilterChange('name')} />
+          <input className="text-input" style={{ maxWidth: '130px' }} placeholder="MOBILE" value={filters.mobile} onChange={handleFilterChange('mobile')} />
+          <input className="text-input" style={{ maxWidth: '110px' }} placeholder="CITY" value={filters.city} onChange={handleFilterChange('city')} />
           <input className="text-input" style={{ maxWidth: '80px' }} placeholder="LEVEL" />
-          <select className="select-input" style={{ maxWidth: '98px' }} defaultValue="">
+          <select className="select-input" style={{ maxWidth: '98px' }} value={filters.status} onChange={handleFilterChange('status')}>
             <option value="">STATUS</option>
             <option value="ACTIVE">ACTIVE</option>
             <option value="IN-ACTIVE">IN-ACTIVE</option>
           </select>
-          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="START DATE" type="date" />
-          <input className="text-input" style={{ maxWidth: '110px' }} placeholder="END DATE" type="date" />
-          <select className="select-input" style={{ maxWidth: '84px' }} defaultValue="10">
+          <input className="text-input" style={{ maxWidth: '120px' }} placeholder="START DATE" type="date" value={filters.startDate} onChange={handleFilterChange('startDate')} />
+          <input className="text-input" style={{ maxWidth: '110px' }} placeholder="END DATE" type="date" value={filters.endDate} onChange={handleFilterChange('endDate')} />
+          <select className="select-input" style={{ maxWidth: '84px' }} value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
@@ -62,7 +105,11 @@ const AllMembersList = () => {
               </tr>
             </thead>
             <tbody>
-              {membersData.map((member) => (
+              {loading ? (
+                <tr>
+                  <td colSpan="14">Loading...</td>
+                </tr>
+              ) : visibleMembers.length > 0 ? visibleMembers.map((member) => (
                 <tr key={member.sNo}>
                   <td>{member.sNo}</td>
                   <td>{member.sponsorId}</td>
@@ -97,7 +144,11 @@ const AllMembersList = () => {
                     <button className="login-btn">LOGIN</button>
                   </td>
                 </tr>
-              ))}
+              )) : (
+                <tr>
+                  <td colSpan="14">No members found</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
