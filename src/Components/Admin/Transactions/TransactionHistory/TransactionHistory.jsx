@@ -1,90 +1,29 @@
+import { useEffect, useMemo, useState } from 'react';
 import './TransactionHistory.css';
-
-const transactionHistoryData = [
-  {
-    sNo: 1,
-    dateTime: '01-02-2026 12:57:37PM',
-    transactionId: '123456355538',
-    memberId: 'MM101011',
-    description: 'DAILY PAYOUT',
-    credit: 1200.00,
-    debit: 0.00,
-    balance: 1200.00
-  },
-  {
-    sNo: 2,
-    dateTime: '02-02-2026 12:57:37PM',
-    transactionId: '124575545575',
-    memberId: 'MM101012',
-    description: 'DAILY PAYOUT',
-    credit: 2500.00,
-    debit: 0.00,
-    balance: 3700.00
-  },
-  {
-    sNo: 3,
-    dateTime: '03-02-2026 12:57:37PM',
-    transactionId: '123456789555',
-    memberId: 'MM101013',
-    description: 'DAILY PAYOUT',
-    credit: 3000.00,
-    debit: 0.00,
-    balance: 6700.00
-  },
-  {
-    sNo: 4,
-    dateTime: '04-02-2026 12:57:37PM',
-    transactionId: '123456789045',
-    memberId: 'MM101014',
-    description: 'DAILY PAYOUT',
-    credit: 2400.00,
-    debit: 0.00,
-    balance: 9100.00
-  },
-  {
-    sNo: 5,
-    dateTime: '04-02-2026 12:57:37PM',
-    transactionId: '1234567890892',
-    memberId: 'MM101015',
-    description: 'PRODUCT PURCHASE',
-    credit: 0.00,
-    debit: 400.00,
-    balance: 8700.00
-  },
-  {
-    sNo: 6,
-    dateTime: '05-02-2026 12:57:37PM',
-    transactionId: '123456789066',
-    memberId: 'MM101016',
-    description: 'DAILY PAYOUT',
-    credit: 1250.00,
-    debit: 0.00,
-    balance: 9950.00
-  },
-  {
-    sNo: 7,
-    dateTime: '06-02-2026 12:57:37PM',
-    transactionId: '123456789456',
-    memberId: 'MM101017',
-    description: 'EPIN GENERATION',
-    credit: 0.00,
-    debit: 2500.00,
-    balance: 7450.00
-  }
-];
+import { getAdminTransactionHistory } from '../../../../api/managementService';
 
 function TransactionHistory() {
-  const totalCredit = transactionHistoryData.reduce(
-    (sum, row) => sum + row.credit,
-    0
-  );
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [pageSize, setPageSize] = useState('10');
 
-  const totalDebit = transactionHistoryData.reduce(
-    (sum, row) => sum + row.debit,
-    0
-  );
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await getAdminTransactionHistory();
+        setRows(response.transactions || []);
+      } catch (error) {
+        setRows([]);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
 
-  const totalBalance = transactionHistoryData[transactionHistoryData.length - 1].balance;
+  const totalCredit = useMemo(() => rows.reduce((sum, row) => sum + Number(row.credit || 0), 0), [rows]);
+  const totalDebit = useMemo(() => rows.reduce((sum, row) => sum + Number(row.debit || 0), 0), [rows]);
+  const totalBalance = rows.length ? rows[rows.length - 1].balance : 0;
+  const visibleRows = rows.slice(0, Number(pageSize));
 
   return (
     <div className="admintransactionhistory-report-page">
@@ -96,7 +35,7 @@ function TransactionHistory() {
           <input className="text-input admintransactionhistory-filter-input" placeholder="TRANSACTION ID" />
           <input className="text-input admintransactionhistory-filter-input" type="date" placeholder="START DATE" />
           <input className="text-input admintransactionhistory-filter-input" type="date" placeholder="END DATE" />
-          <select className="select-input admintransactionhistory-filter-input admintransactionhistory-size-select" defaultValue="10">
+          <select className="select-input admintransactionhistory-filter-input admintransactionhistory-size-select" value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
@@ -124,7 +63,9 @@ function TransactionHistory() {
               </tr>
             </thead>
             <tbody>
-              {transactionHistoryData.map((row) => (
+              {loading ? (
+                <tr><td colSpan="8">Loading...</td></tr>
+              ) : visibleRows.length ? visibleRows.map((row) => (
                 <tr key={row.sNo}>
                   <td>{row.sNo}</td>
                   <td>{row.dateTime}</td>
@@ -135,7 +76,7 @@ function TransactionHistory() {
                   <td>{row.debit.toFixed(2)}</td>
                   <td>{row.balance.toFixed(2)}</td>
                 </tr>
-              ))}
+              )) : (<tr><td colSpan="8">No transactions found</td></tr>)}
               <tr className="admintransactionhistory-summary-row">
                 <td colSpan="5" style={{ textAlign: 'right', fontWeight: 700 }}>
                   TOTAL

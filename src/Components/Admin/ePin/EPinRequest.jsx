@@ -1,7 +1,21 @@
+import { useEffect, useState } from 'react';
 import './EPinRequest.css';
-import { epinRequestRows } from './epinMockData';
+import { getAdminEpinRequests, updateAdminEpinRequestStatus } from '../../../api/managementService';
 
 function EPinRequest() {
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await getAdminEpinRequests();
+        setRows(response.requests || []);
+      } catch (error) {
+        setRows([]);
+      }
+    })();
+  }, []);
+
   return (
     <div>
       <h1 className="page-title">ePin Request</h1>
@@ -55,11 +69,13 @@ function EPinRequest() {
               </tr>
             </thead>
             <tbody>
-              {epinRequestRows.map((row) => (
+              {rows.map((row) => (
                 <tr key={row.id}>
                   <td>{row.id}</td>
                   <td>
-                    <button className="btn-primary">Approve</button>
+                    <button className="btn-primary" type="button" onClick={async () => { await updateAdminEpinRequestStatus(row.id, { status: 'Approved' }); }}>
+                      Approve
+                    </button>
                   </td>
                   <td>{row.clientId}</td>
                   <td>{row.name}</td>

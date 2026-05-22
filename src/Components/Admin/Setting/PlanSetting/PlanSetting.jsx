@@ -1,5 +1,6 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import './PlanSetting.css';
+import { getPlanSetting } from '../../../../api/managementService';
 
 const ColumnTable = ({title, rows}) => (
   <div className="ps-col">
@@ -14,9 +15,22 @@ const ColumnTable = ({title, rows}) => (
 )
 
 export default function PlanSetting(){
-  const level = ['00.00','20.00','20.00','20.00','20.00','20.00','20.00','20.00','20.00','20.00'];
-  const repurchase = ['10.00','10.00','10.00','10.00','10.00','10.00','10.00','10.00','10.00','10.00'];
-  const donation = ['300.00','1000.00','2000.00','4000.00','8000.00','16000.00','32000.00','64000.00','128000.00','-'];
+  const [plan, setPlan] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await getPlanSetting();
+        setPlan(response.planSetting || null);
+      } catch (error) {
+        setPlan(null);
+      }
+    })();
+  }, []);
+
+  const level = plan?.levelIncome || ['00.00','20.00','20.00','20.00','20.00','20.00','20.00','20.00','20.00','20.00'];
+  const repurchase = plan?.repurchaseIncome || ['10.00','10.00','10.00','10.00','10.00','10.00','10.00','10.00','10.00','10.00'];
+  const donation = plan?.donationIncome || ['300.00','1000.00','2000.00','4000.00','8000.00','16000.00','32000.00','64000.00','128000.00','-'];
 
   return (
     <div className="plan-page container">
@@ -28,9 +42,9 @@ export default function PlanSetting(){
       </div>
 
       <div className="plan-footer">
-        <div className="plan-item"><span className="label">TDS CHARGE</span><div className="val">5 %</div></div>
-        <div className="plan-item"><span className="label">ADMIN CHRGES</span><div className="val">5 %</div></div>
-        <div className="plan-item"><span className="label">ID RENEWAL CHARGE</span><div className="val">₹ 350</div></div>
+        <div className="plan-item"><span className="label">TDS CHARGE</span><div className="val">{plan?.tdsCharge || '5 %'}</div></div>
+        <div className="plan-item"><span className="label">ADMIN CHRGES</span><div className="val">{plan?.adminCharges || '5 %'}</div></div>
+        <div className="plan-item"><span className="label">ID RENEWAL CHARGE</span><div className="val">{plan?.idRenewalCharge || '₹ 350'}</div></div>
       </div>
     </div>
   )

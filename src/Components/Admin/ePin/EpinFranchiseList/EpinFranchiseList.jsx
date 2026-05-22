@@ -1,80 +1,28 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EpinFranchiseList.css';
-
-const franchiseRows = [
-  {
-    id: 'EI45451278',
-    name: 'AMRUTA SALUNKE',
-    upi: '9822834083@ybl',
-    whatsapp: '9822834083',
-    city: 'PUNE',
-    stock: 500,
-    status: 'SHOWING'
-  },
-  {
-    id: 'EI45451279',
-    name: 'PUREX WATERTECH',
-    upi: '7250444555@ybl',
-    whatsapp: '7250444555',
-    city: 'SATARA',
-    stock: 200,
-    status: 'HIDDEN'
-  },
-  {
-    id: 'EI45451574',
-    name: 'SONALI SHIRKE',
-    upi: '9822895623@paytm',
-    whatsapp: '9822895623',
-    city: 'THANE',
-    stock: 250,
-    status: 'SHOWING'
-  },
-  {
-    id: 'EI45451272',
-    name: 'SNEHAL SHILIMKAR',
-    upi: '8956238956@ybl',
-    whatsapp: '8956238956',
-    city: 'NAGPUR',
-    stock: 100,
-    status: 'SHOWING'
-  },
-  {
-    id: 'EI45451273',
-    name: 'MEGHA SHIRKE',
-    upi: '9822568956@ybl',
-    whatsapp: '9822568956',
-    city: 'PATANA',
-    stock: 500,
-    status: 'SHOWING'
-  },
-  {
-    id: 'EI45451274',
-    name: 'DHANSHREE KATALE',
-    upi: '9823568955@ybl',
-    whatsapp: '9823568955',
-    city: 'KOLHAPUR',
-    stock: 450,
-    status: 'SHOWING'
-  },
-  {
-    id: 'EI45451275',
-    name: 'RAJANI PATIL',
-    upi: '9822658984@ybl',
-    whatsapp: '9822658984',
-    city: 'SANGALI',
-    stock: 200,
-    status: 'SHOWING'
-  }
-];
+import { getEpinFranchises } from '../../../../api/managementService';
 
 function AdminEpinFranchiseList() {
   const navigate = useNavigate();
   const [filters, setFilters] = useState({ franchiseId: '', franchiseName: '', upi: '', whatsapp: '' });
+  const [franchiseRows, setFranchiseRows] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await getEpinFranchises();
+        setFranchiseRows(response.franchises || []);
+      } catch (error) {
+        setFranchiseRows([]);
+      }
+    })();
+  }, []);
+
   const rows = useMemo(() => {
     return franchiseRows.filter((row) => {
       return (
-        (!filters.franchiseId || row.id.toLowerCase().includes(filters.franchiseId.toLowerCase())) &&
+        (!filters.franchiseId || row.franchiseId.toLowerCase().includes(filters.franchiseId.toLowerCase())) &&
         (!filters.franchiseName || row.name.toLowerCase().includes(filters.franchiseName.toLowerCase())) &&
         (!filters.upi || row.upi.toLowerCase().includes(filters.upi.toLowerCase())) &&
         (!filters.whatsapp || row.whatsapp.toLowerCase().includes(filters.whatsapp.toLowerCase()))
@@ -127,7 +75,7 @@ function AdminEpinFranchiseList() {
             {rows.map((row, index) => (
               <tr key={row.id}>
                 <td>{index + 1}</td>
-                <td>{row.id}</td>
+                <td>{row.franchiseId}</td>
                 <td>{row.name}</td>
                 <td>
                   <span className="admin-epin-scan-placeholder">IMG</span>

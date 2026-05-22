@@ -1,12 +1,25 @@
-import React from "react";
+import { useState } from "react";
 import "./GenerateEPin.css";
+import { generateEpins } from '../../../api/managementService';
 
 const GenerateEPin = () => {
+  const [form, setForm] = useState({ epinName: 'Activation', qty: '1', generatedForId: 'DT101010' });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await generateEpins({ epinName: form.epinName, generatedBy: form.generatedForId, currentOwner: form.generatedForId, qty: form.qty, cost: 10 });
+  };
+
   return (
     <div className="buyepin-container">
       <h1 className="buyepin-title">Generate ePin</h1>
       <div className="buyepin-panel">
-        <form className="buyepin-form-grid">
+        <form className="buyepin-form-grid" onSubmit={handleSubmit}>
           <div className="buyepin-section buyepin-single-card">
             <div className="buyepin-single-flex">
               <div className="buyepin-single-left" style={{width: '100%'}}>
@@ -18,7 +31,7 @@ const GenerateEPin = () => {
                     </div>
                     <div className="buyepin-input-group">
                       <label>Package</label>
-                      <select>
+                      <select name="epinName" value={form.epinName} onChange={handleChange}>
                         <option value="">Select</option>
                         <option value="basic">Basic</option>
                         <option value="standard">Standard</option>
@@ -31,7 +44,7 @@ const GenerateEPin = () => {
                     </div>
                     <div className="buyepin-input-group">
                       <label>Generated For ID</label>
-                      <input type="text" value="DT101010" disabled />
+                      <input type="text" name="generatedForId" value={form.generatedForId} onChange={handleChange} />
                     </div>
                   </div>
                 </div>

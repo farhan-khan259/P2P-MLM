@@ -1,6 +1,7 @@
 // BuyEPin.jsx
 import './BuyEPin.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { createEpinRequest, getBankAccount } from '../../../api/managementService';
 
 function BuyEPin() {
   const [form, setForm] = useState({
@@ -14,6 +15,19 @@ function BuyEPin() {
     paymentSlip: null,
   });
 
+  const [bankAccount, setBankAccount] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await getBankAccount();
+        setBankAccount(response.bankAccount || null);
+      } catch (error) {
+        setBankAccount(null);
+      }
+    })();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setForm((prev) => ({
@@ -22,27 +36,33 @@ function BuyEPin() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Submit logic here
-    console.log('Form submitted:', form);
+    await createEpinRequest({
+      clientId: form.memberId,
+      name: form.fullName,
+      packageCost: form.epinType || 'Activation-10.00',
+      qty: form.numberOfEpins,
+      paidAmount: form.totalPaidAmount,
+      mobile: form.mobileNo,
+    });
   };
 
   // Payment details organized in two logical groups
   const upiDetails = [
-    { label: 'UPI ID', value: 'NishaShirke@Oksbi' },
-    { label: 'Google Pay No.', value: 'gp@example.com' },
-    { label: 'PhonePe No.', value: 'phonepe@example.com' },
-    { label: 'Paytm No.', value: 'paytm@example.com' },
+    { label: 'UPI ID', value: bankAccount?.upiId || 'NishaShirke@Oksbi' },
+    { label: 'Google Pay No.', value: bankAccount?.googlePay || 'gp@example.com' },
+    { label: 'PhonePe No.', value: bankAccount?.phonePe || 'phonepe@example.com' },
+    { label: 'Paytm No.', value: bankAccount?.payTm || 'paytm@example.com' },
   ];
 
   const bankDetails = [
-    { label: 'Bank Name', value: 'State Bank of India' },
-    { label: 'Bank Branch', value: 'Main Branch, New Delhi' },
-    { label: 'A/c Holder Name', value: 'Company Name Pvt Ltd' },
-    { label: 'A/c No.', value: '123456789012' },
-    { label: 'A/c Type', value: 'Current Account' },
-    { label: 'IFSC Code', value: 'SBIN0012345' },
+    { label: 'Bank Name', value: bankAccount?.bankName || 'State Bank of India' },
+    { label: 'Bank Branch', value: bankAccount?.bankBranch || 'Main Branch, New Delhi' },
+    { label: 'A/c Holder Name', value: bankAccount?.accountHolderName || 'Company Name Pvt Ltd' },
+    { label: 'A/c No.', value: bankAccount?.accountNo || '123456789012' },
+    { label: 'A/c Type', value: bankAccount?.accountType || 'Current Account' },
+    { label: 'IFSC Code', value: bankAccount?.ifscCode || 'SBIN0012345' },
   ];
 
   return (
