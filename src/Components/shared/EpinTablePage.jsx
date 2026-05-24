@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getEpinList, updateEpinStatus, transferEpin, getEpinTransferHistory } from '../../api/managementService';
 
 const statusClass = (status) => {
@@ -13,7 +13,7 @@ export default function EpinTablePage({ title, heading, statusFilter, mode, show
   const [pageSize, setPageSize] = useState('10');
   const [filters, setFilters] = useState({ epin: '', generatedBy: '', currentOwner: '', memberId: '', fromDate: '', toDate: '' });
 
-  const loadRows = async () => {
+  const loadRows = useCallback(async () => {
     try {
       if (mode === 'transfer-history') {
         const response = await getEpinTransferHistory();
@@ -27,9 +27,9 @@ export default function EpinTablePage({ title, heading, statusFilter, mode, show
     } finally {
       setLoading(false);
     }
-  };
+  }, [mode, statusFilter]);
 
-  useEffect(() => { loadRows(); }, []);
+  useEffect(() => { loadRows(); }, [loadRows]);
 
   const filteredRows = useMemo(() => {
     return rows.filter((row) => {
@@ -44,6 +44,7 @@ export default function EpinTablePage({ title, heading, statusFilter, mode, show
   }, [filters, rows, mode]);
 
   const visibleRows = filteredRows.slice(0, Number(pageSize));
+  const isTransferHistory = mode === 'transfer-history';
 
   const handleAction = async (epinNo, action) => {
     if (action === 'delete') {
@@ -75,35 +76,53 @@ export default function EpinTablePage({ title, heading, statusFilter, mode, show
         <div className="table-wrap">
           <table className="data-table">
             <thead>
-              <tr>
-                <th>#</th><th>ePinName</th><th>ePin</th><th>Cost</th><th>Gen. Date</th><th>Gen. By</th><th>Cur.Owner</th><th>Status</th><th>Used By</th><th>Used Date</th><th>Action</th>
-              </tr>
+              {isTransferHistory ? (
+                <tr>
+                  <th>#</th><th>Transfer Date</th><th>ePin</th><th>From Member</th><th>To Member</th><th>Amount</th><th>Status</th>
+                </tr>
+              ) : (
+                <tr>
+                  <th>#</th><th>ePinName</th><th>ePin</th><th>Cost</th><th>Gen. Date</th><th>Gen. By</th><th>Cur.Owner</th><th>Status</th><th>Used By</th><th>Used Date</th><th>Action</th>
+                </tr>
+              )}
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="11">Loading...</td></tr>
+                <tr><td colSpan={isTransferHistory ? 7 : 11}>Loading...</td></tr>
               ) : visibleRows.length ? visibleRows.map((row, index) => (
-                <tr key={row.epin || row.id}>
-                  <td>{index + 1}</td>
-                  <td>{row.epinName}</td>
-                  <td>{row.epin}</td>
-                  <td>{row.cost}</td>
-                  <td>{row.genDate || row.transferDate}</td>
-                  <td>{row.genBy || row.fromMember}</td>
-                  <td>{row.currentOwner || row.toMember}</td>
-                  <td><span className={`epin-chip ${statusClass(row.status)}`}>{row.status}</span></td>
-                  <td>{row.usedBy || row.fromMember || '-'}</td>
-                  <td>{row.usedDate || row.transferDate || '-'}</td>
-                  <td>
-                    {showActions ? (
-                      <>
-                        <button type="button" className="epin-delete-btn" onClick={() => handleAction(row.epin, 'delete')}>x</button>
-                      </>
-                    ) : '-'}
-                  </td>
-                </tr>
+                isTransferHistory ? (
+                  <tr key={row.epin || row.id}>
+                    <td>{index + 1}</td>
+                    <td>{row.transferDate}</td>
+                    <td>{row.epin}</td>
+                    <td>{row.fromMember}</td>
+                    <td>{row.toMember}</td>
+                    <td>{row.amount}</td>
+                    <td><span className={`epin-chip ${statusClass(row.status)}`}>{row.status}</span></td>
+                  </tr>
+                ) : (
+                  <tr key={row.epin || row.id}>
+                    <td>{index + 1}</td>
+                    <td>{row.epinName}</td>
+                    <td>{row.epin}</td>
+                    <td>{row.cost}</td>
+                    <td>{row.genDate || row.transferDate}</td>
+                    <td>{row.genBy || row.fromMember}</td>
+                    <td>{row.currentOwner || row.toMember}</td>
+                    <td><span className={`epin-chip ${statusClass(row.status)}`}>{row.status}</span></td>
+                    <td>{row.usedBy || row.fromMember || '-'}</td>
+                    <td>{row.usedDate || row.transferDate || '-'}</td>
+                    <td>
+                      {showActions ? (
+                        <>
+                          <button type="button" className="epin-delete-btn" onClick={() => handleAction(row.epin, 'delete')}>x</button>
+                        </>
+                      ) : '-'}
+                    </td>
+                  </tr>
+                )
               )) : (
-                <tr><td colSpan="11">No Record Found</td></tr>
+                <tr><td colSpan={isTransferHistory ? 7 : 11}>No Record Found</td></tr>
               )}
             </tbody>
           </table>

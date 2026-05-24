@@ -1,22 +1,24 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EpinFranchiseList.css';
-import { getEpinFranchises } from '../../../../api/managementService';
+import { deleteEpinFranchise, getEpinFranchises, updateEpinFranchise } from '../../../../api/managementService';
 
 function AdminEpinFranchiseList() {
   const navigate = useNavigate();
   const [filters, setFilters] = useState({ franchiseId: '', franchiseName: '', upi: '', whatsapp: '' });
   const [franchiseRows, setFranchiseRows] = useState([]);
 
+  const loadRows = async () => {
+    try {
+      const response = await getEpinFranchises();
+      setFranchiseRows(response.franchises || []);
+    } catch (error) {
+      setFranchiseRows([]);
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await getEpinFranchises();
-        setFranchiseRows(response.franchises || []);
-      } catch (error) {
-        setFranchiseRows([]);
-      }
-    })();
+    loadRows();
   }, []);
 
   const rows = useMemo(() => {
@@ -28,10 +30,24 @@ function AdminEpinFranchiseList() {
         (!filters.whatsapp || row.whatsapp.toLowerCase().includes(filters.whatsapp.toLowerCase()))
       );
     });
-  }, [filters]);
+  }, [filters, franchiseRows]);
 
   const handleFilterChange = (key) => (event) => {
     setFilters((prev) => ({ ...prev, [key]: event.target.value }));
+  };
+
+  const handleEdit = (row) => {
+    navigate('/epin/epin-franchise/add-epin-franchise', { state: { franchise: row } });
+  };
+
+  const handleToggleStatus = async (row) => {
+    await updateEpinFranchise(row.franchiseId, { ...row, status: row.status === 'SHOWING' ? 'HIDDEN' : 'SHOWING' });
+    await loadRows();
+  };
+
+  const handleDelete = async (row) => {
+    await deleteEpinFranchise(row.franchiseId);
+    await loadRows();
   };
 
   return (
@@ -86,9 +102,9 @@ function AdminEpinFranchiseList() {
                 <td>{row.stock}</td>
                 <td>
                   <div className="admin-epin-action-group">
-                    <button type="button" className="admin-action-btn show">O</button>
-                    <button type="button" className="admin-action-btn edit">E</button>
-                    <button type="button" className="admin-action-btn delete">X</button>
+                    <button type="button" className="admin-action-btn show" onClick={() => handleToggleStatus(row)}>O</button>
+                    <button type="button" className="admin-action-btn edit" onClick={() => handleEdit(row)}>E</button>
+                    <button type="button" className="admin-action-btn delete" onClick={() => handleDelete(row)}>X</button>
                   </div>
                 </td>
                 <td>{row.status}</td>

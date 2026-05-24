@@ -99,3 +99,13 @@ export const upsertEpinFranchise = async (payload) => {
   const response = await apiClient.post('/epins/franchises', payload);
   return response.data;
 };
+
+export const updateEpinFranchise = async (franchiseId, payload) => {
+  const response = await apiClient.put(`/epins/franchises/${franchiseId}`, payload);
+  return response.data;
+};
+
+export const deleteEpinFranchise = async (franchiseId) => {
+  const response = await apiClient.delete(`/epins/franchises/${franchiseId}`);
+  return response.data;
+};

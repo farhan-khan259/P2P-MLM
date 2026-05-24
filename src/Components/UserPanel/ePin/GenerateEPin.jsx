@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./GenerateEPin.css";
 import { generateEpins } from '../../../api/managementService';
 
 const GenerateEPin = () => {
-  const [form, setForm] = useState({ epinName: 'Activation', qty: '1', generatedForId: 'DT101010' });
+  const defaultGeneratedForId = useMemo(() => {
+    try {
+      const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+      return storedUser.memberId || storedUser.epin || storedUser.id || 'ADMIN';
+    } catch (error) {
+      return 'ADMIN';
+    }
+  }, []);
+
+  const [form, setForm] = useState({ epinName: 'Activation', qty: '1', generatedForId: defaultGeneratedForId });
 
   const handleChange = (event) => {
     const { name, value } = event.target;

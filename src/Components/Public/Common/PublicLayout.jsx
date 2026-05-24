@@ -101,7 +101,6 @@ function PublicLayout() {
         aria-label="Close menu overlay"
         onClick={closeMenu}
       />
-
       <main>
         <Outlet />
       </main>

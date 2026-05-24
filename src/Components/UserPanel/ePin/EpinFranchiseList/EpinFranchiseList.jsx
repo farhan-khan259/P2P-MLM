@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import qrCode from '../../../../Assets/Pictures/QR-Code.png';
 import './EpinFranchiseList.css';
+import { getEpinFranchises } from '../../../../api/managementService';
 
 const CopyIcon = ({ onClick }) => (
   <svg
@@ -22,61 +23,22 @@ const CopyIcon = ({ onClick }) => (
   </svg>
 );
 
-const franchiseItems = [
-  {
-    id: 'EI45451278',
-    name: 'AMRUTA RAJKIRAN ',
-    upi: 'amrutas020187@oksbi',
-    city: 'PUNE',
-    stock: 150,
-    status: 'IN STOCK'
-  },
-  {
-    id: 'EI45451279',
-    name: 'PUREX WATERTECH',
-    upi: 'shirkenshikhant@oksbi',
-    city: 'SATARA',
-    stock: 0,
-    status: 'OUT OF STOCK'
-  },
-  {
-    id: 'EI45451274',
-    name: 'SILVER LIFE MULTITRADE',
-    upi: 'amrutasalunke@oksbi',
-    city: 'THANE',
-    stock: 150,
-    status: 'IN STOCK'
-  },
-  {
-    id: 'EI45451272',
-    name: 'SONALI N SHIRKE',
-    upi: 'amrutasalunke@oksbi',
-    city: 'PUNE',
-    stock: 150,
-    status: 'IN STOCK'
-  },
-  {
-    id: 'EI45451273',
-    name: 'PUNE WATER TECHNOLOGY',
-    upi: 'purexwater@oksbi',
-    city: 'PATANA',
-    stock: 150,
-    status: 'IN STOCK'
-  },
-  {
-    id: 'EI45451275',
-    name: 'DNYANDEV DONGARE',
-    upi: 'dynandongaret@oksbi',
-    city: 'SATARA',
-    stock: 0,
-    status: 'OUT OF STOCK'
-  }
-];
-
 function EpinFranchiseList() {
   const [search, setSearch] = useState('');
   const [city, setCity] = useState('All');
   const [copiedId, setCopiedId] = useState(null);
+  const [franchiseItems, setFranchiseItems] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await getEpinFranchises();
+        setFranchiseItems(response.franchises || []);
+      } catch (error) {
+        setFranchiseItems([]);
+      }
+    })();
+  }, []);
 
   const handleCopy = (text, id) => {
     if (!navigator.clipboard) {
@@ -96,11 +58,11 @@ function EpinFranchiseList() {
         item.name.toLowerCase().includes(term) ||
         item.upi.toLowerCase().includes(term) ||
         item.city.toLowerCase().includes(term) ||
-        item.id.toLowerCase().includes(term);
+        item.franchiseId.toLowerCase().includes(term);
       const matchesCity = city === 'All' || item.city === city;
       return matchesSearch && matchesCity;
     });
-  }, [search, city]);
+  }, [search, city, franchiseItems]);
 
   return (
     <div className="franchise-list-page">
@@ -136,7 +98,7 @@ function EpinFranchiseList() {
         <div className="franchise-card-grid">
           {filteredList.length ? (
             filteredList.map((item) => (
-              <article key={item.id} className="franchise-card">
+              <article key={item.franchiseId} className="franchise-card">
                 <div className="franchise-card-image">
                   <div className="qr-frame">
                     <img src={qrCode} alt="Franchise QR code" className="franchise-qr-image" />
@@ -153,8 +115,8 @@ function EpinFranchiseList() {
                   <div className="franchise-upi-row">
                     <span className="franchise-upi">{item.upi}</span>
                     <div className="franchise-copy-group">
-                      <CopyIcon onClick={() => handleCopy(item.upi, item.id)} />
-                      {copiedId === item.id && <span className="copy-notice">Copied</span>}
+                      <CopyIcon onClick={() => handleCopy(item.upi, item.franchiseId)} />
+                      {copiedId === item.franchiseId && <span className="copy-notice">Copied</span>}
                     </div>
                   </div>
                   <button type="button" className="franchise-share-btn">

@@ -21,6 +21,7 @@ import UsedEPin from './Components/UserPanel/ePin/UsedEPin';
 import UnusedEPin from './Components/UserPanel/ePin/UnusedEPin';
 import ListAllEPin from './Components/UserPanel/ePin/ListAllEPin';
 import TransferEPin from './Components/UserPanel/ePin/TransferEPin';
+import TransferHistory from './Components/Admin/ePin/TransferHistory';
 import EPinTransferHistory from './Components/UserPanel/ePin/EPinTransferHistory';
 import DeletedEPin from './Components/UserPanel/ePin/DeletedEPin';
 import AdminLogin from './Components/AdminLogin';
@@ -224,7 +225,7 @@ function App() {
           <Route path="epin/used-epin" element={<UsedEPin />} />
           <Route path="epin/all-epin" element={<ListAllEPin />} />
           <Route path="epin/delete-epin" element={<DeletedEPin />} />
-          <Route path="epin/transfer-history" element={<TransferEPin />} />
+          <Route path="epin/transfer-history" element={<TransferHistory />} />
           <Route path="epin/epin-franchise" element={<AdminEpinFranchiseList />} />
           <Route path="epin/epin-franchise/add-epin-franchise" element={<AddEpinFranchise />} />
           {/* Removed Admin ePin components from user panel routes. Use only user panel ePin components. */}

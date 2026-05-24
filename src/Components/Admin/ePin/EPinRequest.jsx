@@ -5,16 +5,23 @@ import { getAdminEpinRequests, updateAdminEpinRequestStatus } from '../../../api
 function EPinRequest() {
   const [rows, setRows] = useState([]);
 
+  const loadRows = async () => {
+    try {
+      const response = await getAdminEpinRequests();
+      setRows(response.requests || []);
+    } catch (error) {
+      setRows([]);
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await getAdminEpinRequests();
-        setRows(response.requests || []);
-      } catch (error) {
-        setRows([]);
-      }
-    })();
+    loadRows();
   }, []);
+
+  const handleApprove = async (requestId) => {
+    await updateAdminEpinRequestStatus(requestId, { status: 'Approved' });
+    await loadRows();
+  };
 
   return (
     <div>
@@ -70,10 +77,10 @@ function EPinRequest() {
             </thead>
             <tbody>
               {rows.map((row) => (
-                <tr key={row.id}>
+                <tr key={row._id || row.id}>
                   <td>{row.id}</td>
                   <td>
-                    <button className="btn-primary" type="button" onClick={async () => { await updateAdminEpinRequestStatus(row.id, { status: 'Approved' }); }}>
+                    <button className="btn-primary" type="button" onClick={() => handleApprove(row._id)}>
                       Approve
                     </button>
                   </td>
@@ -94,7 +101,7 @@ function EPinRequest() {
         </div>
 
         <div className="table-footer">
-          <span>Showing Page 1 of 1 From 3 Rows</span>
+          <span>Showing Page 1 of 1 From {rows.length} Rows</span>
           <div className="pagination">
             <button className="page-btn">&lt;&lt;</button>
             <button className="page-btn">&lt;</button>
