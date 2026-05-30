@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import './UserLayout.css';
+import { getProfile } from '../../../api/authService';
 
 const menuItems = [
   { key: 'dashboard', label: 'Dashboard', to: '/user/dashboard' },
@@ -89,9 +90,10 @@ const menuItems = [
   },
   { key: 'kycRequest', label: 'KYC Request', to: '/user/kyc-request' },
     {
-      key: 'payment',
-      label: 'Payment',
+      key: 'deposit',
+      label: 'Deposit',
       children: [
+        { label: 'Deposit History', to: '/user/deposit/history' },
         { label: 'Withdrawal History', to: '/user/payment/withdrawal-history' }
       ]
     },
@@ -140,6 +142,7 @@ function UserLayout() {
   const showBackButton = location.pathname !== '/user/dashboard';
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [openSection, setOpenSection] = useState(() => getDefaultOpenSection(location.pathname));
+  const [memberId, setMemberId] = useState('');
 
   useEffect(() => {
     setOpenSection(getDefaultOpenSection(location.pathname));
@@ -155,6 +158,26 @@ function UserLayout() {
     }
   }, [location.pathname]);
 
+  useEffect(() => {
+    // Try to read cached user from localStorage first
+    try {
+      const stored = JSON.parse(localStorage.getItem('user'));
+      if (stored && stored.memberId) setMemberId(stored.memberId);
+    } catch (err) {
+      // ignore
+    }
+
+    // Refresh profile from API to ensure authoritative memberId
+    (async () => {
+      try {
+        const res = await getProfile();
+        if (res?.success && res.data?.memberId) setMemberId(res.data.memberId);
+      } catch (err) {
+        // ignore
+      }
+    })();
+  }, []);
+
   return (
     <div className={`user-root ${isSidebarOpen ? 'user-sidebar-open' : 'user-sidebar-collapsed'}`}>
       <aside className="user-sidebar">
@@ -164,7 +187,7 @@ function UserLayout() {
             <div className="user-member-avatar">👤</div>
             <div>
               <div className="member-label">Member ID</div>
-              <div className="member-value">IHH192108</div>
+              <div className="member-value">{memberId || '---'}</div>
             </div>
           </div>
           <button

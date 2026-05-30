@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../Common/UserLayout.css';
 import './UserDashboard.css';
 import { getUserDashboard } from '../../../api/dashboardService';
@@ -21,6 +22,7 @@ function MemberDashboard() {
   const [activeTab, setActiveTab] = useState('top');
   const [activeSlide, setActiveSlide] = useState(0);
   const [memberInfo, setMemberInfo] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -127,8 +129,49 @@ function MemberDashboard() {
           </div>
           <div className="user-dashboard1-member-dashboard-actions">
             <button className="user-dashboard1-member-dashboard-action-btn user-dashboard1-member-dashboard-buy">Buy Product</button>
-            <button className="user-dashboard1-member-dashboard-action-btn user-dashboard1-member-dashboard-join">Join Now</button>
-            <button className="user-dashboard1-member-dashboard-action-btn user-dashboard1-member-dashboard-share">Share Link</button>
+            <button
+              className="user-dashboard1-member-dashboard-action-btn user-dashboard1-member-dashboard-join"
+              onClick={() => {
+                const mid = memberInfo?.memberId;
+                if (!mid) return;
+                navigate(`/registration?ref=${encodeURIComponent(mid)}`);
+              }}
+            >
+              Join Now
+            </button>
+            <button
+              className="user-dashboard1-member-dashboard-action-btn user-dashboard1-member-dashboard-share"
+              onClick={async () => {
+                const mid = memberInfo?.memberId;
+                if (!mid) return;
+                const url = `${window.location.origin}/registration?ref=${encodeURIComponent(mid)}`;
+                const title = 'Join me on Elcon';
+                const text = `Join me using my member ID ${mid} — Register here:`;
+
+                if (navigator.share) {
+                  try {
+                    await navigator.share({ title, text, url });
+                    return;
+                  } catch (err) {
+                    // fallthrough to copy
+                  }
+                }
+
+                try {
+                  await navigator.clipboard.writeText(url);
+                  // open whatsapp share as a convenient fallback
+                  const wa = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+                  window.open(wa, '_blank', 'noopener,noreferrer');
+                  alert('Share link copied to clipboard. WhatsApp share opened.');
+                } catch (err) {
+                  // final fallback: open mailto
+                  const mailto = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text + ' ' + url)}`;
+                  window.open(mailto, '_blank', 'noopener,noreferrer');
+                }
+              }}
+            >
+              Share Link
+            </button>
           </div>
         </section>
 

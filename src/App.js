@@ -44,6 +44,7 @@ import MyTeam from './Components/UserPanel/Team/MyTeam/MyTeam';
 import SelfPaymentHistory from './Components/UserPanel/Payment/SelfPaymentHistory/SelfPaymentHistory';
 import GivenHelp from './Components/UserPanel/Donations/GivenHelp';
 import PaymentRequestHistory from './Components/UserPanel/Payment/PaymentRequestHistory/PaymentRequestHistory';
+import DepositHistory from './Components/UserPanel/Payment/DepositHistory/DepositHistory';
 import UserLevelIncome from './Components/UserPanel/Income/LevelIncome/LevelIncome';
 import DonationsIncome from './Components/UserPanel/Income/DonationsIncome/DonationsIncome';
 import RepurchaseIncome from './Components/UserPanel/Income/RepurchaseIncome/RepurchaseIncome';
@@ -87,6 +88,7 @@ import AllDeposits from './Components/Admin/Deposits/AllDeposits/AllDeposits';
 import TdsReport from './Components/Admin/Income/TdsReport/TdsReport';
 import MyCart from './Components/UserPanel/Product/MyCart/MyCart';
 import CompletePayment from './Components/UserPanel/Payment/CompletePayment/CompletePayment';
+import AddDepositFunds from './Components/UserPanel/Payment/AddDepositFunds/AddDepositFunds';
 import Withdraw from './Components/UserPanel/Payment/Withdraw/Withdraw';
 import AdminBankAccount from './Components/Admin/Setting/BankAccount/BankAccount';
 import PlanSetting from './Components/Admin/Setting/PlanSetting/PlanSetting';
@@ -206,6 +208,8 @@ function App() {
           <Route path="payment/withdrawal-history" element={<WithdrawalHistory />} />
           <Route path="payment/complete-payment" element={<CompletePayment />} />
           <Route path="payment/withdraw" element={<Withdraw />} />
+          <Route path="deposit/history" element={<DepositHistory />} />
+          <Route path="deposit/add-funds" element={<AddDepositFunds />} />
           <Route path="income/level-income" element={<UserLevelIncome />} />
           <Route path="support/create-ticket" element={<CreateTicket />} />
           <Route path="sign-out" element={<UserSignOut />} />

@@ -15,6 +15,16 @@ export const getMyWithdrawalHistory = async () => {
   return response.data;
 };
 
+export const createDepositRequest = async (payload) => {
+  const response = await apiClient.post('/deposits', payload);
+  return response.data;
+};
+
+export const getMyDepositHistory = async () => {
+  const response = await apiClient.get('/deposits/me');
+  return response.data;
+};
+
 export const getAdminWithdrawalRequests = async (status) => {
   const response = await apiClient.get('/withdrawals/admin', {
     params: status ? { status } : undefined,

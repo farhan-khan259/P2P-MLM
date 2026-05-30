@@ -6,7 +6,7 @@ import './UserLogin.css';
 
 function UserLogin() {
 	const navigate = useNavigate();
-	const [email, setEmail] = useState('');
+	const [memberId, setMemberId] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -17,7 +17,7 @@ function UserLogin() {
 		setLoading(true);
 
 		try {
-			const data = await loginUser({ email, password });
+			const data = await loginUser({ memberId, password });
 			localStorage.setItem('token', data.token);
 			localStorage.setItem('user', JSON.stringify(data.user));
 
@@ -46,12 +46,12 @@ function UserLogin() {
 								{error}
 							</div>
 						) : null}
-						<label>Email</label>
+						<label>Member ID</label>
 						<input
-							type="email"
-							placeholder="Enter your email"
-							value={email}
-							onChange={(event) => setEmail(event.target.value)}
+							type="text"
+							placeholder="Enter your Member ID (e.g. EL12345678)"
+							value={memberId}
+							onChange={(event) => setMemberId(event.target.value)}
 						/>
 						<label>Password</label>
 						<input

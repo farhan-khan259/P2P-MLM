@@ -49,6 +49,15 @@ function Register() {
 
   // Auto-fetch sponsor name when sponsor ID is entered
   useEffect(() => {
+    // Prefill sponsorId from URL query `ref` if present (share links use ?ref=MEMBERID)
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const ref = params.get('ref') || params.get('sponsor');
+      if (ref) setSponsorId(ref);
+    } catch (err) {
+      // ignore
+    }
+
     if (!sponsorId || sponsorId.trim() === '') {
       setSponsorName('');
       setSponsorError('');
