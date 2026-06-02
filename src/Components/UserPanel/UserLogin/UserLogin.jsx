@@ -28,8 +28,8 @@ function UserLogin() {
 
 			navigate('/user/dashboard');
 		} catch (requestError) {
-			const message = requestError?.response?.data?.message || 'Invalid login credentials';
-			setError(message);
+            const responseData = requestError?.response?.data;
+            const message = responseData?.errors?.[0]?.msg || responseData?.message || 'Invalid login credentials';
 		} finally {
 			setLoading(false);
 		}

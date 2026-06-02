@@ -19,7 +19,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "fix:india-sourcemaps": "node ./scripts/fix-india-state-district-sourcemap-comments.js",
+    "postinstall": "npm run fix:india-sourcemaps"
   },
   "eslintConfig": {
     "extends": [

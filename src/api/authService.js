@@ -10,6 +10,11 @@ export const loginUser = async (credentials) => {
 	return response.data;
 };
 
+export const loginAsUser = async (memberId) => {
+	const response = await apiClient.post('/auth/admin-login-user', { memberId });
+	return response.data;
+};
+
 export const getSponsorDetails = async (sponsorId) => {
 	const response = await apiClient.get(`/auth/sponsor/${sponsorId}`);
 	return response.data;

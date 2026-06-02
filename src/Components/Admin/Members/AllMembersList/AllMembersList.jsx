@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./AllMembersList.css";
 import { getAllMembersList } from '../../../../api/membersService';
+import { loginAsUser } from '../../../../api/authService';
 
 const AllMembersList = () => {
   const [membersData, setMembersData] = useState([]);
@@ -16,6 +18,9 @@ const AllMembersList = () => {
   });
   const [pageSize, setPageSize] = useState('10');
   const [loading, setLoading] = useState(true);
+  const [loginLoadingMember, setLoginLoadingMember] = useState(null);
+  const [loginError, setLoginError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadMembers = async () => {
@@ -55,6 +60,26 @@ const AllMembersList = () => {
 
   const visibleMembers = filteredMembers.slice(0, Number(pageSize));
 
+  const handleLoginAsUser = async (memberId) => {
+    try {
+      setLoginError('');
+      setLoginLoadingMember(memberId);
+      const response = await loginAsUser(memberId);
+      if (response?.token) {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
+        navigate('/user/dashboard', { replace: true });
+      } else {
+        setLoginError('Unable to login to user account.');
+      }
+    } catch (error) {
+      const message = error?.response?.data?.message || 'Unable to login to user account.';
+      setLoginError(message);
+    } finally {
+      setLoginLoadingMember(null);
+    }
+  };
+
   return (
     <div>
       <h1 className="page-title" style={{ fontSize: '42px', marginBottom: '14px' }}>All-Members-List</h1>
@@ -84,6 +109,9 @@ const AllMembersList = () => {
           <button className="btn-primary" type="button">SEARCH</button>
         </div>
 
+        {loginError && (
+          <div style={{ color: '#d32f2f', marginBottom: '12px' }}>{loginError}</div>
+        )}
         <div className="table-wrap">
           <table className="data-table" style={{ minWidth: '1400px' }}>
             <thead>
@@ -141,7 +169,14 @@ const AllMembersList = () => {
                     </div>
                   </td>
                   <td>
-                    <button className="login-btn">LOGIN</button>
+                    <button
+                      className="login-btn"
+                      type="button"
+                      disabled={loginLoadingMember === member.memberId}
+                      onClick={() => handleLoginAsUser(member.memberId)}
+                    >
+                      {loginLoadingMember === member.memberId ? 'LOGGING IN...' : 'LOGIN'}
+                    </button>
                   </td>
                 </tr>
               )) : (
