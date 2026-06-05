@@ -1,10 +1,15 @@
 import axios from 'axios';
 
+const API_BASE = process.env.REACT_APP_API || 'http://localhost:5001/api';
+
 const apiClient = axios.create({
-	baseURL: 'http://localhost:5001/api',
+	baseURL: API_BASE,
 	headers: {
 		'Content-Type': 'application/json',
 	},
+	// If you switch to cookie-based auth, enable this and configure CORS on the backend
+	// with credentials: true and app.set('trust proxy', 1) if behind a proxy.
+	// withCredentials: true,
 });
 
 apiClient.interceptors.request.use((config) => {
