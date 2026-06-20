@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 const defaultApiBaseUrl =
-	typeof window !== 'undefined' ? `${window.location.origin}/api` : '/api';
+	typeof window !== 'undefined' ? `${window.location.origin}/api` : 'https://elconnetwork.com/api';
 
 const apiClient = axios.create({
-	baseURL: process.env.REACT_APP_API_URL || defaultApiBaseUrl,
+	baseURL: process.env.REACT_APP_API || defaultApiBaseUrl,
 	headers: {
 		'Content-Type': 'application/json',
 	},
