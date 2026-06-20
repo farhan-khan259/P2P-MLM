@@ -1,7 +1,47 @@
 import './MyDirectReferral.css';
-import { teamRows } from '../../Common/mockData';
+import { useEffect, useMemo, useState } from 'react';
+import { getTeamTree } from '../../../../api/donationsService';
+
+function flattenDirects(node) {
+  return (node?.children || []).map((child, index) => ({
+    sNo: index + 1,
+    memberId: child.memberId,
+    memberName: child.name,
+    totalDirect: child.directCount || child.children?.length || 0,
+    mobile: child.mobile || '---',
+    joinDate: child.joinDate || '---',
+    activeDate: child.joinDate || '---',
+    formStatus: child.status || 'ACTIVE',
+    blockStatus: child.status || 'ACTIVE',
+  }));
+}
 
 function MyDirectReferral() {
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    getTeamTree()
+      .then((response) => setRows(flattenDirects(response.data)))
+      .catch((loadError) => setError(loadError?.response?.data?.message || 'Failed to load direct referrals.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filteredRows = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    if (!query) {
+      return rows;
+    }
+
+    return rows.filter((row) =>
+      [row.memberId, row.memberName, row.mobile, row.joinDate]
+        .filter(Boolean)
+        .some((value) => String(value).toLowerCase().includes(query))
+    );
+  }, [rows, search]);
+
   return (
     <div>
       <h1 className="page-title">Member Direct Report</h1>
@@ -13,19 +53,21 @@ function MyDirectReferral() {
         </div>
 
         <div className="btn-row">
-          <button className="btn-primary">Show Details</button>
+          <button className="btn-primary" type="button">Show Details</button>
         </div>
         <div className="btn-row">
-          <button className="btn-outline">Excel</button>
+          <button className="btn-outline" type="button">Excel</button>
         </div>
 
         <div className="table-tools">
           <div />
           <label className="search-box">
             Search:
-            <input className="text-input" />
+            <input className="text-input" value={search} onChange={(event) => setSearch(event.target.value)} />
           </label>
         </div>
+
+        {error && <p style={{ color: '#c62828', padding: '0 16px 12px' }}>{error}</p>}
 
         <div className="table-wrap">
           <table className="data-table">
@@ -43,17 +85,21 @@ function MyDirectReferral() {
               </tr>
             </thead>
             <tbody>
-              {teamRows.map((row) => (
-                <tr key={row[0]}>
-                  <td>{row[0]}</td>
-                  <td>{row[1]}</td>
-                  <td>{row[2]}</td>
-                  <td>{row[3].replace('Total Direct :1', 'Total Member : 1')}</td>
-                  <td>{row[4]}</td>
-                  <td>{row[7]}</td>
-                  <td>{row[7]}</td>
-                  <td>ACTIVE</td>
-                  <td>ACTIVE</td>
+              {loading ? (
+                <tr><td colSpan={9}>Loading...</td></tr>
+              ) : filteredRows.length === 0 ? (
+                <tr><td colSpan={9}>No direct referrals found.</td></tr>
+              ) : filteredRows.map((row) => (
+                <tr key={row.memberId}>
+                  <td>{row.sNo}</td>
+                  <td>{row.memberId}</td>
+                  <td>{row.memberName}</td>
+                  <td>{row.totalDirect}</td>
+                  <td>{row.mobile}</td>
+                  <td>{row.joinDate}</td>
+                  <td>{row.activeDate}</td>
+                  <td>{row.formStatus}</td>
+                  <td>{row.blockStatus}</td>
                 </tr>
               ))}
             </tbody>

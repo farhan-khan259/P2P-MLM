@@ -109,3 +109,23 @@ export const deleteEpinFranchise = async (franchiseId) => {
   const response = await apiClient.delete(`/epins/franchises/${franchiseId}`);
   return response.data;
 };
+
+export const createSupportTicket = async (payload) => {
+  const response = await apiClient.post('/support-tickets', payload);
+  return response.data;
+};
+
+export const getMySupportTickets = async () => {
+  const response = await apiClient.get('/support-tickets/me');
+  return response.data;
+};
+
+export const getAdminSupportTickets = async () => {
+  const response = await apiClient.get('/support-tickets');
+  return response.data;
+};
+
+export const updateSupportTicketStatus = async (ticketNo, payload) => {
+  const response = await apiClient.patch(`/support-tickets/${ticketNo}/status`, payload);
+  return response.data;
+};

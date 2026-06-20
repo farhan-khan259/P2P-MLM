@@ -1,7 +1,58 @@
 import './TeamView.css';
-import { teamRows } from '../../Common/mockData';
+import { useEffect, useMemo, useState } from 'react';
+import { getTeamTree } from '../../../../api/donationsService';
+
+function flattenTree(node, parentId = '', depth = 0, acc = []) {
+  if (!node) {
+    return acc;
+  }
+
+  (node.children || []).forEach((child) => {
+    acc.push({
+      memberId: child.memberId,
+      memberName: child.name,
+      totalDirect: child.directCount || child.children?.length || 0,
+      mobile: child.mobile || '---',
+      sponsorId: node.memberId,
+      sponsorName: node.name,
+      joinDate: child.joinDate || '---',
+      activeDate: child.joinDate || '---',
+      formStatus: child.status || 'ACTIVE',
+      blockStatus: child.status || 'ACTIVE',
+      depth,
+    });
+    flattenTree(child, child.memberId, depth + 1, acc);
+  });
+
+  return acc;
+}
 
 function TeamView() {
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    getTeamTree()
+      .then((response) => setRows(flattenTree(response.data)))
+      .catch((loadError) => setError(loadError?.response?.data?.message || 'Failed to load team members.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filteredRows = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    if (!query) {
+      return rows;
+    }
+
+    return rows.filter((row) =>
+      [row.memberId, row.memberName, row.mobile, row.sponsorId, row.sponsorName]
+        .filter(Boolean)
+        .some((value) => String(value).toLowerCase().includes(query))
+    );
+  }, [rows, search]);
+
   return (
     <div>
       <h1 className="page-title">My Team</h1>
@@ -33,16 +84,18 @@ function TeamView() {
         </div>
 
         <div className="btn-row">
-          <button className="btn-outline">Excel</button>
+          <button className="btn-outline" type="button">Excel</button>
         </div>
 
         <div className="table-tools">
           <div />
           <label className="search-box">
             Search:
-            <input className="text-input" />
+            <input className="text-input" value={search} onChange={(event) => setSearch(event.target.value)} />
           </label>
         </div>
+
+        {error && <p style={{ color: '#c62828', padding: '0 16px 12px' }}>{error}</p>}
 
         <div className="table-wrap">
           <table className="data-table">
@@ -59,11 +112,20 @@ function TeamView() {
               </tr>
             </thead>
             <tbody>
-              {teamRows.map((row) => (
-                <tr key={row[0]}>
-                  {row.map((cell, index) => (
-                    <td key={`${row[0]}-${index}`}>{cell}</td>
-                  ))}
+              {loading ? (
+                <tr><td colSpan={8}>Loading...</td></tr>
+              ) : filteredRows.length === 0 ? (
+                <tr><td colSpan={8}>No team members found.</td></tr>
+              ) : filteredRows.map((row, index) => (
+                <tr key={row.memberId || index}>
+                  <td>{index + 1}</td>
+                  <td>{row.memberId}</td>
+                  <td>{row.memberName}</td>
+                  <td>{row.totalDirect}</td>
+                  <td>{row.mobile}</td>
+                  <td>{row.sponsorId}</td>
+                  <td>{row.sponsorName}</td>
+                  <td>{row.joinDate}</td>
                 </tr>
               ))}
             </tbody>

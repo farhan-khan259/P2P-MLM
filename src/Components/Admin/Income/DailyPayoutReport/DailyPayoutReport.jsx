@@ -1,104 +1,43 @@
 import './DailyPayoutReport.css';
-
-const adminDailyPayoutData = [
-  {
-    sNo: 1,
-    incomeDate: '06-02-2026',
-    memberId: 'MM101011',
-    memberName: 'ANAMIKA SAXENA',
-    levelIncome: 1200.00,
-    repurchaseIncome: 1000.00,
-    grossIncome: 2200.00,
-    tds: 110.00,
-    adminCharge: 110.00,
-    netPayable: 1980.00,
-    status: 'Credited To E-wallet'
-  },
-  {
-    sNo: 2,
-    incomeDate: '05-02-2026',
-    memberId: 'MM101012',
-    memberName: 'ANIKET CHOUGULE',
-    levelIncome: 1000.00,
-    repurchaseIncome: 1200.00,
-    grossIncome: 2200.00,
-    tds: 110.00,
-    adminCharge: 110.00,
-    netPayable: 1980.00,
-    status: 'Credited To E-wallet'
-  },
-  {
-    sNo: 3,
-    incomeDate: '04-02-2026',
-    memberId: 'MM101013',
-    memberName: 'RAJMATA SALUKE',
-    levelIncome: 2000.00,
-    repurchaseIncome: 2500.00,
-    grossIncome: 4500.00,
-    tds: 225.00,
-    adminCharge: 225.00,
-    netPayable: 4050.00,
-    status: 'Credited To E-wallet'
-  },
-  {
-    sNo: 4,
-    incomeDate: '03-02-2026',
-    memberId: 'MM101014',
-    memberName: 'SNEHAL MARNE',
-    levelIncome: 2400.00,
-    repurchaseIncome: 250.00,
-    grossIncome: 2650.00,
-    tds: 132.50,
-    adminCharge: 132.50,
-    netPayable: 2385.00,
-    status: 'Credited To E-wallet'
-  },
-  {
-    sNo: 5,
-    incomeDate: '02-02-2026',
-    memberId: 'MM101015',
-    memberName: 'SADDAM SHAIKH',
-    levelIncome: 900.00,
-    repurchaseIncome: 1500.00,
-    grossIncome: 2400.00,
-    tds: 120.00,
-    adminCharge: 120.00,
-    netPayable: 2160.00,
-    status: 'Credited To E-wallet'
-  },
-  {
-    sNo: 6,
-    incomeDate: '01-02-2026',
-    memberId: 'MM101016',
-    memberName: 'AMIT GADE',
-    levelIncome: 400.00,
-    repurchaseIncome: 1800.00,
-    grossIncome: 2200.00,
-    tds: 110.00,
-    adminCharge: 110.00,
-    netPayable: 1980.00,
-    status: 'Credited To E-wallet'
-  },
-  {
-    sNo: 7,
-    incomeDate: '30-01-2026',
-    memberId: 'MM101017',
-    memberName: 'PARAG GUJARATHI',
-    levelIncome: 500.00,
-    repurchaseIncome: 2000.00,
-    grossIncome: 2500.00,
-    tds: 125.00,
-    adminCharge: 125.00,
-    netPayable: 2250.00,
-    status: 'Credited To E-wallet'
-  }
-];
+import { useEffect, useMemo, useState } from 'react';
+import { getMemberPerformance } from '../../../../api/membersService';
 
 function DailyPayoutReport() {
-  const totalPayoutAmount = adminDailyPayoutData.reduce(
-    (sum, row) => sum + row.netPayable,
-    0
-  );
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    getMemberPerformance()
+      .then((response) => setRows(Array.isArray(response.data) ? response.data : []))
+      .catch((loadError) => setError(loadError?.response?.data?.message || 'Failed to load daily payout report.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const adminDailyPayoutData = useMemo(() => rows.map((row) => {
+    const levelIncome = Number(row.levelIncome || 0);
+    const repurchaseIncome = Number(row.repurchaseIncome || 0);
+    const grossIncome = levelIncome + repurchaseIncome;
+    const tds = grossIncome * 0.05;
+    const adminCharge = grossIncome * 0.05;
+    const netPayable = grossIncome - tds - adminCharge;
+
+    return {
+      sNo: row.sNo,
+      incomeDate: row.joinDate,
+      memberId: row.memberId,
+      memberName: row.memberName,
+      levelIncome,
+      repurchaseIncome,
+      grossIncome,
+      tds,
+      adminCharge,
+      netPayable,
+      status: row.status === 'IN-ACTIVE' ? 'Pending' : 'Credited To E-wallet',
+    };
+  }), [rows]);
+
+  const totalPayoutAmount = adminDailyPayoutData.reduce((sum, row) => sum + Number(row.netPayable || 0), 0);
 
   return (
     <div className="daily-payout-report-report-page">
@@ -141,27 +80,35 @@ function DailyPayoutReport() {
               </tr>
             </thead>
             <tbody>
-              {adminDailyPayoutData.map((row) => (
-                <tr key={row.sNo}>
-                  <td>{row.sNo}</td>
-                  <td>{row.incomeDate}</td>
-                  <td>{row.memberId}</td>
-                  <td>{row.memberName}</td>
-                  <td>{row.levelIncome.toFixed(2)}</td>
-                  <td>{row.repurchaseIncome.toFixed(2)}</td>
-                  <td>{row.grossIncome.toFixed(2)}</td>
-                  <td>{row.tds.toFixed(2)}</td>
-                  <td>{row.adminCharge.toFixed(2)}</td>
-                  <td>{row.netPayable.toFixed(2)}</td>
-                  <td>{row.status}</td>
-                </tr>
-              ))}
-              <tr className="daily-payout-report-summary-row">
-                <td colSpan="10" style={{ textAlign: 'right', fontWeight: 700 }}>TOTAL PAYOUT AMOUNT</td>
-                <td>{totalPayoutAmount.toFixed(2)}</td>
-               
-               
-              </tr>
+              {loading ? (
+                <tr><td colSpan={11}>Loading...</td></tr>
+              ) : error ? (
+                <tr><td colSpan={11}>{error}</td></tr>
+              ) : adminDailyPayoutData.length === 0 ? (
+                <tr><td colSpan={11}>No payout data found.</td></tr>
+              ) : (
+                <>
+                  {adminDailyPayoutData.map((row) => (
+                    <tr key={row.sNo}>
+                      <td>{row.sNo}</td>
+                      <td>{row.incomeDate}</td>
+                      <td>{row.memberId}</td>
+                      <td>{row.memberName}</td>
+                      <td>{row.levelIncome.toFixed(2)}</td>
+                      <td>{row.repurchaseIncome.toFixed(2)}</td>
+                      <td>{row.grossIncome.toFixed(2)}</td>
+                      <td>{row.tds.toFixed(2)}</td>
+                      <td>{row.adminCharge.toFixed(2)}</td>
+                      <td>{row.netPayable.toFixed(2)}</td>
+                      <td>{row.status}</td>
+                    </tr>
+                  ))}
+                  <tr className="daily-payout-report-summary-row">
+                    <td colSpan="10" style={{ textAlign: 'right', fontWeight: 700 }}>TOTAL PAYOUT AMOUNT</td>
+                    <td>{totalPayoutAmount.toFixed(2)}</td>
+                  </tr>
+                </>
+              )}
             </tbody>
           </table>
         </div>

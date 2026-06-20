@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import './AdminRankHoldersList.css';
-import { rankHoldersData } from './rankMockData';
+import { useEffect, useMemo, useState } from 'react';
+import { getMemberPerformance } from '../../../api/membersService';
 
 const rankOptions = [
   'STARTER',
@@ -17,17 +17,27 @@ const rankOptions = [
 
 function AdminRankHoldersList() {
   const [selectedRankFilter, setSelectedRankFilter] = useState('');
-  const [filteredData, setFilteredData] = useState(rankHoldersData);
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    getMemberPerformance()
+      .then((response) => setRows(Array.isArray(response.data) ? response.data : []))
+      .catch((loadError) => setError(loadError?.response?.data?.message || 'Failed to load rank holders.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filteredData = useMemo(() => {
+    if (!selectedRankFilter) {
+      return rows;
+    }
+
+    return rows.filter((holder) => String(holder.rank || '').toUpperCase() === selectedRankFilter);
+  }, [rows, selectedRankFilter]);
 
   const handleSearchClick = () => {
-    if (selectedRankFilter) {
-      const filtered = rankHoldersData.filter(
-        (holder) => holder.rank === selectedRankFilter
-      );
-      setFilteredData(filtered);
-    } else {
-      setFilteredData(rankHoldersData);
-    }
+    setSelectedRankFilter((prev) => prev);
   };
 
   return (
@@ -73,18 +83,24 @@ function AdminRankHoldersList() {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((row, index) => (
-                <tr key={row.id}>
-                  <td>{row.sno}</td>
-                  <td>{row.joiningDate}</td>
+              {loading ? (
+                <tr><td colSpan={11}>Loading...</td></tr>
+              ) : error ? (
+                <tr><td colSpan={11}>{error}</td></tr>
+              ) : filteredData.length === 0 ? (
+                <tr><td colSpan={11}>No rank holders found.</td></tr>
+              ) : filteredData.map((row, index) => (
+                <tr key={row.memberId || index}>
+                  <td>{row.sNo || index + 1}</td>
+                  <td>{row.joinDate || row.joiningDate || '---'}</td>
                   <td>{row.memberId}</td>
                   <td>{row.memberName}</td>
-                  <td>{row.city}</td>
-                  <td>{row.directs}</td>
-                  <td>{row.upgrade}</td>
-                  <td>{row.earning}</td>
+                  <td>{row.city || '---'}</td>
+                  <td>{row.totalTeamCount ?? row.directs ?? 0}</td>
+                  <td>{row.unlockLevel || row.joiningLevel || '---'}</td>
+                  <td>{typeof row.totalIncome === 'number' ? row.totalIncome : row.earning || '---'}</td>
                   <td>{row.rank}</td>
-                  <td>{row.status}</td>
+                  <td>{row.status || 'ACTIVE'}</td>
                   <td>
                     <div className="rank-action-buttons">
                       <button type="button" className="action-button action-button-show">

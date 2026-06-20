@@ -1,91 +1,46 @@
 import "../../Common/UserLayout.css";
 import "./RepurchaseIncome.css";
-
-const repurchaseIncomeRows = [
-  {
-    sNo: 1,
-    incomeDate: "02-03-2024 12:57:37pm",
-    memberId: "MM101010",
-    memberName: "ANAMIKA SAXENA",
-    levelNo: 1,
-    levelId: "MM101011",
-    fromMemberName: "SONALI SHIRKE",
-    bvPoin: 10,
-    repurchaseIncome: 10.0,
-  },
-  {
-    sNo: 2,
-    incomeDate: "25-02-2024 12:57:37pm",
-    memberId: "MM101010",
-    memberName: "ANAMIKA SAXENA",
-    levelNo: 9,
-    levelId: "MM101012",
-    fromMemberName: "AMBIKA SALUNKE",
-    bvPoin: 20,
-    repurchaseIncome: 20.0,
-  },
-  {
-    sNo: 3,
-    incomeDate: "25-02-2024 12:57:37pm",
-    memberId: "MM101010",
-    memberName: "ANAMIKA SAXENA",
-    levelNo: 2,
-    levelId: "MM101013",
-    fromMemberName: "RAJKIRAN SALUKE",
-    bvPoin: 200,
-    repurchaseIncome: 200.0,
-  },
-  {
-    sNo: 4,
-    incomeDate: "16-02-2024 12:57:37pm",
-    memberId: "MM101010",
-    memberName: "ANAMIKA SAXENA",
-    levelNo: 1,
-    levelId: "MM101014",
-    fromMemberName: "AMIT SHARMA",
-    bvPoin: 20,
-    repurchaseIncome: 20.0,
-  },
-  {
-    sNo: 5,
-    incomeDate: "10-02-2024 12:57:37pm",
-    memberId: "MM101010",
-    memberName: "ANAMIKA SAXENA",
-    levelNo: 1,
-    levelId: "MM101015",
-    fromMemberName: "SADDAM SHAIKH",
-    bvPoin: 500,
-    repurchaseIncome: 500.0,
-  },
-  {
-    sNo: 6,
-    incomeDate: "10-02-2024 12:57:37pm",
-    memberId: "MM101010",
-    memberName: "ANAMIKA SAXENA",
-    levelNo: 2,
-    levelId: "MM101016",
-    fromMemberName: "THOMAS ANTHONY",
-    bvPoin: 800,
-    repurchaseIncome: 800.0,
-  },
-  {
-    sNo: 7,
-    incomeDate: "05-02-2024 12:57:37pm",
-    memberId: "MM101010",
-    memberName: "ANAMIKA SAXENA",
-    levelNo: 1,
-    levelId: "MM101017",
-    fromMemberName: "RAZMAN HUSSAIN",
-    bvPoin: 2000,
-    repurchaseIncome: 2000.0,
-  },
-];
+import { useEffect, useMemo, useState } from 'react';
+import { getMyDonations } from '../../../../api/donationsService';
 
 function RepurchaseIncome() {
-  const totalRepurchase = repurchaseIncomeRows.reduce(
-    (sum, row) => sum + row.repurchaseIncome,
-    0,
-  );
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [filters, setFilters] = useState({ levelNo: '', levelId: '', fromMemberName: '', startDate: '', endDate: '', pageSize: '10' });
+
+  useEffect(() => {
+    getMyDonations()
+      .then((response) => setRows(response.data?.received || []))
+      .catch((loadError) => setError(loadError?.response?.data?.message || 'Failed to load repurchase income.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const repurchaseIncomeRows = useMemo(() => rows.filter((row) => {
+    const rowDate = row.dateRaw ? new Date(row.dateRaw).toISOString().slice(0, 10) : '';
+    const matchesLevelNo = !filters.levelNo || String(row.level) === filters.levelNo;
+    const matchesLevelId = !filters.levelId || String(row.fromMemberId || '').toLowerCase().includes(filters.levelId.toLowerCase());
+    const matchesFromName = !filters.fromMemberName || String(row.fromName || '').toLowerCase().includes(filters.fromMemberName.toLowerCase());
+    const matchesStart = !filters.startDate || rowDate >= filters.startDate;
+    const matchesEnd = !filters.endDate || rowDate <= filters.endDate;
+    return matchesLevelNo && matchesLevelId && matchesFromName && matchesStart && matchesEnd;
+  }).slice(0, Number(filters.pageSize)).map((row, index) => ({
+    sNo: index + 1,
+    incomeDate: row.date,
+    memberId: row.toMemberId,
+    memberName: row.toName,
+    levelNo: row.level,
+    levelId: row.fromMemberId,
+    fromMemberName: row.fromName,
+    bvPoin: Number(row.amount || 0),
+    repurchaseIncome: Number(row.amount || 0),
+  })), [filters, rows]);
+
+  const totalRepurchase = repurchaseIncomeRows.reduce((sum, row) => sum + row.repurchaseIncome, 0);
+
+  const updateFilter = (key) => (event) => {
+    setFilters((prev) => ({ ...prev, [key]: event.target.value }));
+  };
 
   return (
     <div>
@@ -94,7 +49,7 @@ function RepurchaseIncome() {
         <h3>Total Repurchase Income : {totalRepurchase.toFixed(2)}</h3>
 
         <div className="report-filters">
-          <select aria-label="Level No">
+          <select aria-label="Level No" value={filters.levelNo} onChange={updateFilter('levelNo')}>
             <option value="">LEVEL NO</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -106,15 +61,17 @@ function RepurchaseIncome() {
             <option value="8">8</option>
             <option value="9">9</option>
           </select>
-          <input type="text" placeholder="LEVEL ID" aria-label="Level ID" />
+          <input type="text" placeholder="LEVEL ID" aria-label="Level ID" value={filters.levelId} onChange={updateFilter('levelId')} />
           <input
             type="text"
             placeholder="FROM MEMBER NAME"
             aria-label="From Member Name"
+            value={filters.fromMemberName}
+            onChange={updateFilter('fromMemberName')}
           />
-          <input type="text" placeholder="START DATE" aria-label="Start Date" />
-          <input type="text" placeholder="END DATE" aria-label="End Date" />
-          <select aria-label="Rows per page">
+          <input type="date" placeholder="START DATE" aria-label="Start Date" value={filters.startDate} onChange={updateFilter('startDate')} />
+          <input type="date" placeholder="END DATE" aria-label="End Date" value={filters.endDate} onChange={updateFilter('endDate')} />
+          <select aria-label="Rows per page" value={filters.pageSize} onChange={updateFilter('pageSize')}>
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
@@ -149,7 +106,13 @@ function RepurchaseIncome() {
               </tr>
             </thead>
             <tbody>
-              {repurchaseIncomeRows.map((row) => (
+              {loading ? (
+                <tr><td colSpan={9}>Loading...</td></tr>
+              ) : error ? (
+                <tr><td colSpan={9}>{error}</td></tr>
+              ) : repurchaseIncomeRows.length === 0 ? (
+                <tr><td colSpan={9}>No repurchase income records found.</td></tr>
+              ) : repurchaseIncomeRows.map((row) => (
                 <tr key={row.sNo}>
                   <td>{row.sNo}</td>
                   <td>{row.incomeDate}</td>
@@ -165,10 +128,7 @@ function RepurchaseIncome() {
               <tr className="report-total-row">
                 <td
                   colSpan="8"
-                 style={{
-    
-    textAlign: "end",
-  }}
+                  style={{ textAlign: 'end' }}
                   className="report-total-label"
                 >
                   TOTAL REPURCHASE INCOME

@@ -1,90 +1,32 @@
 import './DatewiseIncome.css';
-
-const adminDatewiseIncomeData = [
-  {
-    sNo: 1,
-    incomeDate: '01-02-2026',
-    memberId: 'MM101010',
-    unlockLevel: 1,
-    totalIds: 3,
-    levelIncome: 60.00,
-    totalBvPoint: 1000,
-    repurchaseIncome: 1000.00,
-    dailyIncome: 1060.00
-  },
-  {
-    sNo: 2,
-    incomeDate: '02-02-2026',
-    memberId: 'MM101011',
-    unlockLevel: 9,
-    totalIds: 5,
-    levelIncome: 100.00,
-    totalBvPoint: 1200,
-    repurchaseIncome: 1200.00,
-    dailyIncome: 1300.00
-  },
-  {
-    sNo: 3,
-    incomeDate: '03-02-2026',
-    memberId: 'MM101012',
-    unlockLevel: 2,
-    totalIds: 10,
-    levelIncome: 200.00,
-    totalBvPoint: 2500,
-    repurchaseIncome: 2500.00,
-    dailyIncome: 2700.00
-  },
-  {
-    sNo: 4,
-    incomeDate: '04-02-2026',
-    memberId: 'MM101013',
-    unlockLevel: 1,
-    totalIds: 12,
-    levelIncome: 240.00,
-    totalBvPoint: 250,
-    repurchaseIncome: 250.00,
-    dailyIncome: 490.00
-  },
-  {
-    sNo: 5,
-    incomeDate: '05-02-2026',
-    memberId: 'MM101014',
-    unlockLevel: 1,
-    totalIds: 15,
-    levelIncome: 300.00,
-    totalBvPoint: 1500,
-    repurchaseIncome: 1500.00,
-    dailyIncome: 1800.00
-  },
-  {
-    sNo: 6,
-    incomeDate: '06-02-2026',
-    memberId: 'MM101015',
-    unlockLevel: 2,
-    totalIds: 20,
-    levelIncome: 400.00,
-    totalBvPoint: 1800,
-    repurchaseIncome: 1800.00,
-    dailyIncome: 2200.00
-  },
-  {
-    sNo: 7,
-    incomeDate: '04-01-2026',
-    memberId: 'MM101016',
-    unlockLevel: 1,
-    totalIds: 25,
-    levelIncome: 500.00,
-    totalBvPoint: 2000,
-    repurchaseIncome: 2000.00,
-    dailyIncome: 2500.00
-  }
-];
+import { useEffect, useMemo, useState } from 'react';
+import { getMemberPerformance } from '../../../../api/membersService';
 
 function DatewiseIncome() {
-  const totalAmount = adminDatewiseIncomeData.reduce(
-    (sum, row) => sum + row.dailyIncome,
-    0
-  );
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    getMemberPerformance()
+      .then((response) => setRows(Array.isArray(response.data) ? response.data : []))
+      .catch((loadError) => setError(loadError?.response?.data?.message || 'Failed to load datewise income.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const adminDatewiseIncomeData = useMemo(() => rows.map((row) => ({
+    sNo: row.sNo,
+    incomeDate: row.joinDate,
+    memberId: row.memberId,
+    unlockLevel: row.unlockLevel,
+    totalIds: row.totalTeamCount,
+    levelIncome: Number(row.levelIncome || 0),
+    totalBvPoint: Number(row.totalTeamCount || 0) * 100,
+    repurchaseIncome: Number(row.repurchaseIncome || 0),
+    dailyIncome: Number(row.totalIncome || 0),
+  })), [rows]);
+
+  const totalAmount = adminDatewiseIncomeData.reduce((sum, row) => sum + Number(row.dailyIncome || 0), 0);
 
   return (
     <div className="datewise-income-report-page">
@@ -126,23 +68,33 @@ function DatewiseIncome() {
               </tr>
             </thead>
             <tbody>
-              {adminDatewiseIncomeData.map((row) => (
-                <tr key={row.sNo}>
-                  <td>{row.sNo}</td>
-                  <td>{row.incomeDate}</td>
-                  <td>{row.memberId}</td>
-                  <td>{row.unlockLevel}</td>
-                  <td>{row.totalIds}</td>
-                  <td>{row.levelIncome.toFixed(2)}</td>
-                  <td>{row.totalBvPoint}</td>
-                  <td>{row.repurchaseIncome.toFixed(2)}</td>
-                  <td>{row.dailyIncome.toFixed(2)}</td>
-                </tr>
-              ))}
-              <tr className="datewise-income-summary-row">
-                <td colSpan="8" style={{ textAlign: 'right', fontWeight: 700 }}>TOTAL AMOUNT</td>
-                <td>{totalAmount.toFixed(2)}</td>
-              </tr>
+              {loading ? (
+                <tr><td colSpan={9}>Loading...</td></tr>
+              ) : error ? (
+                <tr><td colSpan={9}>{error}</td></tr>
+              ) : adminDatewiseIncomeData.length === 0 ? (
+                <tr><td colSpan={9}>No datewise income found.</td></tr>
+              ) : (
+                <>
+                  {adminDatewiseIncomeData.map((row) => (
+                    <tr key={row.sNo}>
+                      <td>{row.sNo}</td>
+                      <td>{row.incomeDate}</td>
+                      <td>{row.memberId}</td>
+                      <td>{row.unlockLevel}</td>
+                      <td>{row.totalIds}</td>
+                      <td>{row.levelIncome.toFixed(2)}</td>
+                      <td>{row.totalBvPoint}</td>
+                      <td>{row.repurchaseIncome.toFixed(2)}</td>
+                      <td>{row.dailyIncome.toFixed(2)}</td>
+                    </tr>
+                  ))}
+                  <tr className="datewise-income-summary-row">
+                    <td colSpan="8" style={{ textAlign: 'right', fontWeight: 700 }}>TOTAL AMOUNT</td>
+                    <td>{totalAmount.toFixed(2)}</td>
+                  </tr>
+                </>
+              )}
             </tbody>
           </table>
         </div>

@@ -1,10 +1,13 @@
 import axios from 'axios';
 
+const defaultApiBaseUrl =
+	typeof window !== 'undefined' ? `${window.location.origin}/api` : '/api';
+
 const apiClient = axios.create({
-    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5001/api',
-    headers: {
-        'Content-Type': 'application/json',
-    },
+	baseURL: process.env.REACT_APP_API_URL || defaultApiBaseUrl,
+	headers: {
+		'Content-Type': 'application/json',
+	},
 });
 
 // ... rest of the code

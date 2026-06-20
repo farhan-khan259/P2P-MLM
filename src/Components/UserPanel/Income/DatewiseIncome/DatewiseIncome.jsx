@@ -1,84 +1,49 @@
 import '../../Common/UserLayout.css';
 import './DatewiseIncome.css';
-
-const datewiseIncomeData = [
-  {
-    sNo: 1,
-    incomeDate: '01-02-2026',
-    memberId: 'MM101010',
-    totalIds: 3,
-    levelIncome: 60.00,
-    totalBvPoint: 1000,
-    repurchaseIncome: 1000.00,
-    dailyIncome: 1060.00
-  },
-  {
-    sNo: 2,
-    incomeDate: '02-02-2026',
-    memberId: 'MM101010',
-    totalIds: 5,
-    levelIncome: 100.00,
-    totalBvPoint: 1200,
-    repurchaseIncome: 1200.00,
-    dailyIncome: 1300.00
-  },
-  {
-    sNo: 3,
-    incomeDate: '03-02-2026',
-    memberId: 'MM101010',
-    totalIds: 10,
-    levelIncome: 200.00,
-    totalBvPoint: 2500,
-    repurchaseIncome: 2500.00,
-    dailyIncome: 2700.00
-  },
-  {
-    sNo: 4,
-    incomeDate: '04-02-2026',
-    memberId: 'MM101010',
-    totalIds: 12,
-    levelIncome: 240.00,
-    totalBvPoint: 250,
-    repurchaseIncome: 250.00,
-    dailyIncome: 490.00
-  },
-  {
-    sNo: 5,
-    incomeDate: '05-02-2026',
-    memberId: 'MM101010',
-    totalIds: 15,
-    levelIncome: 300.00,
-    totalBvPoint: 1500,
-    repurchaseIncome: 1500.00,
-    dailyIncome: 1800.00
-  },
-  {
-    sNo: 6,
-    incomeDate: '06-02-2026',
-    memberId: 'MM101010',
-    totalIds: 20,
-    levelIncome: 400.00,
-    totalBvPoint: 1800,
-    repurchaseIncome: 1800.00,
-    dailyIncome: 2200.00
-  },
-  {
-    sNo: 7,
-    incomeDate: '04-01-2026',
-    memberId: 'MM101010',
-    totalIds: 25,
-    levelIncome: 500.00,
-    totalBvPoint: 2000,
-    repurchaseIncome: 2000.00,
-    dailyIncome: 2500.00
-  }
-];
+import { useEffect, useMemo, useState } from 'react';
+import { getMyDonations } from '../../../../api/donationsService';
 
 function DatewiseIncome() {
-  const totalAmount = datewiseIncomeData.reduce(
-    (sum, row) => sum + row.dailyIncome,
-    0
-  );
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [pageSize, setPageSize] = useState('10');
+
+  useEffect(() => {
+    getMyDonations()
+      .then((response) => setRows(response.data?.received || []))
+      .catch((loadError) => setError(loadError?.response?.data?.message || 'Failed to load datewise income.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const datewiseIncomeData = useMemo(() => {
+    const grouped = new Map();
+
+    rows.forEach((row) => {
+      const key = row.dateRaw ? new Date(row.dateRaw).toISOString().slice(0, 10) : row.date;
+      const current = grouped.get(key) || { count: 0, amount: 0, latest: row };
+      current.count += 1;
+      current.amount += Number(row.amount || 0);
+      current.latest = row;
+      grouped.set(key, current);
+    });
+
+    return Array.from(grouped.entries())
+      .sort((left, right) => new Date(right[0]).getTime() - new Date(left[0]).getTime())
+      .slice(0, Number(pageSize))
+      .map(([date, group], index) => ({
+        sNo: index + 1,
+        incomeDate: date,
+        memberId: group.latest.toMemberId,
+        totalIds: group.count,
+        levelIncome: group.amount * 0.5,
+        totalBvPoint: Math.round(group.amount),
+        repurchaseIncome: group.amount * 0.5,
+        dailyIncome: group.amount,
+      }));
+  }, [pageSize, rows]);
+
+  const totalAmount = datewiseIncomeData.reduce((sum, row) => sum + row.dailyIncome, 0);
 
   return (
     <div>
@@ -87,7 +52,7 @@ function DatewiseIncome() {
         <div className="report-filters">
           <input type="date" placeholder="START DATE" aria-label="Start Date" />
           <input type="date" placeholder="END DATE" aria-label="End Date" />
-          <select aria-label="Rows per page">
+          <select aria-label="Rows per page" value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
@@ -115,7 +80,13 @@ function DatewiseIncome() {
               </tr>
             </thead>
             <tbody>
-              {datewiseIncomeData.map((row) => (
+              {loading ? (
+                <tr><td colSpan={8}>Loading...</td></tr>
+              ) : error ? (
+                <tr><td colSpan={8}>{error}</td></tr>
+              ) : datewiseIncomeData.length === 0 ? (
+                <tr><td colSpan={8}>No datewise income records found.</td></tr>
+              ) : datewiseIncomeData.map((row) => (
                 <tr key={row.sNo}>
                   <td>{row.sNo}</td>
                   <td>{row.incomeDate}</td>

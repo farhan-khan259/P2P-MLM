@@ -1,22 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './EPinRequest.css';
 import { getAdminEpinRequests, updateAdminEpinRequestStatus } from '../../../api/managementService';
 
 function EPinRequest() {
   const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [pageSize, setPageSize] = useState('10');
 
-  const loadRows = async () => {
+  const loadRows = useCallback(async () => {
+    setLoading(true);
+    setError('');
     try {
-      const response = await getAdminEpinRequests();
+      const response = await getAdminEpinRequests(statusFilter || undefined);
       setRows(response.requests || []);
     } catch (error) {
       setRows([]);
+      setError(error?.response?.data?.message || 'Failed to load ePin requests.');
+    } finally {
+      setLoading(false);
     }
-  };
+  }, [statusFilter]);
 
   useEffect(() => {
     loadRows();
-  }, []);
+  }, [loadRows]);
+
+  const filteredRows = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return rows.filter((row) => {
+      if (!query) return true;
+      return [row.clientId, row.name, row.packageCost, row.mobile, row.status]
+        .filter(Boolean)
+        .some((value) => String(value).toLowerCase().includes(query));
+    }).slice(0, Number(pageSize));
+  }, [rows, search, pageSize]);
 
   const handleApprove = async (requestId) => {
     await updateAdminEpinRequestStatus(requestId, { status: 'Approved' });
@@ -33,24 +53,21 @@ function EPinRequest() {
         </div>
 
         <div className="epin-filter-grid">
-          <input className="text-input" placeholder="Client ID" />
-          <select className="select-input">
-            <option>Status</option>
-            <option>Approved</option>
-            <option>Pending</option>
+          <input className="text-input" placeholder="Client ID / Name / Mobile" value={search} onChange={(event) => setSearch(event.target.value)} />
+          <select className="select-input" value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
+            <option value="">Status</option>
+            <option value="Approved">Approved</option>
+            <option value="Pending">Pending</option>
+            <option value="Rejected">Rejected</option>
           </select>
-          <select className="select-input">
-            <option>ePin Name</option>
-            <option>Activation</option>
+          <select className="select-input" value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
           </select>
           <input className="text-input" type="date" />
           <input className="text-input" type="date" />
-          <select className="select-input">
-            <option>10</option>
-            <option>25</option>
-            <option>50</option>
-          </select>
-          <button className="btn-primary">Search</button>
+          <button className="btn-primary" type="button" onClick={loadRows}>Search</button>
         </div>
 
         <div className="epin-tools">
@@ -76,7 +93,11 @@ function EPinRequest() {
               </tr>
             </thead>
             <tbody>
-              {rows.map((row) => (
+              {loading ? (
+                <tr><td colSpan={10}>Loading...</td></tr>
+              ) : error ? (
+                <tr><td colSpan={10}>{error}</td></tr>
+              ) : filteredRows.length ? filteredRows.map((row) => (
                 <tr key={row._id || row.id}>
                   <td>{row.id}</td>
                   <td>
@@ -95,13 +116,15 @@ function EPinRequest() {
                   <td>{row.date}</td>
                   <td>{row.status}</td>
                 </tr>
-              ))}
+              )) : (
+                <tr><td colSpan={10}>No ePin requests found.</td></tr>
+              )}
             </tbody>
           </table>
         </div>
 
         <div className="table-footer">
-          <span>Showing Page 1 of 1 From {rows.length} Rows</span>
+          <span>Showing Page 1 of 1 From {filteredRows.length} Rows</span>
           <div className="pagination">
             <button className="page-btn">&lt;&lt;</button>
             <button className="page-btn">&lt;</button>

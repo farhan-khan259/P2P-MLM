@@ -1,7 +1,35 @@
 import './MemberAlertList.css';
-import { memberAlertRows } from '../../Common/mockData';
+import { useEffect, useMemo, useState } from 'react';
+import { getAllMembersList } from '../../../../api/membersService';
 
 function MemberAlertList() {
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    getAllMembersList()
+      .then((response) => setRows(response.data || []))
+      .catch((loadError) => setError(loadError?.response?.data?.message || 'Failed to load member alerts.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filteredRows = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    const source = rows.filter((row) => row.status !== 'ACTIVE');
+
+    if (!query) {
+      return source;
+    }
+
+    return source.filter((row) =>
+      [row.memberId, row.name, row.mobile, row.city, row.status]
+        .filter(Boolean)
+        .some((value) => String(value).toLowerCase().includes(query))
+    );
+  }, [rows, search]);
+
   return (
     <div>
       <h1 className="page-title">Member Alert List</h1>
@@ -16,19 +44,21 @@ function MemberAlertList() {
         </div>
 
         <div className="btn-row">
-          <button className="btn-primary">Submit</button>
+          <button className="btn-primary" type="button">Submit</button>
         </div>
         <div className="btn-row">
-          <button className="btn-outline">Excel</button>
+          <button className="btn-outline" type="button">Excel</button>
         </div>
 
         <div className="table-tools">
           <div />
           <label className="search-box">
             Search:
-            <input className="text-input" />
+            <input className="text-input" value={search} onChange={(event) => setSearch(event.target.value)} />
           </label>
         </div>
+
+        {error && <p style={{ color: '#c62828', padding: '0 16px 12px' }}>{error}</p>}
 
         <div className="table-wrap">
           <table className="data-table">
@@ -45,16 +75,20 @@ function MemberAlertList() {
               </tr>
             </thead>
             <tbody>
-              {memberAlertRows.map((row) => (
-                <tr key={row[0]}>
-                  <td>{row[0]}</td>
-                  <td>{row[1]}</td>
-                  <td>{row[2]}</td>
-                  <td>{row[3]}</td>
-                  <td>{row[4]}</td>
-                  <td>{row[5]}</td>
-                  <td>{row[6]}</td>
-                  <td className="timer-error">{row[7]}</td>
+              {loading ? (
+                <tr><td colSpan={8}>Loading...</td></tr>
+              ) : filteredRows.length === 0 ? (
+                <tr><td colSpan={8}>No member alerts found.</td></tr>
+              ) : filteredRows.map((row, index) => (
+                <tr key={row.memberId || index}>
+                  <td>{index + 1}</td>
+                  <td>{row.status || 'INACTIVE'}</td>
+                  <td>{row.status || 'INACTIVE'}</td>
+                  <td>{row.memberId}</td>
+                  <td>{row.name}</td>
+                  <td>{row.wallet || '0.00'}</td>
+                  <td>{row.joinDate}</td>
+                  <td className="timer-error">Attention required</td>
                 </tr>
               ))}
             </tbody>

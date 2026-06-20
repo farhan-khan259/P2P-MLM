@@ -1,23 +1,51 @@
 import './BlockUnblock.css';
-import { blockRows } from '../../Common/mockData';
+import { useEffect, useMemo, useState } from 'react';
+import { getAllMembersList } from '../../../../api/membersService';
 
 function BlockUnblock() {
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    getAllMembersList()
+      .then((response) => setRows(response.data || []))
+      .catch((loadError) => setError(loadError?.response?.data?.message || 'Failed to load members.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filteredRows = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    if (!query) {
+      return rows;
+    }
+
+    return rows.filter((row) =>
+      [row.memberId, row.name, row.mobile, row.joinDate, row.status]
+        .filter(Boolean)
+        .some((value) => String(value).toLowerCase().includes(query))
+    );
+  }, [rows, search]);
+
   return (
     <div>
       <h1 className="page-title">Block And Un Block Member Id</h1>
 
       <div className="panel">
         <div className="btn-row">
-          <button className="btn-outline">Excel</button>
+          <button className="btn-outline" type="button">Excel</button>
         </div>
 
         <div className="table-tools">
           <div />
           <label className="search-box">
             Search:
-            <input className="text-input" />
+            <input className="text-input" value={search} onChange={(event) => setSearch(event.target.value)} />
           </label>
         </div>
+
+        {error && <p style={{ color: '#c62828', padding: '0 16px 12px' }}>{error}</p>}
 
         <div className="table-wrap">
           <table className="data-table">
@@ -34,18 +62,22 @@ function BlockUnblock() {
               </tr>
             </thead>
             <tbody>
-              {blockRows.map((row) => (
-                <tr key={row[0]}>
-                  <td>{row[0]}</td>
-                  <td>{row[1]}</td>
-                  <td>{row[2]}</td>
-                  <td>{row[3]}</td>
-                  <td>{row[4]}</td>
+              {loading ? (
+                <tr><td colSpan={8}>Loading...</td></tr>
+              ) : filteredRows.length === 0 ? (
+                <tr><td colSpan={8}>No members found.</td></tr>
+              ) : filteredRows.map((row, index) => (
+                <tr key={row.memberId || index}>
+                  <td>{index + 1}</td>
+                  <td>{row.status || 'ACTIVE'}</td>
+                  <td>{row.status || 'ACTIVE'}</td>
+                  <td>{row.memberId}</td>
+                  <td>{row.name}</td>
                   <td>
-                    <button className="btn-success">BLOCK</button>
+                    <button className="btn-success" type="button">BLOCK</button>
                   </td>
-                  <td>{row[5]}</td>
-                  <td>{row[6]}</td>
+                  <td>{row.mobile}</td>
+                  <td>{row.joinDate}</td>
                 </tr>
               ))}
             </tbody>

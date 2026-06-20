@@ -1,23 +1,51 @@
 import './PaymentRequest.css';
-import { paymentRows } from '../../Common/mockData';
+import { useEffect, useMemo, useState } from 'react';
+import { getAllDonations } from '../../../../api/donationsService';
 
 function PaymentRequest() {
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    getAllDonations({ status: 'PENDING' })
+      .then((response) => setRows(response.data || []))
+      .catch((loadError) => setError(loadError?.response?.data?.message || 'Failed to load payment requests.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filteredRows = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    if (!query) {
+      return rows;
+    }
+
+    return rows.filter((row) =>
+      [row.donationId, row.fromMemberId, row.fromName, row.toMemberId, row.toName, row.status]
+        .filter(Boolean)
+        .some((value) => String(value).toLowerCase().includes(query))
+    );
+  }, [rows, search]);
+
   return (
     <div>
       <h1 className="page-title">Payment Request</h1>
 
       <div className="panel">
         <div className="btn-row">
-          <button className="btn-outline">Excel</button>
+          <button className="btn-outline" type="button">Excel</button>
         </div>
 
         <div className="table-tools">
           <div />
           <label className="search-box">
             Search:
-            <input className="text-input" />
+            <input className="text-input" value={search} onChange={(event) => setSearch(event.target.value)} />
           </label>
         </div>
+
+        {error && <p style={{ color: '#c62828', padding: '0 16px 12px' }}>{error}</p>}
 
         <div className="table-wrap">
           <table className="data-table">
@@ -29,25 +57,32 @@ function PaymentRequest() {
                 <th>To Member ID</th>
                 <th>To Member Name</th>
                 <th>Amount</th>
-                <th>Payment Proof</th>
-                <th>A/C No.</th>
-                <th>IFSC Code</th>
-                <th>Bank Name</th>
+                <th>Donation ID</th>
                 <th>Request Date</th>
-                <th>Approve Date</th>
                 <th>Status</th>
                 <th>Level</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {paymentRows.map((row) => (
-                <tr key={row[0]}>
-                  {row.map((cell, index) => (
-                    <td key={`${row[0]}-${index}`}>{cell}</td>
-                  ))}
+              {loading ? (
+                <tr><td colSpan={11}>Loading...</td></tr>
+              ) : filteredRows.length === 0 ? (
+                <tr><td colSpan={11}>No payment requests found.</td></tr>
+              ) : filteredRows.map((row) => (
+                <tr key={row.donationId}>
+                  <td>{row.sNo}</td>
+                  <td>{row.fromMemberId}</td>
+                  <td>{row.fromName}</td>
+                  <td>{row.toMemberId}</td>
+                  <td>{row.toName}</td>
+                  <td>{Number(row.amount || 0).toFixed(2)}</td>
+                  <td>{row.donationId}</td>
+                  <td>{row.date}</td>
+                  <td>{row.status}</td>
+                  <td>{row.level}</td>
                   <td>
-                    <button className="btn-danger">Decline</button>
+                    <button className="btn-danger" type="button">Decline</button>
                   </td>
                 </tr>
               ))}
@@ -56,7 +91,7 @@ function PaymentRequest() {
         </div>
 
         <div className="table-footer">
-          <span>Showing 1 to 10 of 1440 entries</span>
+          <span>Showing 1 to {filteredRows.length} of {filteredRows.length} entries</span>
           <div className="pagination">
             <button className="page-btn">Previous</button>
             <button className="page-btn active">1</button>

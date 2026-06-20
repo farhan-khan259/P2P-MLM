@@ -1,81 +1,44 @@
 import { useMemo, useState } from 'react';
 import './TdsReport.css';
-
-const tdsRows = [
-  {
-    sno: 1,
-    memberId: 'MM101010',
-    memberName: 'Sonali Shirke',
-    mobileNo: '9822505060',
-    email: 'htytyyh@gmail.com',
-    panNo: 'BHWPS0869P',
-    totalTds: '5057.00'
-  },
-  {
-    sno: 2,
-    memberId: 'MM101011',
-    memberName: 'Ambika Salunke',
-    mobileNo: '9822445566',
-    email: 'htytyyh@gmail.com',
-    panNo: 'HFGYH5789H',
-    totalTds: '4095.00'
-  },
-  {
-    sno: 3,
-    memberId: 'MM101012',
-    memberName: 'Rajkiran Saluke',
-    mobileNo: '9822553322',
-    email: 'htytyyh@gmail.com',
-    panNo: 'HFGYH5789H',
-    totalTds: '32190.00'
-  },
-  {
-    sno: 4,
-    memberId: 'MM101013',
-    memberName: 'Amit Sharma',
-    mobileNo: '9822778899',
-    email: 'htytyyh@gmail.com',
-    panNo: 'HFGYH5789H',
-    totalTds: '2228.00'
-  },
-  {
-    sno: 5,
-    memberId: 'MM101014',
-    memberName: 'Saddam Shaikh',
-    mobileNo: '9822564545',
-    email: '4htytyyh@gmail.com',
-    panNo: 'HFGYH5789H',
-    totalTds: '5000.00'
-  },
-  {
-    sno: 6,
-    memberId: 'MM101015',
-    memberName: 'Thomas Anthony',
-    mobileNo: '9822889955',
-    email: '5htytyyh@gmail.com',
-    panNo: 'HFGYH5789H',
-    totalTds: '3000.00'
-  },
-  {
-    sno: 7,
-    memberId: 'MM101016',
-    memberName: 'Razman Hussain',
-    mobileNo: '9822553322',
-    email: 'Hfgyh@gmail.com',
-    panNo: 'HFGYH5789H',
-    totalTds: '2000.00'
-  }
-];
+import { useEffect } from 'react';
+import { getMemberPerformance } from '../../../../api/membersService';
+import { getMembersLocation } from '../../../../api/membersService';
 
 function TdsReport() {
   const [filters, setFilters] = useState({ memberId: '', panNo: '', startDate: '', endDate: '' });
   const [pageSize, setPageSize] = useState('10');
+  const [memberRows, setMemberRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const rows = useMemo(() => {
+  useEffect(() => {
+    Promise.all([getMembersLocation(), getMemberPerformance()])
+      .then(([locationResponse, performanceResponse]) => {
+        const locationMap = new Map((locationResponse.data || []).map((row) => [String(row.memberId || '').toLowerCase(), row]));
+        const performanceRows = Array.isArray(performanceResponse.data) ? performanceResponse.data : [];
+
+        setMemberRows(performanceRows.map((row, index) => {
+          const location = locationMap.get(String(row.memberId || '').toLowerCase()) || {};
+          return {
+            sno: index + 1,
+            memberId: row.memberId,
+            memberName: row.memberName,
+            mobileNo: location.mobile || row.mobile || '---',
+            email: location.emailId || '---',
+            panNo: location.panNo || '---',
+            totalTds: (Number(row.totalIncome || 0) * 0.05).toFixed(2),
+          };
+        }));
+      })
+      .catch((loadError) => setError(loadError?.response?.data?.message || 'Failed to load TDS report.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const tdsRows = useMemo(() => {
     const memberId = filters.memberId.toLowerCase();
     const panNo = filters.panNo.toLowerCase();
 
-    return tdsRows
+    return memberRows
       .filter((row) => {
         return (
           (!memberId || row.memberId.toLowerCase().includes(memberId)) &&
@@ -83,7 +46,7 @@ function TdsReport() {
         );
       })
       .slice(0, Number(pageSize));
-  }, [filters, pageSize]);
+  }, [filters, memberRows, pageSize]);
 
   const onFilterChange = (key) => (event) => {
     setFilters((prev) => ({ ...prev, [key]: event.target.value }));
@@ -126,7 +89,13 @@ function TdsReport() {
               </tr>
             </thead>
             <tbody>
-              {rows.map((row) => (
+              {loading ? (
+                <tr><td colSpan={7}>Loading...</td></tr>
+              ) : error ? (
+                <tr><td colSpan={7}>{error}</td></tr>
+              ) : tdsRows.length === 0 ? (
+                <tr><td colSpan={7}>No TDS records found.</td></tr>
+              ) : tdsRows.map((row) => (
                 <tr key={`${row.sno}-${row.memberId}`}>
                   <td>{row.sno}</td>
                   <td>{row.memberId}</td>

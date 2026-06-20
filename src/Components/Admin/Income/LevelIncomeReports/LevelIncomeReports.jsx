@@ -1,90 +1,32 @@
 import './LevelIncomeReports.css';
-
-const levelIncomeReportsData = [
-  {
-    sNo: 1,
-    incomeDateTime: '02-03-2024 12:57:37pm',
-    memberId: 'MM101011',
-    memberName: 'ANAMIKA SAXENA',
-    unlockLevel: 1,
-    levelNo: 1,
-    levelId: 'MM164222',
-    fromMemberName: 'SONALI SHIRKE',
-    amount: 20.00
-  },
-  {
-    sNo: 2,
-    incomeDateTime: '25-02-2024 12:57:37pm',
-    memberId: 'MM101012',
-    memberName: 'ANIKET CHOUGULE',
-    unlockLevel: 9,
-    levelNo: 0,
-    levelId: 'MM101015',
-    fromMemberName: 'AMBIKA SALUNKE',
-    amount: 20.00
-  },
-  {
-    sNo: 3,
-    incomeDateTime: '25-02-2024 12:57:37pm',
-    memberId: 'MM101013',
-    memberName: 'RAJMATA SALUKE',
-    unlockLevel: 2,
-    levelNo: 2,
-    levelId: 'MM101018',
-    fromMemberName: 'RAJKIRAN SALUKE',
-    amount: 20.00
-  },
-  {
-    sNo: 4,
-    incomeDateTime: '16-02-2024 12:57:37pm',
-    memberId: 'MM101014',
-    memberName: 'SNEHAL MARNE',
-    unlockLevel: 1,
-    levelNo: 1,
-    levelId: 'MM101022',
-    fromMemberName: 'AMIT SHARMA',
-    amount: 20.00
-  },
-  {
-    sNo: 5,
-    incomeDateTime: '10-02-2024 12:57:37pm',
-    memberId: 'MM101015',
-    memberName: 'SADDAM SHAIKH',
-    unlockLevel: 1,
-    levelNo: 1,
-    levelId: 'MM104242',
-    fromMemberName: 'SADDAM SHAIKH',
-    amount: 20.00
-  },
-  {
-    sNo: 6,
-    incomeDateTime: '07-02-2024 12:57:37pm',
-    memberId: 'MM101016',
-    memberName: 'AMIT GADE',
-    unlockLevel: 2,
-    levelNo: 2,
-    levelId: 'MM105777',
-    fromMemberName: 'THOMAS ANTHONY',
-    amount: 20.00
-  },
-  {
-    sNo: 7,
-    incomeDateTime: '05-02-2024 12:57:37pm',
-    memberId: 'MM101017',
-    memberName: 'PARAG GUJARATHI',
-    unlockLevel: 1,
-    levelNo: 1,
-    levelId: 'MM104755',
-    fromMemberName: 'RAZMAN HUSSAIN',
-    amount: 20.00
-  }
-];
+import { useEffect, useMemo, useState } from 'react';
+import { getMemberPerformance } from '../../../../api/membersService';
 
 function LevelIncomeReports() {
-  const totalAmount = levelIncomeReportsData.reduce(
-    (sum, row) => sum + row.amount,
-    0
-  );
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    getMemberPerformance()
+      .then((response) => setRows(Array.isArray(response.data) ? response.data : []))
+      .catch((loadError) => setError(loadError?.response?.data?.message || 'Failed to load level income reports.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const levelIncomeReportsData = useMemo(() => rows.map((row) => ({
+    sNo: row.sNo,
+    incomeDateTime: row.joinDate,
+    memberId: row.memberId,
+    memberName: row.memberName,
+    unlockLevel: row.unlockLevel,
+    levelNo: row.joiningLevel,
+    levelId: row.memberId,
+    fromMemberName: row.memberName,
+    amount: Number(row.levelIncome || 0),
+  })), [rows]);
+
+  const totalAmount = levelIncomeReportsData.reduce((sum, row) => sum + Number(row.amount || 0), 0);
 
   return (
     <div className="level-income-report-page">
@@ -127,25 +69,35 @@ function LevelIncomeReports() {
               </tr>
             </thead>
             <tbody>
-              {levelIncomeReportsData.map((row) => (
-                <tr key={row.sNo}>
-                  <td>{row.sNo}</td>
-                  <td>{row.incomeDateTime}</td>
-                  <td>{row.memberId}</td>
-                  <td>{row.memberName}</td>
-                  <td>{row.unlockLevel}</td>
-                  <td>{row.levelNo}</td>
-                  <td>{row.levelId}</td>
-                  <td>{row.fromMemberName}</td>
-                  <td>{row.amount.toFixed(2)}</td>
-                </tr>
-              ))}
-              <tr className="level-income-summary-row">
-                <td colSpan="8" style={{ textAlign: 'right', fontWeight: 700 }}>
-                  TOTAL AMOUNT
-                </td>
-                <td>{totalAmount.toFixed(2)}</td>
-              </tr>
+              {loading ? (
+                <tr><td colSpan={9}>Loading...</td></tr>
+              ) : error ? (
+                <tr><td colSpan={9}>{error}</td></tr>
+              ) : levelIncomeReportsData.length === 0 ? (
+                <tr><td colSpan={9}>No level income reports found.</td></tr>
+              ) : (
+                <>
+                  {levelIncomeReportsData.map((row) => (
+                    <tr key={row.memberId}>
+                      <td>{row.sNo}</td>
+                      <td>{row.incomeDateTime}</td>
+                      <td>{row.memberId}</td>
+                      <td>{row.memberName}</td>
+                      <td>{row.unlockLevel}</td>
+                      <td>{row.levelNo}</td>
+                      <td>{row.levelId}</td>
+                      <td>{row.fromMemberName}</td>
+                      <td>{Number(row.amount || 0).toFixed(2)}</td>
+                    </tr>
+                  ))}
+                  <tr className="level-income-summary-row">
+                    <td colSpan="8" style={{ textAlign: 'right', fontWeight: 700 }}>
+                      TOTAL AMOUNT
+                    </td>
+                    <td>{totalAmount.toFixed(2)}</td>
+                  </tr>
+                </>
+              )}
             </tbody>
           </table>
         </div>

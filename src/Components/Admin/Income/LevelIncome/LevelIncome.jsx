@@ -1,93 +1,33 @@
 import './LevelIncome.css';
-
-const levelIncomeRows = [
-  {
-    sNo: 1,
-    incomeDate: '05-02-2026',
-    memberId: 'MM101010',
-    memberName: 'AMBIKA SALUNKE',
-    unlockLevel: 1,
-    levelId: 'MM101011',
-    fromMemberName: 'SONALI SHIRKE',
-    levelNo: 1,
-    amount: 20,
-   
-  },
-  {
-    sNo: 2,
-    incomeDate: '06-02-2026',
-    memberId: 'MM101011',
-    memberName: 'RAJKIRAN SALUKE',
-    unlockLevel: 9,
-    levelId: 'MM101012',
-    fromMemberName: 'AMBIKA SALUNKE',
-    levelNo: 9,
-    amount: 20,
- 
-  },
-  {
-    sNo: 3,
-    incomeDate: '05-02-2026',
-    memberId: 'MM101012',
-    memberName: 'AMIT SHARMA',
-    unlockLevel: 2,
-    levelId: 'MM101013',
-    fromMemberName: 'RAJKIRAN SALUKE',
-    levelNo: 2,
-    amount: 20,
-   
-  },
-  {
-    sNo: 4,
-    incomeDate: '05-02-2026',
-    memberId: 'MM101013',
-    memberName: 'SADDAM SHAIKH',
-    unlockLevel: 1,
-    levelId: 'MM101014',
-    fromMemberName: 'AMIT SHARMA',
-    levelNo: 1,
-    amount: 20,
-  
-  },
-  {
-    sNo: 5,
-    incomeDate: '05-02-2026',
-    memberId: 'MM101014',
-    memberName: 'THOMAS ANTHONY',
-    unlockLevel: 1,
-    levelId: 'MM101015',
-    fromMemberName: 'SADDAM SHAIKH',
-    levelNo: 1,
-    amount: 20,
-   
-  },
-  {
-    sNo: 6,
-    incomeDate: '05-02-2026',
-    memberId: 'MM101015',
-    memberName: 'RAZMAN HUSSAIN',
-    unlockLevel: 2,
-    levelId: 'MM101016',
-    fromMemberName: 'THOMAS ANTHONY',
-    levelNo: 1,
-    amount: 20,
-    
-  },
-  {
-    sNo: 7,
-    incomeDate: '05-01-2026',
-    memberId: 'MM101016',
-    memberName: 'SAMEER MIRZA',
-    unlockLevel: 1,
-    levelId: 'MM101017',
-    fromMemberName: 'RAZMAN HUSSAIN',
-    levelNo: 1,
-    amount: 20,
-  
-  }
-];
+import { useEffect, useMemo, useState } from 'react';
+import { getMemberPerformance } from '../../../../api/membersService';
 
 function LevelIncome() {
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    getMemberPerformance()
+      .then((response) => setRows(Array.isArray(response.data) ? response.data : []))
+      .catch((loadError) => setError(loadError?.response?.data?.message || 'Failed to load level income report.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const levelIncomeRows = useMemo(() => rows.map((row) => ({
+    sNo: row.sNo,
+    incomeDate: row.joinDate,
+    memberId: row.memberId,
+    memberName: row.memberName,
+    unlockLevel: row.unlockLevel,
+    levelId: row.memberId,
+    fromMemberName: row.memberName,
+    levelNo: row.joiningLevel,
+    amount: Number(row.levelIncome || 0),
+  })), [rows]);
+
+  const totalAmount = levelIncomeRows.reduce((sum, row) => sum + Number(row.amount || 0), 0);
+
   return (
     <div className="tds-report-page">
       <h2 className="section-title tds-screen-title">Level Income Reports</h2>
@@ -134,8 +74,14 @@ function LevelIncome() {
               </tr>
             </thead>
             <tbody>
-              {levelIncomeRows.map((row) => (
-                <tr key={row.sNo}>
+              {loading ? (
+                <tr><td colSpan={9}>Loading...</td></tr>
+              ) : error ? (
+                <tr><td colSpan={9}>{error}</td></tr>
+              ) : levelIncomeRows.length === 0 ? (
+                <tr><td colSpan={9}>No level income records found.</td></tr>
+              ) : levelIncomeRows.map((row) => (
+                <tr key={row.memberId}>
                   <td>{row.sNo}</td>
                   <td>{row.incomeDate}</td>
                   <td>{row.memberId}</td>
@@ -144,12 +90,17 @@ function LevelIncome() {
                   <td>{row.levelNo}</td>
                   <td>{row.levelId}</td>
                   <td>{row.fromMemberName}</td>
-                 
-                  <td>{row.amount}</td>
-                 
+                  <td>{Number(row.amount || 0).toFixed(2)}</td>
                 </tr>
               ))}
-             
+              {levelIncomeRows.length > 0 && (
+                <tr className="level-income-summary-row">
+                  <td colSpan="8" style={{ textAlign: 'right', fontWeight: 700 }}>
+                    TOTAL AMOUNT
+                  </td>
+                  <td>{totalAmount.toFixed(2)}</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

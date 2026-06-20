@@ -1,105 +1,43 @@
 import "../../Common/UserLayout.css";
 import "./DailyPayoutReport.css";
-
-const dailyPayoutData = [
-  {
-    sNo: 1,
-    incomeDate: "06-02-2026",
-    memberId: "MM101011",
-    memberName: "ANAMIKA SAXENA",
-    levelIncome: 1200.0,
-    repurchaseIncome: 1000.0,
-    grossIncome: 2200.0,
-    tds: 110.0,
-    adminCharge: 110.0,
-    netPayable: 1980.0,
-    status: "Credited To E-wallet",
-  },
-  {
-    sNo: 2,
-    incomeDate: "05-02-2026",
-    memberId: "MM101011",
-    memberName: "ANAMIKA SAXENA",
-    levelIncome: 1000.0,
-    repurchaseIncome: 1200.0,
-    grossIncome: 2200.0,
-    tds: 110.0,
-    adminCharge: 110.0,
-    netPayable: 1980.0,
-    status: "Credited To E-wallet",
-  },
-  {
-    sNo: 3,
-    incomeDate: "04-02-2026",
-    memberId: "MM101011",
-    memberName: "ANAMIKA SAXENA",
-    levelIncome: 2000.0,
-    repurchaseIncome: 2500.0,
-    grossIncome: 4500.0,
-    tds: 225.0,
-    adminCharge: 225.0,
-    netPayable: 4050.0,
-    status: "Credited To E-wallet",
-  },
-  {
-    sNo: 4,
-    incomeDate: "03-02-2026",
-    memberId: "MM101011",
-    memberName: "ANAMIKA SAXENA",
-    levelIncome: 2400.0,
-    repurchaseIncome: 250.0,
-    grossIncome: 2650.0,
-    tds: 132.5,
-    adminCharge: 132.5,
-    netPayable: 2385.0,
-    status: "Credited To E-wallet",
-  },
-  {
-    sNo: 5,
-    incomeDate: "02-02-2026",
-    memberId: "MM101011",
-    memberName: "ANAMIKA SAXENA",
-    levelIncome: 900.0,
-    repurchaseIncome: 1500.0,
-    grossIncome: 2400.0,
-    tds: 120.0,
-    adminCharge: 120.0,
-    netPayable: 2160.0,
-    status: "Credited To E-wallet",
-  },
-  {
-    sNo: 6,
-    incomeDate: "01-02-2026",
-    memberId: "MM101011",
-    memberName: "ANAMIKA SAXENA",
-    levelIncome: 400.0,
-    repurchaseIncome: 1800.0,
-    grossIncome: 2200.0,
-    tds: 110.0,
-    adminCharge: 110.0,
-    netPayable: 1980.0,
-    status: "Credited To E-wallet",
-  },
-  {
-    sNo: 7,
-    incomeDate: "30-01-2026",
-    memberId: "MM101011",
-    memberName: "ANAMIKA SAXENA",
-    levelIncome: 500.0,
-    repurchaseIncome: 2000.0,
-    grossIncome: 2500.0,
-    tds: 125.0,
-    adminCharge: 125.0,
-    netPayable: 2250.0,
-    status: "Credited To E-wallet",
-  },
-];
+import { useEffect, useMemo, useState } from 'react';
+import { getMyDonations } from '../../../../api/donationsService';
 
 function DailyPayoutReport() {
-  const totalPayoutAmount = dailyPayoutData.reduce(
-    (sum, row) => sum + row.netPayable,
-    0,
-  );
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [pageSize, setPageSize] = useState('10');
+
+  useEffect(() => {
+    getMyDonations()
+      .then((response) => setRows(response.data?.received || []))
+      .catch((loadError) => setError(loadError?.response?.data?.message || 'Failed to load daily payout report.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const dailyPayoutData = useMemo(() => rows.map((row, index) => {
+    const grossIncome = Number(row.amount || 0);
+    const tds = grossIncome * 0.05;
+    const adminCharge = grossIncome * 0.05;
+    const netPayable = grossIncome - tds - adminCharge;
+
+    return {
+      sNo: index + 1,
+      incomeDate: row.date,
+      memberId: row.toMemberId,
+      memberName: row.toName,
+      levelIncome: grossIncome * 0.5,
+      repurchaseIncome: grossIncome * 0.5,
+      grossIncome,
+      tds,
+      adminCharge,
+      netPayable,
+      status: row.status === 'COMPLETED' ? 'Credited To E-wallet' : row.status,
+    };
+  }).slice(0, Number(pageSize)), [pageSize, rows]);
+
+  const totalPayoutAmount = dailyPayoutData.reduce((sum, row) => sum + row.netPayable, 0);
 
   return (
     <div>
@@ -108,7 +46,7 @@ function DailyPayoutReport() {
         <div className="report-filters">
           <input type="date" placeholder="START DATE" aria-label="Start Date" />
           <input type="date" placeholder="END DATE" aria-label="End Date" />
-          <select aria-label="Rows per page">
+          <select aria-label="Rows per page" value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
             <option value="10">10</option>
             <option value="50">50</option>
             <option value="100">100</option>
@@ -145,7 +83,13 @@ function DailyPayoutReport() {
               </tr>
             </thead>
             <tbody>
-              {dailyPayoutData.map((row) => (
+              {loading ? (
+                <tr><td colSpan={11}>Loading...</td></tr>
+              ) : error ? (
+                <tr><td colSpan={11}>{error}</td></tr>
+              ) : dailyPayoutData.length === 0 ? (
+                <tr><td colSpan={11}>No payout records found.</td></tr>
+              ) : dailyPayoutData.map((row) => (
                 <tr key={row.sNo}>
                   <td>{row.sNo}</td>
                   <td>{row.incomeDate}</td>
