@@ -1,43 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
+import { getAllDonations } from '../../../../api/donationsService';
 import './DonationReport.css';
-
-const donationRows = [
-  {
-    srNo: '1', donorMemberId: 'MM101010', donorMemberName: 'SONALI SHIRKE', receiverMemberId: 'MM101011',
-    receiverMemberName: 'AMBIKA SALUNKE', amount: '300', rank: '1', paymentProof: 'VIEW',
-    transactionId: '123456789012', requestDate: '23-11-2024 12:57:37PM', approveDate: '23-11-2024 12:57:37PM', status: 'PENDING'
-  },
-  {
-    srNo: '2', donorMemberId: 'MM101011', donorMemberName: 'AMBIKA SALUNKE', receiverMemberId: 'MM101012',
-    receiverMemberName: 'RAJKIRAN SALUKE', amount: '1000', rank: '2', paymentProof: 'VIEW',
-    transactionId: '123456789012', requestDate: '23-11-2024 12:57:37PM', approveDate: '23-11-2024 12:57:37PM', status: 'PENDING'
-  },
-  {
-    srNo: '3', donorMemberId: 'MM101012', donorMemberName: 'RAJKIRAN SALUKE', receiverMemberId: 'MM101013',
-    receiverMemberName: 'AMIT SHARMA', amount: '2000', rank: '3', paymentProof: '',
-    transactionId: '123456789012', requestDate: '23-11-2024 12:57:37PM', approveDate: '23-11-2024 12:57:37PM', status: 'SUCCESS'
-  },
-  {
-    srNo: '4', donorMemberId: 'MM101013', donorMemberName: 'AMIT SHARMA', receiverMemberId: 'MM101014',
-    receiverMemberName: 'SADDAM SHAIKH', amount: '4000', rank: '4', paymentProof: '',
-    transactionId: '123456789012', requestDate: '23-11-2024 12:57:37PM', approveDate: '23-11-2024 12:57:37PM', status: 'SUCCESS'
-  },
-  {
-    srNo: '5', donorMemberId: 'MM101014', donorMemberName: 'SADDAM SHAIKH', receiverMemberId: 'MM101015',
-    receiverMemberName: 'THOMAS ANTHONY', amount: '16000', rank: '6', paymentProof: '',
-    transactionId: '123456789012', requestDate: '23-11-2024 12:57:37PM', approveDate: '23-11-2024 12:57:37PM', status: 'SUCCESS'
-  },
-  {
-    srNo: '6', donorMemberId: 'MM101015', donorMemberName: 'THOMAS ANTHONY', receiverMemberId: 'MM101016',
-    receiverMemberName: 'RAZMAN HUSSAIN', amount: '2000', rank: '3', paymentProof: '',
-    transactionId: '123456789012', requestDate: '23-11-2024 12:57:37PM', approveDate: '23-11-2024 12:57:37PM', status: 'SUCCESS'
-  },
-  {
-    srNo: '7', donorMemberId: 'MM101016', donorMemberName: 'RAZMAN HUSSAIN', receiverMemberId: 'MM101017',
-    receiverMemberName: 'SAMEER MIRZA', amount: '4000', rank: '4', paymentProof: '',
-    transactionId: '123456789012', requestDate: '23-11-2024 12:57:37PM', approveDate: '23-11-2024 12:57:37PM', status: 'SUCCESS'
-  }
-];
 
 const exportColumns = [
   'S.No', 'Donor Member ID', 'Donor Member Name', 'Receiver Member ID', 'Receiver Member Name', 'D. Amount',
@@ -58,12 +21,19 @@ const rankLabels = {
 };
 
 function parseDate(value) {
-  const datePart = value.split(' ')[0];
-  const [day, month, year] = datePart.split('-');
-  return `${year}-${month}-${day}`;
+  if (!value) return '';
+  const datePart = typeof value === 'string' ? value.split(' ')[0] : '';
+  if (!datePart) return value;
+  const parts = datePart.split('-');
+  if (parts.length === 3) {
+    const [day, month, year] = parts;
+    return `${year}-${month}-${day}`;
+  }
+  return value;
 }
 
 function DonationReport() {
+  const [donationRows, setDonationRows] = useState([]);
   const [filters, setFilters] = useState({
     donorMemberId: '',
     receiverMemberId: '',
@@ -74,6 +44,41 @@ function DonationReport() {
     endDate: ''
   });
   const [pageSize, setPageSize] = useState('10');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetchDonations();
+  }, []);
+
+  const fetchDonations = async () => {
+    try {
+      setLoading(true);
+      const data = await getAllDonations();
+      const donations = Array.isArray(data) ? data : (data.data ? data.data : []);
+      setDonationRows(donations.map((donation, index) => ({
+        srNo: index + 1,
+        donorMemberId: donation.from?.memberId || 'N/A',
+        donorMemberName: donation.from?.userName || 'N/A',
+        receiverMemberId: donation.to?.memberId || 'N/A',
+        receiverMemberName: donation.to?.userName || 'N/A',
+        amount: donation.amount || '0',
+        rank: donation.level || '',
+        paymentProof: donation.paymentProof ? 'VIEW' : '',
+        transactionId: donation._id || '',
+        requestDate: donation.createdAt || '',
+        approveDate: donation.updatedAt || '',
+        status: donation.status || 'PENDING'
+      })));
+      setError('');
+    } catch (err) {
+      setError('Failed to load donations');
+      console.error(err);
+      setDonationRows([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredRows = useMemo(() => {
     return donationRows.filter((row) => {
@@ -169,113 +174,119 @@ function DonationReport() {
       <h2 className="section-title tds-screen-title">Donation Report</h2>
 
       <div className="panel" style={{ borderRadius: '28px', padding: '24px' }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>
-          <input className="text-input" style={{ maxWidth: '150px' }} placeholder="DONAR MEMBER ID" value={filters.donorMemberId} onChange={handleFilterChange('donorMemberId')} />
-          <input className="text-input" style={{ maxWidth: '160px' }} placeholder="RECEIVER MEMBER ID" value={filters.receiverMemberId} onChange={handleFilterChange('receiverMemberId')} />
-          <input className="text-input" style={{ maxWidth: '110px' }} placeholder="D. AMOUNT" value={filters.amount} onChange={handleFilterChange('amount')} />
-          <select className="select-input" style={{ maxWidth: '98px' }} value={filters.rank} onChange={handleFilterChange('rank')}>
-            <option value="">RANK</option>
-            {Object.keys(rankLabels).map((rankKey) => (
-              <option key={rankKey} value={rankKey}>{rankKey}</option>
-            ))}
-          </select>
-          <select className="select-input" style={{ maxWidth: '98px' }} value={filters.status} onChange={handleFilterChange('status')}>
-            <option value="">STATUS</option>
-            <option value="PENDING">PENDING</option>
-            <option value="SUCCESS">SUCCESS</option>
-          </select>
-          <input className="text-input" type="date" style={{ maxWidth: '130px' }} value={filters.startDate} onChange={handleFilterChange('startDate')} />
-          <input className="text-input" type="date" style={{ maxWidth: '120px' }} value={filters.endDate} onChange={handleFilterChange('endDate')} />
-          <select className="select-input" style={{ maxWidth: '92px' }} value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-          </select>
-          <button className="btn-primary" type="button">Search</button>
-        </div>
+        {error && <div style={{ color: '#e74c3c', marginBottom: '14px' }}>{error}</div>}
+        {loading && <div style={{ color: '#666', marginBottom: '14px' }}>Loading donations...</div>}
+        
+        {!loading && (
+          <>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>
+              <input className="text-input" style={{ maxWidth: '150px' }} placeholder="DONAR MEMBER ID" value={filters.donorMemberId} onChange={handleFilterChange('donorMemberId')} />
+              <input className="text-input" style={{ maxWidth: '160px' }} placeholder="RECEIVER MEMBER ID" value={filters.receiverMemberId} onChange={handleFilterChange('receiverMemberId')} />
+              <input className="text-input" style={{ maxWidth: '110px' }} placeholder="D. AMOUNT" value={filters.amount} onChange={handleFilterChange('amount')} />
+              <select className="select-input" style={{ maxWidth: '98px' }} value={filters.rank} onChange={handleFilterChange('rank')}>
+                <option value="">RANK</option>
+                {Object.keys(rankLabels).map((rankKey) => (
+                  <option key={rankKey} value={rankKey}>{rankKey}</option>
+                ))}
+              </select>
+              <select className="select-input" style={{ maxWidth: '98px' }} value={filters.status} onChange={handleFilterChange('status')}>
+                <option value="">STATUS</option>
+                <option value="PENDING">PENDING</option>
+                <option value="SUCCESS">SUCCESS</option>
+              </select>
+              <input className="text-input" type="date" style={{ maxWidth: '130px' }} value={filters.startDate} onChange={handleFilterChange('startDate')} />
+              <input className="text-input" type="date" style={{ maxWidth: '120px' }} value={filters.endDate} onChange={handleFilterChange('endDate')} />
+              <select className="select-input" style={{ maxWidth: '92px' }} value={pageSize} onChange={(event) => setPageSize(event.target.value)}>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </select>
+              <button className="btn-primary" type="button">Search</button>
+            </div>
 
-        <div className="btn-row" style={{ justifyContent: 'flex-end', marginBottom: '14px' }}>
-          <button className="btn-outline" type="button" onClick={handleExportPdf}>Export PDF</button>
-          <button className="btn-outline" type="button" onClick={handleExportExcel}>Export Excel</button>
-        </div>
+            <div className="btn-row" style={{ justifyContent: 'flex-end', marginBottom: '14px' }}>
+              <button className="btn-outline" type="button" onClick={handleExportPdf}>Export PDF</button>
+              <button className="btn-outline" type="button" onClick={handleExportExcel}>Export Excel</button>
+            </div>
 
-        <div className="table-wrap">
-          <table className="data-table" style={{ minWidth: '1680px' }}>
-            <thead>
-              <tr>
-                <th>S.NO</th>
-                <th>DONAR MID</th>
-                <th>DONAR MEMBER NAME</th>
-                <th>RECEIVER MID</th>
-                <th>RECEIVER MEMBER NAME</th>
-                <th>D. AMOUNT</th>
-                <th>RANK</th>
-                <th>REQUEST DATE</th>
-                <th>APPROVE DATE</th>
-                <th>TRANSACTION ID</th>
-                <th>SLIP</th>
-                <th>STATUS</th>
-                <th>ACTION</th>
-              </tr>
-            </thead>
-            <tbody>
-              {visibleRows.map((row) => (
-                <tr key={row.srNo}>
-                  <td>{row.srNo}</td>
-                  <td>{row.donorMemberId}</td>
-                  <td>{row.donorMemberName}</td>
-                  <td>{row.receiverMemberId}</td>
-                  <td>{row.receiverMemberName}</td>
-                  <td>{row.amount}</td>
-                  <td>{row.rank}</td>
-                  <td>{row.requestDate}</td>
-                  <td>{row.approveDate}</td>
-                  <td>{row.transactionId}</td>
-                  <td>
-                    {row.paymentProof ? (
-                      <button className="btn-primary" type="button" style={{ padding: '5px 10px', fontSize: '11px' }}>
-                        {row.paymentProof}
-                      </button>
-                    ) : (
-                      '-'
-                    )}
-                  </td>
-                  <td>{row.status}</td>
-                  <td>
-                    <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
-                      <button className="action-btn accept-btn" type="button" title="Accept" style={{ background: '#e8f8f5', color: '#27ae60', border: '1px solid #27ae60' }}>
-                        ✓
-                      </button>
-                      <button className="action-btn reject-btn" type="button" title="Reject" style={{ background: '#fadbd8', color: '#e74c3c', border: '1px solid #e74c3c' }}>
-                        ✕
-                      </button>
-                      <button className="action-btn return-btn" type="button" title="Return" style={{ background: '#ebf5fb', color: '#3498db', border: '1px solid #3498db' }}>
-                        ↻
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            <div className="table-wrap">
+              <table className="data-table" style={{ minWidth: '1680px' }}>
+                <thead>
+                  <tr>
+                    <th>S.NO</th>
+                    <th>DONAR MID</th>
+                    <th>DONAR MEMBER NAME</th>
+                    <th>RECEIVER MID</th>
+                    <th>RECEIVER MEMBER NAME</th>
+                    <th>D. AMOUNT</th>
+                    <th>RANK</th>
+                    <th>REQUEST DATE</th>
+                    <th>APPROVE DATE</th>
+                    <th>TRANSACTION ID</th>
+                    <th>SLIP</th>
+                    <th>STATUS</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {visibleRows.map((row) => (
+                    <tr key={row.srNo}>
+                      <td>{row.srNo}</td>
+                      <td>{row.donorMemberId}</td>
+                      <td>{row.donorMemberName}</td>
+                      <td>{row.receiverMemberId}</td>
+                      <td>{row.receiverMemberName}</td>
+                      <td>{row.amount}</td>
+                      <td>{row.rank}</td>
+                      <td>{row.requestDate}</td>
+                      <td>{row.approveDate}</td>
+                      <td>{row.transactionId}</td>
+                      <td>
+                        {row.paymentProof ? (
+                          <button className="btn-primary" type="button" style={{ padding: '5px 10px', fontSize: '11px' }}>
+                            {row.paymentProof}
+                          </button>
+                        ) : (
+                          '-'
+                        )}
+                      </td>
+                      <td>{row.status}</td>
+                      <td>
+                        <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+                          <button className="action-btn accept-btn" type="button" title="Accept" style={{ background: '#e8f8f5', color: '#27ae60', border: '1px solid #27ae60' }}>
+                            ✓
+                          </button>
+                          <button className="action-btn reject-btn" type="button" title="Reject" style={{ background: '#fadbd8', color: '#e74c3c', border: '1px solid #e74c3c' }}>
+                            ✕
+                          </button>
+                          <button className="action-btn return-btn" type="button" title="Return" style={{ background: '#ebf5fb', color: '#3498db', border: '1px solid #3498db' }}>
+                            ↻
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
-        <div className="table-footer" style={{ justifyContent: 'center', marginTop: '12px' }}>
-          <div className="pagination">
-            <button className="page-btn">&lt;&lt;</button>
-            <button className="page-btn">&lt;</button>
-            <button className="page-btn active">1</button>
-            <button className="page-btn">2</button>
-            <button className="page-btn">3</button>
-            <button className="page-btn">4</button>
-            <button className="page-btn">5</button>
-            <button className="page-btn">6</button>
-            <button className="page-btn">7</button>
-            <button className="page-btn">&gt;</button>
-            <button className="page-btn">&gt;&gt;</button>
-          </div>
-        </div>
-
+            <div className="table-footer" style={{ justifyContent: 'center', marginTop: '12px' }}>
+              <div className="pagination">
+                <button className="page-btn">&lt;&lt;</button>
+                <button className="page-btn">&lt;</button>
+                <button className="page-btn active">1</button>
+                <button className="page-btn">2</button>
+                <button className="page-btn">3</button>
+                <button className="page-btn">4</button>
+                <button className="page-btn">5</button>
+                <button className="page-btn">6</button>
+                <button className="page-btn">7</button>
+                <button className="page-btn">&gt;</button>
+                <button className="page-btn">&gt;&gt;</button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
