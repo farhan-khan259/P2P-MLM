@@ -69,7 +69,7 @@ function AdminLogin() {
 			}
 		} catch (err) {
 			setError(
-				err?.response?.data?.message || err.message || 'Network error. Please ensure the backend server is running on http://localhost:5001'
+				err?.response?.data?.message || err.message || 'Network error. Please ensure the backend server is reachable.'
 			);
 			setLoading(false);
 		}
